@@ -1,0 +1,108 @@
+body { color: #888; font: 300 12px/1.4em sans-serif; }
+article { float: left; margin: 0 20px 20px; width: 68%; }
+.meta { font-size: 11px; font-family: lucida grande; }
+
+table { border: 1px solid #ccc; border-radius: 5px; color: #888; font: 300 12px/1.4em sans-serif; width: 100%; } 
+table th { background: #EFEFEF; border-bottom: 1px solid #ccc; font-weight: bold; padding: 10px; text-shadow: 1px 1px 0 #fff; text-align: left; }
+table th:first-child { border-radius: 5px 0 0; }
+table th:last-child { border-radius: 0 5px 0 0; }
+table td { border-bottom: 1px solid #e8e8e8; padding: 10px; vertical-align: top; }
+table td a { color: #00AECF; }
+table td a:hover { color: #007586; }
+
+/** odd, even */
+table tr:nth-child(2n) { background: -moz-linear-gradient(center top , #FAFAFA, #EFEFEF); }
+table tr:hover { background: #e0ffe0; }
+
+/*= Type Task - Base stylig, loop
+-------------------------------------------------------------- */
+table .utility-container { font: normal 11px/1.4em lucida Grande; margin: 10px 0 0; }
+table td .status-container,
+table td .priority-container { margin-top: 4px; }
+table tr.type-task .title { font-weight: bold; }
+
+.type-task h3 a { color: #ccc; font-style: italic; font-size: 12px; font-weight: normal; }
+
+/** set our width's for each column */
+.loop .type-task ul li:last-child { border-right: 0; }
+.loop .type-task ul li h2 a { color: #888; }
+.loop .type-task ul.inline { clear: both; float: left; }
+
+.status-container { font-size: 12px; }
+.status-container a { border-radius: 3px; font-weight: normal; opacity: 0.75; padding: 5px 7px; }
+.status-container a:hover { opacity: 1; }
+
+a.zm-base-status-aborted { background: #efeffd; box-shadow: 1px 1px 0 #C8C8FF; color: #c8c8ff; text-decoration: line-through; }
+a.zm-base-status-closed { background: #f0f0f0; box-shadow: 1px 1px 0 #d3d0d0; color: #d3d0d0; }
+a.zm-base-status-resolved { background: #e5f6ed; box-shadow: 1px 1px 0 #67ca97; color: #67ca97; }
+a.zm-base-status-open { background: #efeffd; box-shadow: 1px 1px 0 #b0b0e6; color: #b0b0e6; }
+
+.priority-container a { border-radius: 3px; font-weight: normal; padding: 5px 7px; }
+
+a.zm-base-priority-high { background: #ffcece; box-shadow: 1px 1px 0 #ff0000; color: #ff0000; }
+a.zm-base-priority-meigh { background: #ffddc9; box-shadow: 1px 1px 0 #f7701d; color: #f7701d; }
+a.zm-base-priority-medium { background: #fee5b8; box-shadow: 1px 1px 0 #ff9000; color: #ff9000; }
+a.zm-base-priority-ledium { background: #fef3b8; box-shadow: 1px 1px 0 #ffa800; color: #ffa800; }
+a.zm-base-priority-low { background: #fefeb8; box-shadow: 1px 1px 0 #ffd200; color: #ffd200; }
+
+.zm-base-hidden { visibility: hidden; }
+.zm-base-visible { visibility: visible; }
+
+/*= Navigation
+-------------------------------------------------------------- */
+nav.tt-navigation-container ul { list-style-type: none; margin: 0; padding: 0; }
+nav.tt-navigation-container ul li { float: left; list-style-type: none; }
+nav.tt-navigation-container li.create-ticket { float: right; margin: 13px 5px 0; padding: 0; }
+
+.primary-navigation-container { background: #e9f7f7; border-radius: 5px; float: left; margin-bottom: 20px; width: 100%; }
+.primary-navigation-container li { color: #00aecf; font-size: 14px; margin: 5px 5px 0; padding: 10px; }
+.primary-navigation-container li a { color: #00aecf; }
+
+.primary-navigation-container li.currnet-item { background: #fff; border-radius: 5px 5px 0 0; border: solid #f4f4f4; border-width: 1px 1px 0; }
+
+.primary-navigation-container li:hover { background: #fff; border-radius: 5px 5px 0 0; }
+
+.primary-navigation-container li.create-ticket:hover { background: none; }
+
+.primary-navigation-container li ul { border-radius: 0 0 5px 5px; box-shadow: 0 5px 5px #d8d8d8; background: #fff; display: none; margin: 11px 0 0 -10px; padding: 10px; position: absolute; z-index: 1; }
+.primary-navigation-container li ul li { border-bottom: 1px solid #e8e8e8; float: none; margin: 0; padding: 10px 0; }
+.primary-navigation-container li ul li:last-child { border-bottom: 0; }
+.primary-navigation-container li ul li a { color: #888; font-size: 12px; }
+
+.primary-navigation-container ul li:hover > ul { background: #fff; display: block; }
+
+button,
+.button,
+.button a { color: #00aecf; font-weight: bold; letter-spacing: 0.3px; text-shadow: 1px 1px 0 #fff; }
+
+button:hover,
+.button:hover.button { border-radius: 5px 5px 5px 5px; background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3); border-color: #939393; }
+.button { background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3); border: 1px solid; border-color: #ccc #bbb #a0a0a0; border-left: 1px solid #bbb; border-radius: 5px; cursor: pointer; padding: 7px 10px; }
+
+
+
+/*= Dialog
+-------------------------------------------------------------- */
+.ui-dialog { background: #E9F7F7; border: 1px solid #d3d3d3; border-radius: 5px; float: left; }
+.ui-dialog .form-container { background: none; padding: 0; }
+.ui-dialog .button-container { margin: 20px 0 0 0; }
+.ui-dialog-title { color: #333; float: left; font-size: 20px; font-weight: bold; margin: 0; padding: 10px; }
+.ui-dialog-title em { color: #888; }
+.dialog-container { padding: 10px; }
+
+#task_create_form textarea { border: 2px solid #a5dde6; color: #888; clear: both; float: left; height: 200px; padding: 5px; width: 97%; }
+#task_create_form input[type="text"] { border: 2px solid #a5dde6; color: #888; clear: both; float: left; padding: 5px; width: 97%; }
+#task_create_form p { float: left; margin: 0 0 20px; width: 100%; }
+#task_create_form .form-container { padding: 0; }
+#task_create_form .button-container { float: left; margin: 20px 0 0; padding: 10px 0 0; width: 100%; }
+
+
+form fieldset { border: 0; float: left; width: 14%; margin: 0 10px 10px 0; }
+form fieldset label { clear: both; float: left; }
+/** default title inside of update form */
+.form-container #respond { padding: 10px; }
+.form-container form p label,
+.form-container form p label .title,
+.form-container form p label option { color: #888; font-size: 12px; font-weight: normal; }
+
+form .title { color: #444; font-weight: bold; font-size: 14px; text-transform: capitalize; }
