@@ -55,7 +55,6 @@ function tt_init() {
         'jquery-ui-dialog'
     );
     
-    /** @todo register in base, call here */
     $dependencies = array(
         'jquery',
         'jquery-ui-core',
@@ -80,12 +79,12 @@ function tt_init() {
  * @action zm_base_ajaxurl() Print our ajax url in the footer 
  */
 function zm_base_ajaxurl() {
-    $temp = '<script type="text/javascript"> var ajaxurl = "';
-    $temp .= admin_url("admin-ajax.php");
-    $temp .= '"</script>';
-    print $temp;
+    print '<script type="text/javascript"> var ajaxurl = "'. admin_url("admin-ajax.php") .'"</script>';
 }
                   
+/**
+ * @add_action template_redirect() Redirect to theme inside of plugin if no template is found in the wp-content/themes/mytheme
+ */
 function tt_archive_template() {
     $post_type = get_query_var( 'post_type' );
 
@@ -124,8 +123,72 @@ function tt_taxonomy_template() {
 }
 add_action( 'template_redirect', 'tt_taxonomy_template', 5 );
 
-function register_cpt_task() {
+function tt_activation(){
 
+    // our terms need our taxes registered so we can insert them 
+    register_taxonomy_priority();
+    register_taxonomy_phase();
+    register_taxonomy_status();
+
+    // insert some base terms 
+    // priority 
+    wp_insert_term( 'High',   'priority', array( 'description' => '', 'slug' => 'high' ) );
+    wp_insert_term( 'Low',    'priority', array( 'description' => '', 'slug' => 'low' ) );
+    wp_insert_term( 'Medium', 'priority', array( 'description' => '', 'slug' => 'medium' ) );
+
+    // status
+    wp_insert_term( 'Aborted',  'status', array( 'description' => 'A Task that will NOT be completed.', 'slug' => 'aborted' ) );
+    wp_insert_term( 'Closed',   'status', array( 'description' => 'A Task that has been resolved and reviewed is completed.', 'slug' => 'closed' ) );
+    wp_insert_term( 'New',      'status', array( 'description' => 'A New Task is a Task that is waiting to be worked on.', 'slug' => 'new' ) );
+    wp_insert_term( 'Open',     'status', array( 'description' => 'A Task that is currently being worked on.', 'slug' => 'open' ) );
+    wp_insert_term( 'Resolved', 'status', array( 'description' => 'The Task has been finished, but needs to be approved before it is closed.', 'slug' => 'resolved' ) );
+
+    // priority  
+    wp_insert_term( '0.1', 'phase', array( 'description' => '', 'slug' => '0-1' ) );
+    wp_insert_term( '1.0', 'phase', array( 'description' => '', 'slug' => '1-0' ) );
+    wp_insert_term( '2.0', 'phase', array( 'description' => '', 'slug' => '2-0' ) );
+    wp_insert_term( '3.0', 'phase', array( 'description' => '', 'slug' => '3-0' ) );
+
+    // insert sample task  
+    $author_ID = get_current_user_id();
+    $post = array(
+        'post_title' => 'Your first Task!',
+        'post_content' => 'This is a sample Task',
+        'post_author' => $author_ID,
+        'post_type' => 'task',
+        'post_status' => 'pending'
+    );
+    $post_id = wp_insert_post( $post, true );
+
+    // assign a term for our sample Task  
+    if ( isset( $post_id ) ) {
+        $term_id = term_exists( 'medium', 'priority' );
+        wp_set_post_terms( $post_id, $term_id, 'priority' );
+
+        $term_id = term_exists( 'new', 'status' );
+        wp_set_post_terms( $post_id, $term_id, 'status' );
+
+        $term_id = term_exists( '1.0', 'phase' );
+        wp_set_post_terms( $post_id, $term_id, 'phase' );
+    }
+}
+
+function tt_warning() {
+    $copy = '<p><strong>Thanks for installing Task Tracker!</strong> We\'ve added a sample Task, along with a few most commonly used statuses, priorities and phases. Your first Task is Pending and assigned the following: <br /><br /> Status = New<br /> Priority = Medium<br /> Phase = 1</p>';
+    $one = "post-new.php?post_type=task";
+    $two = "options-permalink.php";
+    print '<div class="updated fade">';
+    print sprintf( __( $copy . 'All you need to do know is start <a href="%1$s">Adding Tasks</a> and <a href="%2$s">update your permalinks</a>!' ),  $one, $two );
+    print '</div>';
+}
+
+
+///////////////////////////////
+///////////////////////////////
+// @todo use CPT class for this
+///////////////////////////////
+///////////////////////////////
+function register_cpt_task() {
     $labels = array( 
         'name' => _x( 'Tasks', 'task' ),
         'singular_name' => _x( 'Task', 'task' ),
@@ -331,63 +394,4 @@ function register_taxonomy_status() {
     );
 
     register_taxonomy( 'status', array('task'), $args );
-}
-
-function tt_activation(){
-
-    // our terms need our taxes registered so we can insert them 
-    register_taxonomy_priority();
-    register_taxonomy_phase();
-    register_taxonomy_status();
-
-    // insert some base terms 
-    // priority 
-    wp_insert_term( 'High',   'priority', array( 'description' => '', 'slug' => 'high' ) );
-    wp_insert_term( 'Low',    'priority', array( 'description' => '', 'slug' => 'low' ) );
-    wp_insert_term( 'Medium', 'priority', array( 'description' => '', 'slug' => 'medium' ) );
-
-    // status
-    wp_insert_term( 'Aborted',  'status', array( 'description' => 'A Task that will NOT be completed.', 'slug' => 'aborted' ) );
-    wp_insert_term( 'Closed',   'status', array( 'description' => 'A Task that has been resolved and reviewed is completed.', 'slug' => 'closed' ) );
-    wp_insert_term( 'New',      'status', array( 'description' => 'A New Task is a Task that is waiting to be worked on.', 'slug' => 'new' ) );
-    wp_insert_term( 'Open',     'status', array( 'description' => 'A Task that is currently being worked on.', 'slug' => 'open' ) );
-    wp_insert_term( 'Resolved', 'status', array( 'description' => 'The Task has been finished, but needs to be approved before it is closed.', 'slug' => 'resolved' ) );
-
-    // priority  
-    wp_insert_term( '0.1', 'phase', array( 'description' => '', 'slug' => '0-1' ) );
-    wp_insert_term( '1.0', 'phase', array( 'description' => '', 'slug' => '1-0' ) );
-    wp_insert_term( '2.0', 'phase', array( 'description' => '', 'slug' => '2-0' ) );
-    wp_insert_term( '3.0', 'phase', array( 'description' => '', 'slug' => '3-0' ) );
-
-    // insert sample task  
-    $author_ID = get_current_user_id();
-    $post = array(
-        'post_title' => 'Your first Task!',
-        'post_content' => 'This is a sample Task',
-        'post_author' => $author_ID,
-        'post_type' => 'task',
-        'post_status' => 'pending'
-    );
-    $post_id = wp_insert_post( $post, true );
-
-    // assign a term for our sample Task  
-    if ( isset( $post_id ) ) {
-        $term_id = term_exists( 'medium', 'priority' );
-        wp_set_post_terms( $post_id, $term_id, 'priority' );
-
-        $term_id = term_exists( 'new', 'status' );
-        wp_set_post_terms( $post_id, $term_id, 'status' );
-
-        $term_id = term_exists( '1.0', 'phase' );
-        wp_set_post_terms( $post_id, $term_id, 'phase' );
-    }
-}
-
-function tt_warning() {
-    $copy = '<p><strong>Thanks for installing Task Tracker!</strong> We\'ve added a sample Task, along with a few most commonly used statuses, priorities and phases. Your first Task is Pending and assigned the following: <br /><br /> Status = New<br /> Priority = Medium<br /> Phase = 1</p>';
-    $one = "post-new.php?post_type=task";
-    $two = "options-permalink.php";
-    print '<div class="updated fade">';
-    print sprintf( __( $copy . 'All you need to do know is start <a href="%1$s">Adding Tasks</a> and <a href="%2$s">update your permalinks</a>!' ),  $one, $two );
-    print '</div>';
 }

@@ -13,13 +13,12 @@
         <?php zm_base_build_radio('priority'); ?>
         <?php zm_base_build_options('project'); ?>
         <?php zm_base_build_options('phase'); ?>
-        <?php //zm_base_build_options('category'); ?>
         <?php zm_base_build_options('assigned'); ?>
         <div class="button-container">
             <div id="publishing-action">
                 <input id="pt_publish" class="button" type="submit" value="Save" accesskey="p" name="save" />
-                <button id="clear">Clear</button>
-                <button id="exit">Exit</button>
+                <button id="clear" class="button">Clear</button>
+                <button id="exit" class="button">Exit</button>
             </div>
         </div>
     </form>
