@@ -49,21 +49,17 @@ function tt_init() {
     register_taxonomy_project();
     register_taxonomy_status();     
     
-    $dependencies = array(
+    $dependencies_js = array(
         'jquery',
         'jquery-ui-core',
         'jquery-ui-dialog'
     );
-    
-    $dependencies = array(
-        'jquery',
-        'jquery-ui-core',
-        'jquery-ui-dialog'
-    );
-    
-    wp_register_script( 'tt-script', MY_PLUGIN_URL .'js/script.js', $dependencies, '1.0' );
-    wp_register_script( 'jquery-ui-effects', MY_PLUGIN_URL . 'js/jquery-ui-1.8.13.effects.min.js', $dependencies, '1.8.13' );
-    wp_register_style(  'tt-styles', MY_PLUGIN_URL . 'css/style.css', '',      'all' );
+
+    $dependencies_css = array( 'wp-jquery-ui-dialog' );
+
+    wp_register_script( 'tt-script', MY_PLUGIN_URL .'js/script.js', $dependencies_js, '1.0' );
+    wp_register_script( 'jquery-ui-effects', MY_PLUGIN_URL . 'js/jquery-ui-1.8.13.effects.min.js', $dependencies_js, '1.8.13' );
+    wp_register_style(  'tt-styles', MY_PLUGIN_URL . 'css/style.css', $dependencies_css, 'all' );
 
     // Define ajaxurl for use when user is NOT logged in
     add_action( 'wp_head', 'zm_base_ajaxurl' ); 
@@ -114,7 +110,6 @@ function tt_taxonomy_template() {
         wp_enqueue_style( 'tt-styles' );
         wp_enqueue_script( 'tt-script' );
         wp_enqueue_script( 'jquery-ui-effects' );
-        wp_enqueue_style( 'wp-jquery-ui-dialog' );
         
         if ( file_exists( STYLESHEETPATH . '/taxonomy.php' ) ) return;
         load_template( MY_PLUGIN_DIR . '/theme/archive-' . $post_type . '.php' );

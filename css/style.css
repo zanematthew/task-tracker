@@ -74,9 +74,17 @@ nav.tt-navigation-container li.create-ticket { float: right; margin: 13px 5px 0;
 button,
 .button,
 .button a { color: #00aecf; font-weight: bold; letter-spacing: 0.3px; text-shadow: 1px 1px 0 #fff; }
-.button { background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3); border: 1px solid; border-color: #ccc #bbb #a0a0a0; border-left: 1px solid #bbb; border-radius: 5px; cursor: pointer; 
-font: bold 15px/1 "Helvetica Neue", sans-serif, arial; padding: 7px 10px; }
+.button { background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3); 
 
+-o-transition: border-top-color 0.218s,border-right-color 0.218s,border-bottom-color 0.218s,border-left-color .218s;
+-moz-transition: border-top-color 0.218s,border-right-color 0.218s,border-bottom-color 0.218s,border-left-color .218s;
+-webkit-transition: border-top-color 0.218s,border-right-color 0.218s,border-bottom-color 0.218s,border-left-color .218s;
+
+border: 1px solid; border-color: #ccc #bbb #a0a0a0; border-left: 1px solid #bbb; border-radius: 5px; cursor: pointer; 
+font: bold 15px/1 "Helvetica Neue", sans-serif, arial; margin-right: 10px; padding: 5px 20px; }
+button#exit { color: red; float: right; }
+input#pt_publish { color: green; }
+button#clear {}
 button:hover,
 .button:hover.button { border-radius: 5px 5px 5px 5px; background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3); border-color: #939393; }
 
@@ -84,21 +92,36 @@ button:hover,
 
 /*= Dialog
 -------------------------------------------------------------- */
-.ui-dialog { background: #E9F7F7; border: 1px solid #d3d3d3; border-radius: 5px; float: left; }
+.ui-dialog { background: #fff; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 0 30px #666; float: left; }
 .ui-dialog .form-container { background: none; padding: 0; }
 .ui-dialog .button-container { margin: 20px 0 0 0; }
-.ui-dialog-title { color: #333; float: left; font-size: 20px; font-weight: bold; margin: 0; padding: 10px; }
+.ui-dialog-title { color: #333; float: left; font-size: 16px; font-weight: bold; margin: 0; padding: 10px; }
 .ui-dialog-title em { color: #888; }
+.ui-widget-overlay { 
+background: -moz-radial-gradient(rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 35%, rgba(0, 0, 0, 0.7));
+}
 .dialog-container { float: left; padding: 10px; }
+.ui-draggable .ui-dialog-titlebar { background: -moz-linear-gradient(center top , #E3E3E3, #F9F9F9) repeat scroll 0 0 transparent; border-bottom: 1px solid #E3E3E3; }
 
-#task_create_form textarea { border: 2px solid #a5dde6; color: #888; clear: both; float: left; height: 200px; padding: 5px; width: 97%; }
-#task_create_form input[type="text"] { border: 2px solid #a5dde6; color: #888; clear: both; float: left; padding: 5px; width: 97%; }
+#task_create_form textarea { border: 1px solid #ddd; border-radius: 3px; color: #888; clear: both; float: left; height: 200px; padding: 5px; width: 97%; }
+#task_create_form input[type="text"] { border: 1px solid #ddd; border-radius: 3px; color: #888; clear: both; float: left; padding: 5px; width: 97%; }
+
+#task_create_form input:focus[type="text"],
+#task_create_form textarea:focus { border-color: #939393; box-shadow: 0 0 3px #939393; }
+
+.form-container select,
+.form-container textarea,
+form#commentform textarea,
+form#commentform input[type="text"]  { border: 1px solid #ddd; color: #888; padding: 5px; }
+
+.form-container select { font-weight: 300; font-size: 12px; margin-top: 5px; }
+.form-wrapper { float: left; padding: 30px; }
 #task_create_form p { float: left; margin: 0 0 20px; width: 100%; }
 #task_create_form .form-container { padding: 0; }
-#task_create_form .button-container { float: left; margin: 20px 0 0; padding: 10px 0 0; width: 100%; }
+#task_create_form .button-container { border-top: 1px solid #E3E3E3; float: left; margin: 20px 0 0 -10px; padding: 10px 0 10px 10px; width: 101.5%; }
 
 
-form fieldset { border: 0; float: left; width: 14%; margin: 0 10px 10px 0; }
+form fieldset { border: 0; float: left; width: 20%; margin: 0 10px 10px 0; }
 form fieldset label { clear: both; float: left; }
 /** default title inside of update form */
 .form-container #respond { padding: 10px; }
