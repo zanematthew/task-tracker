@@ -2,24 +2,21 @@ body { color: #888; font: 300 12px/1.4em sans-serif; }
 article { float: left; margin: 0 20px 20px; width: 68%; }
 .meta { font-size: 11px; font-family: lucida grande; }
 
-table { border: 1px solid #ccc; border-radius: 5px; color: #888; font: 300 12px/1.4em sans-serif; width: 100%; } 
-table th { background: #EFEFEF; border-bottom: 1px solid #ccc; font-weight: bold; padding: 10px; text-shadow: 1px 1px 0 #fff; text-align: left; }
-table th:first-child { border-radius: 5px 0 0; }
-table th:last-child { border-radius: 0 5px 0 0; }
-table td { border-bottom: 1px solid #e8e8e8; padding: 10px; vertical-align: top; }
-table td a { color: #00AECF; }
-table td a:hover { color: #007586; }
-
-/** odd, even */
-table tr:nth-child(2n) { background: -moz-linear-gradient(center top , #FAFAFA, #EFEFEF); }
-table tr:hover { background: #e0ffe0; }
-
-/*= Type Task - Base stylig, loop
+/*= Archive
 -------------------------------------------------------------- */
-table .utility-container { font: normal 11px/1.4em lucida Grande; margin: 10px 0 0; }
-table td .status-container,
-table td .priority-container { margin-top: 4px; }
-table tr.type-task .title { font-weight: bold; }
+.zm-tt-archive-container table { border: 1px solid #ccc; border-radius: 5px; color: #888; font: 300 12px/1.4em sans-serif; width: 100%; } 
+.zm-tt-archive-container table th { background: #EFEFEF; border-bottom: 1px solid #ccc; font-weight: bold; padding: 10px; text-shadow: 1px 1px 0 #fff; text-align: left; }
+.zm-tt-archive-container table th:first-child { border-radius: 5px 0 0; }
+.zm-tt-archive-container table th:last-child { border-radius: 0 5px 0 0; }
+.zm-tt-archive-container table td { border-bottom: 1px solid #e8e8e8; padding: 10px; vertical-align: top; }
+.zm-tt-archive-container table td a { color: #00AECF; }
+.zm-tt-archive-container table td a:hover { color: #007586; }
+.zm-tt-archive-container table tr:nth-child(2n) { background: -moz-linear-gradient(center top , #FAFAFA, #EFEFEF); }
+.zm-tt-archive-container .zm-tt-archive-container table tr:hover { background: #e0ffe0; }
+.zm-tt-archive-container table .utility-container { font: normal 11px/1.4em lucida Grande; margin: 10px 0 0; }
+.zm-tt-archive-container table td .status-container,
+.zm-tt-archive-container table td .priority-container { margin-top: 4px; }
+.zm-tt-archive-container table tr.type-task .title { font-weight: bold; }
 
 .type-task h3 a { color: #ccc; font-style: italic; font-size: 12px; font-weight: normal; }
 
