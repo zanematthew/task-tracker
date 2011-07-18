@@ -4,7 +4,7 @@
                 <th id="title"><span>Title</span></th>
                 <th id="milestone"><span>Milestone</span></th>
                 <th id="age"><span>Age</span></th>                
-                <th id="category"><span>Category</span></th>
+<!--                <th id="category"><span>Category</span></th> -->
                 <th id="status"><span>Status</span></th>
                 <th id="priority"><span>Priority</span></th>
                 <th id="project"><span>Project</span></th>
@@ -29,9 +29,10 @@
                 <td>
                 <?php project_age(); ?>
                 </td>
-                <td>
+<!--                <td>
                     <div class="category-container"><?php print zm_base_get_the_term_list($post->ID, 'category'); ?></div>
                 </td>
+-->
                 <td>
                     <div class="status-container"><?php print zm_base_get_the_term_list($post->ID, 'status'); ?></div>
                 </td>

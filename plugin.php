@@ -68,7 +68,8 @@ function tt_init() {
     // Our functions to be ran during an ajax request
     add_action( 'wp_ajax_base', 'base' );
     add_action( 'wp_ajax_project_submit_task', 'project_submit_task' );
-    add_action('admin_notices', 'tt_warning');
+    add_action( 'admin_notices', 'tt_warning' );
+    add_action( 'wp_ajax_project_wp_update_post', 'project_wp_update_post' );
 }
 
 /** 
@@ -78,9 +79,32 @@ function zm_base_ajaxurl() {
     print '<script type="text/javascript"> var ajaxurl = "'. admin_url("admin-ajax.php") .'"</script>';
 }
                   
+function tt_single_template() {
+    $post_type = get_query_var( 'post_type' );
+        
+        wp_enqueue_style( 'tt-styles' );
+        wp_enqueue_script( 'tt-script' );
+        wp_enqueue_script( 'jquery-ui-effects' );
+        wp_enqueue_style( 'wp-jquery-ui-dialog' );
+
+    if ( is_post_type_archive( $post_type ) && isset( $post_type ) ) {
+        // @todo would be better if we can just redirect on a template part vs. the template 
+        if ( file_exists( STYLESHEETPATH . '/archive-' . $post_type . '.php' ) ) return;
+        load_template( MY_PLUGIN_DIR . '/theme/archive-' . $post_type . '.php' );
+    } elseif ( $post_type == 'task' ) {
+
+        // @todo would be better if we can just redirect on a template part vs. the template 
+        if ( file_exists( STYLESHEETPATH . 'single-' . $post_type . '.php' ) ) return;
+        load_template( MY_PLUGIN_DIR . 'theme/single-' . $post_type . '.php' );
+        exit;        
+    }
+}
+add_action('template_redirect', 'tt_single_template', 5);
+
 /**
  * @add_action template_redirect() Redirect to theme inside of plugin if no template is found in the wp-content/themes/mytheme
  */
+/* see above
 function tt_archive_template() {
     $post_type = get_query_var( 'post_type' );
 
@@ -100,7 +124,7 @@ function tt_archive_template() {
     }
 }
 add_action( 'template_redirect', 'tt_archive_template', 5 );
-
+*/
 function tt_taxonomy_template() {
     $taxonomy = get_query_var( 'taxonomy' );
     $post_type = get_post_type();
@@ -177,6 +201,44 @@ function tt_warning() {
     print '</div>';
 }
 
+
+function project_wp_update_post( $post ) {
+
+    $post_id = (int)$_POST['PostID'];
+//    $comment = $_POST['comment'];
+
+    /** What's left is our taxonomies */
+    unset( $_POST['action'] );
+    unset( $_POST['PostID'] );
+    unset( $_POST['comment'] );
+    $taxonomies = $_POST;
+
+    /** insert terms */
+    /** @todo should only do the insert if they change? */
+    foreach( $taxonomies as $taxonomy => $term )
+        wp_set_post_terms( $post_id, $term, &$taxonomy );
+
+    if ( isset( $comment ) ) {
+        $current_user = wp_get_current_user();
+        $time = current_time('mysql');
+        $data = array(
+            'comment_post_ID' => $post_id,
+            'comment_author' => $current_user->user_nicename,
+            'comment_author_email' => $current_user->user_email,
+            'comment_author_url' => $current_user->user_url,
+            'comment_content' => $comment,
+            'comment_type' => '',
+            'comment_parent' => 0,
+            'user_id' => $current_user->ID,
+            'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
+            'comment_agent' => $_SERVER['HTTP_USER_AGENT'],
+            'comment_date' => $time,
+            'comment_approved' => 1
+            );
+        wp_insert_comment( $data );
+    }
+    die();
+}
 
 ///////////////////////////////
 ///////////////////////////////

@@ -7,7 +7,7 @@ jQuery(document).ready(function( $ ){
     });
 
     $('#update_task', this).submit(function(){
-    
+console.log('updating..');    
         /** 
          * @todo 1 this should be part of a global ajax setup, where when the request is made
          * ALL form fields are DISABLED! and enabled on success
@@ -22,6 +22,7 @@ jQuery(document).ready(function( $ ){
             data: "action=project_wp_update_post&" + $(this).serialize(), 
             success: function( msg ){
                 /** @todo see 1 */
+console.log( msg );
                 $('select', this).attr('disabled',' ');
                 location.reload( true );
             }
@@ -99,5 +100,6 @@ jQuery(document).ready(function( $ ){
             }
         });    
     });
-});
 
+});
+	
