@@ -1,4 +1,4 @@
-<div class="form-container" id="task_create_form">
+<div class="zm-tt-form-container" id="task_create_form">
     <form action="javascript://" id="create_task_form">
         <div class="form-wrapper">
         <input type="hidden" value="task" name="post_type" />

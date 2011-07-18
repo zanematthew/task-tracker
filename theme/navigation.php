@@ -1,4 +1,4 @@
-<div class="primary-navigation-container">
+<div class="zm-tt-navigation-container">
 <nav class="tt-navigation-container">
 <ul>
 <li class="currnet-item"><a href="<?php bloginfo('url'); ?>/task" title="List Recent Activity for: <?php bloginfo('name'); ?>">Recent</a></li>
