@@ -84,7 +84,6 @@ border: 1px solid; border-color: #ccc #bbb #a0a0a0; border-left: 1px solid #bbb;
 font: bold 15px/1 "Helvetica Neue", sans-serif, arial; margin-right: 10px; padding: 5px 20px; }
 button#exit { color: red; float: right; }
 input#pt_publish { color: green; }
-button#clear {}
 button:hover,
 .button:hover.button { border-radius: 5px 5px 5px 5px; background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3); border-color: #939393; }
 
@@ -134,25 +133,8 @@ form .title { color: #444; font-weight: bold; font-size: 14px; text-transform: c
 
 pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px/1em Courier; }
 
-.zm-tt-single-container {}
-
-.zm-tt-single-container h1,
-.zm-tt-single-container h2,
-.zm-tt-single-container h3,
-.zm-tt-single-container h4,
-.zm-tt-single-container h5,
-.zm-tt-single-container h6 {}
-
 .zm-tt-single-container h1 { font: normal 28px/1 sans-serif; color: #333; margin: 0 0 10px; }
-.zm-tt-single-container h2 {}
-.zm-tt-single-container h3 {}
-.zm-tt-single-container h4 {}
-.zm-tt-single-container h5 {}
-.zm-tt-single-container h6 {}
-
 .zm-tt-single-container p { font-size: 14px; margin-bottom: 5px; }
-.zm-tt-single-container a {} 
-
 .zm-tt-single-container .nav-previous-container { float: left; margin: 10px 0 20px 0; width: 100%; }
 .zm-tt-single-container .nav-previous-container .next { float: right; text-align: right; width: 30%; }
 .zm-tt-single-container .nav-previous-container .previous { float: left; width: 30%; }
@@ -164,7 +146,6 @@ pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px
 .zm-tt-single-container .entry-utility ul li { float: left; margin: 0 20px 0 0; }
 
 .zm-tt-single-container .task-update-container { clear: both; float: left; margin-bottom: 20px; }
-.zm-tt-single-container .task-update-container .title { }
 
 /* twentytweelve mess up*/
 .zm-tt-single-container #respond { float: left; }
@@ -172,12 +153,9 @@ pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px
 .zm-tt-sidebar-container aside { float: left; }
 .zm-tt-sidebar-container ul { margin: 0; }
 
-.zm-tt-single-container .task-update-container { }
 .zm-tt-single-container .task-update-container h3 { color: #333; font-size: 16px; font-weight: bold; margin: 0 0 10px; }
 .zm-tt-single-container .task-update-container h3 em { color: #888; }
 .zm-tt-single-container .task-update-container form fieldset { width: 15%; }
-.zm-tt-single-container .task-update-container { }
-
 .zm-tt-single-container small { color: #d3d3d3; font: normal 11px/1 lucida grande; float: left; margin: 0 0 5px 0;}
 
 
