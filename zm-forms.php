@@ -6,12 +6,12 @@
  * tried using add_filter( 'get_the_term_list', 'new_get_the_term_list' ); but it wasn't working
  * ummm, I think these 2 functions do the same thing wtf! 
  */
-function zm_base_get_the_term_list( $id = 0, $taxonomy, $before = '', $sep = ', ', $after = '' ) {
+function zm_base_get_the_term_list( $id = 0, $taxonomy=null, $before = '', $sep = ', ', $after = '' ) {
 
 	$terms = get_the_terms( $id, $taxonomy, $before, $sep, $after);
 
     if ( is_wp_error( $terms ) || empty( $terms ) ) {
-        print 'error';
+        print '&mdash;';
         return;
     } else {
 	foreach ( $terms as $term ) {
@@ -45,9 +45,14 @@ function zm_base_list_terms( $taxonomy ) {
         $html .= '<span class="zm-base-count">' . $term->count . '</span>';
         $html .= '</li>';
     }
-    
+
+/*
+print '<pre>';
+print_r( $terms );
+print '</pre>';
+*/
     // @todo make sure term used as class name is 'clean', i.e. no spaces! all lower case.
-    $first = '<li class="zm-base-terms ' . $terms[0]->taxonomy . '"><span class="zm-base-title">' . $terms[0]->taxonomy . '</span><ul>';    
+    $first = '<li class="zm-base-terms ' . $terms[1]->taxonomy . '"><span class="zm-base-title">' . $terms[1]->taxonomy . '</span><ul>';    
     $last = '</ul></li>';
     print $first . $html . $last; 
 }
@@ -120,7 +125,7 @@ function zm_base_build_options( $taxonomy=null, $value='term_id' ) {
     ?>
 	<?php if ( !empty( $terms ) ) : ?>
     <fieldset class="zm-base-<?php echo $taxonomy; ?>-container <?php echo $taxonomy; ?>-container">
-    <legend class="zm-base-title"><?php echo $taxonomy; ?></legend>	
+    <legend class="title"><?php echo $taxonomy; ?></legend>	
 	<select name="<?php echo $taxonomy; ?>">
         <option value="">-- Choose a <?php echo $taxonomy; ?> --</option>              
 	    <?php foreach( $terms as $term ) : ?>

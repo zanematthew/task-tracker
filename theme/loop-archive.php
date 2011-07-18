@@ -18,9 +18,8 @@
 	                 <strong class="title"><a href="<?php the_permalink(); ?>" title="Link to project: <?php the_title(); ?>"><?php the_title(); ?></a></strong>
               	     <span class="comment-count"><?php comments_number(' '); ?></span>
          	         <div class="utility-container zm-base-hidden">
-	                     <?php edit_post_link('Edit', '' , ' |'); ?>
+	                     <?php edit_post_link('Admin Edit', '' , ' |'); ?>
                          by <?php the_author(); ?> on <?php the_time(get_option('date_format')); ?> |
-          	             Categories: <?php the_category(', '); ?>
            	         </div>
 	            </td>
                 <td>

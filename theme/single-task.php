@@ -8,11 +8,11 @@
 <div class="container_12">
     <div class="grid_12">
         <div class="main-container">
-            <article class="grid_8 alpha">
+            <article class="grid_9 alpha">
                 <?php load_template( MY_PLUGIN_DIR . '/theme/navigation.php' ); ?>   
-                <?php load_template( MY_PLUGIN_DIR . '/theme/loop-single.php' ); ?>
+                <?php load_template( MY_PLUGIN_DIR . '/theme/loop-single.php' ); ?>   
             </article>
-            <?php get_sidebar(); ?>
+                <?php load_template( MY_PLUGIN_DIR . '/theme/sidebar.php' ); ?>   
         </div>
     </div>
 </div>

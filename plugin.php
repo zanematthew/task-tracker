@@ -55,10 +55,15 @@ function tt_init() {
         'jquery-ui-dialog'
     );
 
-    $dependencies_css = array( 'wp-jquery-ui-dialog' );
+    $dependencies_css = array( 
+        'wp-jquery-ui-dialog',
+        'tt-960-grid'
+     );
 
     wp_register_script( 'tt-script', MY_PLUGIN_URL .'js/script.js', $dependencies_js, '1.0' );
     wp_register_script( 'jquery-ui-effects', MY_PLUGIN_URL . 'js/jquery-ui-1.8.13.effects.min.js', $dependencies_js, '1.8.13' );
+
+    wp_register_style(  'tt-960-grid', MY_PLUGIN_URL . 'css/960.css', '', 'all' );
     wp_register_style(  'tt-styles', MY_PLUGIN_URL . 'css/style.css', $dependencies_css, 'all' );
 
     // Define ajaxurl for use when user is NOT logged in
