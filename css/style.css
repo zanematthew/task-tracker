@@ -50,22 +50,16 @@ a.zm-base-priority-low { background: #fefeb8; box-shadow: 1px 1px 0 #ffd200; col
 nav.tt-navigation-container ul { list-style-type: none; margin: 0; padding: 0; }
 nav.tt-navigation-container ul li { float: left; list-style-type: none; }
 nav.tt-navigation-container li.create-ticket { float: right; margin: 13px 5px 0; padding: 0; }
-
 .primary-navigation-container { background: #e9f7f7; border-radius: 5px; float: left; margin-bottom: 20px; width: 100%; }
 .primary-navigation-container li { color: #00aecf; font-size: 14px; margin: 5px 5px 0; padding: 10px; }
 .primary-navigation-container li a { color: #00aecf; }
-
 .primary-navigation-container li.currnet-item { background: #fff; border-radius: 5px 5px 0 0; border: solid #f4f4f4; border-width: 1px 1px 0; }
-
 .primary-navigation-container li:hover { background: #fff; border-radius: 5px 5px 0 0; }
-
 .primary-navigation-container li.create-ticket:hover { background: none; }
-
 .primary-navigation-container li ul { border-radius: 0 0 5px 5px; box-shadow: 0 5px 5px #d8d8d8; background: #fff; display: none; margin: 11px 0 0 -10px; padding: 10px; position: absolute; z-index: 1; }
 .primary-navigation-container li ul li { border-bottom: 1px solid #e8e8e8; float: none; margin: 0; padding: 10px 0; }
 .primary-navigation-container li ul li:last-child { border-bottom: 0; }
 .primary-navigation-container li ul li a { color: #888; font-size: 12px; }
-
 .primary-navigation-container ul li:hover > ul { background: #fff; display: block; }
 
 button,
@@ -84,8 +78,6 @@ input#pt_publish { color: green; }
 button:hover,
 .button:hover.button { border-radius: 5px 5px 5px 5px; background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3); border-color: #939393; }
 
-
-
 /*= Dialog
 -------------------------------------------------------------- */
 .ui-dialog { background: #fff; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 0 30px #666; float: left; }
@@ -98,35 +90,6 @@ background: -moz-radial-gradient(rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0
 }
 .dialog-container { float: left; padding: 10px; }
 .ui-draggable .ui-dialog-titlebar { background: -moz-linear-gradient(center top , #E3E3E3, #F9F9F9) repeat scroll 0 0 transparent; border-bottom: 1px solid #E3E3E3; }
-
-#task_create_form textarea { border: 1px solid #ddd; border-radius: 3px; color: #888; clear: both; float: left; height: 200px; padding: 5px; width: 97%; }
-#task_create_form input[type="text"] { border: 1px solid #ddd; border-radius: 3px; color: #888; clear: both; float: left; padding: 5px; width: 97%; }
-
-#task_create_form input:focus[type="text"],
-#task_create_form textarea:focus { border-color: #939393; box-shadow: 0 0 3px #939393; }
-
-.form-container select,
-.form-container textarea,
-form#commentform textarea,
-form#commentform input[type="text"]  { border: 1px solid #ddd; color: #888; padding: 5px; }
-
-.form-container select { font-weight: 300; font-size: 12px; margin-top: 5px; }
-.form-wrapper { float: left; padding: 30px; }
-#task_create_form p { float: left; margin: 0 0 20px; width: 100%; }
-#task_create_form .form-container { padding: 0; }
-#task_create_form .button-container { float: left; margin: 20px 0 0 -10px; width: 101.5%; }
-.button-container { border-top: 1px solid #E3E3E3; float: left; padding: 10px 0 10px 10px; width: 100%; }
-
-
-form fieldset { border: 0; float: left; width: 20%; margin: 0 10px 10px 0; }
-form fieldset label { clear: both; float: left; }
-/** default title inside of update form */
-.form-container #respond { padding: 10px; }
-.form-container form p label,
-.form-container form p label .title,
-.form-container form p label option { color: #888; font-size: 12px; font-weight: normal; }
-
-form .title { color: #444; font-weight: bold; font-size: 14px; text-transform: capitalize; }
 
 pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px/1em Courier; }
 
@@ -152,6 +115,26 @@ pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px
 .zm-tt-single-container .task-update-container h3 em { color: #888; }
 .zm-tt-single-container .task-update-container form fieldset { width: 15%; }
 .zm-tt-single-container small { color: #d3d3d3; font: normal 11px/1 lucida grande; float: left; margin: 0 0 5px 0;}
+
+/*= Forms
+-------------------------------------------------------------- */
+.zm-tt-form-container textarea { border: 1px solid #ddd; border-radius: 3px; color: #888; clear: both; float: left; height: 200px; padding: 5px; width: 97%; }
+.zm-tt-form-container input[type="text"] { border: 1px solid #ddd; border-radius: 3px; color: #888; clear: both; float: left; padding: 5px; width: 97%; }
+.zm-tt-form-container input:focus[type="text"],
+.zm-tt-form-container textarea:focus { border-color: #939393; box-shadow: 0 0 3px #939393; }
+.zm-tt-form-container select,
+.zm-tt-form-container textarea { border: 1px solid #ddd; color: #888; padding: 5px; }
+.zm-tt-form-container select { font-weight: 300; font-size: 12px; margin-top: 5px; }
+.zm-tt-form-container .form-wrapper { float: left; padding: 30px; }
+.zm-tt-form-container #task_create_form p { float: left; margin: 0 0 20px; width: 100%; }
+.zm-tt-form-container #task_create_form .button-container { float: left; margin: 20px 0 0 -10px; width: 101.5%; }
+.zm-tt-form-container .button-container { border-top: 1px solid #E3E3E3; float: left; padding: 10px 0 10px 10px; width: 100%; }
+.zm-tt-form-container form fieldset { border: 0; float: left; width: 20%; margin: 0 10px 10px 0; }
+.zm-tt-form-container form fieldset label { clear: both; float: left; }
+.zm-tt-form-container form p label,
+.zm-tt-form-container form p label .title,
+.zm-tt-form-container form p label option { color: #888; font-size: 12px; font-weight: normal; }
+.zm-tt-form-container form .title { color: #444; font-weight: bold; font-size: 14px; text-transform: capitalize; }
 
 
 /*= Sidebar
