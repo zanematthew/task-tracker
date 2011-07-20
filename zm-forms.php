@@ -46,11 +46,6 @@ function zm_base_list_terms( $taxonomy ) {
         $html .= '</li>';
     }
 
-/*
-print '<pre>';
-print_r( $terms );
-print '</pre>';
-*/
     // @todo make sure term used as class name is 'clean', i.e. no spaces! all lower case.
     $first = '<li class="zm-base-terms ' . $terms[1]->taxonomy . '"><span class="zm-base-title">' . $terms[1]->taxonomy . '</span><ul>';    
     $last = '</ul></li>';

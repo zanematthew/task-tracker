@@ -91,20 +91,26 @@ function tt_template() {
         case ( is_tax( $my_taxonomies ) ):
             global $wp_query;
 
+            if ( in_array( $wp_query->query_vars['taxonomy'], $my_taxonomies ) )
+                load_template( MY_PLUGIN_DIR . 'theme/archive-' . $my_post_type . '.php' );
+
+// Check if any ctt template file exists
+/*
             foreach ( $my_taxonomies as $my_taxonomy ) {
                 // Determine the correct template for the taxonomy we are currently viewing
                 if ( $my_taxonomy == $wp_query->query_vars['taxonomy'] ) {
-                    if ( file_exists( STYLESHEETPATH . '/taxonomy-' . $my_taxonomy . '.php' ) )
-                        return;
-                    load_template( MY_PLUGIN_DIR . '/theme/taxonomy-' . $my_taxonomy . '.php' );
+                    if ( file_exists( STYLESHEETPATH . 'taxonomy-' . $my_taxonomy . '.php' ) ) return;
+                    if ( file_exists( STYLESHEETPATH . 'taxonomy-' . $my_taxonomy . '.php' ) ) return;
+                    load_template( MY_PLUGIN_DIR . 'theme/taxonomy-' . $my_taxonomy . '.php' );
                 }
             }
+*/            
             exit;
             break;
 
         // Is this a single page
         case ( is_single() ):
-            // If your not my post type GTOF
+            // If your not my post type GTFO
             if ( get_post_type() != $my_post_type ) return;                
             if ( file_exists( STYLESHEETPATH . '/single-' . $my_post_type . '.php' ) ) return;
 
@@ -115,7 +121,6 @@ function tt_template() {
         // Is this a post type archive page
         case ( is_post_type_archive( $my_post_type ) ):
             if ( file_exists( STYLESHEETPATH . '/archive-' . $my_post_type . '.php' ) ) return;
-
             load_template( MY_PLUGIN_DIR . '/theme/archive-' . $my_post_type . '.php' );
             exit;
             break;
