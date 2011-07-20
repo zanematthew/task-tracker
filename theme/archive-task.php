@@ -1,10 +1,10 @@
 <?php get_header(); ?>
 <?php get_template_part( 'header-container', 'single' ); ?>
-<div class="zm-tt-archive-container">
 <div class="container_12">
     <div class="grid_12">
+<div class="zm-tt-container zm-tt-archive-container">
         <div class="main-container">
-            <article class="grid_8 alpha">
+            <div class="grid_8 alpha omega">
                 <?php load_template( MY_PLUGIN_DIR . '/theme/navigation.php' ); ?>   
                 <table>
                     <thead>
@@ -47,7 +47,7 @@
                         </tr>
                     <?php endwhile; ?>
                 </table>
-            </article>
+            </div>
             <?php get_sidebar(); ?>
         </div>
     </div>

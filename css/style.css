@@ -1,4 +1,3 @@
-body { color: #888; font: 300 12px/1.4em sans-serif; }
 article { float: left; margin: 0 20px 20px; width: 68%; }
 pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px/1em Courier; }
 .meta { font-size: 11px; font-family: lucida grande; }
@@ -18,17 +17,6 @@ a.zm-base-priority-ledium { background: #fef3b8; box-shadow: 1px 1px 0 #ffa800; 
 a.zm-base-priority-low { background: #fefeb8; box-shadow: 1px 1px 0 #ffd200; color: #ffd200; }
 .zm-base-hidden { visibility: hidden; }
 .zm-base-visible { visibility: visible; }
-button,
-.button,
-.button a { color: #00aecf; font-weight: bold; letter-spacing: 0.3px; text-shadow: 1px 1px 0 #fff; }
-.button { background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3); 
--o-transition: border-top-color 0.218s,border-right-color 0.218s,border-bottom-color 0.218s,border-left-color .218s;
--moz-transition: border-top-color 0.218s,border-right-color 0.218s,border-bottom-color 0.218s,border-left-color .218s;
--webkit-transition: border-top-color 0.218s,border-right-color 0.218s,border-bottom-color 0.218s,border-left-color .218s;
-border: 1px solid; border-color: #ccc #bbb #a0a0a0; border-left: 1px solid #bbb; border-radius: 5px; cursor: pointer; 
-font: bold 15px/1 "Helvetica Neue", sans-serif, arial; margin-right: 10px; padding: 5px 20px; }
-button:hover,
-.button:hover.button { border-radius: 5px 5px 5px 5px; background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3); border-color: #939393; }
 
 /* twentytweelve mess up*/
 .zm-tt-single-container #respond { float: left; }
@@ -92,6 +80,7 @@ button:hover,
 .zm-tt-archive-container table td { border-bottom: 1px solid #e8e8e8; padding: 10px; vertical-align: top; }
 .zm-tt-archive-container table td a { color: #00AECF; }
 .zm-tt-archive-container table td a:hover { color: #007586; }
+.zm-tt-archive-container table tr { background: #fff; }
 .zm-tt-archive-container table tr:nth-child(2n) { background: -moz-linear-gradient(center top , #FAFAFA, #EFEFEF); }
 .zm-tt-archive-container table tr:hover { background: #e0ffe0; }
 .zm-tt-archive-container table .utility-container { font: normal 11px/1.4em lucida Grande; margin: 10px 0 0; }
@@ -114,7 +103,7 @@ button:hover,
 .zm-tt-form-container .form-wrapper { float: left; padding: 30px; }
 .zm-tt-form-container #task_create_form p { float: left; margin: 0 0 20px; width: 100%; }
 .zm-tt-form-container #task_create_form .button-container { float: left; margin: 20px 0 0 -10px; width: 101.5%; }
-.zm-tt-form-container button#exit { color: red; float: right; }
+.zm-tt-form-container a#exit { color: red; float: right; }
 .zm-tt-form-container input#pt_publish { color: green; }
 .zm-tt-form-container .button-container { border-top: 1px solid #E3E3E3; float: left; padding: 10px 0 10px 10px; width: 100%; }
 
@@ -145,3 +134,32 @@ button:hover,
 .zm-tt-single-container aside .priority .zm-base-low a { color: #FFD200; }
 .zm-tt-single-container aside .priority .zm-base-high a { color: #FF0000; }
 .zm-tt-single-container aside .priority .zm-base-meigh a { color: #f7701d; }
+
+/*= Reset fixes
+-------------------------------------------------------------- */
+.zm-tt-archive-container table { border-collapse: separate; }
+.zm-tt-container { font: 300 12px/1.4em sans-serif; }
+.zm-tt-container a { border: 0; }
+.zm-tt-container a:hover { border: 0; }
+
+.zm-tt-archive-container { background: #FFF;
+    border: 1px solid #DDD;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 2px 2px 4px #F3F3F3 inset;
+    float: left;
+    padding: 10px;
+}
+
+.button,
+.button a { color: #00aecf; font-weight: bold; letter-spacing: 0.3px; text-shadow: 1px 1px 0 #fff; }
+
+.button { 
+    background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3); 
+    -o-transition: border-top-color 0.218s,border-right-color 0.218s,border-bottom-color 0.218s,border-left-color .218s;
+    -moz-transition: border-top-color 0.218s,border-right-color 0.218s,border-bottom-color 0.218s,border-left-color .218s;
+    -webkit-transition: border-top-color 0.218s,border-right-color 0.218s,border-bottom-color 0.218s,border-left-color .218s;
+    border: 1px solid; border-color: #ccc #bbb #a0a0a0; border-left: 1px solid #bbb; border-radius: 5px; cursor: pointer; 
+    font: bold 15px/1 "Helvetica Neue", sans-serif, arial; margin-right: 10px; padding: 5px 20px; 
+    }
+    
+.button:hover.button { border-radius: 5px 5px 5px 5px; background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3); border-color: #939393; }

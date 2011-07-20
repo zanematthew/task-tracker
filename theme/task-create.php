@@ -19,8 +19,8 @@
         <div class="button-container">
             <div id="publishing-action">
                 <input id="pt_publish" class="button" type="submit" value="Save" accesskey="p" name="save" />
-                <button id="clear" class="button">Clear</button>
-                <button id="exit" class="button">Exit</button>
+                <a href="javascript://" id="clear" class="button">Clear</a>
+                <a href="javascript://" id="exit" class="button">Exit</a>
             </div>
         </div>
     </form>
