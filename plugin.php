@@ -2,7 +2,6 @@
 
 /**
  * Registers custom post type "Task", ...
- *
  */
 
 /**
@@ -15,16 +14,12 @@
  * License: GP
  */
 
-// Plugin URL and DIR used later
 define( 'MY_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . str_replace( basename( __FILE__ ), "", plugin_basename( __FILE__ ) ) );
 define( 'MY_PLUGIN_URL', WP_PLUGIN_URL . '/' . str_replace( basename( __FILE__ ), "", plugin_basename( __FILE__ ) ) );
 
-/**
- * Procedural code that is not used by any hooks
- */
 require_once 'tt_functions.php';
 
-/**
+/** 
  * @todo make OO
  * Procedural code to make generating forms via CPTs and CTTs easier
  */
@@ -32,14 +27,10 @@ require_once 'zm-forms.php';
 
 add_action( 'init', 'tt_init' );
 
-/**
- * @register_activation_hook() Inserts sample task, terms and assigns sample task to given terms
- */
+// Inserts sample task, terms and assigns sample task to given terms
 register_activation_hook( __FILE__ , 'tt_activation' );
 
-/**
- * @add_action tt_init() Registers: CPT, CTT, JS, CSS and adds the needed actions
- */
+// Registers: CPT, CTT, JS, CSS and adds the needed actions
 function tt_init() {
 // tt_activation();
     register_cpt_task();
@@ -66,7 +57,6 @@ function tt_init() {
     wp_register_style(  'tt-960-grid', MY_PLUGIN_URL . 'css/960.css', '', 'all' );
     wp_register_style(  'tt-styles', MY_PLUGIN_URL . 'css/style.css', $dependencies_css, 'all' );
 
-    // Define ajaxurl for use when user is NOT logged in
     add_action( 'wp_head', 'zm_base_ajaxurl' ); 
     add_action( 'wp_footer', 'project_create_ticket_div' );
 
@@ -77,75 +67,63 @@ function tt_init() {
     add_action( 'wp_ajax_project_wp_update_post', 'project_wp_update_post' );
 }
 
-/** 
- * @action zm_base_ajaxurl() Print our ajax url in the footer 
- */
+// zm_base_ajaxurl() Print our ajax url in the footer 
 function zm_base_ajaxurl() {
     print '<script type="text/javascript"> var ajaxurl = "'. admin_url("admin-ajax.php") .'"</script>';
 }
                   
-function tt_single_template() {
-    $post_type = get_query_var( 'post_type' );
-        
-        wp_enqueue_style( 'tt-styles' );
-        wp_enqueue_script( 'tt-script' );
-        wp_enqueue_script( 'jquery-ui-effects' );
-        wp_enqueue_style( 'wp-jquery-ui-dialog' );
+function tt_template() {
+    $post_type = get_query_var( 'post_type' ); // $current_post_type
+    $my_post_type = 'task'; // consider making a define
+    $my_taxonomies = array( 'status', 'priority', 'project', 'phase', 'assigned' ); // same as above
 
-    if ( is_post_type_archive( $post_type ) && isset( $post_type ) ) {
-        // @todo would be better if we can just redirect on a template part vs. the template 
-        if ( file_exists( STYLESHEETPATH . '/archive-' . $post_type . '.php' ) ) return;
-        load_template( MY_PLUGIN_DIR . '/theme/archive-' . $post_type . '.php' );
-    } elseif ( $post_type == 'task' ) {
+    // Quick and harsh error checking
+    if ( !isset( $my_post_type ) ) die( 'Need a CPT!' );
+    if ( !isset( $my_taxonomies ) ) die( 'Need a CTT!' );
 
-        // @todo would be better if we can just redirect on a template part vs. the template 
-        if ( file_exists( STYLESHEETPATH . 'single-' . $post_type . '.php' ) ) return;
-        load_template( MY_PLUGIN_DIR . 'theme/single-' . $post_type . '.php' );
-        exit;        
-    }
+    wp_enqueue_style( 'tt-styles' );
+    wp_enqueue_script( 'tt-script' );
+    wp_enqueue_script( 'jquery-ui-effects' );
+    wp_enqueue_style( 'wp-jquery-ui-dialog' );
+
+    switch( isset( $post_type ) ) {
+        // Are we viewing a taxonomy page?
+        case ( is_tax( $my_taxonomies ) ):
+            global $wp_query;
+
+            foreach ( $my_taxonomies as $my_taxonomy ) {
+                // Determine the correct template for the taxonomy we are currently viewing
+                if ( $my_taxonomy == $wp_query->query_vars['taxonomy'] ) {
+                    if ( file_exists( STYLESHEETPATH . '/taxonomy-' . $my_taxonomy . '.php' ) )
+                        return;
+                    load_template( MY_PLUGIN_DIR . '/theme/taxonomy-' . $my_taxonomy . '.php' );
+                }
+            }
+            exit;
+            break;
+
+        // Is this a single page
+        case ( is_single() ):
+            // If your not my post type GTOF
+            if ( get_post_type() != $my_post_type ) return;                
+            if ( file_exists( STYLESHEETPATH . '/single-' . $my_post_type . '.php' ) ) return;
+
+            load_template( MY_PLUGIN_DIR . '/theme/single-' . $my_post_type . '.php' );
+            exit;
+            break;
+
+        // Is this a post type archive page
+        case ( is_post_type_archive( $my_post_type ) ):
+            if ( file_exists( STYLESHEETPATH . '/archive-' . $my_post_type . '.php' ) ) return;
+
+            load_template( MY_PLUGIN_DIR . '/theme/archive-' . $my_post_type . '.php' );
+            exit;
+            break;
+        default:
+            return;
+    } // End 'switch'
 }
-add_action('template_redirect', 'tt_single_template', 5);
-
-/**
- * @add_action template_redirect() Redirect to theme inside of plugin if no template is found in the wp-content/themes/mytheme
- */
-/* see above
-function tt_archive_template() {
-    $post_type = get_query_var( 'post_type' );
-
-    if ( $post_type == '' )
-        $post_type = 'task';
-
-    if ( is_post_type_archive( $post_type ) ) {
-        wp_enqueue_style( 'tt-styles' );
-        wp_enqueue_script( 'tt-script' );
-        wp_enqueue_script( 'jquery-ui-effects' );
-        wp_enqueue_style( 'wp-jquery-ui-dialog' );
-        
-        // @todo would be better if we can just redirect on a template part vs. the template 
-        if ( file_exists( STYLESHEETPATH . '/archive-' . $post_type . '.php' ) ) return;
-        load_template( MY_PLUGIN_DIR . '/theme/archive-' . $post_type . '.php' );
-        exit;
-    }
-}
-add_action( 'template_redirect', 'tt_archive_template', 5 );
-*/
-function tt_taxonomy_template() {
-    $taxonomy = get_query_var( 'taxonomy' );
-    $post_type = get_post_type();
-    
-    // This sets ALL taxonomies to use the same theme
-    if ( $post_type == 'task' && isset( $taxonomy ) ) {
-        wp_enqueue_style( 'tt-styles' );
-        wp_enqueue_script( 'tt-script' );
-        wp_enqueue_script( 'jquery-ui-effects' );
-        
-        if ( file_exists( STYLESHEETPATH . '/taxonomy.php' ) ) return;
-        load_template( MY_PLUGIN_DIR . '/theme/archive-' . $post_type . '.php' );
-        exit;
-    }
-}
-add_action( 'template_redirect', 'tt_taxonomy_template', 5 );
+add_action('template_redirect', 'tt_template', 5);
 
 function tt_activation(){
 
