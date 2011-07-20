@@ -1,10 +1,10 @@
 <?php get_header(); ?>
 <?php get_template_part( 'header-container', 'single' ); ?>
-<div class="zm-tt-single-container">
 <div class="container_12">
     <div class="grid_12">
+<div class="zm-tt-container zm-tt-single-container">
         <div class="main-container">
-            <article class="grid_9 alpha">
+            <div class="grid_9 alpha">
                 <?php load_template( MY_PLUGIN_DIR . '/theme/navigation.php' ); ?>   
                 <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
                     <div class="nav-previous-container">
@@ -38,7 +38,7 @@
                     <?php comments_template( '', true ); ?>
                 <?php endwhile; ?>
             </div>
-            </article>
+            </div>
             <div class="grid_3 omega">
                 <aside>
                     <ul>
@@ -53,5 +53,5 @@
         </div>
     </div>
 </div>
-<?php get_template_part( 'footer-container', 'single' ); ?>
 <?php get_footer(); ?>
+

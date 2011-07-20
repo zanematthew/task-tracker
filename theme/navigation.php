@@ -4,7 +4,9 @@
 <li class="currnet-item"><a href="<?php bloginfo('url'); ?>/task" title="List Recent Activity for: <?php bloginfo('name'); ?>">Recent</a></li>
 <li class="create-ticket">
 <?php if ( is_user_logged_in() ) : ?>
-    <a href="javascript://" id="create_ticket" class="button">Create a Task</a>
+    <div class="zm-tt-form-container">
+        <a href="javascript://" id="create_ticket" class="button">Create a Task</a>
+    </div>
 <?php else : ?>
     <a href="<?php echo wp_login_url(); ?>" title="Click to login and create a Task">Login</a> to create a Task
 <?php endif ?>
