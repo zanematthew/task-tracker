@@ -172,20 +172,29 @@ function zm_base_list_terms( $taxonomy ) {
 
     $terms = get_terms( $taxonomy );
     $html = null;
+    $i = 0;
+    $len = count( $terms );
+    $first = null;
+    $last = null;
 
     /** @todo -- add support for rss link */
     foreach( $terms as $term ) {
-        $html .= '<li class="zm-base-' . $term->slug . '">';
+        
+        // First
+        if ( $i == 0 ) {
+            $html .= '<li class="zm-base-title ' . $term->taxonomy . '">' . $term->taxonomy .'</li>';    
+        }
+        
+        $html .= '<li class="zm-base-item zm-base-' . $term->slug . '">';
         $html .= '<a href="' . get_term_link( $term->slug, $term->taxonomy ) . '" title="' . sprintf(
         __( "View all %s"), $term->name ) . '" '. '>' . $term->name . '</a>';
         $html .= '<span class="zm-base-count">' . $term->count . '</span>';
         $html .= '</li>';
+        $i++;
     }
     
     /** @todo make sure term used as class name is 'clean', i.e. no spaces! all lower case. */
-    $first = '<li class="zm-base-terms ' . $terms[0]->taxonomy . '"><span class="zm-base-title">' . $terms[0]->taxonomy . '</span><ul>';    
-    $last = '</ul></li>';
-    print $first . $html . $last; 
+    print '<ul>'.$html.'</ul>'; 
 }
 
 /** 
