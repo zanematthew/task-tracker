@@ -233,7 +233,8 @@ function zm_base_get_terms( $taxonomy ) {
 
     /** All Terms */
     $args = array(
-        'orderby' => 'parent'
+        'orderby' => 'parent',
+        'hide_empty' => 0
          );
 
     $terms = get_terms( $taxonomy, $args );
@@ -254,7 +255,7 @@ function zm_base_get_terms( $taxonomy ) {
  * @param mixed $value, the value to be used in the form field, can be term_id or term_slug
  */
 function zm_base_build_options( $taxonomy=null, $value='term_id' ) {
-
+            
     $terms = zm_base_get_terms( $taxonomy );
     $tmp = get_the_terms( $post->ID, $taxonomy );
     
