@@ -1,5 +1,9 @@
 <?php
 
+if ( is_admin() ) {
+//    ini_set('display_errors', 1);
+//    error_reporting( E_ALL );
+}
 /**
  * Registers custom post type "Task", ...
  */
@@ -23,7 +27,7 @@ require_once 'tt_functions.php';
  * @todo make OO
  * Procedural code to make generating forms via CPTs and CTTs easier
  */
-require_once 'zm-forms.php';
+require_once 'wordpress-helper-functions.php';
 
 add_action( 'init', 'tt_init' );
 

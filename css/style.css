@@ -126,26 +126,23 @@ clear: both; float: left; padding: 5px; width: 97%;
 
 /*= Sidebar
 -------------------------------------------------------------- */
-.zm-tt-container aside { float: left; width: 100%; }
-.zm-tt-container aside ul { list-style-type: none; margin: 0; }
-.zm-tt-container aside li { margin-bottom: 3px; }
-.zm-tt-container aside ul .zm-base-title { color: #444; text-transform: capitalize; }
-.zm-tt-container aside ul li.zm-base-terms { color: #444; border-bottom: 2px solid #EFEFEF; font-weight: bold; font-size: 13px; margin-bottom: 25px; padding-bottom: 25px; }
-.zm-tt-container aside ul li.categories { color: #444; font-weight: bold; font-size: 13px; }
-.zm-tt-container aside ul li.categories ul li { font-size: 12px; font-weight: 300; }
-.zm-tt-container aside .categories a { color: #666; font-size: 12px; font-weight: 300; }
-.zm-tt-container aside .zm-base-count { border-radius: 4px; background: #ddd; color: #fff; float: right; font: bold 11px arial; margin: 0 0 0 10px; padding: 2px 3px; }
-.zm-tt-container aside .zm-base-terms { font-size: 12px; font-weight: 300; }
-.zm-tt-container aside .zm-base-terms a { color: #666; font-size: 12px; font-weight: 300; }
-.zm-tt-container aside .status a { font-weight: bold; }
-.zm-tt-container aside .status .zm-base-closed a { color: #D3D0D0; }
-.zm-tt-container aside .status .zm-base-open a { color: #B0B0E6; }
-.zm-tt-container aside .status .zm-base-aborted a { text-decoration: line-through; }
-.zm-tt-container aside .priority a { font-weight: bold; }
-.zm-tt-container aside .priority .zm-base-medium a { color: #FF9000; }
-.zm-tt-container aside .priority .zm-base-low a { color: #FFD200; }
-.zm-tt-container aside .priority .zm-base-high a { color: #FF0000; }
-.zm-tt-container aside .priority .zm-base-meigh a { color: #f7701d; }
+.zm-tt-container .zm-tt-sidebar-container { float: left; width: 100%; }
+.zm-tt-sidebar-container ul { list-style-type: none; margin: 0; }
+.zm-tt-sidebar-container li { margin-bottom: 3px; }
+.zm-tt-sidebar-container .zm-base-title { color: #444; text-transform: capitalize; }
+.zm-tt-sidebar-container ul { color: #444; border-bottom: 2px solid #EFEFEF; font-weight: bold; font-size: 13px; margin-bottom: 25px; padding-bottom: 25px; }
+.zm-tt-sidebar-container .zm-base-count { border-radius: 4px; background: #ddd; color: #fff; float: right; font: bold 11px arial; margin: 0 0 0 10px; padding: 2px 3px; }
+.zm-tt-sidebar-container .zm-base-terms { font-size: 12px; font-weight: 300; }
+.zm-tt-sidebar-container .zm-base-terms a { color: #666; font-size: 12px; font-weight: 300; }
+.zm-tt-sidebar-container .priority a { font-weight: bold; }
+.zm-tt-sidebar-container .status a { font-weight: bold; }
+.zm-tt-sidebar-container .zm-base-closed a { color: #D3D0D0; }
+.zm-tt-sidebar-container .zm-base-open a { color: #B0B0E6; }
+.zm-tt-sidebar-container .zm-base-aborted a { text-decoration: line-through; }
+.zm-tt-sidebar-container .zm-base-medium a { color: #FF9000; }
+.zm-tt-sidebar-container .zm-base-low a { color: #FFD200; }
+.zm-tt-sidebar-container .zm-base-high a { color: #FF0000; }
+.zm-tt-sidebar-container .zm-base-meigh a { color: #f7701d; }
 
 /*= Reset fixes
 -------------------------------------------------------------- */

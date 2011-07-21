@@ -33,9 +33,11 @@ function zm_base_get_the_term_list( $id = 0, $taxonomy=null, $before = '', $sep 
  * @helper zm_base_list_terms( $taxonomy ) This funtction will return a 'well' structured list of links for a given taxonomy 
  */
 function zm_base_list_terms( $taxonomy ) {
-
     $terms = get_terms( $taxonomy );
     $html = null;
+print '<pre>';
+print_r( $terms );
+print '</pre>';
 
     // @todo -- add support for rss link 
     foreach( $terms as $term ) {
