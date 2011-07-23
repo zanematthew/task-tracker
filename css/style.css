@@ -180,3 +180,6 @@ clear: both; float: left; padding: 5px; width: 97%;
 .zm-tt-form-container .button:last-child { margin-right: 0; }
     
 .zm-tt-form-container .button:hover.button { border-radius: 5px; border-color: #939393; border-style: solid; border-width: 1px; background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3); border-color: #939393; }
+
+.zm-base-resolved  { color: #67CA97; }
+.zm-base-resolved a { color: #67CA97; }
