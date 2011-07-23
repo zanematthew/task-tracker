@@ -3,7 +3,7 @@ pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px
 .meta { font-size: 11px; font-family: lucida grande; }
 
 .zm-tt-container .status-container { font-size: 12px; }
-.zm-tt-container .status-container a { border-radius: 3px; font-weight: normal; opacity: 0.75; padding: 5px 7px; }
+.zm-tt-container .status-container a { border-radius: 3px; font-weight: normal; opacity: 0.65; padding: 5px 7px; }
 .zm-tt-container .status-container a:hover { opacity: 1; }
 .zm-tt-container ..zm-base-status-aborted { background: #efeffd; box-shadow: 1px 1px 0 #C8C8FF; color: #c8c8ff; text-decoration: line-through; }
 .zm-tt-container a.zm-base-status-closed { background: #f0f0f0; box-shadow: 1px 1px 0 #d3d0d0; color: #d3d0d0; }
@@ -103,6 +103,8 @@ font: 300 15px/1.625 "Helvetica Neue",Helvetica,Arial,sans-serif;
 color: #888; 
 clear: both; float: left; padding: 5px; width: 97%; 
 }
+.zm-tt-form-container select:focus,
+.zm-tt-form-container select:hover,
 .zm-tt-form-container input:focus[type="text"],
 .zm-tt-form-container textarea:focus { border-color: #939393; box-shadow: 0 0 3px #939393; }
 .zm-tt-form-container select,
@@ -122,7 +124,7 @@ clear: both; float: left; padding: 5px; width: 97%;
 .zm-tt-form-container form p label,
 .zm-tt-form-container form p label .title,
 .zm-tt-form-container form p label option { color: #888; font-size: 12px; font-weight: normal; }
-.zm-tt-form-container form .title { color: #444; font-weight: bold; font-size: 14px; text-transform: capitalize; margin-bottom: 4px; }
+.zm-tt-form-container form .zm-base-title { color: #444; font-weight: bold; font-size: 14px; text-transform: capitalize; margin-bottom: 4px; }
 
 /*= Sidebar
 -------------------------------------------------------------- */
@@ -148,7 +150,7 @@ clear: both; float: left; padding: 5px; width: 97%;
 -------------------------------------------------------------- */
 .zm-tt-container { font: 300 12px/1.4em sans-serif; }
 .zm-tt-container a { border: 0; color: #00AECF; }
-.zm-tt-container a:hover { border: 0; color: #007586; }
+.zm-tt-container a:hover { border: 0; }
 
 .zm-tt-container table { border-collapse: separate; }
 .zm-tt-container { background: #FFF;

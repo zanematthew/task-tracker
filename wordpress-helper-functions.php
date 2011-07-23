@@ -300,7 +300,7 @@ function zm_base_build_radio( $taxonomy=null, $value='term_id' ) {
 
     /** @todo the below markup should be pulled out into a 'view' */ 
     ?>    
-    <fieldset class="zm-base-<?php echo $taxonomy; ?>-container"><legend class="title"><?php echo $taxonomy; ?></legend>
+    <fieldset class="zm-base-<?php echo $taxonomy; ?>-container"><legend class="zm-base-title"><?php echo $taxonomy; ?></legend>
     <?php foreach( $terms as $term ) : ?>
         <?php /** Some cryptic short hand true:false */ ?>
         <?php $current_term == $term->name ? $selected = 'checked=checked' : $selected = null; ?>
@@ -326,7 +326,7 @@ function zm_base_build_checkbox( $taxonomy=null, $value='term_id' ) {
 
     /** @todo the below markup should be pulled out into a 'view' */ 
     ?>    
-    <fieldset class="zm-base-<?php echo $taxonomy; ?>-container"><legend class="title"><?php echo $taxonomy; ?></legend>
+    <fieldset class="zm-base-<?php echo $taxonomy; ?>-container"><legend class="zm-base-title"><?php echo $taxonomy; ?></legend>
     <?php foreach( $terms as $term ) : ?>
         <?php /** Some cryptic short hand true:false */ ?>
         <?php $current_term == $term->name ? $selected = 'checked=checked' : $selected = null; ?>
