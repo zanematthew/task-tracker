@@ -35,7 +35,6 @@
                         </div>
                     </div>
                     <?php load_template( MY_PLUGIN_DIR . '/theme/task-update.php' ); ?>
-                    <?php comments_template( '', true ); ?>
                 <?php endwhile; ?>
             </div>
             </div>
