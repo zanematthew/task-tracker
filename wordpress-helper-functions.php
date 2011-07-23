@@ -276,8 +276,7 @@ function zm_base_build_options( $taxonomy=null, $value='term_id' ) {
 	    <?php foreach( $terms as $term ) : ?>
             <?php /** Some cryptic short hand true:false */ ?>
             <?php $current_term == $term->name ? $selected = 'selected=selected' : $selected = null; ?>
-            <optgroup label="my label" />
-            <option value="<?php echo $term->$value; ?>" my_term_id=<?php echo $term->term_id; ?> <?php echo $selected; ?>><?php echo $term->name; ?></option>              
+            <option value="<?php echo $term->$value; ?>" my_term_id=<?php echo $term->term_id; ?> <?php echo $selected; ?>><?php echo $term->name; ?></option>
 	    <?php endforeach; ?>
     </select>
     </fieldset>
