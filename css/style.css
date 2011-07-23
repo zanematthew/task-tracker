@@ -127,7 +127,7 @@ clear: both; float: left; padding: 5px; width: 97%;
 
 /*= Sidebar
 -------------------------------------------------------------- */
-.zm-tt-container .zm-tt-sidebar-container { float: left; width: 100%; }
+.zm-tt-container .zm-tt-sidebar-container { float: right; }
 .zm-tt-sidebar-container ul { list-style-type: none; margin: 0; }
 .zm-tt-sidebar-container li { margin-bottom: 3px; }
 .zm-tt-sidebar-container .zm-base-title { color: #444; text-transform: capitalize; }
