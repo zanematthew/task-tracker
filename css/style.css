@@ -54,7 +54,7 @@ pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px
 -------------------------------------------------------------- */
 .zm-tt-single-container h1 { font: normal 28px/1 sans-serif; color: #333; margin: 0 0 10px; }
 .zm-tt-single-container p { font-size: 14px; margin-bottom: 5px; }
-.zm-tt-single-container small { color: #d3d3d3; font: normal 11px/1 lucida grande; float: left; margin: 0 0 5px 0;}
+.zm-tt-single-container small { color: #d3d3d3; font: normal 11px/1 lucida grande; margin: 0 0 5px 0;}
 
 .zm-tt-single-container .nav-previous-container { float: left; margin: 10px 0 20px 0; width: 100%; }
 .zm-tt-single-container .nav-previous-container ul { list-style-type: none; margin: 0; }
@@ -104,7 +104,6 @@ color: #888;
 clear: both; float: left; padding: 5px; width: 97%; 
 }
 .zm-tt-form-container select:focus,
-.zm-tt-form-container select:hover,
 .zm-tt-form-container input:focus[type="text"],
 .zm-tt-form-container textarea:focus { border-color: #939393; box-shadow: 0 0 3px #939393; }
 .zm-tt-form-container select,

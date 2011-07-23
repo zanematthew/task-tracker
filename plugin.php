@@ -197,7 +197,7 @@ function tt_warning() {
 function project_wp_update_post( $post ) {
 
     $post_id = (int)$_POST['PostID'];
-//    $comment = $_POST['comment'];
+    $comment = $_POST['comment'];
 
     /** What's left is our taxonomies */
     unset( $_POST['action'] );
