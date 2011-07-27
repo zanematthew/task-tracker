@@ -28,7 +28,7 @@ function project_submit_task() {
 
     $author_ID = get_current_user_id();
 
-    if ( current_user_can( 'administrator' ) || current_usr_can( 'editor' ) ) {
+    if ( current_user_can( 'administrator' ) || current_user_can( 'editor' ) ) {
         $status = 'publish';
     } else {
         $status = 'pending';
@@ -44,6 +44,9 @@ function project_submit_task() {
 
     /** insert our post */
     $post_id = wp_insert_post( $post, true );
+
+    if ( is_wp_error( $post_id ) )
+        return;
 
     if ( $post_id )
         base_insert_terms( $post_id );

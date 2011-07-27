@@ -8,7 +8,9 @@
         <a href="javascript://" id="create_ticket" class="button">Create a Task</a>
     </div>
 <?php else : ?>
+    <div class="zm-tt-form-container">
     <a href="<?php echo wp_login_url(); ?>" title="Click to login and create a Task">Login</a> to create a Task
+    </div>
 <?php endif ?>
 </li>
 </ul>
