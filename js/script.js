@@ -61,11 +61,8 @@ console.log( msg );
 
     /** @todo needs to be part of class for dialog */
     $('#exit').live('click', function(){
-        $('#create_ticket_dialog').dialog('close');
-    
-        if ( $( '#post_title' ).val() == null ) {
-            location.reload( true );
-        }
+//        $('#create_ticket_dialog').dialog('close');
+        location.reload( true );
         return false;
     });
 
