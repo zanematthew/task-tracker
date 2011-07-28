@@ -295,13 +295,6 @@ function zm_base_build_radio( $taxonomy=null, $options=array() ) {
     extract( $defaults );
     extract( $options );
 
-//print $value;
-print $default;
-//print '<pre>';
-//print_r( $defaults );        
-//print_r( $options );
-//print '</pre>';
-
     $terms = zm_base_get_terms( $taxonomy );
     
     if ( !empty( $default ) )
@@ -309,11 +302,6 @@ print $default;
     else 
         $current_term = zm_base_current_term( $taxonomy );
         
-print '<pre>';
-print_r( $current_term );
-print '</pre>';
-//    $current_term = $default;
-
     /** @todo the below markup should be pulled out into a 'view' */ 
     ?>    
     <fieldset class="zm-base-<?php echo $taxonomy; ?>-container"><legend class="zm-base-title"><?php echo $taxonomy; ?></legend>
