@@ -11,48 +11,6 @@ function project_age() {
 }
 endif;
 
-function project_submit_task() {
-    unset( $_POST['action'] );
-    /** @todo error checking to come */
-    $type = $_POST['post_type'];
-    $title = $_POST['post_title'];
-    $content = $_POST['content'];
-    /** 
-     * We unset what we've used because everything left over is going to be used for our taxonomies
-     * We do this as opposed to hard coding taxonomies, because we might not know what they are called
-     */
-    unset( $_POST['post_title'] );
-    unset( $_POST['content'] );
-    unset( $_POST['post_author'] );
-    unset( $_POST['post_type'] );
-
-    $author_ID = get_current_user_id();
-
-    if ( current_user_can( 'administrator' ) || current_user_can( 'editor' ) ) {
-        $status = 'publish';
-    } else {
-        $status = 'pending';
-    }
-
-    $post = array(
-        'post_title' => $title,
-        'post_content' => $content,
-        'post_author' => $author_ID,
-        'post_type' => $type,
-        'post_status' => $status
-    );
-
-    /** insert our post */
-    $post_id = wp_insert_post( $post, true );
-
-    if ( is_wp_error( $post_id ) )
-        return;
-
-    if ( $post_id )
-        base_insert_terms( $post_id );
-
-    die();
-}
 
 function base_insert_terms( $post_id ) {
     /** insert terms */

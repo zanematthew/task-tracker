@@ -194,10 +194,55 @@ function tt_warning() {
 }
 
 
-function project_wp_update_post( $post ) {
+function project_submit_task() {
+            
+    unset( $_POST['action'] );
+    /** @todo error checking to come, just use fucking extract? */
+    $type = $_POST['post_type'];
+    $title = $_POST['post_title'];
+    $content = $_POST['content'];
 
-    if ( empty( $_POST['comment'] ) )
+    unset( $_POST['post_title'] );
+    unset( $_POST['content'] );
+    unset( $_POST['post_author'] );
+    unset( $_POST['post_type'] );
+
+    $author_ID = get_current_user_id();
+
+    if ( current_user_can( 'administrator' ) || current_user_can( 'editor' ) ) {
+        $status = 'publish';
+    } else {
+        $status = 'pending';
+    }
+
+    $post = array(
+        'post_title' => $title,
+        'post_content' => $content,
+        'post_author' => $author_ID,
+        'post_type' => $type,
+        'post_status' => $status
+    );
+
+    /** insert our post */
+    $post_id = wp_insert_post( $post, true );
+
+    if ( is_wp_error( $post_id ) )
         return;
+
+    if ( $post_id ) {
+        $taxonomies = $_POST;
+        foreach( $taxonomies as $taxonomy => $term ) {
+            if ( isset( $term ) ) {
+//                print 'inserting: ' . $post_id . ' term: ' . $term . ' tax: ' . $taxonomy . '<br />';
+                wp_set_post_terms( $post_id, $term, &$taxonomy );
+            }
+        }
+    }
+    die();
+}
+
+
+function project_wp_update_post( $post ) {
         
     $post_id = (int)$_POST['PostID'];
     $comment = $_POST['comment'];
@@ -213,7 +258,7 @@ function project_wp_update_post( $post ) {
     foreach( $taxonomies as $taxonomy => $term )
         wp_set_post_terms( $post_id, $term, &$taxonomy );
 
-    if ( isset( $comment ) ) {
+    if ( !empty( $comment ) ) {
         $current_user = wp_get_current_user();
         $time = current_time('mysql');
         $data = array(
