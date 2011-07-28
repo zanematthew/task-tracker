@@ -196,9 +196,9 @@ function tt_warning() {
 
 function project_wp_update_post( $post ) {
 
-print_r( $post );
-print_r( $_POST );
-
+    if ( empty( $_POST['comment'] ) )
+        return;
+        
     $post_id = (int)$_POST['PostID'];
     $comment = $_POST['comment'];
 
