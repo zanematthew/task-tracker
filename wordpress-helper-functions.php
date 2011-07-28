@@ -255,16 +255,9 @@ function zm_base_get_terms( $taxonomy ) {
  * @param mixed $value, the value to be used in the form field, can be term_id or term_slug
  */
 function zm_base_build_options( $taxonomy=null, $value='term_id' ) {
-            
+
     $terms = zm_base_get_terms( $taxonomy );
-    $tmp = get_the_terms( $post->ID, $taxonomy );
-    
-    if ( is_array( $tmp ) ) {
-        $tmp_index = array_keys( $tmp );
-        $current_term = $tmp[ $tmp_index[0]]->name;
-    } else {
-        $current_term = null;
-    }
+    $current_term = zm_base_current_term( $taxonomy );
 
     /** @todo the below markup should be pulled out into a 'view' */ 
     ?>
@@ -292,10 +285,34 @@ function zm_base_build_options( $taxonomy=null, $value='term_id' ) {
  * @param string $taxonomy
  * @param string $value, The value to be used in the 'name' field of the form
  */
-function zm_base_build_radio( $taxonomy=null, $value='term_id' ) {
+function zm_base_build_radio( $taxonomy=null, $options=array() ) {
+
+    // @todo need an array of "choices" like value => array( 'term_id', 'term_name' )
+    $defaults = array(
+        'default' => null,
+        'value' => 'term_id'
+    );
+    extract( $defaults );
+    extract( $options );
+
+//print $value;
+print $default;
+//print '<pre>';
+//print_r( $defaults );        
+//print_r( $options );
+//print '</pre>';
 
     $terms = zm_base_get_terms( $taxonomy );
-    $current_term = zm_base_current_term( $taxonomy );
+    
+    if ( !empty( $default ) )
+        $current_term = $default;
+    else 
+        $current_term = zm_base_current_term( $taxonomy );
+        
+print '<pre>';
+print_r( $current_term );
+print '</pre>';
+//    $current_term = $default;
 
     /** @todo the below markup should be pulled out into a 'view' */ 
     ?>    
@@ -304,7 +321,8 @@ function zm_base_build_radio( $taxonomy=null, $value='term_id' ) {
         <?php /** Some cryptic short hand true:false */ ?>
         <?php $current_term == $term->name ? $selected = 'checked=checked' : $selected = null; ?>
         <label for="<?php echo $term->$value; ?>">        
-        <input type="radio" value="<?php echo $term->$value; ?>" id="<?php echo $term->term_id; ?>" my_term_id="<?php echo $term->term_id; ?>" name="<?php echo $taxonomy; ?>" <?php echo $selected; ?> />
+        <input type="radio" value="<?php echo $term->$value; ?>" id="<?php echo $term->term_id; ?>" my_term_id="<?php echo $term->term_id; ?>" name="<?php echo $taxonomy; ?>"
+        <?php echo $selected; ?> />
         <?php echo $term->name; ?></label>
     <?php endforeach; ?>
     </fieldset>
