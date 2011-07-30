@@ -17,16 +17,12 @@ if ( is_admin() ) {
  * Author URI: http://zanematthew.com/
  * License: GP
  */
-
 define( 'MY_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . str_replace( basename( __FILE__ ), "", plugin_basename( __FILE__ ) ) );
 define( 'MY_PLUGIN_URL', WP_PLUGIN_URL . '/' . str_replace( basename( __FILE__ ), "", plugin_basename( __FILE__ ) ) );
 
 require_once 'tt_functions.php';
 
-/** 
- * @todo make OO
- * Procedural code to make generating forms via CPTs and CTTs easier
- */
+/** @todo make OO Procedural code to make generating forms via CPTs and CTTs easier */
 require_once 'wordpress-helper-functions.php';
 
 add_action( 'init', 'tt_init' );
@@ -37,6 +33,9 @@ register_activation_hook( __FILE__ , 'tt_activation' );
 // Registers: CPT, CTT, JS, CSS and adds the needed actions
 function tt_init() {
 // tt_activation();
+// $boo = current_user_can( 'publish_posts' );
+// var_dump( $boo );
+// die();
     register_cpt_task();
     register_taxonomy_assigned();
     register_taxonomy_priority();
@@ -195,12 +194,22 @@ function tt_warning() {
 
 
 function project_submit_task() {
+                                   
+    if ( !is_user_logged_in() )
+        return false;
             
+    if ( current_user_can( 'publish_posts' ) )
+        $status = 'publish';
+    else 
+        $status = 'pending';
+
+    check_ajax_referer( 'tt-ajax-forms', 'security' );        
+    
     unset( $_POST['action'] );
     /** @todo error checking to come, just use fucking extract? */
     $type = $_POST['post_type'];
     $title = $_POST['post_title'];
-    $content = $_POST['content'];
+    $content = esc_attr_e( $_POST['content'] );
 
     unset( $_POST['post_title'] );
     unset( $_POST['content'] );
@@ -208,12 +217,6 @@ function project_submit_task() {
     unset( $_POST['post_type'] );
 
     $author_ID = get_current_user_id();
-
-    if ( current_user_can( 'administrator' ) || current_user_can( 'editor' ) ) {
-        $status = 'publish';
-    } else {
-        $status = 'pending';
-    }
 
     $post = array(
         'post_title' => $title,
@@ -240,7 +243,6 @@ function project_submit_task() {
     }
     die();
 }
-
 
 function project_wp_update_post( $post ) {
         
