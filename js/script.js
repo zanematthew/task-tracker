@@ -88,12 +88,7 @@ console.log( msg );
             url: ajaxurl,
             data: "action=project_submit_task&" + $(this).serialize(), 
             success: function( msg ){
-                /** on success project_submit_task returns Task ID */
-                if ( isNaN( msg ) ) {
-                    //alert('Failed: ' + msg );                            
-                } else {
-                    clear_form();                    
-                }
+                clear_form();                    
             }
         });    
     });
