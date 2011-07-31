@@ -1,7 +1,7 @@
 <?php
 
 if ( is_admin() ) {
-//    ini_set('display_errors', 0;
+//    ini_set('display_errors', 0);
 //    error_reporting( E_ALL );
 }
 /**
@@ -64,10 +64,11 @@ function tt_init() {
     add_action( 'wp_footer', 'project_create_ticket_div' );
 
     // Our functions to be ran during an ajax request
-    add_action( 'wp_ajax_base', 'base' );
+    add_action( 'wp_ajax_base', 'base' ); // Load our create task form
     add_action( 'wp_ajax_project_submit_task', 'project_submit_task' );
-    add_action( 'admin_notices', 'tt_warning' );
     add_action( 'wp_ajax_project_wp_update_post', 'project_wp_update_post' );
+    add_action( 'admin_notices', 'tt_warning' );
+
 }
 
 // zm_base_ajaxurl() Print our ajax url in the footer 
@@ -192,9 +193,11 @@ function tt_warning() {
     print '</div>';
 }
 
-
 function project_submit_task() {
-                                   
+    check_ajax_referer( 'tt-ajax-forms', 'security' );        
+
+// print_r( $_POST );
+
     if ( !is_user_logged_in() )
         return false;
             
@@ -202,14 +205,15 @@ function project_submit_task() {
         $status = 'publish';
     else 
         $status = 'pending';
-
-    check_ajax_referer( 'tt-ajax-forms', 'security' );        
     
     unset( $_POST['action'] );
-    /** @todo error checking to come, just use fucking extract? */
+    
+    foreach( $_POST as $k => $v )
+        $_POST[$k] = esc_attr( $v );
+    
     $type = $_POST['post_type'];
     $title = $_POST['post_title'];
-    $content = esc_attr_e( $_POST['content'] );
+    $content = $_POST['content'];
 
     unset( $_POST['post_title'] );
     unset( $_POST['content'] );
@@ -232,7 +236,7 @@ function project_submit_task() {
     if ( is_wp_error( $post_id ) )
         return;
 
-    if ( $post_id ) {
+    if ( !empty( $post_id ) ) {
         $taxonomies = $_POST;
         foreach( $taxonomies as $taxonomy => $term ) {
             if ( isset( $term ) ) {
