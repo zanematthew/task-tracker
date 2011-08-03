@@ -2,6 +2,7 @@
 
 if ( is_admin() ) {
 //    ini_set('display_errors', 0);
+// changes
 //    error_reporting( E_ALL );
 }
 /**
@@ -89,7 +90,7 @@ function tt_template() {
     wp_enqueue_script( 'tt-script' );
     wp_enqueue_script( 'jquery-ui-effects' );
     wp_enqueue_style( 'wp-jquery-ui-dialog' );
-
+// changes
     switch( isset( $post_type ) ) {
         // Are we viewing a taxonomy page?
         case ( is_tax( $my_taxonomies ) ):
