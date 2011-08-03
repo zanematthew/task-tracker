@@ -35,7 +35,7 @@ console.log( msg );
         autoOpen: false,
         minWidth: 600,
         maxWidth: 800,
-        minHeight: 660,
+        minHeight: 630,
         title: 'Create a <em>Task</em>',
         modal: true
     });
