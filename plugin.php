@@ -1,5 +1,5 @@
 <?php
-
+// more change
 if ( is_admin() ) {
 //    ini_set('display_errors', 0);
 //    error_reporting( E_ALL );
@@ -8,6 +8,7 @@ if ( is_admin() ) {
  * Registers custom post type "Task", ...
  */
 
+// more changes
 /**
  * Plugin Name: Task Tracker
  * Plugin URI: --
