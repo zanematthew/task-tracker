@@ -5,7 +5,7 @@
 <li class="create-ticket">
 <?php if ( is_user_logged_in() ) : ?>
     <div class="zm-tt-form-container">
-        <a href="javascript://" id="create_ticket" class="button">Create a Task</a>
+        <a href="javascript://" id="create_ticket" tt_template="theme/task-create.php" class="button">Create a Task</a>
     </div>
 <?php else : ?>
     <div class="zm-tt-form-container">

@@ -34,7 +34,12 @@ function project_create_ticket_div() {
  * load our template 
  * uh, why not make it ajaxy? :D
  */
-function base(){
-    load_template( MY_PLUGIN_DIR . '/theme/task-create.php' );
+function tt_load_template( ) {
+    $template = $_POST['template'];
+
+    if ( $template == null )
+        die( 'please enter a template' );
+        
+    load_template( MY_PLUGIN_DIR . $template );
     die();
 }

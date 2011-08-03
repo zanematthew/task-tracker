@@ -1,5 +1,4 @@
 jQuery(document).ready(function( $ ){
-
     $('tr', this).hover(function(){
         $(this).find('.utility-container').addClass( 'zm-base-visible').removeClass( 'zm-base-hidden');
     }, function(){
@@ -45,8 +44,11 @@ console.log( msg );
     $('#create_ticket').click(function(){
         $('#create_ticket_dialog').dialog('open');        
         
+        template = $(this).attr( 'tt_template' );
+        
         data = { 
-            action: "base"
+            action: "tt_load_template",
+            template: template
             };
 
         $.ajax({
@@ -58,11 +60,27 @@ console.log( msg );
             }
         });
     });   
-
+    
     /** @todo needs to be part of class for dialog */
     $('#exit').live('click', function(){
-//        $('#create_ticket_dialog').dialog('close');
-        location.reload( true );
+        $('#tt_main_target').fadeOut();
+
+        template = $(this).attr( 'tt_template' );
+
+        data = { 
+            action: "tt_load_template",
+            template: template
+            };
+
+        $.ajax({
+            type: "POST",
+            url: ajaxurl,
+            data: data,
+            success: function( msg ){
+                $('#create_ticket_dialog').dialog('close');        
+                $('#tt_main_target').fadeIn().html( msg );
+            }
+        });
         return false;
     });
 
