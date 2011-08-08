@@ -43,3 +43,36 @@ function tt_load_template( ) {
     load_template( MY_PLUGIN_DIR . $template );
     die();
 }
+
+/**
+ * Prints an json dataset of Tasks
+ */
+function tt_json_feed() {
+    global $wp_query, $post;
+    $args = array(
+       'post_type' => 'task',
+       'post_status' => 'publish'
+    );
+    
+    $my_query = null;
+    $my_query = new WP_Query( $args );
+    $tasks = array();
+    $taxonomies = array( 'status', 'priority', 'project', 'phase', 'assigned' );
+    
+    while ( $my_query->have_posts() ) : $my_query->the_post();
+    
+        $tasks[$post->ID] = array(
+            "id" => $post->ID,
+            "title" => $post->post_title
+            );
+    
+        foreach ( $taxonomies as $taxonomy ) {
+            $term = wp_get_object_terms( $post->ID, $taxonomy );
+            $term = ( $term ) ? $term[0]->slug : 'none' ;
+    
+            $tasks[$post->ID][$taxonomy] = $term;
+        }
+    
+    endwhile;
+    print '<script type="text/javascript">var _tasks = ' . json_encode( $tasks ) . '</script>';
+}
