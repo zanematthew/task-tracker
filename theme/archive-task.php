@@ -30,18 +30,22 @@
                                  </div>
                             </td>
                             <td>
-                                <div class="milestone-container"><?php print zm_base_get_the_term_list($post->ID, 'milestone'); ?></div>
+<div class="milestone-container zm-base-item">
+<?php print zm_base_get_the_term_list( array( 'link' => false, 'post_id' => $post->ID, 'taxonomy' => 'milestone' )); ?>
+</div>
                             </td>
                             <td>
                             <?php project_age(); ?>
                             </td>
                             <td>
-                                <div class="status-container"><?php print zm_base_get_the_term_list($post->ID, 'status'); ?></div>
+      <div class="status-container"><?php print zm_base_get_the_term_list( $post->ID, 'status' ); ?></div>
                             </td>
                             <td>
-                                <div class="priority-container"><?php print zm_base_get_the_term_list( $post->ID, 'priority'); ?></div>
+<div class="priority-container zm-base-item">
+<?php print zm_base_get_the_term_list( array( 'link' => false, 'post_id' => $post->ID, 'taxonomy' => 'priority' ) ); ?>
+</div>
                             <td>
-                                <div class="project-container"><?php print zm_base_get_the_term_list($post->ID, 'project'); ?></div>
+<div class="project-container zm-base-item"><?php print zm_base_get_the_term_list( array( 'link' => false, 'post_id' => $post->ID, 'taxonomy' => 'project' ) ); ?></div>
                             </td>
                         </tr>
                     <?php endwhile; ?>
