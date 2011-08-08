@@ -22,7 +22,7 @@
                     <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
                         <tr <?php post_class('result')?>>
                             <td><?php $x++; ?>
-                                 <strong class="title"><a href="<?php the_permalink(); ?>" title="Link to project: <?php the_title(); ?>"><?php the_title(); ?></a></strong>
+                                 <strong class="title"><a href="<?php the_permalink(); ?>" title="Link to project: <?php the_title(); ?>">#<?php the_ID(); ?> <?php the_title(); ?></a></strong>
                                  <span class="comment-count"><?php comments_number(' '); ?></span>
                                  <div class="utility-container zm-base-hidden">
                                      <?php edit_post_link('Admin Edit', '' , ' |'); ?>
@@ -46,19 +46,19 @@
                         </tr>
                     <?php endwhile; ?>
                 </table>
-
                     <?php // load_template( MY_PLUGIN_DIR . 'theme/archive-table.php' ); ?>
                 </div>
             </div>
             <div class="grid_3 omega zm-tt-sidebar-container">
-                <?php zm_base_list_terms( 'status' ); ?>
-                <?php zm_base_list_terms( 'priority' ); ?>
-                <?php zm_base_list_terms( 'project' ); ?>
-                <?php zm_base_list_terms( 'phase' ); ?>
-                <?php zm_base_list_terms( 'assigned' ); ?>
+                <?php zm_base_list_terms( array('taxonomy' => 'status', 'link' => false ) ); ?>
+                <?php zm_base_list_terms( array('taxonomy' => 'priority', 'link' => false ) ); ?>
+                <?php zm_base_list_terms( array('taxonomy' => 'project', 'link' => false ) ); ?>
+                <?php zm_base_list_terms( array('taxonomy' => 'phase', 'link' => false ) ); ?>
+                <?php zm_base_list_terms( array('taxonomy' => 'assigned', 'link' => false ) ); ?>
             </div>
             </div>
     </div>
 </div>
 </div>
+<?php tt_json_feed(); ?>
 <?php get_footer(); ?>

@@ -1,3 +1,4 @@
+<div class="zm-tt-archive-container">
 <?php 
 global $wp_query; 
     $args = array(
@@ -8,7 +9,7 @@ global $wp_query;
     $my_query = null;
     $my_query = new WP_Query( $args );
 ?>
-               <table>
+               <table id="archive_table">
                     <thead>
                         <tr>
                             <th id="title"><span>Title</span></th>
@@ -47,3 +48,5 @@ global $wp_query;
                         </tr>
                     <?php endwhile; ?>
                 </table>
+<?php tt_json_feed(); ?>
+</div>

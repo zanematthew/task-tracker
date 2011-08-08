@@ -6,7 +6,6 @@ jQuery(document).ready(function( $ ){
     });
 
     $('#update_task', this).submit(function(){
-console.log('updating..');    
         /** 
          * @todo 1 this should be part of a global ajax setup, where when the request is made
          * ALL form fields are DISABLED! and enabled on success
@@ -21,7 +20,6 @@ console.log('updating..');
             data: "action=project_wp_update_post&" + $(this).serialize(), 
             success: function( msg ){
                 /** @todo see 1 */
-console.log( msg );
                 $('select', this).attr('disabled',' ');
                 location.reload( true );
             }
@@ -63,25 +61,29 @@ console.log( msg );
     
     /** @todo needs to be part of class for dialog */
     $('#exit').live('click', function(){
-        $('#tt_main_target').fadeOut();
-
-        template = $(this).attr( 'tt_template' );
-
-        data = { 
-            action: "tt_load_template",
-            template: template
-            };
-
-        $.ajax({
-            type: "POST",
-            url: ajaxurl,
-            data: data,
-            success: function( msg ){
-                $('#create_ticket_dialog').dialog('close');        
-                $('#tt_main_target').fadeIn().html( msg );
-            }
-        });
-        return false;
+        if ( $( '#tt_update_container' ).length != 1 ) {
+            $('#tt_main_target').fadeOut();
+    
+            template = $(this).attr( 'tt_template' );
+    
+            data = { 
+                action: "tt_load_template",
+                template: template
+                };
+    
+            $.ajax({
+                type: "POST",
+                url: ajaxurl,
+                data: data,
+                success: function( msg ){
+                    $('#create_ticket_dialog').dialog('close');        
+                    $('#tt_main_target').fadeIn().html( msg );
+                }
+            });
+            return false;
+        } else {
+            $('#create_ticket_dialog').dialog('close');                
+        }
     });
 
     /** clear our form */
@@ -109,5 +111,38 @@ console.log( msg );
                 clear_form();                    
             }
         });    
+    });
+
+    $(".zm-base-item a").live("click", function() {
+        if ( $( '#archive_table' ).length == 0 ) {
+
+            $('#tt_main_target').fadeOut();
+            template = "theme/archive-table.php";
+            data = { 
+                action: "tt_load_template",
+                template: template
+            };
+
+           $.ajax({
+                type: "POST",
+                url: ajaxurl,
+                data: data,
+                success: function( msg ){
+                    $('#tt_main_target').fadeIn().html( msg );
+                }
+            });
+            return false;
+        }
+    
+        var search_on = $( this ).attr( 'rel' );
+        search_on = search_on.split( "_" );
+    
+        for( var i in _tasks ) {
+            if ( _tasks[i][search_on[0]] == search_on[1] ) {
+                $( ".post-" + i ).fadeIn();
+            } else {
+                $( ".post-" + i ).fadeOut();
+            }
+        }
     });
 });

@@ -1,5 +1,5 @@
 <?php if ( is_user_logged_in() ) : ?>
-<div class="zm-tt-form-container task-update-container">
+<div class="zm-tt-form-container task-update-container" id="tt_update_container">
         <a name="update"></a>
         <h3>Update Task <em><?php the_title(); ?></em></h3>
         <form action="javascript://" method="POST" id="update_task">

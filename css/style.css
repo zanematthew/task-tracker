@@ -157,7 +157,7 @@ clear: both; float: left; padding: 5px; width: 97%;
 .zm-tt-container a { border: 0; color: #00AECF; }
 .zm-tt-container a:hover { border: 0; }
 
-.zm-tt-container table { border-collapse: separate; }
+.zm-tt-container table { border-collapse: separate; float: left; }
 .zm-tt-container { background: #FFF;
     border: 1px solid #DDD;
     border-radius: 5px 5px 5px 5px;
@@ -199,3 +199,5 @@ clear: both; float: left; padding: 5px; width: 97%;
 
 .zm-base-resolved  { color: #67CA97; }
 .zm-base-resolved a { color: #67CA97; }
+
+.zm-tt-single-container .zm-tt-archive-container table .hentry { float: none; }

@@ -74,5 +74,6 @@ function tt_json_feed() {
         }
     
     endwhile;
+// print_r( $tasks );
     print '<script type="text/javascript">var _tasks = ' . json_encode( $tasks ) . '</script>';
 }
