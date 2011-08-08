@@ -1,13 +1,15 @@
-<?php get_header(); ?>
-<?php get_template_part( 'header-container', 'single' ); ?>
-<div class="container_12">
-    <div class="grid_12">
-<div class="zm-tt-container zm-tt-archive-container">
-        <div class="main-container">
-            <div class="grid_9 alpha">
-                <?php load_template( MY_PLUGIN_DIR . 'theme/navigation.php' ); ?>   
-                <div id="tt_main_target">
-               <table>
+<div class="zm-tt-archive-container">
+<?php 
+global $wp_query; 
+    $args = array(
+      'post_type' => 'task',
+      'post_status' => 'publish'
+    );
+
+    $my_query = null;
+    $my_query = new WP_Query( $args );
+?>
+               <table id="archive_table">
                     <thead>
                         <tr>
                             <th id="title"><span>Title</span></th>
@@ -19,10 +21,10 @@
                         </tr>
                     </thead>
                     <?php $x = 0; ?>
-                    <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
+                    <?php if ( $my_query->have_posts() ) while ( $my_query->have_posts() ) : $my_query->the_post(); ?>
                         <tr <?php post_class('result')?>>
                             <td><?php $x++; ?>
-                                 <strong class="title"><a href="<?php the_permalink(); ?>" title="Link to project: <?php the_title(); ?>">#<?php the_ID(); ?> <?php the_title(); ?></a></strong>
+                                 <strong class="title"><a href="<?php the_permalink(); ?>" title="Link to project: <?php the_title(); ?>"><?php the_title(); ?></a></strong>
                                  <span class="comment-count"><?php comments_number(' '); ?></span>
                                  <div class="utility-container zm-base-hidden">
                                      <?php edit_post_link('Admin Edit', '' , ' |'); ?>
@@ -46,19 +48,5 @@
                         </tr>
                     <?php endwhile; ?>
                 </table>
-                    <?php // load_template( MY_PLUGIN_DIR . 'theme/archive-table.php' ); ?>
-                </div>
-            </div>
-            <div class="grid_3 omega zm-tt-sidebar-container">
-                <?php zm_base_list_terms( array('taxonomy' => 'status', 'link' => false ) ); ?>
-                <?php zm_base_list_terms( array('taxonomy' => 'priority', 'link' => false ) ); ?>
-                <?php zm_base_list_terms( array('taxonomy' => 'project', 'link' => false ) ); ?>
-                <?php zm_base_list_terms( array('taxonomy' => 'phase', 'link' => false ) ); ?>
-                <?php zm_base_list_terms( array('taxonomy' => 'assigned', 'link' => false ) ); ?>
-            </div>
-            </div>
-    </div>
-</div>
-</div>
 <?php tt_json_feed(); ?>
-<?php get_footer(); ?>
+</div>

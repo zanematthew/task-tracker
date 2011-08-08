@@ -66,7 +66,7 @@ function tt_init() {
     add_action( 'wp_footer', 'project_create_ticket_div' );
 
     // Our functions to be ran during an ajax request
-    add_action( 'wp_ajax_base', 'base' ); // Load our create task form
+    add_action( 'wp_ajax_tt_load_template', 'tt_load_template' ); // Load our create task form
     add_action( 'wp_ajax_project_submit_task', 'project_submit_task' );
     add_action( 'wp_ajax_project_wp_update_post', 'project_wp_update_post' );
     add_action( 'admin_notices', 'tt_warning' );

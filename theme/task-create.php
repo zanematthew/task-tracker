@@ -21,7 +21,7 @@
             <div id="publishing-action">
                 <input id="pt_publish" class="button" type="submit" value="Save" accesskey="p" name="save" />
                 <a href="javascript://" id="clear" class="button">Clear</a>
-                <a href="javascript://" id="exit" class="button">Exit</a>
+                <a href="javascript://" id="exit" tt_template="theme/archive-table.php" class="button">Exit</a>
             </div>
         </div>
     </form>
