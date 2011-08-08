@@ -170,24 +170,33 @@ function zm_base_get_the_term_list( $id = 0, $taxonomy=null, $before = '', $sep 
  */
 function zm_base_list_terms( $taxonomy ) {
 
+    if ( is_array( $taxonomy ) )
+        extract( $taxonomy );
+    
     $terms = get_terms( $taxonomy );
     $html = null;
     $i = 0;
     $len = count( $terms );
     $first = null;
     $last = null;
+    $my_link = null;
 
     /** @todo -- add support for rss link */
     foreach( $terms as $term ) {
+
+        if ( isset( $link ) )
+            $my_link = 'javascript://';
+        else
+            $my_link = get_term_link( $term->slug, $term->taxonomy );
         
         // First
-        if ( $i == 0 ) {
+        if ( $i == 0 )
             $html .= '<li class="zm-base-title ' . $term->taxonomy . '">' . $term->taxonomy .'</li>';    
-        }
-        
+                        
+        $title = sprintf( __( "View all %s"), $term->name );
+
         $html .= '<li class="zm-base-item zm-base-' . $term->slug . '">';
-        $html .= '<a href="' . get_term_link( $term->slug, $term->taxonomy ) . '" title="' . sprintf(
-        __( "View all %s"), $term->name ) . '" '. '>' . $term->name . '</a>';
+        $html .= '<a href="' . $my_link . '" title="'.$title.'" rel="' . $term->taxonomy . '_' . $term->slug . '">' . $term->name . '</a>';
         $html .= '<span class="zm-base-count">' . $term->count . '</span>';
         $html .= '</li>';
         $i++;
