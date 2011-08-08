@@ -44,12 +44,6 @@
                 <?php zm_base_list_terms( array('taxonomy' => 'project', 'link' => false ) ); ?>
                 <?php zm_base_list_terms( array('taxonomy' => 'phase', 'link' => false ) ); ?>
                 <?php zm_base_list_terms( array('taxonomy' => 'assigned', 'link' => false ) ); ?>
-
-                        <?php zm_base_list_terms( 'status' ); ?>
-                        <?php zm_base_list_terms( 'priority' ); ?>
-                        <?php zm_base_list_terms( 'project' ); ?>
-                        <?php zm_base_list_terms( 'phase' ); ?>
-                        <?php zm_base_list_terms( 'assigned' ); ?>
             </div>
         </div>
 </div>
