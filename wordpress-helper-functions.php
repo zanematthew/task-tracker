@@ -140,27 +140,37 @@ function zm_base_image_src( $size=null ) {
  */
 function zm_base_get_the_term_list( $id = 0, $taxonomy=null, $before = '', $sep = ', ', $after = '' ) {
 
-    $terms = get_the_terms( $id, $taxonomy, $before, $sep, $after);
+    if ( is_array( $id ) )
+        extract( $id );
+
+// @todo wtf
+$id = 0;
+
+// @todo mo wtf
+//    $terms = get_the_terms( $id, $taxonomy, $before, $sep, $after);
+
+    $terms = get_the_terms( $id, $taxonomy );
+    $my_link = null;
 
     if ( is_wp_error( $terms ) || empty( $terms ) ) {
         print '&mdash;';
         return;
     } else {
-    foreach ( $terms as $term ) {
-        $link = get_term_link( $term, $taxonomy );
+        foreach ( $terms as $term ) {
+            if ( isset( $link ) )
+                $my_link = 'javascript://';
+            else
+                $my_link = get_term_link( $term, $taxonomy );
 
-        if ( is_wp_error( $link ) )
-            return $link;
+            if ( is_wp_error( $my_link ) )
+                return $my_link;
 
-        $term_links[] = '<a href="' . $link . '" rel="tag" class="zm-base-'. $taxonomy.'-'.$term->slug .'">' . $term->name . '</a>';
-    }
-
-    $term_links = apply_filters( "term_links-$taxonomy", $term_links );
-
-    return $before . join( $sep, $term_links ) . $after;
+            $term_links[] = '<a href="' . $my_link . '" rel="'.$term->taxonomy . '_' . $term->slug.'" class="zm-base-'. $taxonomy.'-'.$term->slug .'">' . $term->name . '</a>';
+        }
+        $term_links = apply_filters( "term_links-$taxonomy", $term_links );
+        return $before . join( $sep, $term_links ) . $after;
     }
 }
-
 
 /** 
  * This funtction will return a 'well' structured list of links for a given taxonomy 
