@@ -22,7 +22,9 @@
                             <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
                                 <tr <?php post_class('result')?>>
                                     <td><?php $x++; ?>
-                                         <strong class="title"><a href="<?php the_permalink(); ?>" title="Link to project: <?php the_title(); ?>">#<?php the_ID(); ?> <?php the_title(); ?></a></strong>
+                                         #<?php the_ID(); ?>                                    
+                                         <strong class="title">
+                                         <a href="<?php the_permalink(); ?>" title="Link to project: <?php the_title(); ?>"><?php the_title(); ?></a></strong>
                                          <span class="comment-count"><?php comments_number(' '); ?></span>
                                          <div class="utility-container zm-base-hidden">
                                              <?php edit_post_link('Admin Edit', '' , ' |'); ?>

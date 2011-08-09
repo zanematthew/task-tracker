@@ -49,6 +49,6 @@
 </div>
     </div>
 </div>
-<?php tt_json_feed(); ?>
+<?php // tt_json_feed(); ?>
 <?php get_footer(); ?>
 

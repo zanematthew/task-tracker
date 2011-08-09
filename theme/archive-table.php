@@ -1,4 +1,4 @@
-<div class="zm-tt-archive-container">
+<div class="zm-tt-archive-container" >
 <?php 
 global $wp_query; 
     $args = array(
@@ -9,7 +9,7 @@ global $wp_query;
     $my_query = null;
     $my_query = new WP_Query( $args );
 ?>
-               <table id="archive_table">
+                       <table id="archive_table">
                             <thead>
                                 <tr>
                                     <th id="title"><span>Title</span></th>
@@ -21,7 +21,7 @@ global $wp_query;
                                 </tr>
                             </thead>
                             <?php $x = 0; ?>
-                            <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
+                            <?php if ( $my_query->have_posts() ) while ( $my_query->have_posts() ) : $my_query->the_post(); ?>
                                 <tr <?php post_class('result')?>>
                                     <td><?php $x++; ?>
                                          <strong class="title"><a href="<?php the_permalink(); ?>" title="Link to project: <?php the_title(); ?>">#<?php the_ID(); ?> <?php the_title(); ?></a></strong>
