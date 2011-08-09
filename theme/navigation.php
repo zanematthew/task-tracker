@@ -9,7 +9,7 @@
     </div>
 <?php else : ?>
     <div class="zm-tt-form-container">
-    <a href="<?php echo wp_login_url(); ?>" title="Click to login and create a Task">Login</a> to create a Task
+    <a href="<?php echo wp_login_url(); ?>" class="login" title="Click to login and create a Task">Login to create a Task</a>
     </div>
 <?php endif ?>
 </li>
