@@ -201,3 +201,5 @@ clear: both; float: left; padding: 5px; width: 97%;
 .zm-base-resolved a { color: #67CA97; }
 
 .zm-tt-single-container .zm-tt-archive-container table .hentry { float: none; }
+
+a.login { font-size: 12px; margin: 10px 10px 0 0; display: inline-block; }
