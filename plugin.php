@@ -67,10 +67,12 @@ function tt_init() {
 
     // Our functions to be ran during an ajax request
     add_action( 'wp_ajax_tt_load_template', 'tt_load_template' ); // Load our create task form
-    add_action( 'wp_ajax_project_submit_task', 'project_submit_task' );
-    add_action( 'wp_ajax_project_wp_update_post', 'project_wp_update_post' );
-    add_action( 'admin_notices', 'tt_warning' );
+    add_action( 'wp_ajax_nopriv_tt_load_template', 'tt_load_template' ); // For users that are not logged in.
 
+    add_action( 'wp_ajax_project_submit_task', 'project_submit_task' );
+    add_action( 'wp_ajax_project_wp_update_post', 'project_wp_update_post' );    
+
+    add_action( 'admin_notices', 'tt_warning' );
 }
 
 // zm_base_ajaxurl() Print our ajax url in the footer 
