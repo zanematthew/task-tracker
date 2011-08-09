@@ -115,7 +115,7 @@ jQuery(document).ready(function( $ ){
 
     $(".zm-base-item a").live("click", function() {
 
-        if ( $( '#archive_table' ).length != 0 ) {
+        if ( !$( '#archive_table' ).length ) {
             $('#tt_main_target').fadeOut();
             template = "theme/archive-table.php";
             data = { 
