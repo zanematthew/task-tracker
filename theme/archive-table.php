@@ -37,7 +37,7 @@ global $wp_query;
                                         </div>
                                     </td>
                                     <td>
-                                        <?php project_age(); ?>
+                                        <?php tt_task_age(); ?>
                                     </td>
                                     <td>
                                         <div class="status-container">
