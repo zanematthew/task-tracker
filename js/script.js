@@ -6,20 +6,12 @@ jQuery(document).ready(function( $ ){
     });
 
     $('#update_task', this).submit(function(){
-        /** 
-         * @todo 1 this should be part of a global ajax setup, where when the request is made
-         * ALL form fields are DISABLED! and enabled on success
-         */
-//        $('select', this).attr('disabled','disabled');
-
-        /** @props petemilkman.com for being right */
-        /** ajax post request */
+        /** @props petemilkman.com for being right, concatinate data */
         $.ajax({
             type: "POST",
             url: ajaxurl,
             data: "action=project_wp_update_post&" + $(this).serialize(), 
             success: function( msg ){
-                /** @todo see 1 */
                 $('select', this).attr('disabled',' ');
                 location.reload( true );
             }
@@ -37,7 +29,7 @@ jQuery(document).ready(function( $ ){
         modal: true
     });
 
-    /** Show dialog box and get create ticket form */
+    /** Load dialog box and get create ticket form */
     /** @todo needs to be part of class for dialog */
     $('#create_ticket').click(function(){
         $('#create_ticket_dialog').dialog('open');        
@@ -93,7 +85,6 @@ jQuery(document).ready(function( $ ){
             .val('')
             .removeAttr('checked')
             .removeAttr('selected');   
-        /** @todo why does this blink like 8 fucking times? is it doing it based on number of 'clears' */
         $('.ui-dialog').effect("highlight", {}, 3000);            
     }
 
