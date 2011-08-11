@@ -15,17 +15,6 @@ function tt_task_age() {
 endif;
 
 
-function base_insert_terms( $post_id ) {
-    /** insert terms */
-    /** @todo should only do the insert if they change? */
-    $taxonomies = $_POST;
-    foreach( $taxonomies as $taxonomy => $term ) {
-        if ( isset( $term ) ) {
-            wp_set_post_terms( $post_id, $term, &$taxonomy );
-        }
-    }
-}
-
 function project_create_ticket_div() {
     $html = '<div id="create_ticket_dialog" class="dialog-container">';
     $html .= '<div id="create_ticket_target" style="display: none;">hi</div>';
