@@ -1,15 +1,13 @@
 <?php
-// more change
 if ( is_admin() ) {
 //    ini_set('display_errors', 0);
-// changes
 //    error_reporting( E_ALL );
 }
+
 /**
  * Registers custom post type "Task", ...
  */
 
-// more changes
 /**
  * Plugin Name: Task Tracker
  * Plugin URI: --
@@ -29,7 +27,6 @@ require_once 'wordpress-helper-functions.php';
 
 add_action( 'init', 'tt_init' );
 
-// Inserts sample task, terms and assigns sample task to given terms
 register_activation_hook( __FILE__ , 'tt_activation' );
 
 // Registers: CPT, CTT, JS, CSS and adds the needed actions
@@ -65,7 +62,7 @@ function tt_init() {
     wp_register_style(  'tt-styles', MY_PLUGIN_URL . 'css/style.css', $dependencies_css, 'all' );
 
     add_action( 'wp_head', 'zm_base_ajaxurl' ); 
-    add_action( 'wp_footer', 'project_create_ticket_div' );
+    add_action( 'wp_footer', 'tt_create_task_div' );
 
     // Our functions to be ran during an ajax request
     add_action( 'wp_ajax_tt_load_template', 'tt_load_template' ); // Load our create task form
@@ -75,6 +72,27 @@ function tt_init() {
     add_action( 'wp_ajax_project_wp_update_post', 'project_wp_update_post' );    
 
     add_action( 'admin_notices', 'tt_warning' );
+}
+
+function tt_create_task_div() {
+    $html = '<div id="create_ticket_dialog" class="dialog-container">';
+    $html .= '<div id="create_ticket_target" style="display: none;">hi</div>';
+    $html .= '</div>';
+    print $html;
+}
+                
+/** 
+ * load our template 
+ * uh, why not make it ajaxy? :D
+ */
+function tt_load_template( ) {
+    $template = $_POST['template'];
+
+    if ( $template == null )
+        die( 'please enter a template' );
+
+    load_template( MY_PLUGIN_DIR . $template );
+    die();
 }
 
 // zm_base_ajaxurl() Print our ajax url in the footer 
@@ -95,7 +113,7 @@ function tt_template() {
     wp_enqueue_script( 'tt-script' );
     wp_enqueue_script( 'jquery-ui-effects' );
     wp_enqueue_style( 'wp-jquery-ui-dialog' );
-// changes
+
     switch( isset( $post_type ) ) {
         // Are we viewing a taxonomy page?
         case ( is_tax( $my_taxonomies ) ):
@@ -103,18 +121,6 @@ function tt_template() {
 
             if ( in_array( $wp_query->query_vars['taxonomy'], $my_taxonomies ) )
                 load_template( MY_PLUGIN_DIR . 'theme/archive-' . $my_post_type . '.php' );
-
-// Check if any ctt template file exists
-/*
-            foreach ( $my_taxonomies as $my_taxonomy ) {
-                // Determine the correct template for the taxonomy we are currently viewing
-                if ( $my_taxonomy == $wp_query->query_vars['taxonomy'] ) {
-                    if ( file_exists( STYLESHEETPATH . 'taxonomy-' . $my_taxonomy . '.php' ) ) return;
-                    if ( file_exists( STYLESHEETPATH . 'taxonomy-' . $my_taxonomy . '.php' ) ) return;
-                    load_template( MY_PLUGIN_DIR . 'theme/taxonomy-' . $my_taxonomy . '.php' );
-                }
-            }
-*/            
             exit;
             break;
 
@@ -202,8 +208,6 @@ function tt_warning() {
 function project_submit_task() {
     check_ajax_referer( 'tt-ajax-forms', 'security' );        
 
-// print_r( $_POST );
-
     if ( !is_user_logged_in() )
         return false;
             
@@ -245,10 +249,8 @@ function project_submit_task() {
     if ( !empty( $post_id ) ) {
         $taxonomies = $_POST;
         foreach( $taxonomies as $taxonomy => $term ) {
-            if ( isset( $term ) ) {
-//                print 'inserting: ' . $post_id . ' term: ' . $term . ' tax: ' . $taxonomy . '<br />';
+            if ( isset( $term ) )
                 wp_set_post_terms( $post_id, $term, &$taxonomy );
-            }
         }
     }
     die();

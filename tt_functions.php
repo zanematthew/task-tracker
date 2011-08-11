@@ -14,14 +14,6 @@ function tt_task_age() {
 }
 endif;
 
-
-function project_create_ticket_div() {
-    $html = '<div id="create_ticket_dialog" class="dialog-container">';
-    $html .= '<div id="create_ticket_target" style="display: none;">hi</div>';
-    $html .= '</div>';
-    print $html;
-}
-
 /** 
  * load our template 
  * uh, why not make it ajaxy? :D
