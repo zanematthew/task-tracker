@@ -44,6 +44,8 @@ function tt_init() {
     register_taxonomy_phase();
     register_taxonomy_project();
     register_taxonomy_status();     
+    register_taxonomy_ETA();     
+// @todo type tax
     
     $dependencies_js = array(
         'jquery',
@@ -316,7 +318,7 @@ function register_cpt_task() {
         'hierarchical' => true,
         'description' => 'Photo galleries',
         'supports' => array( 'title', 'editor', 'thumbnail', 'comments', 'revisions' ),
-        'taxonomies' => array( 'assigned', 'phase', 'priority', 'project', 'status', 'type' ),
+        'taxonomies' => array( 'assigned', 'phase', 'priority', 'project', 'status', 'type', 'ETA' ),
         'public' => true,
         'show_ui' => true,
         'show_in_menu' => true,
@@ -501,4 +503,37 @@ function register_taxonomy_status() {
     );
 
     register_taxonomy( 'status', array('task'), $args );
+}
+
+function register_taxonomy_ETA() {
+    $labels = array(
+        'name' => _x( 'ETA', 'ETA' ),
+        'singular_name' => _x( 'ETA', 'ETA' ),
+        'search_items' => _x( 'Search ETA', 'ETA' ),
+        'popular_items' => _x( 'Popular ETA', 'ETA' ),
+        'all_items' => _x( 'All ETA', 'ETA' ),
+        'parent_item' => _x( 'Parent ETA', 'ETA' ),
+        'parent_item_colon' => _x( 'Parent ETA:', 'ETA' ),
+        'edit_item' => _x( 'Edit ETA', 'ETA' ),
+        'update_item' => _x( 'Update ETA', 'ETA' ),
+        'add_new_item' => _x( 'Add New ETA', 'ETA' ),
+        'new_item_name' => _x( 'New ETA Name', 'ETA' ),
+        'separate_items_with_commas' => _x( 'Separate ETA with commas', 'ETA' ),
+        'add_or_remove_items' => _x( 'Add or remove ETA', 'ETA' ),
+        'choose_from_most_used' => _x( 'Choose from the most used ETA', 'ETA' ),
+        'menu_name' => _x( 'ETA', 'ETA' )
+    );
+        
+    $args = array(
+        'labels' => $labels,
+        'public' => true,
+        'show_in_nav_menus' => true,
+        'show_ui' => true,
+        'show_tagcloud' => true,
+        'hierarchical' => true,
+        'rewrite' => true,
+        'query_var' => true
+    );
+
+    register_taxonomy( 'ETA', array('task'), $args );
 }
