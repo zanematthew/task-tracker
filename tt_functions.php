@@ -1,5 +1,11 @@
 <?php
-
+/**
+ *
+ * This file should only contain procedural code that is NOT part of any Hook/Action.
+ * Please place Hook/Action funcitons in the apropiate file.
+ *
+ */
+ 
 /**
  * Prints the "age" of a Task from the current date to when it was posted
  */
@@ -14,34 +20,28 @@ function tt_task_age() {
 }
 endif;
 
-/** 
- * load our template 
- * uh, why not make it ajaxy? :D
- */
-function tt_load_template( ) {
-    $template = $_POST['template'];
-
-    if ( $template == null )
-        die( 'please enter a template' );
-        
-    load_template( MY_PLUGIN_DIR . $template );
-    die();
-}
-
 /**
- * Prints an json dataset of Tasks
+ * Prints a json dataset of Tasks
  */
+if ( ! function_exists( 'tt_json_feed' ) ) :
 function tt_json_feed() {
     global $wp_query, $post;
+    $my_query = null;
+    $tasks = array();
+    
     $args = array(
        'post_type' => 'task',
        'post_status' => 'publish'
     );
-    
-    $my_query = null;
+        
     $my_query = new WP_Query( $args );
-    $tasks = array();
-    $taxonomies = array( 'status', 'priority', 'project', 'phase', 'assigned' );
+    
+    $taxonomies = array( 'status', 
+                         'priority', 
+                         'project', 
+                         'phase', 
+                         'assigned' 
+                         );
     
     while ( $my_query->have_posts() ) : $my_query->the_post();
     
@@ -53,10 +53,10 @@ function tt_json_feed() {
         foreach ( $taxonomies as $taxonomy ) {
             $term = wp_get_object_terms( $post->ID, $taxonomy );
             $term = ( $term ) ? $term[0]->slug : 'none' ;
-    
             $tasks[$post->ID][$taxonomy] = $term;
         }
     
     endwhile;
     print '<script type="text/javascript">var _tasks = ' . json_encode( $tasks ) . '</script>';
 }
+endif;
