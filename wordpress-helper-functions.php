@@ -335,6 +335,40 @@ function zm_base_build_radio( $taxonomy=null, $options=array() ) {
     </fieldset>
 <?php }
 
+
+function zm_base_build_input( $taxonomy=null ) {
+
+    if ( is_array( $taxonomy ) )
+        extract( $taxonomy );
+
+    // @todo need to merge 
+    $defaults = array(
+        'value' => 'term_id'
+    );
+    extract( $defaults );
+
+    $terms = zm_base_get_terms( $taxonomy );
+    
+    if ( !empty( $default ) )
+        $current_term = $default;
+    else 
+        $current_term = zm_base_current_term( $taxonomy );
+        
+    /** @todo the below markup should be pulled out into a 'view' */ 
+    ?>    
+    <fieldset class="zm-base-<?php echo $taxonomy; ?>-container"><legend class="zm-base-title"><?php echo $taxonomy; ?></legend>
+    <?php foreach( $terms as $term ) : ?>
+        <?php /** Some cryptic short hand true:false */ ?>
+        <?php $current_term == $term->name ? $selected = 'checked=checked' : $selected = null; ?>
+        <label for="<?php echo $term->$value; ?>">        
+        <input type="<?php echo $type; ?>" value="<?php echo $term->$value; ?>" id="<?php echo $term->term_id; ?>" my_term_id="<?php echo $term->term_id; ?>" name="<?php echo $taxonomy; 
+?>"
+        <?php echo $selected; ?> />
+        <?php echo $term->name; ?></label>
+    <?php endforeach; ?>
+    </fieldset>
+<?php }
+
 /**
  * Build radio buttons of Terms based on a given Taxonomy.
  *
@@ -360,7 +394,6 @@ function zm_base_build_checkbox( $taxonomy=null, $value='term_id' ) {
     <?php endforeach; ?>
     </fieldset>
 <?php }
-
 
 /**
  * Retrive the next post type modified from TwentyTen

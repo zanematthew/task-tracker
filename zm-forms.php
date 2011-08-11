@@ -179,24 +179,4 @@ function zm_base_build_checkbox( $taxonomy=null, $value='term_id' ) {
 <?php }
 
 
-/**
- * @helper zm_base_build_checkbox( $taxonomy=null, $value='term_id' ) Build radio buttons of Terms based on a given Taxonomy.
- * @param value = the value to be use in the form, can be term_id or term_slug
- */
-function zm_base_build_input( $taxonomy=null, $value='term_id', $type=null ) {
-    if ( empty( $type ) )
-        die( 'we need a type'); 
-        
-    $terms = zm_base_get_terms( $taxonomy );
-    $current_term = zm_base_current_term( $taxonomy );
-    ?>    
-    <fieldset class="zm-base-<?php echo $taxonomy; ?>-container"><legend class="title"><?php echo $taxonomy; ?></legend>
-    <?php foreach( $terms as $term ) : ?>
-        <?php /** Some cryptic short hand true:false */ ?>
-        <?php $current_term == $term->name ? $selected = 'checked=checked' : $selected = null; ?>
-        <label for="<?php echo $term->$value; ?>">        
-        <input type="<?php echo $type; ?>" value="<?php echo $term->$value; ?>" id="<?php echo $term->term_id; ?>" my_term_id="<?php echo $term->term_id; ?>" name="<?php echo $taxonomy; ?>[]" <?php echo $selected; ?> />
-        <?php echo $term->name; ?></label>
-    <?php endforeach; ?>
-    </fieldset>
-<?php }
+function wtf() { ?> booo <?php }

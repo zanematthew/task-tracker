@@ -10,9 +10,9 @@
         <p>
             <label>Description</label>
             <textarea name="content"></textarea>
-        </p>
+        </p>        
         <?php zm_base_build_radio('status', array( 'default' => 'New' )); ?>
-        <?php zm_base_build_radio('priority', array( 'default' => 'Medium' ) ); ?>
+        <?php zm_base_build_input( array( 'taxonomy'=> 'priority', 'type'=> 'radio', 'default' => 'Low' ) ); ?>
         <?php zm_base_build_options('project'); ?>
         <?php zm_base_build_options('phase'); ?>
         <?php zm_base_build_options('assigned'); ?>
