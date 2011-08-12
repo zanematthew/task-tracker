@@ -1,10 +1,7 @@
 <?php get_header(); ?>
 <?php get_template_part( 'header-container', 'single' ); ?>
-<div class="container_12">
-    <div class="grid_12">
         <div class="zm-tt-container zm-tt-archive-container">
             <div class="main-container">
-                <div class="grid_9 alpha">
                     <?php load_template( MY_PLUGIN_DIR . 'theme/navigation.php' ); ?>   
                     <div id="tt_main_target">
                        <table id="archive_table">
@@ -57,18 +54,16 @@
                             <?php endwhile; ?>
                         </table>
                         <?php // load_template( MY_PLUGIN_DIR . 'theme/archive-table.php' ); ?>
-                    </div>
                 </div>
-                <div class="grid_3 omega zm-tt-sidebar-container">
+            </div>
+
+                <div class="zm-tt-sidebar-container">
                     <?php zm_base_list_terms( array('taxonomy' => 'status', 'link' => false ) ); ?>
                     <?php zm_base_list_terms( array('taxonomy' => 'priority', 'link' => false ) ); ?>
                     <?php zm_base_list_terms( array('taxonomy' => 'project', 'link' => false ) ); ?>
                     <?php zm_base_list_terms( array('taxonomy' => 'phase', 'link' => false ) ); ?>
                     <?php zm_base_list_terms( array('taxonomy' => 'assigned', 'link' => false ) ); ?>
                 </div>
-            </div>
         </div>
-    </div>
-</div>
 <?php tt_json_feed(); ?>
 <?php get_footer(); ?>

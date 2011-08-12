@@ -51,8 +51,7 @@ function tt_init() {
     );
 
     $dependencies_css = array( 
-        'wp-jquery-ui-dialog',
-        'tt-960-grid'
+        'wp-jquery-ui-dialog'
      );
 
     wp_register_script( 'tt-script', MY_PLUGIN_URL .'js/script.js', $dependencies_js, '1.0' );

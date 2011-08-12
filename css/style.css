@@ -158,13 +158,16 @@ clear: both; float: left; padding: 5px; width: 97%;
 .zm-tt-container a:hover { border: 0; }
 
 .zm-tt-container table { border-collapse: separate; float: left; }
-.zm-tt-container { background: #FFF;
+.zm-tt-container { }
+.tt-glue {
+background: #FFF;
     border: 1px solid #DDD;
     border-radius: 5px 5px 5px 5px;
     box-shadow: 2px 2px 4px #F3F3F3 inset;
     float: left;
     padding: 10px;
-    width: 100%;
+    width: 98%;
+    margin: 0 10px 20px 0;
 }
 
 .zm-tt-form-container .button,
@@ -172,6 +175,9 @@ clear: both; float: left; padding: 5px; width: 97%;
 .zm-tt-form-container .button { 
     background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3); 
     background: -webkit-linear-gradient(top , #F9F9F9, #E3E3E3); 
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f9f9f9), color-stop(100%, #e3e3e3)); /* Safari 4+, Chrome 2+ */  
+    background: linear-gradient( #f9f9f9, #e3e3e3); /* the standard */  
+        
     -o-transition: border-top-color 0.218s,border-right-color 0.218s,border-bottom-color 0.218s,border-left-color .218s;
     -moz-transition: border-top-color 0.218s,border-right-color 0.218s,border-bottom-color 0.218s,border-left-color .218s;
     -webkit-transition: border-top-color 0.218s,border-right-color 0.218s,border-bottom-color 0.218s,border-left-color .218s;
@@ -203,3 +209,8 @@ clear: both; float: left; padding: 5px; width: 97%;
 .zm-tt-single-container .zm-tt-archive-container table .hentry { float: none; }
 
 a.login { font-size: 12px; margin: 10px 10px 0 0; display: inline-block; }
+
+.zm-tt-container { margin: 0 auto; width: 960px; }
+.main-container { float: left; width: 700px; margin-right: 10px; }
+.zm-tt-sidebar-container { float: right; width: 220px; margin-left: 10px; }
+.zm-tt-archive-container .main-container { }
