@@ -213,4 +213,5 @@ a.login { font-size: 12px; margin: 10px 10px 0 0; display: inline-block; }
 .zm-tt-container { margin: 0 auto; width: 960px; }
 .main-container { float: left; width: 700px; margin-right: 10px; }
 .zm-tt-sidebar-container { float: right; width: 220px; margin-left: 10px; }
-.zm-tt-archive-container .main-container { }
+
+.zm-tt-form-container #filter_task_form .form-wrapper { padding: 15px 0 35px 5px; }

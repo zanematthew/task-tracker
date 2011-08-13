@@ -136,4 +136,46 @@ jQuery(document).ready(function( $ ){
             }
         }
     });
+    
+    $('#filter_handle', this).click(function(){    
+        $('#tt_filter_target').toggle( "slow", function(){    
+            template = "theme/navigation-filter.php";
+            data = {
+                action: "tt_load_template",
+                template: template
+            };
+           
+            $.ajax({
+                type: "POST",
+                url: ajaxurl,
+                data: data,
+                success: function( msg ){
+                    $('#tt_filter_target').fadeIn().html( msg );
+                }
+            });            
+        });        
+    });    
+
+    $( '#tt_filter_target select' ).live( 'change', function(){   
+        var selectedValue = $( 'option:selected', this).val();
+        var selectedTerm = $( 'option:selected', this).attr( 'my_term' );
+        var selectedTax = $( 'option:selected', this).attr( 'my_taxonomy' );
+
+        console.log( selectedValue + ' ' + selectedTerm );
+
+var search_on = [];
+search_on[0] = selectedTax;
+search_on[1] = selectedTerm;
+
+console.log( search_on );
+        for( var i in _tasks ) {
+            if ( _tasks[i][search_on[0]] == search_on[1] ) {
+        console.log( selectedValue + ' ' + selectedTerm );
+                $( ".post-" + i ).fadeIn();
+            } else {
+        console.log( selectedValue + ' ' + selectedTerm );
+                $( ".post-" + i ).fadeOut();
+            }
+        }        
+    });
 });
