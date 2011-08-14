@@ -56,5 +56,6 @@ global $wp_query;
                                 </tr>
                             <?php endwhile; ?>
                         </table>
+                            <div id="no_results">nothing here move on..</div>
 <?php tt_json_feed(); ?>
 </div>

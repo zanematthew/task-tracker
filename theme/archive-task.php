@@ -54,6 +54,7 @@
                             <?php endwhile; ?>
                         </table>
                         <?php // load_template( MY_PLUGIN_DIR . 'theme/archive-table.php' ); ?>
+<div id="no_results" style="display: none;">nothing here move on..</div>                        
                 </div>
             </div>
 

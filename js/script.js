@@ -158,8 +158,26 @@ console.log( _tasks );
         });        
     });    
 
+    
     $( '#tt_filter_target select' ).live( 'change', function() {   
-        $( "#archive_table tr." + $(this).val() ).fadeIn();
-        $( "#archive_table tbody tr" ).not("." + $(this).val() ).fadeOut();
+        var searchClass = '';     
+        $( "#filter_task_form select" ).each(function() { 
+            if( $( this ).val() != "" ) 
+                searchClass += "." + $(this).val(); 
+        }); 
+        
+        if ( searchClass != '' ) {
+            
+            if( $("#archive_table_tr" + searchClass).length ) { 
+                $("#no_results").fadeOut(); 
+            } else { 
+                $("#no_results").fadeIn(); 
+            }
+            
+            $( "#archive_table tbody tr" + searchClass ).fadeIn();                
+            $( "#archive_table tbody tr" ).not(searchClass).fadeOut(); 
+        } else {
+            $( "#archive_table tbody tr" ).fadeIn();            
+        } 
     });
 });

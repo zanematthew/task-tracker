@@ -4,8 +4,8 @@
         <div class="form-wrapper">
             <input type="hidden" value="task" name="post_type" />
             <?php zm_base_build_options( array( 'taxonomy' => 'status', 'prepend' => 'status-' ) ); ?>
-            <?php zm_base_build_options( 'priority' ); ?>
-            <?php zm_base_build_options( 'project' ); ?>
+            <?php zm_base_build_options( array( 'taxonomy' => 'priority', 'prepend' => 'priority-' ) ); ?>
+            <?php zm_base_build_options( array( 'taxonomy' => 'project', 'prepend' => 'project-' ) ); ?>
         </div>
     </form>
 </div>
