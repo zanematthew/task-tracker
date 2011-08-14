@@ -1,5 +1,4 @@
 jQuery(document).ready(function( $ ){
-console.log( _tasks );
 
     $('tr', this).hover(function(){
         $(this).find('.utility-container').addClass( 'zm-base-visible').removeClass( 'zm-base-hidden');
