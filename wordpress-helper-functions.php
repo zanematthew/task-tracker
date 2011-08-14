@@ -274,7 +274,14 @@ function zm_base_get_terms( $taxonomy ) {
  * @param mixed $value, the value to be used in the form field, can be term_id or term_slug
  */
 function zm_base_build_options( $taxonomy=null, $value='term_id' ) {
+    
+    if ( is_array( $taxonomy ) )
+        extract( $taxonomy );
 
+    // white list
+    if ( empty( $prepend ) )
+        $prepend = null; 
+        
     $terms = zm_base_get_terms( $taxonomy );
     $current_term = zm_base_current_term( $taxonomy );
 
@@ -283,12 +290,12 @@ function zm_base_build_options( $taxonomy=null, $value='term_id' ) {
 	<?php if ( $terms ) : ?>
     <fieldset class="zm-base-<?php echo $taxonomy; ?>-container <?php echo $taxonomy; ?>-container">
     <legend class="zm-base-title"><?php echo $taxonomy; ?></legend>	
-	<select name="<?php echo $taxonomy; ?>">
+	<select name="<?php echo $taxonomy; ?>" id="select_<?php echo $taxonomy; ?>">
         <option value="">-- Choose a <?php echo $taxonomy; ?> --</option>              
 	    <?php foreach( $terms as $term ) : ?>
             <?php /** Some cryptic short hand true:false */ ?>
             <?php $current_term == $term->name ? $selected = 'selected=selected' : $selected = null; ?>
-            <option value="<?php echo $term->$value; ?>" my_taxonomy=<?php echo $taxonomy; ?> my_term=<?php echo $term->slug; ?> my_term_id=<?php echo $term->term_id; ?> <?php echo $selected; ?>><?php echo $term->name; ?></option>
+            <option value="<?php echo $prepend; ?><?php echo $term->$value; ?>" class="taxonomy-<?php echo $taxonomy; ?> term-<?php echo $term->slug; ?> <?php echo $taxonomy; ?>-<?php echo $term->term_id; ?>" <?php echo $selected; ?>><?php echo $term->name; ?></option>
 	    <?php endforeach; ?>
     </select>
     </fieldset>

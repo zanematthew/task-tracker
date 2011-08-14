@@ -1,4 +1,6 @@
 jQuery(document).ready(function( $ ){
+console.log( _tasks );
+
     $('tr', this).hover(function(){
         $(this).find('.utility-container').addClass( 'zm-base-visible').removeClass( 'zm-base-hidden');
     }, function(){
@@ -136,7 +138,7 @@ jQuery(document).ready(function( $ ){
             }
         }
     });
-    
+        
     $('#filter_handle', this).click(function(){    
         $('#tt_filter_target').toggle( "slow", function(){    
             template = "theme/navigation-filter.php";
@@ -156,26 +158,8 @@ jQuery(document).ready(function( $ ){
         });        
     });    
 
-    $( '#tt_filter_target select' ).live( 'change', function(){   
-        var selectedValue = $( 'option:selected', this).val();
-        var selectedTerm = $( 'option:selected', this).attr( 'my_term' );
-        var selectedTax = $( 'option:selected', this).attr( 'my_taxonomy' );
-
-        console.log( selectedValue + ' ' + selectedTerm );
-
-var search_on = [];
-search_on[0] = selectedTax;
-search_on[1] = selectedTerm;
-
-console.log( search_on );
-        for( var i in _tasks ) {
-            if ( _tasks[i][search_on[0]] == search_on[1] ) {
-        console.log( selectedValue + ' ' + selectedTerm );
-                $( ".post-" + i ).fadeIn();
-            } else {
-        console.log( selectedValue + ' ' + selectedTerm );
-                $( ".post-" + i ).fadeOut();
-            }
-        }        
+    $( '#tt_filter_target select' ).live( 'change', function() {   
+        $( "#archive_table tr." + $(this).val() ).fadeIn();
+        $( "#archive_table tbody tr" ).not("." + $(this).val() ).fadeOut();
     });
 });

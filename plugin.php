@@ -71,7 +71,23 @@ function tt_init() {
     add_action( 'wp_ajax_project_wp_update_post', 'project_wp_update_post' );    
 
     add_action( 'admin_notices', 'tt_warning' );
+
+	add_filter('post_class', 'taxonomyIDClass' );
+
 }
+
+// add category nicenames in body and post class
+	function taxonomyIDClass($classes) {
+	    global $post;
+	    $taxonomy = array();
+	    $taxonomies = array( 'status', 'project', 'priority' );
+	    
+	    foreach( $taxonomies as $taxonomy ) {	   	    
+    	    foreach( ( get_the_terms( $post->ID, $taxonomy ) ) as $term )
+	            $classes[] = $taxonomy . '-' . $term->term_id;
+	    }
+        return $classes;	    
+	}
 
 function tt_create_task_div() {
     $html = '<div id="create_ticket_dialog" class="dialog-container">';
