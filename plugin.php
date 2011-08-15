@@ -54,11 +54,10 @@ function tt_init() {
         'wp-jquery-ui-dialog'
      );
 
-    wp_register_script( 'tt-script', MY_PLUGIN_URL .'js/script.js', $dependencies_js, '1.0' );
-    wp_register_script( 'jquery-ui-effects', MY_PLUGIN_URL . 'js/jquery-ui-1.8.13.effects.min.js', $dependencies_js, '1.8.13' );
+    wp_register_script( 'tt-script', MY_PLUGIN_URL .'theme/js/script.js', $dependencies_js, '1.0' );
+    wp_register_script( 'jquery-ui-effects', MY_PLUGIN_URL . 'theme/js/jquery-ui-1.8.13.effects.min.js', $dependencies_js, '1.8.13' );
 
-    wp_register_style(  'tt-960-grid', MY_PLUGIN_URL . 'css/960.css', '', 'all' );
-    wp_register_style(  'tt-styles', MY_PLUGIN_URL . 'css/style.css', $dependencies_css, 'all' );
+    wp_register_style(  'tt-styles', MY_PLUGIN_URL . 'theme/css/style.css', $dependencies_css, 'all' );
 
     add_action( 'wp_head', 'zm_base_ajaxurl' ); 
     add_action( 'wp_footer', 'tt_create_task_div' );
@@ -99,7 +98,17 @@ function tt_create_task_div() {
     $html .= '</div>';
     print $html;
 }
-                
+
+function tt_debug( $message=null ) {
+    $debug = debug_backtrace();
+    $html = null;
+    print '<pre>Message: ' . $message . '<br />File: ' . $debug[0]["file"]. '<br />line: ' . $debug[0]["line"] . '</pre>';
+    print '<pre>';
+    debug_print_backtrace();
+    print '</pre>';
+    die();
+}   
+             
 /** 
  * load our template 
  * uh, why not make it ajaxy? :D
@@ -107,8 +116,8 @@ function tt_create_task_div() {
 function tt_load_template( ) {
     $template = $_POST['template'];
 
-    if ( $template == null )
-        die( 'please enter a template' );
+    if ( $template == null ) 
+        tt_debug( 'Yo, you need a fucking template!');
 
     load_template( MY_PLUGIN_DIR . $template );
     die();
