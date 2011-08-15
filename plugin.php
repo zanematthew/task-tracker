@@ -76,15 +76,16 @@ function tt_init() {
 
 }
 
-// add category nicenames in body and post class
 	function taxonomyIDClass($classes) {
 	    global $post;
-	    $taxonomy = array();
 	    $taxonomies = array( 'status', 'project', 'priority' );
-	    
-	    foreach( $taxonomies as $taxonomy ) {	   	    
-    	    foreach( ( get_the_terms( $post->ID, $taxonomy ) ) as $term )
-	            $classes[] = $taxonomy . '-' . $term->term_id;
+
+	    foreach( $taxonomies as $taxonomy ) {	   	 
+	        $terms = get_the_terms( $post->ID, $taxonomy );
+	        if ( $terms ) {
+        	    foreach( $terms as $term )
+	                $classes[] = $taxonomy . '-' . $term->term_id;
+	        }
 	    }
         return $classes;	    
 	}
