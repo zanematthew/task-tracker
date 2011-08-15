@@ -1,0 +1,195 @@
+jQuery(document).ready(function( $ ){
+$.ajaxSetup({
+    type: "POST",
+    url: ajaxurl
+});
+
+$('.tt_loading').ajaxStart(function(){
+    $( this ).fadeIn();
+});
+    $('tr', this).hover(function(){
+        $(this).find('.utility-container').addClass( 'zm-base-visible').removeClass( 'zm-base-hidden');
+    }, function(){
+        $(this).find('.utility-container').addClass( 'zm-base-hidden wtf').removeClass( 'zm-base-visible');
+    });
+
+    $('#update_task', this).submit(function(){
+        /** @props petemilkman.com for being right, concatinate data */
+        $.ajax({
+            data: "action=project_wp_update_post&" + $(this).serialize(), 
+            success: function( msg ){
+                $('select', this).attr('disabled',' ');
+                location.reload( true );
+            }
+        });    
+    }); // End 'update'
+    
+    /** Setup our dialog for create a ticket */
+    /** @todo needs to be part of class for dialog */
+    $('#create_ticket_dialog').dialog({ 
+        autoOpen: false,
+        minWidth: 600,
+        maxWidth: 800,
+        minHeight: 630,
+        title: 'Create a <em>Task</em>',
+        modal: true
+    });
+
+    /** Load dialog box and get create ticket form */
+    /** @todo needs to be part of class for dialog */
+    $('#create_ticket').click(function(){
+        $('#create_ticket_dialog').dialog('open');        
+        
+        template = $(this).attr( 'tt_template' );
+        
+        data = { 
+            action: "tt_load_template",
+            template: template
+            };
+
+        $.ajax({
+            data: data,
+            success: function( msg ){
+                $('#create_ticket_target').fadeIn().html( msg );
+            }
+        });
+    });   
+    
+    /** @todo needs to be part of class for dialog */
+    $('#exit').live('click', function(){
+        if ( $( '#tt_update_container' ).length != 1 ) {
+            $('#tt_main_target').fadeOut();
+    
+            template = $(this).attr( 'tt_template' );
+    
+            data = { 
+                action: "tt_load_template",
+                template: template
+                };
+    
+            $.ajax({
+                data: data,
+                success: function( msg ){
+                    $('#create_ticket_dialog').dialog('close');        
+                    $('#tt_main_target').fadeIn().html( msg );
+                }
+            });
+            return false;
+        } else {
+            $('#create_ticket_dialog').dialog('close');                
+        }
+    });
+
+    /** clear our form */
+    function clear_form() {
+        $(':input','#create_task_form')
+            .not(':button, :submit, :reset, :hidden')
+            .val('')
+            .removeAttr('checked')
+            .removeAttr('selected');   
+        $('.ui-dialog').effect("highlight", {}, 3000);            
+    }
+
+    $('#clear').live('click', function(){
+        clear_form();
+    });
+
+    /** @todo needs to be part of class for dialog */
+    $('#create_task_form', this).live('submit', function(){
+        $.ajax({
+            data: "action=project_submit_task&" + $(this).serialize(), 
+            success: function( msg ){
+                clear_form();                    
+            }
+        });    
+    });
+
+    $(".zm-base-item a").live("click", function() {
+
+        if ( !$( '#archive_table' ).length ) {
+            $('#tt_main_target').fadeOut();
+            template = "theme/archive-table.php";
+            data = { 
+                action: "tt_load_template",
+                template: template
+            };
+
+           $.ajax({
+                data: data,
+                success: function( msg ){
+                    $('#tt_main_target').fadeIn().html( msg );
+                }
+            });
+            return false;
+        }
+    
+        var search_on = $( this ).attr( 'rel' );
+        search_on = search_on.split( "_" );
+    
+        for( var i in _tasks ) {
+            if ( _tasks[i][search_on[0]] == search_on[1] ) {
+                $( ".post-" + i ).fadeIn();
+            } else {
+                $( ".post-" + i ).fadeOut();
+            }
+        }
+    });
+        
+    $('#filter_handle', this).click(function(){    
+        $('#tt_filter_target').toggle( "slow", function(){    
+            template = "theme/navigation-filter.php";
+            data = {
+                action: "tt_load_template",
+                template: template
+            };
+           
+            $.ajax({
+                data: data,
+                success: function( msg ){
+                    $('#tt_filter_target').fadeIn().html( msg );
+                }
+            });            
+        });        
+    });    
+
+    
+    $( '#tt_filter_target select' ).live( 'change', function() {   
+        var searchClass = '';     
+        $( "#filter_task_form select" ).each(function() { 
+            if( $( this ).val() != "" ) 
+                searchClass += "." + $(this).val(); 
+        }); 
+        
+        if ( searchClass != '' ) {
+            
+            if( $("#archive_table_tr" + searchClass).length ) { 
+                $("#no_results").fadeOut(); 
+            } else { 
+                $("#no_results").fadeIn(); 
+            }
+            
+            $( "#archive_table tbody tr" + searchClass ).fadeIn();                
+            $( "#archive_table tbody tr" ).not(searchClass).fadeOut(); 
+        } else {
+            $( "#archive_table tbody tr" ).fadeIn();            
+        } 
+    });
+
+    $( window ).load(function(){
+        if ( $('.sample').length ) {
+            template = $( '.sample' ).attr('tt_template');
+            data = { 
+                action: "tt_load_template",
+                template: template
+            };
+
+           $.ajax({
+                data: data,
+                success: function( msg ){
+                    $('#tt_main_target').fadeIn().html( msg );
+                }
+            });
+            return false;
+        }
+    });
+});
