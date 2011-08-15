@@ -158,9 +158,8 @@ clear: both; float: left; padding: 5px; width: 97%;
 .zm-tt-container a:hover { border: 0; }
 
 .zm-tt-container table { border-collapse: separate; float: left; }
-.zm-tt-container { }
 .tt-glue {
-background: #FFF;
+    background: #FFF;
     border: 1px solid #DDD;
     border-radius: 5px 5px 5px 5px;
     box-shadow: 2px 2px 4px #F3F3F3 inset;

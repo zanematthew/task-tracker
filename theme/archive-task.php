@@ -1,6 +1,7 @@
 <?php get_header(); ?>
 <?php get_template_part( 'header-container', 'single' ); ?>
         <div class="zm-tt-container zm-tt-archive-container">
+<div class="tt-glue">
             <div class="main-container">
                     <?php load_template( MY_PLUGIN_DIR . 'theme/navigation.php' ); ?>   
                     <div id="tt_main_target">
@@ -66,5 +67,6 @@
                     <?php zm_base_list_terms( array('taxonomy' => 'assigned', 'link' => false ) ); ?>
                 </div>
         </div>
+</div>
 <?php tt_json_feed(); ?>
 <?php get_footer(); ?>
