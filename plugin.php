@@ -72,23 +72,26 @@ function tt_init() {
 
     add_action( 'admin_notices', 'tt_warning' );
 
-	add_filter('post_class', 'taxonomyIDClass' );
+	add_filter( 'post_class', 'tt_post_class_add' );
 
 }
 
-	function taxonomyIDClass($classes) {
-	    global $post;
-	    $taxonomies = array( 'status', 'project', 'priority' );
+/**
+ * Add additional classes to post_class()
+ */
+function tt_post_class_add( $classes ) {
+    global $post;
+    $taxonomies = array( 'status', 'project', 'priority' );
 
-	    foreach( $taxonomies as $taxonomy ) {	   	 
-	        $terms = get_the_terms( $post->ID, $taxonomy );
-	        if ( $terms ) {
-        	    foreach( $terms as $term )
-	                $classes[] = $taxonomy . '-' . $term->term_id;
-	        }
-	    }
-        return $classes;	    
-	}
+    foreach( $taxonomies as $taxonomy ) {
+        $terms = get_the_terms( $post->ID, $taxonomy );
+        if ( $terms ) {
+            foreach( $terms as $term )
+                $classes[] = $taxonomy . '-' . $term->term_id;
+        }
+    }
+    return $classes;
+}
 
 function tt_create_task_div() {
     $html = '<div id="create_ticket_dialog" class="dialog-container">';
