@@ -3,8 +3,9 @@
     <div class="zm-tt-container zm-tt-archive-container">
         <div class="tt-glue">
             <div class="main-container">
-                    <?php load_template( MY_PLUGIN_DIR . 'theme/navigation.php' ); ?>   
-                    <div id="tt_main_target">
+                <?php load_template( MY_PLUGIN_DIR . 'theme/navigation.php' ); ?>   
+                <div id="tt_main_target">
+                    <div class="tt_loading"></div>
                     <div class="sample" tt_template="theme/archive-table.php"></div>
                     <div id="no_results">nothing here move on..</div>                        
                 </div>
