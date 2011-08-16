@@ -165,7 +165,9 @@ $id = 0;
             if ( is_wp_error( $my_link ) )
                 return $my_link;
 
-            $term_links[] = '<a href="' . $my_link . '" rel="'.$term->taxonomy . '_' . $term->slug.'" class="zm-base-'. $taxonomy.'-'.$term->slug .'">' . $term->name . '</a>';
+            $title = sprintf( '%1$s <br /><em>%2$s</em>', sprintf( __("View all %s"), $term->name), $term->description );
+
+            $term_links[] = '<a href="' . $my_link . '" title="'.$title.'" rel="'.$term->taxonomy . '_' . $term->slug.'" class="zm-base-'. $taxonomy.'-'.$term->slug .'">' . $term->name . '</a>';
         }
         $term_links = apply_filters( "term_links-$taxonomy", $term_links );
         return $before . join( $sep, $term_links ) . $after;
@@ -203,7 +205,7 @@ function zm_base_list_terms( $taxonomy ) {
         if ( $i == 0 )
             $html .= '<li class="zm-base-title ' . $term->taxonomy . '">' . $term->taxonomy .'</li>';    
                         
-        $title = sprintf( __( "View all %s"), $term->name );
+        $title = sprintf( '%1$s <br /><em>%2$s</em>', sprintf( __("View all %s"), $term->name), $term->description );
 
         $html .= '<li class="zm-base-item zm-base-' . $term->slug . '">';
         $html .= '<a href="' . $my_link . '" title="'.$title.'" rel="' . $term->taxonomy . '_' . $term->slug . '">' . $term->name . '</a>';

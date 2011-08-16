@@ -2,6 +2,7 @@
  * Run jQuery in no-conflict mode but still have access to $
  */
 jQuery(document).ready(function( $ ){
+    $('a[title]').qtip();
     
     /**
      * Default ajax setup
@@ -216,6 +217,7 @@ jQuery(document).ready(function( $ ){
                 data: data,
                 success: function( msg ){
                     $('#tt_main_target').fadeIn().html( msg );
+                    $.getScript( _pluginurl + "theme/js/script.js");
                 }
             });
             return false;

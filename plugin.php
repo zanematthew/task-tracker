@@ -54,10 +54,12 @@ function tt_init() {
         'wp-jquery-ui-dialog'
      );
 
+    wp_register_style(  'tt-styles', MY_PLUGIN_URL . 'theme/css/style.css', $dependencies_css, 'all' );
+    wp_register_style(  'qtip-nightly-style', MY_PLUGIN_URL . 'library/js/qtip-nightly/jquery.qtip.min.css', '', 'all' );
+
     wp_register_script( 'tt-script', MY_PLUGIN_URL .'theme/js/script.js', $dependencies_js, '1.0' );
     wp_register_script( 'jquery-ui-effects', MY_PLUGIN_URL . 'theme/js/jquery-ui-1.8.13.effects.min.js', $dependencies_js, '1.8.13' );
-
-    wp_register_style(  'tt-styles', MY_PLUGIN_URL . 'theme/css/style.css', $dependencies_css, 'all' );
+    wp_register_script( 'qtip-nightly', MY_PLUGIN_URL . 'library/js/qtip-nightly/jquery.qtip.min.js', $dependencies_js, '0.0.1' );
 
     add_action( 'wp_head', 'zm_base_ajaxurl' ); 
     add_action( 'wp_footer', 'tt_create_task_div' );
@@ -72,7 +74,6 @@ function tt_init() {
     add_action( 'admin_notices', 'tt_warning' );
 
 	add_filter( 'post_class', 'tt_post_class_add' );
-
 }
 
 /**
@@ -125,7 +126,7 @@ function tt_load_template( ) {
 
 // zm_base_ajaxurl() Print our ajax url in the footer 
 function zm_base_ajaxurl() {
-    print '<script type="text/javascript"> var ajaxurl = "'. admin_url("admin-ajax.php") .'"</script>';
+    print '<script type="text/javascript"> var ajaxurl = "'. admin_url("admin-ajax.php") .'"; var _pluginurl="'. MY_PLUGIN_URL.'";</script>';
 }
                   
 function tt_template() {
@@ -137,10 +138,13 @@ function tt_template() {
     if ( !isset( $my_post_type ) ) die( 'Need a CPT!' );
     if ( !isset( $my_taxonomies ) ) die( 'Need a CTT!' );
 
-    wp_enqueue_style( 'tt-styles' );
-    wp_enqueue_script( 'tt-script' );
-    wp_enqueue_script( 'jquery-ui-effects' );
+    wp_enqueue_style( 'qtip-nightly-style' );
     wp_enqueue_style( 'wp-jquery-ui-dialog' );
+    wp_enqueue_style( 'tt-styles' );
+
+    wp_enqueue_script( 'tt-script' );
+    wp_enqueue_script( 'qtip-nightly' );
+    wp_enqueue_script( 'jquery-ui-effects' );
 
     switch( isset( $post_type ) ) {
         // Are we viewing a taxonomy page?
