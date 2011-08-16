@@ -1,18 +1,34 @@
+/**
+ * Run jQuery in no-conflict mode but still have access to $
+ */
 jQuery(document).ready(function( $ ){
-$.ajaxSetup({
-    type: "POST",
-    url: ajaxurl
-});
+    
+    /**
+     * Default ajax setup
+     */
+    $.ajaxSetup({
+        type: "POST",
+        url: ajaxurl
+    });
+    
+    /**
+     * Notification icon
+     */
+    $('.tt_loading').ajaxStart(function(){
+        $( this ).fadeIn();
+    });
 
-$('.tt_loading').ajaxStart(function(){
-    $( this ).fadeIn();
-});
+    /* @todo this needs to be tied down via a class? */
     $('tr', this).hover(function(){
         $(this).find('.utility-container').addClass( 'zm-base-visible').removeClass( 'zm-base-hidden');
     }, function(){
         $(this).find('.utility-container').addClass( 'zm-base-hidden wtf').removeClass( 'zm-base-visible');
     });
 
+    /** @todo update [task]: needs to be part of class for dialog */
+    /**
+     * Updating a task
+     */    
     $('#update_task', this).submit(function(){
         /** @props petemilkman.com for being right, concatinate data */
         $.ajax({
@@ -24,8 +40,10 @@ $('.tt_loading').ajaxStart(function(){
         });    
     }); // End 'update'
     
-    /** Setup our dialog for create a ticket */
-    /** @todo needs to be part of class for dialog */
+    /** @todo create dialog defaults [task]: needs to be part of class for dialog */
+    /** 
+     * Setup our dialog for create a ticket 
+     */
     $('#create_ticket_dialog').dialog({ 
         autoOpen: false,
         minWidth: 600,
@@ -36,10 +54,11 @@ $('.tt_loading').ajaxStart(function(){
     });
 
     /** Load dialog box and get create ticket form */
-    /** @todo needs to be part of class for dialog */
+    /** @todo create dialog [task]: needs to be part of class for dialog */
     $('#create_ticket').click(function(){
         $('#create_ticket_dialog').dialog('open');        
         
+        // @todo templating still handled via php, consider js templating?
         template = $(this).attr( 'tt_template' );
         
         data = { 
@@ -55,11 +74,16 @@ $('.tt_loading').ajaxStart(function(){
         });
     });   
     
-    /** @todo needs to be part of class for dialog */
+    /** @todo exit dialog [task]: needs to be part of class for dialog */    
+    /**
+     * Exit our dialog box on click and reload our archive view
+     */
     $('#exit').live('click', function(){
-        if ( $( '#tt_update_container' ).length != 1 ) {
-            $('#tt_main_target').fadeOut();
     
+        if ( $( '#tt_update_container' ).length != 1 ) {
+            $('#tt_main_target').fadeOut();   
+
+            // @todo templating still handled via php, consider js templating?
             template = $(this).attr( 'tt_template' );
     
             data = { 
@@ -80,6 +104,7 @@ $('.tt_loading').ajaxStart(function(){
         }
     });
 
+    /** @todo clear [task] form: needs to be part of class for dialog */
     /** clear our form */
     function clear_form() {
         $(':input','#create_task_form')
@@ -90,11 +115,12 @@ $('.tt_loading').ajaxStart(function(){
         $('.ui-dialog').effect("highlight", {}, 3000);            
     }
 
+    /** @todo clear [task] event: needs to be part of class for dialog */    
     $('#clear').live('click', function(){
         clear_form();
     });
 
-    /** @todo needs to be part of class for dialog */
+    /** @todo create [task]: needs to be part of class for dialog */
     $('#create_task_form', this).live('submit', function(){
         $.ajax({
             data: "action=project_submit_task&" + $(this).serialize(), 
@@ -104,6 +130,7 @@ $('.tt_loading').ajaxStart(function(){
         });    
     });
 
+    /** @todo filter [task] onclick: needs to be part of class for dialog */    
     $(".zm-base-item a").live("click", function() {
 
         if ( !$( '#archive_table' ).length ) {
@@ -135,6 +162,7 @@ $('.tt_loading').ajaxStart(function(){
         }
     });
         
+    /** @todo load [task] filters: needs to be part of class for dialog */    
     $('#filter_handle', this).click(function(){    
         $('#tt_filter_target').toggle( "slow", function(){    
             template = "theme/navigation-filter.php";
@@ -152,7 +180,7 @@ $('.tt_loading').ajaxStart(function(){
         });        
     });    
 
-    
+    /** @todo filter [task] archive: needs to be part of class for dialog */    
     $( '#tt_filter_target select' ).live( 'change', function() {   
         var searchClass = '';     
         $( "#filter_task_form select" ).each(function() { 
@@ -174,8 +202,9 @@ $('.tt_loading').ajaxStart(function(){
             $( "#archive_table tbody tr" ).fadeIn();            
         } 
     });
-
+        
     $( window ).load(function(){
+        /** @todo load [task] archive: needs to be part of class for dialog */    
         if ( $('.sample').length ) {
             template = $( '.sample' ).attr('tt_template');
             data = { 
@@ -190,6 +219,6 @@ $('.tt_loading').ajaxStart(function(){
                 }
             });
             return false;
-        }
+        } // End 'if'
     });
 });
