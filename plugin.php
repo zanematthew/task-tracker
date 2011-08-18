@@ -22,7 +22,6 @@ if ( is_admin() ) {
  * A predetermined list of methods our class MUST implement
  */
 interface ICustomPostType {
-    public function getName();
     public function regsiterCpt();
     public function regsiterCt();    
 }
@@ -60,4 +59,4 @@ class CustomPostType extends CustomPostTypeBase {
     }
 }
 
-$task = new CustomPostType('Task Tracker');
+$task = new CustomPostType();
