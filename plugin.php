@@ -63,22 +63,20 @@ function tt_init() {
 
     add_action( 'wp_head', 'zm_base_ajaxurl' ); 
     add_action( 'wp_footer', 'tt_create_task_div' );
-
-    // Our functions to be ran during an ajax request
     add_action( 'wp_ajax_tt_load_template', 'tt_load_template' ); // Load our create task form
     add_action( 'wp_ajax_nopriv_tt_load_template', 'tt_load_template' ); // For users that are not logged in.
-
     add_action( 'wp_ajax_project_submit_task', 'project_submit_task' );
     add_action( 'wp_ajax_project_wp_update_post', 'project_wp_update_post' );    
-
     add_action( 'admin_notices', 'tt_warning' );
-
+    add_action('template_redirect', 'tt_template', 5);
+	
 	add_filter( 'post_class', 'tt_post_class_add' );
 }
 
 /**
  * Add additional classes to post_class()
  */
+/** @todo tt_post_class_add() $taxonomies needs to come from Obj->taxonomies */ 
 function tt_post_class_add( $classes ) {
     global $post;
     $taxonomies = array( 'status', 'project', 'priority' );
@@ -114,7 +112,7 @@ function tt_debug( $message=null ) {
  * load our template 
  * uh, why not make it ajaxy? :D
  */
-function tt_load_template( ) {
+function tt_load_template() {
     $template = $_POST['template'];
 
     if ( $template == null ) 
@@ -124,11 +122,14 @@ function tt_load_template( ) {
     die();
 }
 
-// zm_base_ajaxurl() Print our ajax url in the footer 
+/**
+ * zm_base_ajaxurl() Print our ajax url in the footer 
+ */
 function zm_base_ajaxurl() {
     print '<script type="text/javascript"> var ajaxurl = "'. admin_url("admin-ajax.php") .'"; var _pluginurl="'. MY_PLUGIN_URL.'";</script>';
 }
                   
+/** @todo tt_template() param $my_taxonomies(array) Obj->taxonomies */
 function tt_template() {
     $post_type = get_query_var( 'post_type' ); // $current_post_type
     $my_post_type = 'task'; // consider making a define
@@ -176,7 +177,6 @@ function tt_template() {
             return;
     } // End 'switch'
 }
-add_action('template_redirect', 'tt_template', 5);
 
 function tt_activation(){
 

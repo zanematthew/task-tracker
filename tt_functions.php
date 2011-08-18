@@ -24,6 +24,7 @@ endif;
  * Prints a json dataset of Tasks
  */
 if ( ! function_exists( 'tt_json_feed' ) ) :
+/** @todo tt_json_feed() should take the following params: taxonomies(array), count(int) */
 function tt_json_feed() {
     global $wp_query, $post;
     $my_query = null;
