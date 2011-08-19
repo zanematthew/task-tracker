@@ -30,10 +30,11 @@ interface ICustomPostType {
  * Declare our methods signature
  */
 abstract class CustomPostTypeBase implements ICustomPostType {
-
-    private $my_plugin_dir;
-
+    public $plugin_url = WP_PLUGIN_URL;
+    public $plugin_dir = WP_PLUGIN_DIR;
+      
     public function registerPostType( $args=NULL ) {
+    
         foreach ( $this->post_type as $post_type ) {
         
             $post_type['type'] = strtolower( $post_type['type'] );
@@ -126,49 +127,42 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             register_taxonomy( $taxonomy['name'], $taxonomy['post_type'], $args );
         } // End 'foreach'
     } // End 'function'   
-    
-    public function registerStylesheet() {
-        $my_plugin_dir = WP_PLUGIN_DIR . '/' . str_replace( basename( __FILE__ ), "", plugin_basename( __FILE__ ) );
-        $my_plugin_url = WP_PLUGIN_URL . '/' . str_replace( basename( __FILE__ ), "", plugin_basename( __FILE__ ) );
-        
-        $dependencies_js = array(
-            'jquery',
-//            'jquery-ui-core',
-//            'jquery-ui-dialog'
-        );
 
-        $dependencies_css = array(
-            'wp-jquery-ui-dialog'
-        );
-
-        wp_register_style(  'tt-styles', $my_plugin_url . 'theme/css/style.css', $dependencies_css, 'all' );
-        wp_register_script( 'tt-script', $my_plugin_url.'theme/js/script.js', $dependencies_js, '1.0' );
-
-//    wp_register_style(  'qtip-nightly-style', MY_PLUGIN_URL . 'library/js/qtip-nightly/jquery.qtip.min.css', '', 'all' );
-//    wp_register_script( 'jquery-ui-effects', MY_PLUGIN_URL . 'theme/js/jquery-ui-1.8.13.effects.min.js', $dependencies_js, '1.8.13' );
-//    wp_register_script( 'qtip-nightly', MY_PLUGIN_URL . 'library/js/qtip-nightly/jquery.qtip.min.js', $dependencies_js, '0.0.1' );    
-    } // End 'registerStylesheet' 
 }
 
 class CustomPostType extends CustomPostTypeBase { 
     
     static $instance;
-    
+    public $plugin_dir = WP_PLUGIN_DIR;
+    public $plugin_url = WP_PLUGIN_URL;    
+    public $dependencies = array();
+        
     /**
      * Everything to be ran when our class is instantioned adds hooks and sh!t 
      */
     public function __construct() {
         self::$instance = $this;       
+        $this->plugin_dir = $this->plugin_dir . '/' . str_replace( basename( __FILE__ ), "", plugin_basename( __FILE__ ) );
+        $this->plugin_url = $this->plugin_url . '/' . str_replace( basename( __FILE__ ), "", plugin_basename( __FILE__ ) );
+        $this->dependencies['script'] = array(
+            'jquery',
+            'jquery-ui-core',
+            'jquery-ui-dialog'
+        );
+
+        $this->dependencies['style'] = array(
+            'wp-jquery-ui-dialog'
+        );
+        
         add_action( 'init', array( &$this, 'registerPostType' ) );
         add_action( 'init', array( &$this, 'registerTaxonomy' ) ); 
-        add_action( 'init', array( &$this, 'registerStylesheet' ) ); 
-    }
-    
-/*
-    public function regsiterCpt() {
-        print 'my cpt...';
-    }
-*/    
+        
+        wp_register_style(  'tt-styles', $this->plugin_url . 'theme/css/style.css', $this->dependencies['style'], 'all' );
+        wp_register_style(  'qtip-nightly-style', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.css', '', 'all' );
+        wp_register_script( 'tt-script', $this->plugin_url . 'theme/js/script.js', $this->dependencies['script'], '1.0' );        
+        wp_register_script( 'jquery-ui-effects', $this->plugin_url . 'theme/js/jquery-ui-1.8.13.effects.min.js', $this->dependencies['script'], '1.8.13' );
+        wp_register_script( 'qtip-nightly', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.js', $this->dependencies['script'], '0.0.1' );            
+    }    
 }
 
 $task = new CustomPostType();
@@ -208,4 +202,4 @@ $task->taxonomy = array(
         'name' => 'ETA',
         'post_type' => 'task'
         )
-);
+    );
