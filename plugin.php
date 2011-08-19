@@ -127,12 +127,12 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             register_taxonomy( $taxonomy['name'], $taxonomy['post_type'], $args );
         } // End 'foreach'
     } // End 'function'   
-
 }
 
 class CustomPostType extends CustomPostTypeBase { 
     
     static $instance;
+
     public $plugin_dir = WP_PLUGIN_DIR;
     public $plugin_url = WP_PLUGIN_URL;    
     public $dependencies = array();
@@ -156,13 +156,65 @@ class CustomPostType extends CustomPostTypeBase {
         
         add_action( 'init', array( &$this, 'registerPostType' ) );
         add_action( 'init', array( &$this, 'registerTaxonomy' ) ); 
-        
         wp_register_style(  'tt-styles', $this->plugin_url . 'theme/css/style.css', $this->dependencies['style'], 'all' );
         wp_register_style(  'qtip-nightly-style', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.css', '', 'all' );
         wp_register_script( 'tt-script', $this->plugin_url . 'theme/js/script.js', $this->dependencies['script'], '1.0' );        
         wp_register_script( 'jquery-ui-effects', $this->plugin_url . 'theme/js/jquery-ui-1.8.13.effects.min.js', $this->dependencies['script'], '1.8.13' );
         wp_register_script( 'qtip-nightly', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.js', $this->dependencies['script'], '0.0.1' );            
-    }    
+
+//        add_action( 'template_redirect','templateRedirect', 5 );    
+
+        add_action( 'template_redirect',array( &$this, 'templateRedirect') );    
+    }
+
+    public function templateRedirect() {
+
+        $post_type = get_query_var( 'post_type' ); // $current_post_type
+print_r( $post_type );
+        $my_taxonomies = array( 'status', 'priority', 'project', 'phase', 'assigned' ); // same as above
+
+        // Quick and harsh error checking
+        if ( !isset( $this->post_type ) ) die( 'Need a CPT!' );
+        if ( !isset( $my_taxonomies ) ) die( 'Need a CTT!' );
+    
+        wp_enqueue_style( 'qtip-nightly-style' );
+        wp_enqueue_style( 'wp-jquery-ui-dialog' );
+        wp_enqueue_style( 'tt-styles' );
+    
+        wp_enqueue_script( 'tt-script' );
+        wp_enqueue_script( 'qtip-nightly' );
+        wp_enqueue_script( 'jquery-ui-effects' );
+    
+        switch( isset( $this->post_type ) ) {
+            // Are we viewing a taxonomy page?
+            case ( is_tax( $my_taxonomies ) ):
+                global $wp_query;
+    
+                if ( in_array( $wp_query->query_vars['taxonomy'], $my_taxonomies ) )
+                    load_template( MY_PLUGIN_DIR . 'theme/archive-' . $this->post_type . '.php' );
+                exit;
+                break;
+    
+            // Is this a single page
+            case ( is_single() ):
+                // If your not my post type GTFO
+                if ( get_post_type() != $my_post_type ) return;
+                if ( file_exists( STYLESHEETPATH . '/single-' . $my_post_type . '.php' ) ) return;
+    
+                load_template( MY_PLUGIN_DIR . '/theme/single-' . $my_post_type . '.php' );
+                exit;
+                break;
+  
+            // Is this a post type archive page
+            case ( is_post_type_archive( $my_post_type ) ):
+                if ( file_exists( STYLESHEETPATH . '/archive-' . $my_post_type . '.php' ) ) return;
+                load_template( MY_PLUGIN_DIR . '/theme/archive-' . $my_post_type . '.php' );
+                exit;
+                break;
+            default:
+                return;
+        } // End 'switch'
+    } // End 'function'
 }
 
 $task = new CustomPostType();
