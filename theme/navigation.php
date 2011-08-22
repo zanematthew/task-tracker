@@ -2,7 +2,7 @@
     <nav class="tt-navigation-container">
         <ul>
             <li class="currnet-item"><a href="<?php bloginfo('url'); ?>/task" title="List Recent Activity for: <?php bloginfo('name'); ?>">Recent</a></li>
-            <li id="filter_handle"><a href="#filter-task">Filter</a></li>
+            <li><a href="#filter-task" id="filter_handle" tt_template="navigation-filter.php">Filter</a></li>
             <li class="create-ticket">
                 <?php if ( is_user_logged_in() ) : ?>
                     <div class="zm-tt-form-container">

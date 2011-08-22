@@ -1,6 +1,8 @@
 /**
  * Run jQuery in no-conflict mode but still have access to $
  */
+_plugindir = "theme/";
+
 jQuery(document).ready(function( $ ){
     $('a[title]').qtip();
     
@@ -164,21 +166,26 @@ jQuery(document).ready(function( $ ){
     });
         
     /** @todo load [task] filters: needs to be part of class for dialog */    
-    $('#filter_handle', this).click(function(){    
-        $('#tt_filter_target').toggle( "slow", function(){    
-            template = "theme/navigation-filter.php";
-            data = {
-                action: "tt_load_template",
-                template: template
-            };
+    $( '#filter_handle' ).click(function(){  
+        var _this = this;  
+        if ( $( '#filter_task_form' ).length ) {
+            $( '#filter_task_form' ).toggle( 'slow' );
+        } else {
+            $('#tt_filter_target').toggle( "slow", function(){                
+                template = _plugindir + $( _this ).attr( 'tt_template' );
+                data = {
+                    action: "tt_load_template",
+                    template: template
+                };
            
-            $.ajax({
-                data: data,
-                success: function( msg ){
-                    $('#tt_filter_target').fadeIn().html( msg );
-                }
-            });            
-        });        
+                $.ajax({
+                    data: data,
+                    success: function( msg ){
+                        $('#tt_filter_target').fadeIn().html( msg );
+                    }
+                });            
+            });                    
+        }
     });    
 
     /** @todo filter [task] archive: needs to be part of class for dialog */    
@@ -217,7 +224,6 @@ jQuery(document).ready(function( $ ){
                 data: data,
                 success: function( msg ){
                     $('#tt_main_target').fadeIn().html( msg );
-                    $.getScript( _pluginurl + "theme/js/script.js");
                 }
             });
             return false;
