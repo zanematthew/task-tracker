@@ -254,14 +254,13 @@ function zm_base_get_terms( $taxonomy ) {
 
     /** All Terms */
     $args = array(
-        'orderby' => 'parent',
-        'hide_empty' => 0
+        'orderby' => 'name'
          );
 
     $terms = get_terms( $taxonomy, $args );
 
     if ( is_wp_error( $terms ) ) {
-        exit( "Opps..." . $terms->get_error_message() . "..dog, cmon, fix it!" );
+//        exit( "Opps..." . $terms->get_error_message() . "..dog, cmon, fix it!" );
     }
 
     return $terms;
