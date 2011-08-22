@@ -214,9 +214,13 @@ a.login { font-size: 12px; margin: 10px 10px 0 0; display: inline-block; }
 .zm-tt-sidebar-container { float: right; width: 220px; margin-left: 10px; }
 
 .zm-tt-form-container #filter_task_form .form-wrapper { padding: 15px 0 35px 5px; }
+.tt-filter-container { float: left; margin-bottom: 20px; width: 100%; }
+ul.inline { list-style-type: none; margin: 0; padding: 0; }
+ul.inline li { float: left; }
 
 #no_results { display: none; }
 .tt_loading { background: url(images/w-loader.gif) no-repeat center center; float: left; height: 200px; width: 100%; }
 
 .ui-tooltip, 
 .qtip { font-size: 11px; max-width: 180px; }
+

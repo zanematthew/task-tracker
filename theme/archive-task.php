@@ -4,6 +4,12 @@
         <div class="tt-glue">
             <div class="main-container">
                 <?php load_template( MY_PLUGIN_DIR . 'theme/navigation.php' ); ?>   
+                <div class="tt-filter-container">
+                    <ul class="inline">
+                        <li><a href="#filter-task" id="filter_handle" tt_template="navigation-filter.php">Filter</a></li>                
+                    </ul>
+                </div>
+                <div id="tt_filter_target"></div>                
                 <div id="tt_main_target">
                     <div class="tt_loading"></div>
                     <div class="sample" tt_template="theme/archive-table.php"></div>
