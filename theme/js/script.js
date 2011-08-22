@@ -196,14 +196,7 @@ jQuery(document).ready(function( $ ){
                 searchClass += "." + $(this).val(); 
         }); 
         
-        if ( searchClass != '' ) {
-            
-            if( $("#archive_table_tr" + searchClass).length ) { 
-                $("#no_results").fadeOut(); 
-            } else { 
-                $("#no_results").fadeIn(); 
-            }
-            
+        if ( searchClass != '' ) {            
             $( "#archive_table tbody tr" + searchClass ).fadeIn();                
             $( "#archive_table tbody tr" ).not(searchClass).fadeOut(); 
         } else {
