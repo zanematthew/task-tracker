@@ -23,19 +23,44 @@ require_once 'functions.php';
 
 /**
  * A predetermined list of methods our class MUST implement
+ *
+ * The goal of this interface is to provide a set of base methods for making Custom Post Types in WordPress 3.2+. 
+ * With these methods you should be able to create an unlimted number of CPTs and CTs, with as less code as possible.
+ * Along with having basic functionality either already built or guided for you.
+ *
+ * Your plugin MUST do the following:
+ * - Regsiter a custom post type(s)
+ * - Regsiter a custom taxonomy(s)
+ * - Provide a default archive template, which can be overriden by the theme, i.e template redirect
+ * - Provide a default single template, which can be overriden by the theme 
+ * - Activation script
+ * - Deactivation script
+ * - enqueue a base stylesheet
  */
 interface ICustomPostType {
-    public function registerPostType();
-    public function registerTaxonomy();    
+    public function registerPostType( $param=array() );
+    public function registerTaxonomy( $param=array() );    
+    
+    // no need for you to implement this, i'll do it for you.
+    // public function templateRedirect();
+//    public function baseStyleSheet( $param=array() );
 }
 
 /**
- * Declare our methods signature
+ * Declare our methods signature, these methods should match what is defined in our interface.
+ *
+ * Within our abstract you will find the methods that are required to be implemented. Any functionality
+ * desired should NOT be placed in this abstract. It should be placed in the Class that is implementing your
+ * abstract.
+ *
  */
 abstract class CustomPostTypeBase implements ICustomPostType {
     public $plugin_url = WP_PLUGIN_URL;
     public $plugin_dir = WP_PLUGIN_DIR;
-      
+    
+    /**
+     * Regsiter an unlimited number of CPTs based on an array of parmas.
+     */
     public function registerPostType( $args=NULL ) {
     
         foreach ( $this->post_type as $post_type ) {
@@ -146,7 +171,64 @@ abstract class CustomPostTypeBase implements ICustomPostType {
        
     return $this->taxonomy;
     } // End 'function'   
-}
+
+    /**
+     * Determines archive template, single template, and template per taxonomy if any exisits
+     * else falls back on theme tempates
+     */
+    public function templateRedirect() {
+
+        $current_post_type = get_query_var( 'post_type' ); // $current_post_type
+
+        $my_taxonomies = array( 'status', 'priority', 'project', 'phase', 'assigned' ); // same as above
+
+        // Quick and harsh error checking
+        if ( !isset( $this->post_type ) ) die( 'Need a CPT!' );
+        if ( !isset( $my_taxonomies ) ) die( 'Need a CTT!' );
+    
+        wp_enqueue_style( 'qtip-nightly-style' );
+        wp_enqueue_style( 'wp-jquery-ui-dialog' );
+        wp_enqueue_style( 'tt-styles' );
+    
+        wp_enqueue_script( 'tt-script' );
+        wp_enqueue_script( 'qtip-nightly' );
+        wp_enqueue_script( 'jquery-ui-effects' );
+
+        foreach ( $this->post_type as $my_post_type => $k ) {    	
+            switch( $k['type'] ) {
+            // Are we viewing a taxonomy page?
+            case ( is_tax( $my_taxonomies ) ):
+die('tax');
+                global $wp_query;
+    
+                if ( in_array( $wp_query->query_vars['taxonomy'], $my_taxonomies ) )
+                    load_template( MY_PLUGIN_DIR . 'theme/archive-' . $this->post_type . '.php' );
+                exit;
+                break;
+    
+            // Is this a single page
+            case ( is_single() ):
+                // If your not my post type GTFO
+die('single');
+                if ( get_post_type() != $this->post_type ) return;
+                if ( file_exists( STYLESHEETPATH . '/single-' . $my_post_type . '.php' ) ) return;
+    
+                load_template( MY_PLUGIN_DIR . '/theme/single-' . $my_post_type . '.php' );
+                exit;
+                break;
+  
+            // Is this a post type archive page
+            case ( is_post_type_archive( $k['type'] ) ):
+                if ( file_exists( STYLESHEETPATH . '/archive-' . $k['type'] . '.php' ) ) return;
+                load_template( $this->plugin_dir . '/theme/archive-' . $k['type'] . '.php' );
+                exit;
+                break;
+            default:
+                return;
+            } // End 'switch'
+        } // End 'foreach'
+    } // End 'function templateRedirect'    
+} // End 'CustomPostTypeBase'
 
 class CustomPostType extends CustomPostTypeBase { 
     
@@ -200,6 +282,9 @@ class CustomPostType extends CustomPostTypeBase {
     
     /**
      * Add additional classes to post_class()
+     *
+     * Adds public and NOT builtin terms to the post_class function call outputing the following:
+     * term_slug-taxonomy_id
      */
     public function addPostClass( $classes ) {
         global $post;
@@ -230,6 +315,9 @@ die('array of classes does NOT need to be indexed!' );
         return $classes;
     }
 
+    /**
+     * Basic post submission for use with an ajax request
+     */
     public function postTypeSubmit() {
         check_ajax_referer( 'tt-ajax-forms', 'security' );
     
@@ -264,7 +352,7 @@ die('array of classes does NOT need to be indexed!' );
             'post_type' => $type,
             'post_status' => $status
         );
-        /** insert our post */
+        
         $post_id = wp_insert_post( $post, true );
     
         if ( is_wp_error( $post_id ) )
@@ -278,7 +366,7 @@ die('array of classes does NOT need to be indexed!' );
             }
         }
         die();
-    }
+    } // End 'postTypeSubmit'
     
     public function postTypeUpdate( $post ) {
     
@@ -341,61 +429,7 @@ die('array of classes does NOT need to be indexed!' );
      */
     public function baseAjaxUrl() {
         print '<script type="text/javascript"> var ajaxurl = "'. admin_url("admin-ajax.php") .'"; var _pluginurl="'. MY_PLUGIN_URL.'";</script>';    
-    }
-    
-    public function templateRedirect() {
-
-        $current_post_type = get_query_var( 'post_type' ); // $current_post_type
-
-        $my_taxonomies = array( 'status', 'priority', 'project', 'phase', 'assigned' ); // same as above
-
-        // Quick and harsh error checking
-        if ( !isset( $this->post_type ) ) die( 'Need a CPT!' );
-        if ( !isset( $my_taxonomies ) ) die( 'Need a CTT!' );
-    
-        wp_enqueue_style( 'qtip-nightly-style' );
-        wp_enqueue_style( 'wp-jquery-ui-dialog' );
-        wp_enqueue_style( 'tt-styles' );
-    
-        wp_enqueue_script( 'tt-script' );
-        wp_enqueue_script( 'qtip-nightly' );
-        wp_enqueue_script( 'jquery-ui-effects' );
-
-        foreach ( $this->post_type as $my_post_type => $k ) {    	
-        switch( $k['type'] ) {
-            // Are we viewing a taxonomy page?
-            case ( is_tax( $my_taxonomies ) ):
-die('tax');
-                global $wp_query;
-    
-                if ( in_array( $wp_query->query_vars['taxonomy'], $my_taxonomies ) )
-                    load_template( MY_PLUGIN_DIR . 'theme/archive-' . $this->post_type . '.php' );
-                exit;
-                break;
-    
-            // Is this a single page
-            case ( is_single() ):
-                // If your not my post type GTFO
-die('single');
-                if ( get_post_type() != $this->post_type ) return;
-                if ( file_exists( STYLESHEETPATH . '/single-' . $my_post_type . '.php' ) ) return;
-    
-                load_template( MY_PLUGIN_DIR . '/theme/single-' . $my_post_type . '.php' );
-                exit;
-                break;
-  
-            // Is this a post type archive page
-            case ( is_post_type_archive( 'task' ) ):
-                if ( file_exists( STYLESHEETPATH . '/archive-' . $k['type'] . '.php' ) ) return;
-                load_template( $this->plugin_dir . '/theme/archive-' . $k['type'] . '.php' );
-                exit;
-                break;
-            default:
-                return;
-        } // End 'switch'
-    } // End 'foreach'
-    } // End 'function templateRedirect'
-    
+    }       
 } // End 'CustomPostType'
 
 $task = new CustomPostType();
