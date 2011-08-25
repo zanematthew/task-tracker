@@ -63,7 +63,7 @@ jQuery(document).ready(function( $ ){
         template = $(this).attr( 'tt_template' );
         
         data = { 
-            action: "tt_load_template",
+            action: "loadTemplate",
             template: template
             };
 
