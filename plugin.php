@@ -301,7 +301,6 @@ class CustomPostType extends CustomPostTypeBase {
             $tax_names[] .= $taxonomy->labels->name;
           }
         }
-        // $taxonomies = array( 'status', 'project', 'priority' );
 
         foreach( $tax_names as $name ) {
             $terms = get_the_terms( $post->ID, $name );
@@ -310,8 +309,6 @@ class CustomPostType extends CustomPostTypeBase {
                     $classes[] = $name . '-' . $term->term_id;
             }
         }
-        print_r( $classes );
-die('array of classes does NOT need to be indexed!' );        
         return $classes;
     }
 

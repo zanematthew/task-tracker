@@ -24,15 +24,15 @@ endif;
  * Prints a json dataset of Tasks
  */
 if ( ! function_exists( 'tt_json_feed' ) ) :
-function tt_json_feed( $post_type=null, $taxonomies=null ) {
+function tt_json_feed( $post_type, $taxonomies=array() ) {
 
     if ( empty( $post_type ) || empty( $taxonomies ) )
         die( 'I need a fucking post type and a fucking array of taxonomies' );
     
     global $wp_query, $post;
     $my_query = null;
-    $tasks = array();
-    
+    $types = array();
+
     $args = array(
        'post_type' => $post_type,
        'post_status' => 'publish'
