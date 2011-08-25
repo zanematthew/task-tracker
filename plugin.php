@@ -62,6 +62,9 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      * Regsiter an unlimited number of CPTs based on an array of parmas.
      */
     public function registerPostType( $args=NULL ) {
+        $taxonomies = array();
+        foreach( $this->taxonomy as $tax )
+            $taxonomies[] = $tax['name'];
     
         foreach ( $this->post_type as $post_type ) {
         
@@ -104,6 +107,12 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             $capabilities = array(
                 'edit_article'
                 );
+                         
+//print '<pre>';
+//print_r( $taxonomies );
+// print_r( $this->taxonomy );
+// die();
+//            $taxonomies[] = ;
             
             $args = array(
                 'labels' => $labels,
@@ -113,7 +122,8 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 'rewrite' => array( 'slug' => $post_type['slug'] ),
                 'hierarchical' => true,
                 'description' => 'Photo galleries',
-        //        'taxonomies' => array( 'assigned', 'phase', 'priority', 'project', 'status', 'type', 'ETA' ),
+//                'taxonomies' => array( 'assigned', 'phase', 'priority', 'project', 'status', 'type', 'ETA' ),
+                'taxonomies' => $taxonomies,
                 'public' => true,
                 'show_ui' => true,
                 'show_in_menu' => true,
@@ -180,12 +190,15 @@ abstract class CustomPostTypeBase implements ICustomPostType {
 
         $current_post_type = get_query_var( 'post_type' ); // $current_post_type
 
-        $my_taxonomies = array( 'status', 'priority', 'project', 'phase', 'assigned' ); // same as above
+        $my_cpt = get_post_types( array( 'name' => 'task' ) ,'objects' );
+
+        foreach( $my_cpt as $myt )
+            $my_taxonomies = $myt->taxonomies;
 
         // Quick and harsh error checking
-        if ( !isset( $this->post_type ) ) die( 'Need a CPT!' );
-        if ( !isset( $my_taxonomies ) ) die( 'Need a CTT!' );
-    
+        if ( !isset( $this->post_type ) ) wp_die( 'Need a CPT!' );
+        if ( !isset( $my_taxonomies ) ) wp_die( 'Need a CTT!' );
+
         wp_enqueue_style( 'qtip-nightly-style' );
         wp_enqueue_style( 'wp-jquery-ui-dialog' );
         wp_enqueue_style( 'tt-styles' );
@@ -198,22 +211,29 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             switch( $k['type'] ) {
             // Are we viewing a taxonomy page?
             case ( is_tax( $my_taxonomies ) ):
-die('tax');
                 global $wp_query;
-    
-                if ( in_array( $wp_query->query_vars['taxonomy'], $my_taxonomies ) )
-                    load_template( MY_PLUGIN_DIR . 'theme/archive-' . $this->post_type . '.php' );
+                
+                if ( in_array( $wp_query->query_vars['taxonomy'], $my_taxonomies ) ) {
+                    foreach ( $my_taxonomies as $taxonomy ) {
+                        load_template( MY_PLUGIN_DIR . 'theme/archive-' . $k['type'] . '.php' );
+//                        load_template( MY_PLUGIN_DIR . 'theme/taxonomy-' . $my_taxonomies. '.php' );
+                    }
+                }
                 exit;
                 break;
     
             // Is this a single page
             case ( is_single() ):
-                // If your not my post type GTFO
-die('single');
-                if ( get_post_type() != $this->post_type ) return;
-                if ( file_exists( STYLESHEETPATH . '/single-' . $my_post_type . '.php' ) ) return;
+                // If your not my post type GTFO                
+                foreach ( $this->post_type as $my_post_type )
+                    if ( get_post_type() != $my_post_type['type'] ) return;
+                
+                // first checkout our plugin themes folder
+                foreach ( $this->post_type as $my_post_type )
+                    if ( file_exists( STYLESHEETPATH . '/single-' . $my_post_type['type'] . '.php' ) ) return;
     
-                load_template( MY_PLUGIN_DIR . '/theme/single-' . $my_post_type . '.php' );
+                foreach ( $this->post_type as $my_post_type )
+                    load_template( MY_PLUGIN_DIR . '/theme/single-' . $my_post_type['type'] . '.php' );
                 exit;
                 break;
   
