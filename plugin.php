@@ -108,12 +108,6 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 'edit_article'
                 );
                          
-//print '<pre>';
-//print_r( $taxonomies );
-// print_r( $this->taxonomy );
-// die();
-//            $taxonomies[] = ;
-            
             $args = array(
                 'labels' => $labels,
                 'public' => true,
