@@ -186,20 +186,17 @@ function zm_base_list_terms( $taxonomy ) {
         extract( $taxonomy );
     
     $terms = get_terms( $taxonomy );
-    $html = null;
     $i = 0;
     $len = count( $terms );
-    $first = null;
-    $last = null;
-    $my_link = null;
+    $html = $first = $last = $my_link = null;
 
     /** @todo -- add support for rss link */
     foreach( $terms as $term ) {
 
-        if ( isset( $link ) )
-            $my_link = 'javascript://';
-        else
+        if ( $link )
             $my_link = get_term_link( $term->slug, $term->taxonomy );
+        else
+            $my_link = 'javascript://';
         
         // First
         if ( $i == 0 )
