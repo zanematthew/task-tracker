@@ -155,8 +155,9 @@ jQuery(document).ready(function( $ ){
     
         var search_on = $( this ).attr( 'rel' );
         search_on = search_on.split( "_" );
-    
+
         for( var i in _tasks ) {
+console.log( search_on[0] + ' ' + search_on[1] );
             if ( _tasks[i][search_on[0]] == search_on[1] ) {
                 $( ".post-" + i ).fadeIn();
             } else {
@@ -191,20 +192,29 @@ jQuery(document).ready(function( $ ){
     /** @todo filter [task] archive: needs to be part of class for dialog */    
     $( '#tt_filter_target select' ).live( 'change', function() {   
         var searchClass = '';     
+        
         $( "#filter_task_form select" ).each(function() { 
             if( $( this ).val() != "" ) 
                 searchClass += "." + $(this).val(); 
         }); 
         
+        searchTemp( searchClass );
+    });
+
+    function searchTemp( searchClass ) {        
         if ( searchClass != '' ) {            
             $( "#archive_table tbody tr" + searchClass ).fadeIn();                
             $( "#archive_table tbody tr" ).not(searchClass).fadeOut(); 
         } else {
             $( "#archive_table tbody tr" ).fadeIn();            
         } 
-    });
-        
+    }        
+           
     $( window ).load(function(){
+        // @todo if we have a hash store it to filter on later
+        if ( window.location[ 'hash' ] )
+            var search_on = window.location['hash'].split('/');            
+
         /** @todo load [task] archive: needs to be part of class for dialog */    
         if ( $('.sample').length ) {
             template = $( '.sample' ).attr('tt_template');
@@ -219,7 +229,15 @@ jQuery(document).ready(function( $ ){
                 data: data,
                 success: function( msg ){
                     $('#tt_main_target').fadeIn().html( msg );
-                }
+                        for( var i in _tasks ) {
+                            // @todo would be better to tell it '#' vs. 1
+                            if ( _tasks[i][search_on[0].substr( 1 ) ] == search_on[1] ) {
+                                $( ".post-" + i ).fadeIn();
+                            } else {
+                                $( ".post-" + i ).fadeOut();
+                            }
+                        } // End 'for'           
+                } // End 'suckit' 
             });
             return false;
         } // End 'if'
