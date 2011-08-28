@@ -209,7 +209,9 @@ jQuery(document).ready(function( $ ){
         if ( $('.sample').length ) {
             template = $( '.sample' ).attr('tt_template');
             data = { 
-                action: "tt_load_template",
+                action: "loadTemplate",
+                post_type: "task",
+                post_status: "publish",
                 template: template
             };
 

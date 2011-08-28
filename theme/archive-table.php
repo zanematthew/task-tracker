@@ -1,4 +1,7 @@
 <?php
+print '<pre>';
+print_r( $_POST );
+print '</pre>';
 global $wp_query;
 $args = array(
   'post_type' => 'task',

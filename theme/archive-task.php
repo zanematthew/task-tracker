@@ -15,8 +15,8 @@
                     <div class="sample" tt_template="theme/archive-table.php"></div>
                     <div id="no_results">nothing here move on..</div>                        
                 </div>
-<!-- -->
 <?php
+/*
 global $wp_query;
 $args = array(
   'post_type' => 'task',
@@ -25,6 +25,7 @@ $args = array(
 
 $my_query = null;
 $my_query = new WP_Query( $args );
+*/
 ?>
 <div class="zm-tt-archive-container" >
    <table id="archive_table">
@@ -39,7 +40,8 @@ $my_query = new WP_Query( $args );
             </tr>
         </thead>
         <?php $x = 0; ?>
-        <?php if ( $my_query->have_posts() ) while ( $my_query->have_posts() ) : $my_query->the_post(); ?>
+        <?php // if ( $my_query->have_posts() ) while ( $my_query->have_posts() ) : $my_query->the_post(); ?>
+        <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
             <tr <?php post_class('result')?>>
                 <td><?php $x++; ?>
                      <strong class="title"><a href="<?php the_permalink(); ?>" title="Link to project: <?php the_title(); ?>">#<?php the_ID(); ?> <?php the_title(); ?></a></strong>
@@ -51,7 +53,7 @@ $my_query = new WP_Query( $args );
                 </td>
                 <td>
                     <div class="milestone-container zm-base-item">
-                        <?php print zm_base_get_the_term_list( array( 'link' => false, 'post_id' => $post->ID, 'taxonomy' => 'phase' )); ?>
+                        <?php print zm_base_get_the_term_list( array( 'link' => true, 'post_id' => $post->ID, 'taxonomy' => 'phase' )); ?>
                     </div>
                 </td>
                 <td>
@@ -59,16 +61,16 @@ $my_query = new WP_Query( $args );
                 </td>
                 <td>
                     <div class="status-container">
-                        <?php print zm_base_get_the_term_list( array( 'link' => false, 'post_id' => $post->ID, 'taxonomy' => 'status' ) ); ?>
+                        <?php print zm_base_get_the_term_list( array( 'link' => true, 'post_id' => $post->ID, 'taxonomy' => 'status' ) ); ?>
                     </div>
                 </td>
                 <td>
                     <div class="priority-container zm-base-item">
-                        <?php print zm_base_get_the_term_list( array( 'link' => false, 'post_id' => $post->ID, 'taxonomy' => 'priority' ) ); ?>
+                        <?php print zm_base_get_the_term_list( array( 'link' => true, 'post_id' => $post->ID, 'taxonomy' => 'priority' ) ); ?>
                     </div>
                 <td>
                     <div class="project-container zm-base-item">
-                        <?php print zm_base_get_the_term_list( array( 'link' => false, 'post_id' => $post->ID, 'taxonomy' => 'project' ) ); ?>
+                        <?php print zm_base_get_the_term_list( array( 'link' => true, 'post_id' => $post->ID, 'taxonomy' => 'project' ) ); ?>
                     </div>
                 </td>
             </tr>
@@ -77,14 +79,15 @@ $my_query = new WP_Query( $args );
     <div id="no_results">nothing here move on..</div>
     <?php tt_json_feed( 'task',  array( 'status', 'priority', 'project', 'phase', 'assigned' ) ); ?>
 </div>
-<!------------- -------------------->                
+
+
             </div>
             <div class="zm-tt-sidebar-container">
-                <?php zm_base_list_terms( array('taxonomy' => 'status', 'link' => false ) ); ?>
-                <?php zm_base_list_terms( array('taxonomy' => 'priority', 'link' => false ) ); ?>
-                <?php zm_base_list_terms( array('taxonomy' => 'project', 'link' => false ) ); ?>
-                <?php zm_base_list_terms( array('taxonomy' => 'phase', 'link' => false ) ); ?>
-                <?php zm_base_list_terms( array('taxonomy' => 'assigned', 'link' => false ) ); ?>
+                <?php zm_base_list_terms( array('taxonomy' => 'status', 'link' => true ) ); ?>
+                <?php zm_base_list_terms( array('taxonomy' => 'priority', 'link' => true ) ); ?>
+                <?php zm_base_list_terms( array('taxonomy' => 'project', 'link' => true ) ); ?>
+                <?php zm_base_list_terms( array('taxonomy' => 'phase', 'link' => true ) ); ?>
+                <?php zm_base_list_terms( array('taxonomy' => 'assigned', 'link' => true ) ); ?>
             </div>
         </div>
     </div>

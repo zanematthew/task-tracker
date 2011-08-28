@@ -39,8 +39,7 @@ require_once 'functions.php';
  */
 interface ICustomPostType {
     public function registerPostType( $param=array() );
-    public function registerTaxonomy( $param=array() );    
-    
+    public function registerTaxonomy( $param=array() );        
     // no need for you to implement this, i'll do it for you.
     // public function templateRedirect();
 //    public function baseStyleSheet( $param=array() );
@@ -203,7 +202,6 @@ abstract class CustomPostTypeBase implements ICustomPostType {
 
         foreach ( $this->post_type as $my_post_type => $k ) {    	
             switch( $k['type'] ) {
-            // Are we viewing a taxonomy page?
             case ( is_tax( $my_taxonomies ) ):
                 global $wp_query;
                 
@@ -216,7 +214,6 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 exit;
                 break;
     
-            // Is this a single page
             case ( is_single() ):
                 // If your not my post type GTFO                
                 foreach ( $this->post_type as $my_post_type )
@@ -231,7 +228,6 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 exit;
                 break;
   
-            // Is this a post type archive page
             case ( is_post_type_archive( $k['type'] ) ):
                 if ( file_exists( STYLESHEETPATH . '/archive-' . $k['type'] . '.php' ) ) return;
                 load_template( $this->plugin_dir . '/theme/archive-' . $k['type'] . '.php' );
@@ -330,6 +326,8 @@ class CustomPostType extends CustomPostTypeBase {
      * Basic post submission for use with an ajax request
      */
     public function postTypeSubmit() {
+print_r( $_POST );
+die();
         check_ajax_referer( 'tt-ajax-forms', 'security' );
     
         if ( !is_user_logged_in() )
