@@ -188,14 +188,16 @@ function zm_base_list_terms( $taxonomy ) {
     $terms = get_terms( $taxonomy );
     $i = 0;
     $len = count( $terms );
-    $html = $first = $last = $my_link = null;
+    $html = $anchor = $first = $last = $my_link = null;
 
     /** @todo -- add support for rss link */
+    // very fucking usefull http://php.net/manual/en/types.comparisons.php    
     foreach( $terms as $term ) {
-
-        if ( $link )
+        if ( is_null( $link ) ) // is it set to TRUE
             $my_link = get_term_link( $term->slug, $term->taxonomy );
-        else
+        elseif ( isset( $link ) && $link == 'anchor' ) // is it set to TRUE AND is it 'anchor'
+            $my_link ='#' . $term->taxonomy . '-' . $term->slug;
+        else // is it FALSE
             $my_link = 'javascript://';
         
         // First
