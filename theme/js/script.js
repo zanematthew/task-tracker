@@ -213,7 +213,7 @@ console.log( search_on[0] + ' ' + search_on[1] );
     $( window ).load(function(){
         // @todo if we have a hash store it to filter on later
         if ( window.location[ 'hash' ] )
-            var search_on = window.location['hash'].split('/');            
+            var search_on = window.location['hash'].split('-');            
 
         /** @todo load [task] archive: needs to be part of class for dialog */    
         if ( $('.sample').length ) {
