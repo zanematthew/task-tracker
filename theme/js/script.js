@@ -35,7 +35,7 @@ jQuery(document).ready(function( $ ){
     $('#update_task', this).submit(function(){
         /** @props petemilkman.com for being right, concatinate data */
         $.ajax({
-            data: "action=project_wp_update_post&" + $(this).serialize(), 
+            data: "action=postTypeUpdate&" + $(this).serialize(), 
             success: function( msg ){
                 $('select', this).attr('disabled',' ');
                 location.reload( true );
@@ -126,7 +126,7 @@ jQuery(document).ready(function( $ ){
     /** @todo create [task]: needs to be part of class for dialog */
     $('#create_task_form', this).live('submit', function(){
         $.ajax({
-            data: "action=project_submit_task&" + $(this).serialize(), 
+            data: "action=postTypeSubmit&" + $(this).serialize(), 
             success: function( msg ){
                 clear_form();                    
             }
@@ -174,7 +174,7 @@ jQuery(document).ready(function( $ ){
             $('#tt_filter_target').toggle( "slow", function(){                
                 template = _plugindir + $( _this ).attr( 'tt_template' );
                 data = {
-                    action: "tt_load_template",
+                    action: "loadTemplate",
                     template: template
                 };
            
