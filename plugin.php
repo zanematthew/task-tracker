@@ -38,27 +38,34 @@ require_once 'functions.php';
  * - enqueue a base stylesheet
  */
 interface ICustomPostType {
+
     public function registerPostType( $param=array() );
     public function registerTaxonomy( $param=array() );        
-    // no need for you to implement this, i'll do it for you.
-    // public function templateRedirect();
-//    public function baseStyleSheet( $param=array() );
-}
+    public function templateRedirect();
+    // public function baseStyleSheet( $param=array() );
+
+} // End 'ICustomPostType'
+
 
 /**
- * Declare our methods signature, these methods should match what is defined in our interface.
- *
- * Within our abstract you will find the methods that are required to be implemented. Any functionality
- * desired should NOT be placed in this abstract. It should be placed in the Class that is implementing your
- * abstract.
+ * This is used to regsiter a custom post type, custom taxonomy and provide template redirecting.
+ * 
+ * Use the following templates if they exisits, fall back on normal WordPress template hierarchy:
+ * plugin_dir/themes/single-[my custom post type].php
+ * plugin_dir/themes/archive-[my custom post type].php 
+ * plugin_dir/thems/taxonomy-[my custom taxonomy].php 
  *
  */
 abstract class CustomPostTypeBase implements ICustomPostType {
+
     public $plugin_url = WP_PLUGIN_URL;
     public $plugin_dir = WP_PLUGIN_DIR;
     
     /**
      * Regsiter an unlimited number of CPTs based on an array of parmas.
+     * 
+     * Note, some args are still hard coded.
+     * Full list @ http://codex.wordpress.org/Function_Reference/register_post_type     
      */
     public function registerPostType( $args=NULL ) {
         $taxonomies = array();
@@ -90,7 +97,6 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 'parent_item_colon' => ''
                 );
 
-            /** Full list @ http://codex.wordpress.org/Function_Reference/register_post_type */            
             /** @todo make these optional */
             $supports = array(
                 'title',
@@ -132,8 +138,11 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 );
             
             register_post_type( $post_type['type'], $args);
+
         } // End 'foreach'         
+
         return $this->post_type;
+
     } // End 'function'
 
     public function registerTaxonomy( $args=NULL ) {
@@ -172,7 +181,8 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             register_taxonomy( $taxonomy['name'], $taxonomy['post_type'], $args );
         } // End 'foreach'
        
-    return $this->taxonomy;
+        return $this->taxonomy;
+    
     } // End 'function'   
 
     /**
@@ -273,15 +283,18 @@ class CustomPostType extends CustomPostTypeBase {
         add_action( 'init', array( &$this, 'registerPostType' ) );
         add_action( 'init', array( &$this, 'registerTaxonomy' ) ); 
         add_action( 'template_redirect', array( &$this, 'templateRedirect' ) );        
+        
+        /** @todo consider, moving the following to the abstract */
         add_action( 'wp_head', array( &$this, 'baseAjaxUrl' ) );        
-        add_action( 'wp_footer', array( &$this, 'createPostTypeDiv' ) );        
-        add_action( 'wp_ajax_loadTemplate', array( &$this, 'loadTemplate' ) ); // Load our create task form
-        add_action( 'wp_ajax_nopriv_loadTemplate', array( &$this, 'loadTemplate' ) ); // For users that are not logged in.        
+        add_action( 'wp_ajax_loadTemplate', array( &$this, 'loadTemplate' ) ); 
+        add_action( 'wp_ajax_nopriv_loadTemplate', array( &$this, 'loadTemplate' ) ); 
+        add_filter( 'post_class', array( &$this, 'addPostClass' ) );
+                
+        add_action( 'wp_footer', array( &$this, 'createPostTypeDiv' ) );            
         add_action( 'wp_ajax_postTypeSubmit', array( &$this, 'postTypeSubmit' ) );        
         add_action( 'wp_ajax_postTypeUpdate', array( &$this, 'postTypeUpdate' ) );
 
 //        add_action( 'admin_notices', 'tt_warning' );
-        add_filter( 'post_class', array( &$this, 'addPostClass' ) );
         
         wp_register_style(  'tt-styles', $this->plugin_url . 'theme/css/style.css', $this->dependencies['style'], 'all' );
         wp_register_style(  'qtip-nightly-style', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.css', '', 'all' );
@@ -291,10 +304,11 @@ class CustomPostType extends CustomPostTypeBase {
     }
     
     /**
-     * Add additional classes to post_class()
+     * Add additional classes to post_class() for additional CSS styling and JavaScript manipulation.
      *
      * Adds public and NOT builtin terms to the post_class function call outputing the following:
      * term_slug-taxonomy_id
+     * @todo addPostClass() consider moving this to the abstract
      */
     public function addPostClass( $classes ) {
         global $post;
@@ -307,9 +321,8 @@ class CustomPostType extends CustomPostTypeBase {
         $taxonomies = get_taxonomies( $args, $output ); 
 
         if ( $taxonomies ) {
-          foreach ($taxonomies  as $taxonomy ) {
+          foreach ($taxonomies  as $taxonomy )
             $tax_names[] .= $taxonomy->labels->name;
-          }
         }
 
         foreach( $tax_names as $name ) {
@@ -320,7 +333,7 @@ class CustomPostType extends CustomPostTypeBase {
             }
         }
         return $classes;
-    }
+    } // End 'addPostClass'
 
     /**
      * Basic post submission for use with an ajax request
@@ -434,11 +447,13 @@ die();
     }
     
     /**
-     * zm_base_ajaxurl() Print our ajax url in the footer 
+     * Print our ajax url in the footer 
+     * @todo baseAjaxUrl() consider moving to abstract
      */
     public function baseAjaxUrl() {
         print '<script type="text/javascript"> var ajaxurl = "'. admin_url("admin-ajax.php") .'"; var _pluginurl="'. MY_PLUGIN_URL.'";</script>';    
-    }       
+    } // End 'baseAjaxUrl'
+    
 } // End 'CustomPostType'
 
 $task = new CustomPostType();
