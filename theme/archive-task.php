@@ -83,11 +83,11 @@ $my_query = new WP_Query( $args );
 
             </div>
             <div class="zm-tt-sidebar-container">
-                <?php zm_base_list_terms( array('taxonomy' => 'status', 'link' => true ) ); ?>
-                <?php zm_base_list_terms( array('taxonomy' => 'priority', 'link' => true ) ); ?>
-                <?php zm_base_list_terms( array('taxonomy' => 'project', 'link' => true ) ); ?>
-                <?php zm_base_list_terms( array('taxonomy' => 'phase', 'link' => true ) ); ?>
-                <?php zm_base_list_terms( array('taxonomy' => 'assigned', 'link' => true ) ); ?>
+                <?php zm_base_list_terms( array('taxonomy' => 'status', 'link' => 'javascript://' ) ); ?>
+                <?php zm_base_list_terms( array('taxonomy' => 'priority', 'link' => 'anchor' ) ); ?>
+                <?php zm_base_list_terms( array('taxonomy' => 'project' ) ); ?>
+                <?php zm_base_list_terms( array('taxonomy' => 'phase' ) ); ?>
+                <?php zm_base_list_terms( array('taxonomy' => 'assigned' ) ); ?>
             </div>
         </div>
     </div>
