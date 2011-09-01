@@ -362,6 +362,7 @@ class CustomPostType extends CustomPostTypeBase {
         unset( $_POST['content'] );
         unset( $_POST['post_author'] );
         unset( $_POST['post_type'] );
+        unset( $_POST['security'] );
     
         $author_ID = get_current_user_id();
     
