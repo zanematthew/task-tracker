@@ -121,7 +121,6 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 'rewrite' => array( 'slug' => $post_type['slug'] ),
                 'hierarchical' => true,
                 'description' => 'Photo galleries',
-//                'taxonomies' => array( 'assigned', 'phase', 'priority', 'project', 'status', 'type', 'ETA' ),
                 'taxonomies' => $taxonomies,
                 'public' => true,
                 'show_ui' => true,
