@@ -216,10 +216,11 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 global $wp_query;
                 
                 if ( in_array( $wp_query->query_vars['taxonomy'], $my_taxonomies ) ) {
-                    foreach ( $my_taxonomies as $taxonomy ) {
-                        load_template( MY_PLUGIN_DIR . 'theme/archive-' . $k['type'] . '.php' );
+                    load_template( MY_PLUGIN_DIR . 'theme/'.$k['type'].'-taxonomy.php' );
+//                    foreach ( $my_taxonomies as $taxonomy ) {
+//                        load_template( MY_PLUGIN_DIR . 'theme/archive-' . $k['type'] . '.php' );
 //                        load_template( MY_PLUGIN_DIR . 'theme/taxonomy-' . $my_taxonomies. '.php' );
-                    }
+//                    }
                 }
                 exit;
                 break;
@@ -339,8 +340,6 @@ class CustomPostType extends CustomPostTypeBase {
      * Basic post submission for use with an ajax request
      */
     public function postTypeSubmit() {
-print_r( $_POST );
-die();
         check_ajax_referer( 'tt-ajax-forms', 'security' );
     
         if ( !is_user_logged_in() )
