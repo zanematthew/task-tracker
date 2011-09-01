@@ -90,8 +90,10 @@ jQuery(document).ready(function( $ ){
             template = $(this).attr( 'tt_template' );
     
             data = { 
-                action: "tt_load_template",
-                template: template
+                action: "loadTemplate",
+                template: template,
+                post_type: "task",
+                post_status: "published"
                 };
     
             $.ajax({
@@ -209,8 +211,9 @@ console.log( search_on[0] + ' ' + search_on[1] );
             $( "#archive_table tbody tr" ).fadeIn();            
         } 
     }        
-           
+
     $( window ).load(function(){
+                    
         // @todo if we have a hash store it to filter on later
         if ( window.location[ 'hash' ] )
             var search_on = window.location['hash'].split('-');            
@@ -218,6 +221,7 @@ console.log( search_on[0] + ' ' + search_on[1] );
         /** @todo load [task] archive: needs to be part of class for dialog */    
         if ( $('.sample').length ) {
             template = $( '.sample' ).attr('tt_template');
+
             data = { 
                 action: "loadTemplate",
                 post_type: "task",
@@ -229,6 +233,7 @@ console.log( search_on[0] + ' ' + search_on[1] );
                 data: data,
                 success: function( msg ){
                     $('#tt_main_target').fadeIn().html( msg );
+                    if ( search_on ) {
                         for( var i in _tasks ) {
                             // @todo would be better to tell it '#' vs. 1
                             if ( _tasks[i][search_on[0].substr( 1 ) ] == search_on[1] ) {
@@ -236,7 +241,8 @@ console.log( search_on[0] + ' ' + search_on[1] );
                             } else {
                                 $( ".post-" + i ).fadeOut();
                             }
-                        } // End 'for'           
+                        } // End 'for'          
+                    }
                 } // End 'suckit' 
             });
             return false;
