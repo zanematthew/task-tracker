@@ -155,6 +155,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             if ( empty( $taxonomy['plural_name'] ) )
                 $taxonomy['plural_name'] = $taxonomy['name'] . 's';
 
+/** @todo this as fasle fucks up on wp_set_post_terms() for submitting and updating a cpt */
             if ( empty( $taxonomy['hierarchical']) )
                 $taxonomy['hierarchical'] = false;
 
@@ -173,10 +174,15 @@ abstract class CustomPostTypeBase implements ICustomPostType {
 
             $args = array(
                 'labels'  => $labels,
+//                'hierarchical' => $taxonomy['hierarchical'],
+                'hierarchical' => true,
+                'query_var' => true,
+                'public' => true,
                 'rewrite' => array('slug' => $taxonomy['slug']),
-                'hierarchical' => $taxonomy['hierarchical'],
-                'query_var' => true
-                );
+                'show_in_nav_menus' => true,
+                'show_ui' => true,
+                'show_tagcloud' => true
+    );
             register_taxonomy( $taxonomy['name'], $taxonomy['post_type'], $args );
         } // End 'foreach'
        
