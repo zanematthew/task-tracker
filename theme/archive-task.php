@@ -12,18 +12,18 @@
                 <div id="tt_filter_target"></div>                
                 <div id="tt_main_target">
                     <div class="tt_loading"></div>
-                    <div class="sample" tt_template="theme/archive-table.php"></div>
+-                    <div class="sample" tt_template="theme/archive-table.php"></div> 
                     <div id="no_results">nothing here move on..</div>                        
                 </div>
             </div>
             <div class="zm-tt-sidebar-container">
-                <?php zm_base_list_terms( array('taxonomy' => 'status', 'link' => false ) ); ?>
-                <?php zm_base_list_terms( array('taxonomy' => 'priority', 'link' => false ) ); ?>
-                <?php zm_base_list_terms( array('taxonomy' => 'project', 'link' => false ) ); ?>
-                <?php zm_base_list_terms( array('taxonomy' => 'phase', 'link' => false ) ); ?>
-                <?php zm_base_list_terms( array('taxonomy' => 'assigned', 'link' => false ) ); ?>
+                <?php zm_base_list_terms( array('taxonomy' => 'status', 'link' => 'javascript://' ) ); ?>
+                <?php zm_base_list_terms( array('taxonomy' => 'priority', 'link' => 'anchor' ) ); ?>
+                <?php zm_base_list_terms( array('taxonomy' => 'project' ) ); ?>
+                <?php zm_base_list_terms( array('taxonomy' => 'phase' ) ); ?>
+                <?php zm_base_list_terms( array('taxonomy' => 'assigned' ) ); ?>
             </div>
         </div>
     </div>
-<?php tt_json_feed(); ?>
+<?php tt_json_feed( 'task',  array( 'status', 'priority', 'project', 'phase', 'assigned' ) ); ?>
 <?php get_footer(); ?>
