@@ -287,21 +287,29 @@ class CustomPostType extends CustomPostTypeBase {
             'wp-jquery-ui-dialog'
         );
         
+        
+        // @todo the abstract should possibly be responsible for doing this
         add_action( 'init', array( &$this, 'registerPostType' ) );
-        add_action( 'init', array( &$this, 'registerTaxonomy' ) ); 
+        add_action( 'init', array( &$this, 'registerTaxonomy' ) );                
         add_action( 'template_redirect', array( &$this, 'templateRedirect' ) );        
         
         /** @todo consider, moving the following to the abstract */
         add_action( 'wp_head', array( &$this, 'baseAjaxUrl' ) );        
         add_action( 'wp_ajax_loadTemplate', array( &$this, 'loadTemplate' ) ); 
-        add_action( 'wp_ajax_nopriv_loadTemplate', array( &$this, 'loadTemplate' ) ); 
+        add_action( 'wp_ajax_nopriv_loadTemplate', array( &$this, 'loadTemplate' ) ); // for public use
         add_filter( 'post_class', array( &$this, 'addPostClass' ) );
-                
+                        
+        // Only our container divs are loaded, the contents is injected via ajax :)
         add_action( 'wp_footer', array( &$this, 'createPostTypeDiv' ) );            
+        add_action( 'wp_footer', array( &$this, 'createLoginDiv' ) );            
+        
         add_action( 'wp_ajax_postTypeSubmit', array( &$this, 'postTypeSubmit' ) );        
         add_action( 'wp_ajax_postTypeUpdate', array( &$this, 'postTypeUpdate' ) );
-
-//        add_action( 'admin_notices', 'tt_warning' );
+        add_action( 'wp_ajax_siteLoginSubmit', array( &$this, 'siteLoginSubmit' ) );        
+        add_action( 'wp_ajax_nopriv_siteLoginSubmit', array( &$this, 'siteLoginSubmit' ) ); 
+        
+        // add_action( 'admin_notices', 'tt_warning' );
+        
         
         wp_register_style(  'tt-styles', $this->plugin_url . 'theme/css/style.css', $this->dependencies['style'], 'all' );
         wp_register_style(  'qtip-nightly-style', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.css', '', 'all' );
@@ -397,7 +405,7 @@ class CustomPostType extends CustomPostTypeBase {
     } // End 'postTypeSubmit'
     
     public function postTypeUpdate( $post ) {
-    
+
         $post_id = (int)$_POST['PostID'];
         $comment = $_POST['comment'];
     
@@ -434,6 +442,24 @@ class CustomPostType extends CustomPostTypeBase {
         die();
     }    
     
+    public function siteLoginSubmit() {
+        $creds = array();
+        $creds['user_login'] = $_POST['user_name'];
+        $creds['user_password'] = $_POST['password'];
+
+        if ( $_POST['remember'] == 'on' )
+            $creds['remember'] = true;
+        else            
+            $creds['remember'] = false;
+            
+        $user = wp_signon( $creds, false );
+
+        if ( is_wp_error( $user ) )
+            $user->get_error_message();
+
+        die();
+    }
+
     /** 
      * load our template 
      * uh, why not make it ajaxy? :D
@@ -450,6 +476,10 @@ class CustomPostType extends CustomPostTypeBase {
 
     public function createPostTypeDiv(){
         print '<div id="create_ticket_dialog" class="dialog-container"><div id="create_ticket_target" style="display: none;">hi</div></div>';
+    }
+
+    public function createLoginDiv(){
+        print '<div id="login_dialog" class="dialog-container"><div id="login_target" style="display: none;">login hi</div></div>';
     }
     
     /**

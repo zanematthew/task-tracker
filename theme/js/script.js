@@ -56,27 +56,61 @@ jQuery(document).ready(function( $ ){
         modal: true
     });
 
-    /** Load dialog box and get create ticket form */
-    /** @todo create dialog [task]: needs to be part of class for dialog */
-    $('#create_ticket').click(function(){
-        $('#create_ticket_dialog').dialog('open');        
-        
+    $('#login_dialog').dialog({ 
+        autoOpen: false,
+        title: 'Please <em>LTFO</em>',
+        modal: true
+    });
+    
+    $('#login_exit').live('click', function(){
+        $( '#login_dialog' ).dialog( 'close' ); 
+    });
+    
+    function temp_load( params ) {
         // @todo templating still handled via php, consider js templating?
-        template = $(this).attr( 'tt_template' );
-        
         data = { 
             action: "loadTemplate",
-            template: template
+            template: params.template
             };
 
         $.ajax({
             data: data,
             success: function( msg ){
-                $('#create_ticket_target').fadeIn().html( msg );
+                $( params.target_div ).fadeIn().html( msg );
             }
-        });
-    });   
+        });    
+    }
     
+    /** Load dialog box and get create ticket form */
+    /** @todo create dialog [task]: needs to be part of class for dialog */
+    $('#create_ticket').click(function(){
+        $('#create_ticket_dialog').dialog('open');        
+        var params  = {};
+        params.target_div = '#create_ticket_target';
+        params.template = $( this ).attr( 'tt_template' );
+        temp_load( params );         
+    });   
+
+    // @todo look up^^ very similar!
+    $( '#ltfo_handle' ).click(function(){
+        $( '#login_dialog' ).dialog( 'open' );
+        var params  = {};
+        params.target_div = '#login_target';
+        params.template = $( this ).attr( 'tt_template' );
+        temp_load( params );        
+    });
+    
+
+    /** @todo create [task]: needs to be part of class for dialog */
+    $('#login_form', this).live('submit', function(){
+        $.ajax({
+            data: "action=siteLoginSubmit&" + $(this).serialize(), 
+            success: function( msg ){
+                location.reload( true );
+            }
+        });    
+    });
+
     /** @todo exit dialog [task]: needs to be part of class for dialog */    
     /**
      * Exit our dialog box on click and reload our archive view

@@ -9,10 +9,15 @@
                     </div>
                 <?php else : ?>
                     <div class="zm-tt-form-container">
-                        <a href="<?php echo wp_login_url(); ?>" class="login" title="Click to login and create a Task">Login to create a Task</a>
+                        <a href="javascript://" id="ltfo_handle" class="login" tt_template="theme/login.php" title="Click to login and create a Task">LTFI to create a Task</a>
                     </div>
                 <?php endif ?>
             </li>
         </ul>
     </nav>
 </div>
+
+<?php if ( is_user_logged_in() ) : ?>
+<a href="<?php echo wp_logout_url( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ); ?>" title="Logout the fuck out">LTFO</a>
+<?php endif; ?>
+
