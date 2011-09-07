@@ -49,7 +49,7 @@ jQuery(document).ready(function( $ ){
      */
     $('#create_ticket_dialog').dialog({ 
         autoOpen: false,
-        minWidth: 600,
+        minWidth: 750,
         maxWidth: 800,
         minHeight: 630,
         title: 'Create a <em>Task</em>',
