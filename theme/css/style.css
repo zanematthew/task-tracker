@@ -24,7 +24,7 @@ pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px
 -------------------------------------------------------------- */
 .ui-dialog { background: #fff; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 0 30px #666; float: left; }
 .ui-dialog .form-container { background: none; padding: 0; }
-.ui-dialog .button-container { margin: 20px 0 0 0; }
+.ui-dialog .button-container { border-top: 1px solid #E3E3E3; float: left; margin: 20px 0 0 0; padding: 10px 0 10px 10px; width: 100%; }
 .ui-dialog-title { color: #333; float: left; font: bold 16px/1 sans-serif; margin: 0; padding: 10px; }
 .ui-dialog-title em { color: #888; }
 .ui-widget-overlay { 
@@ -124,7 +124,6 @@ clear: both; float: left; padding: 5px; width: 97%;
 .zm-tt-form-container a#exit { color: red; float: right; }
 
 .zm-tt-form-container input#pt_publish { color: green; }
-.zm-tt-form-container .button-container { border-top: 1px solid #E3E3E3; float: left; padding: 10px 0 10px 10px; width: 100%; }
 
 .zm-tt-form-container form p label,
 .zm-tt-form-container form p label .title,
