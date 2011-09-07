@@ -19,16 +19,18 @@
     </div>
 <?php endif; ?>
 
+<div class="comments-container">
+<h2>Notes</h2>
 <ul>
     <?php
     $comments = get_comments( array(
-        'post_id' => $post->ID,
+      'post_id' => $post->ID,
       'number'    => 10,
       'status'    => 'approve'
     ) );
-    
     foreach($comments as $comment) :
-        echo "<li>{$comment->comment_content}<br /><small>{$comment->comment_author}</small></li>";
+        echo "<li>{$comment->comment_content}<br /><small>{$comment->comment_author} @ {$comment->comment_date}</small></li>";
     endforeach;    
     ?>
 </ul>
+</div>
