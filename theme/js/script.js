@@ -158,9 +158,9 @@ jQuery(document).ready(function( $ ){
         var search_on = $( this ).attr( 'rel' );
         search_on = search_on.split( "_" );
 
-        for( var i in _tasks ) {
+        for( var i in _task ) {
 console.log( search_on[0] + ' ' + search_on[1] );
-            if ( _tasks[i][search_on[0]] == search_on[1] ) {
+            if ( _task[i][search_on[0]] == search_on[1] ) {
                 $( ".post-" + i ).fadeIn();
             } else {
                 $( ".post-" + i ).fadeOut();
@@ -234,9 +234,9 @@ console.log( search_on[0] + ' ' + search_on[1] );
                 success: function( msg ){
                     $('#tt_main_target').fadeIn().html( msg );
                     if ( search_on ) {
-                        for( var i in _tasks ) {
+                        for( var i in _task ) {
                             // @todo would be better to tell it '#' vs. 1
-                            if ( _tasks[i][search_on[0].substr( 1 ) ] == search_on[1] ) {
+                            if ( _task[i][search_on[0].substr( 1 ) ] == search_on[1] ) {
                                 $( ".post-" + i ).fadeIn();
                             } else {
                                 $( ".post-" + i ).fadeOut();

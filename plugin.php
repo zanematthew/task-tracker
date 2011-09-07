@@ -197,8 +197,9 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     public function templateRedirect() {
 
         $current_post_type = get_query_var( 'post_type' ); // $current_post_type
-
-        $my_cpt = get_post_types( array( 'name' => 'task' ) ,'objects' );
+        
+        // @todo this will fuck me up later, it needs to be an array of CPTS with CTTs
+        $my_cpt = get_post_types( array( 'name' => $this->post_type[0]['type']), 'objects' );
 
         foreach( $my_cpt as $myt )
             $my_taxonomies = $myt->taxonomies;

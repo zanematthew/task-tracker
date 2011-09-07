@@ -54,6 +54,6 @@ function tt_json_feed( $post_type, $taxonomies=array() ) {
         }
     
     endwhile;
-    print '<script type="text/javascript">var _tasks = ' . json_encode( $types ) . '</script>';
+    print '<script type="text/javascript">var _'.$post_type.' = ' . json_encode( $types ) . '</script>';
 }
 endif;
