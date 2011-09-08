@@ -7,7 +7,12 @@ Alpha demo can be view [here] (http://zanematthew.com/task/).
 ### EXPERIENCE
 A WordPress plugin that turns WordPress into a SIMPLE task tracking machine. Its intended use is to have a centeral location where you can record your task, be it something as simple as: "read up on backbone js", "check the issue tracker on wiki" or "take out the trash". 
 
-Each Task can be assigned:
+Each Task has a:
+
+* Title
+* Description
+
+And can be assigned:
 
 * Status
 * Priority
