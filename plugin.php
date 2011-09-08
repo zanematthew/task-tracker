@@ -17,7 +17,6 @@ if ( is_admin() ) {
  * Author URI: http://zanematthew.com/
  * License: GP
  */
-/** @todo make OO Procedural code to make generating forms via CPTs and CTTs easier */
 require_once 'wordpress-helper-functions.php';
 require_once 'functions.php';
 
@@ -76,7 +75,6 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         
             $post_type['type'] = strtolower( $post_type['type'] );
             
-            /** */
             if ( empty( $post_type['singular_name'] ) )
                 $post_type['singular_name'] = $post_type['name'];
 
@@ -120,7 +118,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 'supports' => $supports,
                 'rewrite' => array( 'slug' => $post_type['slug'] ),
                 'hierarchical' => true,
-                'description' => 'Photo galleries',
+                'description' => 'None for now GFYS',
                 'taxonomies' => $taxonomies,
                 'public' => true,
                 'show_ui' => true,
@@ -155,7 +153,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             if ( empty( $taxonomy['plural_name'] ) )
                 $taxonomy['plural_name'] = $taxonomy['name'] . 's';
 
-/** @todo this as fasle fucks up on wp_set_post_terms() for submitting and updating a cpt */
+            /** @todo if this as fasle fucks up on wp_set_post_terms() for submitting and updating a cpt */
             if ( empty( $taxonomy['hierarchical']) )
                 $taxonomy['hierarchical'] = false;
 
@@ -174,7 +172,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
 
             $args = array(
                 'labels'  => $labels,
-//                'hierarchical' => $taxonomy['hierarchical'],
+                // 'hierarchical' => $taxonomy['hierarchical'],
                 'hierarchical' => true,
                 'query_var' => true,
                 'public' => true,
@@ -182,8 +180,10 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 'show_in_nav_menus' => true,
                 'show_ui' => true,
                 'show_tagcloud' => true
-    );
+                );
+                
             register_taxonomy( $taxonomy['name'], $taxonomy['post_type'], $args );
+            
         } // End 'foreach'
        
         return $this->taxonomy;
@@ -191,8 +191,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     } // End 'function'   
 
     /**
-     * Determines archive template, single template, and template per taxonomy if any exisits
-     * else falls back on theme tempates
+     * Determines which template to redirct to.
      */
     public function templateRedirect() {
 
@@ -205,13 +204,13 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             $my_taxonomies = $myt->taxonomies;
 
         // Quick and harsh error checking
+        // @todo again, needs to be an array, i think will fuck me later.
         if ( !isset( $this->post_type ) ) wp_die( 'Need a CPT!' );
         if ( !isset( $my_taxonomies ) ) wp_die( 'Need a CTT!' );
 
         wp_enqueue_style( 'qtip-nightly-style' );
         wp_enqueue_style( 'wp-jquery-ui-dialog' );
         wp_enqueue_style( 'tt-styles' );
-    
         wp_enqueue_script( 'tt-script' );
         wp_enqueue_script( 'qtip-nightly' );
         wp_enqueue_script( 'jquery-ui-effects' );
@@ -223,10 +222,10 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 
                 if ( in_array( $wp_query->query_vars['taxonomy'], $my_taxonomies ) ) {
                     load_template( MY_PLUGIN_DIR . 'theme/'.$k['type'].'-taxonomy.php' );
-//                    foreach ( $my_taxonomies as $taxonomy ) {
-//                        load_template( MY_PLUGIN_DIR . 'theme/archive-' . $k['type'] . '.php' );
-//                        load_template( MY_PLUGIN_DIR . 'theme/taxonomy-' . $my_taxonomies. '.php' );
-//                    }
+                    // foreach ( $my_taxonomies as $taxonomy ) {
+                        // load_template( MY_PLUGIN_DIR . 'theme/archive-' . $k['type'] . '.php' );
+                        // load_template( MY_PLUGIN_DIR . 'theme/taxonomy-' . $my_taxonomies. '.php' );
+                    // }
                 }
                 exit;
                 break;
@@ -252,11 +251,18 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 break;
             default:
                 return;
+                
             } // End 'switch'
+            
         } // End 'foreach'
+        
     } // End 'function templateRedirect'    
+    
 } // End 'CustomPostTypeBase'
 
+/**
+ * Our class
+ */
 class CustomPostType extends CustomPostTypeBase { 
     
     static $instance;
@@ -266,7 +272,7 @@ class CustomPostType extends CustomPostTypeBase {
     public $dependencies = array();
         
     /**
-     * Everything to be ran when our class is instantioned adds hooks and sh!t 
+     * Every thing that is "custom" to our CPT goes here.
      */
     public function __construct() {
         self::$instance = $this;       
@@ -286,7 +292,6 @@ class CustomPostType extends CustomPostTypeBase {
         $this->dependencies['style'] = array(
             'wp-jquery-ui-dialog'
         );
-        
         
         // @todo the abstract should possibly be responsible for doing this
         add_action( 'init', array( &$this, 'registerPostType' ) );
@@ -309,14 +314,13 @@ class CustomPostType extends CustomPostTypeBase {
         add_action( 'wp_ajax_nopriv_siteLoginSubmit', array( &$this, 'siteLoginSubmit' ) ); 
         
         // add_action( 'admin_notices', 'tt_warning' );
-        
-        
         wp_register_style(  'tt-styles', $this->plugin_url . 'theme/css/style.css', $this->dependencies['style'], 'all' );
         wp_register_style(  'qtip-nightly-style', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.css', '', 'all' );
         wp_register_script( 'tt-script', $this->plugin_url . 'theme/js/script.js', $this->dependencies['script'], '1.0' );        
         wp_register_script( 'jquery-ui-effects', $this->plugin_url . 'theme/js/jquery-ui-1.8.13.effects.min.js', $this->dependencies['script'], '1.8.13' );
         wp_register_script( 'qtip-nightly', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.js', $this->dependencies['script'], '0.0.1' );            
     }
+    
     
     /**
      * Add additional classes to post_class() for additional CSS styling and JavaScript manipulation.
@@ -331,13 +335,13 @@ class CustomPostType extends CustomPostTypeBase {
           'public'   => true,
           '_builtin' => false  
         ); 
-        $output = 'objects'; // or objects
+        $output = 'objects';
         $tax_names = array();        
         $taxonomies = get_taxonomies( $args, $output ); 
 
         if ( $taxonomies ) {
-          foreach ($taxonomies  as $taxonomy )
-            $tax_names[] .= $taxonomy->labels->name;
+            foreach ($taxonomies  as $taxonomy )
+                $tax_names[] .= $taxonomy->labels->name;
         }
 
         foreach( $tax_names as $name ) {
@@ -347,9 +351,12 @@ class CustomPostType extends CustomPostTypeBase {
                     $classes[] = $name . '-' . $term->term_id;
             }
         }
+        
         return $classes;
+        
     } // End 'addPostClass'
 
+    
     /**
      * Basic post submission for use with an ajax request
      */
@@ -390,10 +397,13 @@ class CustomPostType extends CustomPostTypeBase {
         );
         
         $post_id = wp_insert_post( $post, true );
-    
+        
         if ( is_wp_error( $post_id ) )
             return;
-    
+        
+        /**
+         * if insert was successful we take everything left in post and submit, yeah, should be while listed, I'm dumb or lazy
+         */
         if ( !empty( $post_id ) ) {
             $taxonomies = $_POST;
             foreach( $taxonomies as $taxonomy => $term ) {
@@ -404,6 +414,7 @@ class CustomPostType extends CustomPostTypeBase {
         die();
     } // End 'postTypeSubmit'
     
+
     public function postTypeUpdate( $post ) {
 
         $post_id = (int)$_POST['PostID'];
