@@ -413,8 +413,11 @@ class CustomPostType extends CustomPostTypeBase {
         }
         die();
     } // End 'postTypeSubmit'
-    
 
+    
+    /**
+     * Simple form submission to be used in AJAX request!
+     */
     public function postTypeUpdate( $post ) {
 
         if ( !is_user_logged_in() )
@@ -459,8 +462,12 @@ class CustomPostType extends CustomPostTypeBase {
             wp_insert_comment( $data );
         }
         die();
-    }    
-    
+    } // postTypeUpdate
+
+
+    /**
+     * to be used in AJAX submission, gets the $_POST data and logs the user in.
+     */    
     public function siteLoginSubmit() {
         $creds = array();
         $creds['user_login'] = $_POST['user_name'];
@@ -477,7 +484,7 @@ class CustomPostType extends CustomPostTypeBase {
             $user->get_error_message();
 
         die();
-    }
+    } // siteLoginSubmit
 
     /** 
      * load our template 
@@ -491,7 +498,7 @@ class CustomPostType extends CustomPostTypeBase {
     
         load_template( MY_PLUGIN_DIR . $template );
         die();
-    }
+    } // loadTemplate
 
     public function createPostTypeDiv(){
         print '<div id="create_ticket_dialog" class="dialog-container"><div id="create_ticket_target" style="display: none;">hi</div></div>';
