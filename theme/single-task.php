@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="zm-tt-sidebar-container">
-            <?php zm_base_list_terms( array('taxonomy' => 'status', 'link' => false ) ); ?>
+            <?php zm_base_list_terms( array('taxonomy' => 'status' ) ); ?>
             <?php zm_base_list_terms( array('taxonomy' => 'priority', 'link' => false ) ); ?>
             <?php zm_base_list_terms( array('taxonomy' => 'project', 'link' => false ) ); ?>
             <?php zm_base_list_terms( array('taxonomy' => 'phase', 'link' => false ) ); ?>
