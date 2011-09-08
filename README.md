@@ -10,6 +10,7 @@ Theming should be done as followed:
 
 ## REPO STRUCTURE
 ### LIBRARY
+3rd party libraries go here, we try to keep this to as less as possible, because well if we didn't write it it's probally no
 ### THEME
 At the root level you'll find templates that should reflect the WordPress template naming convention as much as possible. 
 For more information check the WordPress docs [here] (http://codex.wordpress.org/Template_Hierarchy). Note the plugin will try
