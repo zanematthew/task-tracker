@@ -14,8 +14,11 @@ Theming should be done as followed:
 At the root level you'll find templates that should reflect the WordPress template naming convention as much as possible. 
 For more information check the WordPress docs [here] (http://codex.wordpress.org/Template_Hierarchy). Note the plugin will try
 and load the template for the current theme first then will fall back on the "default". i.e.
+
   /wp-content/theme/[my-theme]/task-single.php
+
   /wp-content/plugins/task-tracker/theme/task-single.php
+
 #### JS
 #### CSS
 
