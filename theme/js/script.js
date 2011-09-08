@@ -35,7 +35,7 @@ jQuery(document).ready(function( $ ){
     $('#update_task', this).submit(function(){
         /** @props petemilkman.com for being right, concatinate data */
         $.ajax({
-            data: "action=project_wp_update_post&" + $(this).serialize(), 
+            data: "action=postTypeUpdate&" + $(this).serialize(), 
             success: function( msg ){
                 $('select', this).attr('disabled',' ');
                 location.reload( true );
@@ -49,34 +49,68 @@ jQuery(document).ready(function( $ ){
      */
     $('#create_ticket_dialog').dialog({ 
         autoOpen: false,
-        minWidth: 600,
+        minWidth: 750,
         maxWidth: 800,
         minHeight: 630,
         title: 'Create a <em>Task</em>',
         modal: true
     });
 
-    /** Load dialog box and get create ticket form */
-    /** @todo create dialog [task]: needs to be part of class for dialog */
-    $('#create_ticket').click(function(){
-        $('#create_ticket_dialog').dialog('open');        
-        
+    $('#login_dialog').dialog({ 
+        autoOpen: false,
+        title: 'Please <em>LTFO</em>',
+        modal: true
+    });
+    
+    $('#login_exit').live('click', function(){
+        $( '#login_dialog' ).dialog( 'close' ); 
+    });
+    
+    function temp_load( params ) {
         // @todo templating still handled via php, consider js templating?
-        template = $(this).attr( 'tt_template' );
-        
         data = { 
-            action: "tt_load_template",
-            template: template
+            action: "loadTemplate",
+            template: params.template
             };
 
         $.ajax({
             data: data,
             success: function( msg ){
-                $('#create_ticket_target').fadeIn().html( msg );
+                $( params.target_div ).fadeIn().html( msg );
             }
-        });
-    });   
+        });    
+    }
     
+    /** Load dialog box and get create ticket form */
+    /** @todo create dialog [task]: needs to be part of class for dialog */
+    $('#create_ticket').click(function(){
+        $('#create_ticket_dialog').dialog('open');        
+        var params  = {};
+        params.target_div = '#create_ticket_target';
+        params.template = $( this ).attr( 'tt_template' );
+        temp_load( params );         
+    });   
+
+    // @todo look up^^ very similar!
+    $( '#ltfo_handle' ).click(function(){
+        $( '#login_dialog' ).dialog( 'open' );
+        var params  = {};
+        params.target_div = '#login_target';
+        params.template = $( this ).attr( 'tt_template' );
+        temp_load( params );        
+    });
+    
+
+    /** @todo create [task]: needs to be part of class for dialog */
+    $('#login_form', this).live('submit', function(){
+        $.ajax({
+            data: "action=siteLoginSubmit&" + $(this).serialize(), 
+            success: function( msg ){
+                location.reload( true );
+            }
+        });    
+    });
+
     /** @todo exit dialog [task]: needs to be part of class for dialog */    
     /**
      * Exit our dialog box on click and reload our archive view
@@ -90,8 +124,10 @@ jQuery(document).ready(function( $ ){
             template = $(this).attr( 'tt_template' );
     
             data = { 
-                action: "tt_load_template",
-                template: template
+                action: "loadTemplate",
+                template: template,
+                post_type: "task",
+                post_status: "published"
                 };
     
             $.ajax({
@@ -126,7 +162,7 @@ jQuery(document).ready(function( $ ){
     /** @todo create [task]: needs to be part of class for dialog */
     $('#create_task_form', this).live('submit', function(){
         $.ajax({
-            data: "action=project_submit_task&" + $(this).serialize(), 
+            data: "action=postTypeSubmit&" + $(this).serialize(), 
             success: function( msg ){
                 clear_form();                    
             }
@@ -155,9 +191,10 @@ jQuery(document).ready(function( $ ){
     
         var search_on = $( this ).attr( 'rel' );
         search_on = search_on.split( "_" );
-    
-        for( var i in _tasks ) {
-            if ( _tasks[i][search_on[0]] == search_on[1] ) {
+
+        for( var i in _task ) {
+console.log( search_on[0] + ' ' + search_on[1] );
+            if ( _task[i][search_on[0]] == search_on[1] ) {
                 $( ".post-" + i ).fadeIn();
             } else {
                 $( ".post-" + i ).fadeOut();
@@ -174,7 +211,7 @@ jQuery(document).ready(function( $ ){
             $('#tt_filter_target').toggle( "slow", function(){                
                 template = _plugindir + $( _this ).attr( 'tt_template' );
                 data = {
-                    action: "tt_load_template",
+                    action: "loadTemplate",
                     template: template
                 };
            
@@ -191,25 +228,38 @@ jQuery(document).ready(function( $ ){
     /** @todo filter [task] archive: needs to be part of class for dialog */    
     $( '#tt_filter_target select' ).live( 'change', function() {   
         var searchClass = '';     
+        
         $( "#filter_task_form select" ).each(function() { 
             if( $( this ).val() != "" ) 
                 searchClass += "." + $(this).val(); 
         }); 
         
+        searchTemp( searchClass );
+    });
+
+    function searchTemp( searchClass ) {        
         if ( searchClass != '' ) {            
             $( "#archive_table tbody tr" + searchClass ).fadeIn();                
             $( "#archive_table tbody tr" ).not(searchClass).fadeOut(); 
         } else {
             $( "#archive_table tbody tr" ).fadeIn();            
         } 
-    });
-        
+    }        
+
     $( window ).load(function(){
+                    
+        // @todo if we have a hash store it to filter on later
+        if ( window.location[ 'hash' ] )
+            var search_on = window.location['hash'].split('-');            
+
         /** @todo load [task] archive: needs to be part of class for dialog */    
         if ( $('.sample').length ) {
             template = $( '.sample' ).attr('tt_template');
+
             data = { 
-                action: "tt_load_template",
+                action: "loadTemplate",
+                post_type: "task",
+                post_status: "publish",
                 template: template
             };
 
@@ -217,7 +267,17 @@ jQuery(document).ready(function( $ ){
                 data: data,
                 success: function( msg ){
                     $('#tt_main_target').fadeIn().html( msg );
-                }
+                    if ( search_on ) {
+                        for( var i in _task ) {
+                            // @todo would be better to tell it '#' vs. 1
+                            if ( _task[i][search_on[0].substr( 1 ) ] == search_on[1] ) {
+                                $( ".post-" + i ).fadeIn();
+                            } else {
+                                $( ".post-" + i ).fadeOut();
+                            }
+                        } // End 'for'          
+                    }
+                } // End 'suckit' 
             });
             return false;
         } // End 'if'

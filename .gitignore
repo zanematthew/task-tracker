@@ -1,2 +1,9 @@
+# Don't worry its just a symlink
+wp-config.php
+
+# Any save files
 *.*~
+*.*.save
+
+# Pesky hidden mac file
 .DS_Store

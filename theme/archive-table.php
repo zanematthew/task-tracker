@@ -1,8 +1,8 @@
 <?php
 global $wp_query;
 $args = array(
-  'post_type' => 'task',
-  'post_status' => 'publish'
+  'post_type' => $_POST['post_type'],
+  'post_status' => $_POST['post_status']
 );
 
 $my_query = null;
@@ -14,7 +14,7 @@ $my_query = new WP_Query( $args );
             <tr>
                 <th id="title"><span>Title</span></th>
                 <th id="milestone"><span>Phase</span></th>
-                <th id="age"><span>Age</span></th>
+                <th id="assigned"><span>Assigned</span></th>
                 <th id="status"><span>Status</span></th>
                 <th id="priority"><span>Priority</span></th>
                 <th id="project"><span>Project</span></th>
@@ -37,7 +37,9 @@ $my_query = new WP_Query( $args );
                     </div>
                 </td>
                 <td>
-                    <?php tt_task_age(); ?>
+                    <div class="milestone-container zm-base-item">
+                        <?php print zm_base_get_the_term_list( array( 'link' => false, 'post_id' => $post->ID, 'taxonomy' => 'assigned' )); ?>
+                    </div>
                 </td>
                 <td>
                     <div class="status-container">
@@ -57,6 +59,5 @@ $my_query = new WP_Query( $args );
         <?php endwhile; ?>
     </table>
     <div id="no_results">nothing here move on..</div>
-    <?php tt_json_feed(); ?>
+    <?php tt_json_feed( 'task',  array( 'status', 'priority', 'project', 'phase', 'assigned' ) ); ?>
 </div>
-

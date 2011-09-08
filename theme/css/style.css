@@ -24,7 +24,7 @@ pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px
 -------------------------------------------------------------- */
 .ui-dialog { background: #fff; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 0 30px #666; float: left; }
 .ui-dialog .form-container { background: none; padding: 0; }
-.ui-dialog .button-container { margin: 20px 0 0 0; }
+.ui-dialog .button-container { border-top: 1px solid #E3E3E3; float: left; margin: 20px 0 0 0; padding: 10px 0 10px 10px; width: 100%; }
 .ui-dialog-title { color: #333; float: left; font: bold 16px/1 sans-serif; margin: 0; padding: 10px; }
 .ui-dialog-title em { color: #888; }
 .ui-widget-overlay { 
@@ -32,6 +32,11 @@ pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px
     background: -webkit-radial-gradient(rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 35%, rgba(0, 0, 0, 0.7)); 
 }
 .ui-draggable .ui-dialog-titlebar { background: -moz-linear-gradient(center top , #E3E3E3, #F9F9F9) repeat scroll 0 0 transparent; border-bottom: 1px solid #E3E3E3; }
+/** default wp login form */
+#login_form input[type="password"], 
+#login_form input[type="text"] { width: 93%; }
+#login_form .form-wrapper { padding-bottom: 0; }
+#login_form .button-container { padding: 10px; width: 93%; }
 
 /*= Navigation
 -------------------------------------------------------------- */
@@ -100,6 +105,7 @@ pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px
 .zm-tt-form-container form fieldset label { clear: both; float: left; font-weight: 300; margin: 0 0 4px 5px; }
 .zm-tt-form-container textarea { height: 200px; padding: 5px; width: 97%; }
 .zm-tt-form-container textarea,
+.zm-tt-form-container input[type="password"],
 .zm-tt-form-container input[type="text"] { 
 background: #FAFAFA;
 box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1) inset;
@@ -121,10 +127,12 @@ clear: both; float: left; padding: 5px; width: 97%;
 .zm-tt-form-container #create_task_form form p { float: left; margin: 0 0 20px; width: 100%; }
 .zm-tt-form-container #create_task_form .button-container { float: left; margin: 0; padding-right: 10px; width: 96.5%; }
 .zm-tt-form-container a.button { float: left; padding: 8px 20px; }
+.zm-tt-form-container #login_exit,
 .zm-tt-form-container a#exit { color: red; float: right; }
 
+#login_form #login_button,
+.zm-tt-form-container input#wp-submit,
 .zm-tt-form-container input#pt_publish { color: green; }
-.zm-tt-form-container .button-container { border-top: 1px solid #E3E3E3; float: left; padding: 10px 0 10px 10px; width: 100%; }
 
 .zm-tt-form-container form p label,
 .zm-tt-form-container form p label .title,
@@ -171,6 +179,8 @@ clear: both; float: left; padding: 5px; width: 97%;
 
 .zm-tt-form-container .button,
 .zm-tt-form-container .button a { color: #00aecf; font-weight: bold; letter-spacing: 0.3px; text-shadow: 1px 1px 0 #fff; }
+
+.zm-tt-form-container input[type="submit"],
 .zm-tt-form-container .button { 
     background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3); 
     background: -webkit-linear-gradient(top , #F9F9F9, #E3E3E3); 
@@ -183,9 +193,6 @@ clear: both; float: left; padding: 5px; width: 97%;
     border: 1px solid; border-color: #ccc #bbb #a0a0a0; border-left: 1px solid #bbb; border-radius: 5px; cursor: pointer; 
     font: bold 15px/1 "Helvetica Neue", sans-serif, arial; 
     margin-right: 10px; 
-    }
-
-.zm-tt-form-container .button { 
     padding: 8px 20px; 
 }
 
@@ -224,3 +231,6 @@ ul.inline li { float: left; }
 .ui-tooltip, 
 .qtip { font-size: 11px; max-width: 180px; }
 
+.comments-container { float: left; }
+.comments-container ul { margin: 0; }
+.comments-container ul li { margin: 0 0 20px 20px; }
