@@ -417,6 +417,14 @@ class CustomPostType extends CustomPostTypeBase {
 
     public function postTypeUpdate( $post ) {
 
+        if ( !is_user_logged_in() )
+            return false;
+
+        if ( current_user_can( 'publish_posts' ) )
+            $status = 'publish';
+        else
+            $status = 'pending';
+
         $post_id = (int)$_POST['PostID'];
         $comment = $_POST['comment'];
     
