@@ -1,7 +1,38 @@
-TaskTracker -- A plugin that turns WordPress into a SIMPLE task tracking system.
+TaskTracker -- A simple way to track your task.
 ====================================
 
+Alpha demo can be view [here] (http://zanematthew.com/task/).
+
 ## DESCRIPTION
+### EXPERIENCE
+A WordPress plugin that turns WordPress into a SIMPLE task tracking machine. Its intended use is to have a centeral location where you can record your task, be it something as simple as: "read up on backbone js", "check the issue tracker on wiki" or "take out the trash". 
+
+Each Task can be assigned:
+
+* Status
+* Priority
+* Project
+* Phase
+* Assignee
+* ETA
+
+This is NOT a replacement for a bug/issue tracker, advanced project management tracking, simple todo (or honey do list).
+
+### TECHNICAL
+This plugin leverages: 
+
+* Custom Post Types
+* Custom Taxonoimes
+* AJAX form submission
+* AJAX login 
+* JSON powered filter/search.
+
+Requirments
+
+* WordPress
+* PHP 5.3.2 or higher
+
+
 ## INSTALLATION
 Place the folder 
 
@@ -20,8 +51,9 @@ Which will link to the Task archive page (this is the preferred way). From here 
 ## THEMING
 Theming should be done as followed:
 
-1. Simple customization -- Override CSS in your THEME!
-1. Advanced customization -- Override the template by creating a template in your current theme file.
+1. Simple customization - Override CSS in your THEME!
+1. Advanced customization - Override the template by creating a template in your current theme file.
+1. Extra-advanced customization - huh? don't even f^cking think about it.  
 
 ## REPO STRUCTURE
 
