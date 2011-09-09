@@ -24,7 +24,7 @@ $my_query = new WP_Query( $args );
         <?php if ( $my_query->have_posts() ) while ( $my_query->have_posts() ) : $my_query->the_post(); ?>
             <tr <?php post_class('result')?>>
                 <td><?php $x++; ?>
-                     <strong class="title"><a href="<?php the_permalink(); ?>" title="Link to project: <?php the_title(); ?>">#<?php the_ID(); ?> <?php the_title(); ?></a></strong>
+                     <strong class="title"><a href="<?php the_permalink(); ?>" title="Link to project: <?php the_title(); ?>"><?php the_title(); ?></a></strong>
                      <span class="comment-count"><?php comments_number(' '); ?></span>
                      <div class="utility-container zm-base-hidden">
                          <?php edit_post_link('Admin Edit', '' , ' |'); ?>
