@@ -171,35 +171,41 @@ jQuery(document).ready(function( $ ){
 
     /** @todo filter [task] onclick: needs to be part of class for dialog */    
     $(".zm-base-item a").live("click", function() {
-
-        if ( !$( '#archive_table' ).length ) {
-            $('#tt_main_target').fadeOut();
-            template = "theme/archive-table.php";
-            data = { 
-                action: "tt_load_template",
-                template: template
-            };
-
-           $.ajax({
-                data: data,
-                success: function( msg ){
-                    $('#tt_main_target').fadeIn().html( msg );
-                }
-            });
-            return false;
-        }
+        
+        var link = $( this ).attr( 'href' );
+        
+        // This is not fucking ajax
+        // we can't just check for 'http://' cause chrome removes it
+        // should be a better way to do this.
+        if ( link.substring( 0, 1 ) == '#' || link == 'javascript://' ) {
+            if ( !$( '#archive_table' ).length ) {
+                $('#tt_main_target').fadeOut();
+                template = "theme/archive-table.php";
+                data = { 
+                    action: "tt_load_template",
+                    template: template
+                };
     
-        var search_on = $( this ).attr( 'rel' );
-        search_on = search_on.split( "_" );
-
-        for( var i in _task ) {
-console.log( search_on[0] + ' ' + search_on[1] );
-            if ( _task[i][search_on[0]] == search_on[1] ) {
-                $( ".post-" + i ).fadeIn();
-            } else {
-                $( ".post-" + i ).fadeOut();
+               $.ajax({
+                    data: data,
+                    success: function( msg ){
+                        $('#tt_main_target').fadeIn().html( msg );
+                    }
+                });
+                return false;
             }
-        }
+        
+            var search_on = $( this ).attr( 'rel' );
+            search_on = search_on.split( "_" );
+    
+            for( var i in _task ) {
+                if ( _task[i][search_on[0]] == search_on[1] ) {
+                    $( ".post-" + i ).fadeIn();
+                } else {
+                    $( ".post-" + i ).fadeOut();
+                }
+            }
+        } // End 'fuckery'
     });
         
     /** @todo load [task] filters: needs to be part of class for dialog */    
