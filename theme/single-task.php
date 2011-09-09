@@ -10,10 +10,6 @@
                         <h1 class="title"><?php the_title(); ?></h1>
                         <?php the_content(); ?>
                     <div class="nav-previous-container">
-                    <ul class="inline">
-                        <li class="previous"><?php previous_post_link( '%link', '<span class="meta-nav">' . _x( '&larr;', 'Previous post link', 'twentyten' ) . '</span> %title' ); ?></li>
-                        <li class="next"><?php next_post_link( '%link', '%title <span class="meta-nav">' . _x( '&rarr;', 'Next post link', 'twentyten' ) . '</span>' ); ?></li>
-                    </ul>
                     </div>
                         <div class="entry-utility" id="utility">
                             <ul class="inline">
