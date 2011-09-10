@@ -208,12 +208,11 @@ jQuery(document).ready(function( $ ){
         
     /** @todo load [task] filters: needs to be part of class for dialog */    
     $( '#filter_handle' ).click(function(){  
-        var _this = this;  
         if ( $( '#filter_task_form' ).length ) {
             $( '#filter_task_form' ).toggle( 'slow' );
         } else {
-            $('#tt_filter_target').toggle( "slow", function(){                
-                template = _plugindir + $( _this ).attr( 'tt_template' );
+            $( '#tt_filter_target' ).toggle( "slow", function(){                
+                template = _plugindir + $( this ).attr( 'tt_template' );
                 data = {
                     action: "loadTemplate",
                     template: template
