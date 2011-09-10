@@ -113,7 +113,9 @@ abstract class CustomPostTypeBase implements ICustomPostType {
 
             if ( in_array( $post_type['supports'], $white_list['supports'] ) )
                 $supports = $post_type['supports'];
-
+            else
+                $supports = null;
+                
             $capabilities = array(
                 'edit_article'
                 );
