@@ -1,7 +1,7 @@
 /**
  * Run jQuery in no-conflict mode but still have access to $
  */
-_plugindir = "theme/";
+var _plugindir = "theme/";
 
 jQuery(document).ready(function( $ ){
     $('a[title]').qtip();
@@ -17,12 +17,12 @@ jQuery(document).ready(function( $ ){
     /**
      * Notification icon
      */
-    $('.tt_loading').ajaxStart(function(){
+    $( '.tt_loading' ).ajaxStart(function(){
         $( this ).fadeIn();
     });
 
     /* @todo this needs to be tied down via a class? */
-    $('tr', this).hover(function(){
+    $( '.zm-tt-container tr' ).hover(function(){
         $(this).find('.utility-container').addClass( 'zm-base-visible').removeClass( 'zm-base-hidden');
     }, function(){
         $(this).find('.utility-container').addClass( 'zm-base-hidden wtf').removeClass( 'zm-base-visible');
@@ -32,7 +32,7 @@ jQuery(document).ready(function( $ ){
     /**
      * Updating a task
      */    
-    $('#update_task', this).submit(function(){
+    $( '#update_task' ).submit(function(){
         /** @props petemilkman.com for being right, concatinate data */
         $.ajax({
             data: "action=postTypeUpdate&" + $(this).serialize(), 
@@ -47,7 +47,7 @@ jQuery(document).ready(function( $ ){
     /** 
      * Setup our dialog for create a ticket 
      */
-    $('#create_ticket_dialog').dialog({ 
+    $( '#create_ticket_dialog' ).dialog({ 
         autoOpen: false,
         minWidth: 750,
         maxWidth: 800,
@@ -56,13 +56,13 @@ jQuery(document).ready(function( $ ){
         modal: true
     });
 
-    $('#login_dialog').dialog({ 
+    $( '#login_dialog' ).dialog({ 
         autoOpen: false,
         title: 'Please <em>LTFO</em>',
         modal: true
     });
     
-    $('#login_exit').live('click', function(){
+    $( '#login_exit' ).live('click', function(){
         $( '#login_dialog' ).dialog( 'close' ); 
     });
     
@@ -71,7 +71,7 @@ jQuery(document).ready(function( $ ){
         data = { 
             action: "loadTemplate",
             template: params.template
-            };
+        };
 
         $.ajax({
             data: data,
@@ -83,7 +83,7 @@ jQuery(document).ready(function( $ ){
     
     /** Load dialog box and get create ticket form */
     /** @todo create dialog [task]: needs to be part of class for dialog */
-    $('#create_ticket').click(function(){
+    $( '#create_ticket' ).click(function(){
         $('#create_ticket_dialog').dialog('open');        
         var params  = {};
         params.target_div = '#create_ticket_target';
@@ -102,7 +102,7 @@ jQuery(document).ready(function( $ ){
     
 
     /** @todo create [task]: needs to be part of class for dialog */
-    $('#login_form', this).live('submit', function(){
+    $( '#login_form' ).live('submit', function(){
         $.ajax({
             data: "action=siteLoginSubmit&" + $(this).serialize(), 
             success: function( msg ){
@@ -115,9 +115,9 @@ jQuery(document).ready(function( $ ){
     /**
      * Exit our dialog box on click and reload our archive view
      */
-    $('#exit').live('click', function(){
+    $( '#exit' ).live('click', function(){
     
-        if ( $( '#tt_update_container' ).length != 1 ) {
+        if ( !$( '#tt_update_container' ).length ) {
             $('#tt_main_target').fadeOut();   
 
             // @todo templating still handled via php, consider js templating?
@@ -128,7 +128,7 @@ jQuery(document).ready(function( $ ){
                 template: template,
                 post_type: "task",
                 post_status: "published"
-                };
+            };
     
             $.ajax({
                 data: data,
@@ -155,10 +155,10 @@ jQuery(document).ready(function( $ ){
     }
 
     /** @todo clear [task] event: needs to be part of class for dialog */    
-    $('#clear').live('click', clear_form);
+    $( '#clear' ).live('click', clear_form);
 
     /** @todo create [task]: needs to be part of class for dialog */
-    $('#create_task_form', this).live('submit', function(){
+    $( '#create_task_form' ).live('submit', function(){
         $.ajax({
             data: "action=postTypeSubmit&" + $(this).serialize(), 
             success: function( msg ){
@@ -183,8 +183,7 @@ jQuery(document).ready(function( $ ){
                     action: "tt_load_template",
                     template: template
                 };
-    
-               $.ajax({
+                $.ajax({
                     data: data,
                     success: function( msg ){
                         $('#tt_main_target').fadeIn().html( msg );
@@ -192,10 +191,8 @@ jQuery(document).ready(function( $ ){
                 });
                 return false;
             }
-        
             var search_on = $( this ).attr( 'rel' );
             search_on = search_on.split( "_" );
-    
             for( var i in _task ) {
                 if ( _task[i][search_on[0]] == search_on[1] ) {
                     $( ".post-" + i ).fadeIn();
@@ -208,12 +205,12 @@ jQuery(document).ready(function( $ ){
         
     /** @todo load [task] filters: needs to be part of class for dialog */    
     $( '#filter_handle' ).click(function(){  
-        var _this = this;  
+        var $this = $(this);
         if ( $( '#filter_task_form' ).length ) {
             $( '#filter_task_form' ).toggle( 'slow' );
         } else {
-            $('#tt_filter_target').toggle( "slow", function(){                
-                template = _plugindir + $( _this ).attr( 'tt_template' );
+            $( '#tt_filter_target' ).toggle( "slow", function(){                
+                template = _plugindir + $this.attr( 'tt_template' );
                 data = {
                     action: "loadTemplate",
                     template: template
@@ -243,11 +240,21 @@ jQuery(document).ready(function( $ ){
 
     function searchTemp( searchClass ) {        
         if ( searchClass != '' ) {            
-            $( "#archive_table tbody tr" + searchClass ).fadeIn();                
-            $( "#archive_table tbody tr" ).not(searchClass).fadeOut(); 
+            $( "#archive_table tbody tr" + searchClass ).fadeIn().addClass('task-active');
+            $( "#archive_table tbody tr" ).not(searchClass).fadeOut().removeClass('task-active'); 
         } else {
-            $( "#archive_table tbody tr" ).fadeIn();            
+            $( "#archive_table tbody tr" ).not('.no-results').fadeIn().addClass('task-active');
         } 
+        if( !$("#archive_table tbody tr.task-active").length ) {
+            if( !$("#archive_table tbody tr.no-results").length ) {
+                $("#archive_table tbody")
+                    .append('<tr class="no-results"><td colspan="6"><em>No Tasks match the selected criteria.</em></td></tr>');
+            } else {
+                $("#archive_table tbody tr.no-results").fadeIn();
+            }
+        } else {
+            $("#archive_table tbody tr.no-results").fadeOut();
+        }
     }        
 
     $( window ).load(function(){

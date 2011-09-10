@@ -58,8 +58,12 @@
                 </td>
             </tr>
         <?php endwhile; ?>
+        <tr class="no-results">
+            <td colspan="6">
+                <em>No Tasks match the selected criteria.</em>
+            </td>
+        </tr>
     </table>
-    <div id="no_results">nothing here move on..</div>
     <?php tt_json_feed( 'task',  array( 'status', 'priority', 'project', 'phase', 'assigned' ) ); ?>
 </div>
 
