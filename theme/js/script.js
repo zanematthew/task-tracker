@@ -1,7 +1,7 @@
 /**
  * Run jQuery in no-conflict mode but still have access to $
  */
-_plugindir = "theme/";
+var _plugindir = "theme/";
 
 jQuery(document).ready(function( $ ){
     $('a[title]').qtip();
