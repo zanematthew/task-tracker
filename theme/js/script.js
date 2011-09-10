@@ -208,9 +208,7 @@ jQuery(document).ready(function( $ ){
         var $this = $(this);
         if ( $( '#filter_task_form' ).length ) {
             $( '#filter_task_form' ).toggle( 'slow' );
-            console.log('here');
         } else {
-            console.log('there');
             $( '#tt_filter_target' ).toggle( "slow", function(){                
                 template = _plugindir + $this.attr( 'tt_template' );
                 data = {
@@ -242,11 +240,21 @@ jQuery(document).ready(function( $ ){
 
     function searchTemp( searchClass ) {        
         if ( searchClass != '' ) {            
-            $( "#archive_table tbody tr" + searchClass ).fadeIn();                
-            $( "#archive_table tbody tr" ).not(searchClass).fadeOut(); 
+            $( "#archive_table tbody tr" + searchClass ).fadeIn().addClass('task-active');
+            $( "#archive_table tbody tr" ).not(searchClass).fadeOut().removeClass('task-active'); 
         } else {
-            $( "#archive_table tbody tr" ).fadeIn();            
+            $( "#archive_table tbody tr" ).not('.no-results').fadeIn().addClass('task-active');
         } 
+        if( !$("#archive_table tbody tr.task-active").length ) {
+            if( !$("#archive_table tbody tr.no-results").length ) {
+                $("#archive_table tbody")
+                    .append('<tr class="no-results"><td colspan="6"><em>No Tasks match the selected criteria.</em></td></tr>');
+            } else {
+                $("#archive_table tbody tr.no-results").fadeIn();
+            }
+        } else {
+            $("#archive_table tbody tr.no-results").fadeOut();
+        }
     }        
 
     $( window ).load(function(){

@@ -58,6 +58,5 @@ $my_query = new WP_Query( $args );
             </tr>
         <?php endwhile; ?>
     </table>
-    <div id="no_results">nothing here move on..</div>
     <?php tt_json_feed( 'task',  array( 'status', 'priority', 'project', 'phase', 'assigned' ) ); ?>
 </div>
