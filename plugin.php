@@ -68,6 +68,22 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      */
     public function registerPostType( $args=NULL ) {
         $taxonomies = array();
+
+        // our white list taken from http://codex.wordpress.org/Function_Reference/register_post_type see 'supports'
+        $white_list = array();
+        
+        // Default, title, editor
+        $white_list['supports'] = array(
+                'title',
+                'editor',
+                'author',
+                'thumbnail',
+                'excerpt',
+                'comments',
+                'custom-fields',
+                'trackbacks'
+                );
+                
         foreach( $this->taxonomy as $tax )
             $taxonomies[] = $tax['name'];
     
@@ -95,18 +111,11 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 'parent_item_colon' => ''
                 );
 
-            /** @todo make these optional */
-            $supports = array(
-                'title',
-                'editor',
-                'author',
-                'thumbnail',
-                'excerpt',
-                'comments',
-                'custom-fields',
-                'trackbacks'
-                );
-
+            if ( in_array( $post_type['supports'], $white_list['supports'] ) )
+                $supports = $post_type['supports'];
+            else
+                $supports = null;
+                
             $capabilities = array(
                 'edit_article'
                 );
@@ -522,7 +531,13 @@ $task = new CustomPostType();
 $task->post_type = array(
     array(
         'name' => 'Task',
-        'type' => 'task'
+        'type' => 'task',
+        'supports' => array(
+                'title',
+                'editor',
+                'author',
+                'comments'
+        )
     )
 );
 
