@@ -1,5 +1,4 @@
 <?php get_header(); ?>
-<?php get_template_part( 'header-container', 'single' ); ?>
     <div class="zm-tt-container zm-tt-archive-container">
         <div class="tt-glue">
             <div class="main-container">
@@ -24,6 +23,7 @@
         </thead>
         <?php $x = 0; ?>
         <?php // if ( $my_query->have_posts() ) while ( $my_query->have_posts() ) : $my_query->the_post(); ?>
+        
         <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
             <tr <?php post_class('result')?>>
                 <td><?php $x++; ?>
