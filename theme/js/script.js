@@ -221,7 +221,7 @@ jQuery(document).ready(function( $ ){
                 $.ajax({
                     data: data,
                     success: function( msg ){
-                        $('#tt_filter_target').fadeIn().html( msg );
+                        $('#tt_filter_target').html( msg ).fadeIn();
                     }
                 });            
             });                    
