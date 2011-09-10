@@ -155,9 +155,7 @@ jQuery(document).ready(function( $ ){
     }
 
     /** @todo clear [task] event: needs to be part of class for dialog */    
-    $('#clear').live('click', function(){
-        clear_form();
-    });
+    $('#clear').live('click', clear_form);
 
     /** @todo create [task]: needs to be part of class for dialog */
     $('#create_task_form', this).live('submit', function(){
