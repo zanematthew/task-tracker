@@ -1,5 +1,4 @@
 <?php get_header(); ?>
-<?php get_template_part( 'header-container', 'single' ); ?>
 <div class="zm-tt-container zm-tt-single-container">
     <div class="tt-glue">
         <div class="main-container">

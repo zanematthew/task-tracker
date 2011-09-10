@@ -50,7 +50,7 @@ pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px
 .zm-tt-navigation-container li ul li a { color: #888; font-size: 12px; }
 .zm-tt-navigation-container ul li:hover > ul { background: #fff; display: block; }
 
-.zm-tt-navigation-container li.currnet-item { background: #fff; border-radius: 5px 5px 0 0; border: solid #f4f4f4; border-width: 1px 1px 0; }
+body.archive .zm-tt-navigation-container li.most-recent-task { background: #fff; border-radius: 5px 5px 0 0; border: solid #f4f4f4; border-width: 1px 1px 0; }
 .zm-tt-navigation-container li.create-ticket:hover { background: none; }
 
 .zm-tt-navigation-container nav.tt-navigation-container ul { list-style-type: none; margin: 0; padding: 0; }
