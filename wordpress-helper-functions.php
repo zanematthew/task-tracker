@@ -254,7 +254,8 @@ function zm_base_get_terms( $taxonomy ) {
 
     /** All Terms */
     $args = array(
-        'orderby' => 'name'
+        'orderby' => 'name',
+        'hide_empty' => false
          );
 
     $terms = get_terms( $taxonomy, $args );
@@ -283,7 +284,19 @@ function zm_base_build_options( $taxonomy=null, $value='term_id' ) {
     if ( empty( $prepend ) )
         $prepend = null; 
         
-    $terms = zm_base_get_terms( $taxonomy );
+    /** All Terms */
+    $args = array(
+        'orderby' => 'name',
+        'hide_empty' => false
+         );
+
+    $terms = get_terms( $taxonomy, $args );
+
+    if ( is_wp_error( $terms ) ) {
+//        exit( "Opps..." . $terms->get_error_message() . "..dog, cmon, fix it!" );
+        $terms = false;
+    }
+
     $current_term = zm_base_current_term( $taxonomy );
 
     /** @todo the below markup should be pulled out into a 'view' */ 
@@ -360,8 +373,19 @@ function zm_base_build_input( $taxonomy=null ) {
         
     extract( $defaults );
 
-    $terms = zm_base_get_terms( $taxonomy );
-    
+    /** All Terms */
+    $args = array(
+        'orderby' => 'name',
+        'hide_empty' => false
+         );
+
+    $terms = get_terms( $taxonomy, $args );
+
+    if ( is_wp_error( $terms ) ) {
+//        exit( "Opps..." . $terms->get_error_message() . "..dog, cmon, fix it!" );
+        $terms = false;
+    }    
+
     if ( !empty( $default ) )
         $current_term = $default;
     else 
@@ -391,7 +415,20 @@ function zm_base_build_input( $taxonomy=null ) {
  * @param string $value, The value to be used in the 'name' field of the form
  */
 function zm_base_build_checkbox( $taxonomy=null, $value='term_id' ) {
-    $terms = zm_base_get_terms( $taxonomy );
+
+    /** All Terms */
+    $args = array(
+        'orderby' => 'name',
+        'hide_empty' => false
+         );
+
+    $terms = get_terms( $taxonomy, $args );
+
+    if ( is_wp_error( $terms ) ) {
+//        exit( "Opps..." . $terms->get_error_message() . "..dog, cmon, fix it!" );
+        $terms = false;
+    }
+
     $current_term = zm_base_current_term( $taxonomy );
 
     /** @todo the below markup should be pulled out into a 'view' */ 
