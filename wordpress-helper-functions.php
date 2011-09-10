@@ -186,10 +186,14 @@ function zm_base_list_terms( $taxonomy ) {
         extract( $taxonomy );
     
     $terms = get_terms( $taxonomy );
+    
+    if ( !$terms )
+        return;
+        
     $i = 0;
     $len = count( $terms );
     $html = $first = $last = $my_link = null;
-    
+
     /** @todo -- add support for rss link */
     // very fucking usefull http://php.net/manual/en/types.comparisons.php    
     foreach( $terms as $term ) {
