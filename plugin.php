@@ -84,8 +84,9 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 'trackbacks'
                 );
                 
-        foreach( $this->taxonomy as $tax )
-            $taxonomies[] = $tax['name'];
+        if ( !empty( $this->taxonomy ) )
+            foreach( $this->taxonomy as $tax )
+                $taxonomies[] = $tax['name'];
     
         foreach ( $this->post_type as $post_type ) {
         
@@ -153,11 +154,15 @@ abstract class CustomPostTypeBase implements ICustomPostType {
 
     public function registerTaxonomy( $args=NULL ) {
         foreach ( $this->taxonomy as $taxonomy ) {
+            
+            if ( empty( $taxonomy['taxonomy'] ) )
+                $taxonomy['taxonomy'] = strtolower( str_replace( " ", "-", $taxonomy['name'] ) );
 
-            $taxonomy['name'] = strtolower( $taxonomy['name'] );
-
-            if ( empty( $taxonomy['slug'] ) || empty( $taxonomy['singular_name'] ) )
-                $taxonomy['slug'] =  $taxonomy['singular_name'] = $taxonomy['name'];
+            if ( empty( $taxonomy['slug'] ) )
+                $taxonomy['slug'] = $taxonomy['taxonomy'];
+            
+            if ( empty( $taxonomy['singular_name'] ) )
+                $taxonomy['singular_name'] = $taxonomy['name'];
 
             if ( empty( $taxonomy['plural_name'] ) )
                 $taxonomy['plural_name'] = $taxonomy['name'] . 's';
@@ -191,7 +196,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 'show_tagcloud' => true
                 );
                 
-            register_taxonomy( $taxonomy['name'], $taxonomy['post_type'], $args );
+            register_taxonomy( $taxonomy['taxonomy'], $taxonomy['post_type'], $args );
             
         } // End 'foreach'
        
@@ -212,8 +217,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         foreach( $my_cpt as $myt )
             $my_taxonomies = $myt->taxonomies;
 
-        // Quick and harsh error checking
-        // @todo again, needs to be an array, i think will fuck me later.
+        // Quick and harsh error checking @todo again, needs to be an array, i think will fuck me later.
         if ( !isset( $this->post_type ) ) wp_die( 'Need a CPT!' );
         if ( !isset( $my_taxonomies ) ) wp_die( 'Need a CTT!' );
 
@@ -224,46 +228,43 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         wp_enqueue_script( 'qtip-nightly' );
         wp_enqueue_script( 'jquery-ui-effects' );
 
-        foreach ( $this->post_type as $my_post_type => $k ) {    	
-            switch( $k['type'] ) {
-            case ( is_tax( $my_taxonomies ) ):
-                global $wp_query;
-                
-                if ( in_array( $wp_query->query_vars['taxonomy'], $my_taxonomies ) ) {
-                    load_template( MY_PLUGIN_DIR . 'theme/'.$k['type'].'-taxonomy.php' );
-                    // foreach ( $my_taxonomies as $taxonomy ) {
-                        // load_template( MY_PLUGIN_DIR . 'theme/archive-' . $k['type'] . '.php' );
-                        // load_template( MY_PLUGIN_DIR . 'theme/taxonomy-' . $my_taxonomies. '.php' );
-                    // }
-                }
-                exit;
-                break;
-    
-            case ( is_single() ):
-                // If your not my post type GTFO                
-                foreach ( $this->post_type as $my_post_type )
-                    if ( get_post_type() != $my_post_type['type'] ) return;
-                
-                // first checkout our plugin themes folder
-                foreach ( $this->post_type as $my_post_type )
-                    if ( file_exists( STYLESHEETPATH . '/single-' . $my_post_type['type'] . '.php' ) ) return;
-    
-                foreach ( $this->post_type as $my_post_type )
-                    load_template( MY_PLUGIN_DIR . '/theme/single-' . $my_post_type['type'] . '.php' );
-                exit;
-                break;
-  
-            case ( is_post_type_archive( $k['type'] ) ):
-                if ( file_exists( STYLESHEETPATH . '/archive-' . $k['type'] . '.php' ) ) return;
-                load_template( $this->plugin_dir . '/theme/archive-' . $k['type'] . '.php' );
-                exit;
-                break;
-            default:
-                return;
-                
-            } // End 'switch'
-            
-        } // End 'foreach'
+        if ( is_tax( $my_taxonomies ) ) {
+            global $wp_query;
+            if ( in_array( $wp_query->query_vars['taxonomy'], $my_taxonomies ) ) {
+
+                if ( file_exists( MY_PLUGIN_DIR . 'theme/' . $wp_query->posts[0]->post_type . '-taxonomy.php' ) )
+                    load_template( MY_PLUGIN_DIR . 'theme/' . $wp_query->posts[0]->post_type . '-taxonomy.php' );                        
+                elseif ( file_exists( STYLESHEETPATH . '/archive.php' ) )
+                    load_template( STYLESHEETPATH . '/archive.php' );
+                else
+                    load_template( STYLESHEETPATH . '/index.php' );                                                
+            }
+            exit;
+        }
+
+        if ( is_single() ) {
+            if ( file_exists( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' ) )
+                load_template( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' );
+            elseif ( file_exists( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php'  ) )
+                load_template( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php' );
+            else
+                load_template( STYLESHEETPATH . '/single.php' );
+            exit;                    
+        }
+
+        if ( is_post_type_archive( $current_post_type ) ) {
+            if ( file_exists( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' ) )
+                load_template( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' );
+            elseif ( file_exists( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' ) )
+                load_template( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' );
+            elseif ( file_exists( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' ) )
+                load_template( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' );                    
+            elseif ( file_exists( STYLESHEETPATH . '/archive.php' ) )
+                load_template( STYLESHEETPATH . '/archive.php' );
+            else
+                load_template( STYLESHEETPATH . '/index.php' );
+            exit;                    
+        }
         
     } // End 'function templateRedirect'    
     
@@ -303,8 +304,8 @@ class CustomPostType extends CustomPostTypeBase {
         );
         
         // @todo the abstract should possibly be responsible for doing this
-        add_action( 'init', array( &$this, 'registerPostType' ) );
-        add_action( 'init', array( &$this, 'registerTaxonomy' ) );                
+        add_action( 'init', array( &$this, 'registerPostType' ) );        
+        add_action( 'init', array( &$this, 'registerTaxonomy' ) );                            
         add_action( 'template_redirect', array( &$this, 'templateRedirect' ) );        
         
         /** @todo consider, moving the following to the abstract */
@@ -355,10 +356,11 @@ class CustomPostType extends CustomPostTypeBase {
 
         foreach( $tax_names as $name ) {
             $terms = get_the_terms( $post->ID, $name );
-            if ( $terms ) {
+
+            if ( !is_wp_error( $terms ) && !empty( $terms )) {
                 foreach( $terms as $term )
                     $classes[] = $name . '-' . $term->term_id;
-            }
+            } 
         }
         
         return $classes;
@@ -537,15 +539,15 @@ $task->post_type = array(
                 'editor',
                 'author',
                 'comments'
-        )
-    )
+        )        
+    )    
 );
 
 $task->taxonomy = array(
     array(
         'name' => 'assigned', 
         'post_type' => 'task'
-        ),        
+        ),
     array( 
         'name' => 'phase', 
         'post_type' => 'task'
