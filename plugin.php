@@ -154,8 +154,9 @@ abstract class CustomPostTypeBase implements ICustomPostType {
 
     public function registerTaxonomy( $args=NULL ) {
         foreach ( $this->taxonomy as $taxonomy ) {
-
-            $taxonomy['name'] = strtolower( $taxonomy['name'] );
+            
+            if ( empty( $taxonomy['taxonomy'] ) )
+                $taxonomy['taxonomy'] = strtolower( $taxonomy['name'] );
 
             if ( empty( $taxonomy['slug'] ) || empty( $taxonomy['singular_name'] ) )
                 $taxonomy['slug'] =  $taxonomy['singular_name'] = $taxonomy['name'];
@@ -192,7 +193,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 'show_tagcloud' => true
                 );
                 
-            register_taxonomy( $taxonomy['name'], $taxonomy['post_type'], $args );
+            register_taxonomy( $taxonomy['taxonomy'], $taxonomy['post_type'], $args );
             
         } // End 'foreach'
        
@@ -352,10 +353,11 @@ class CustomPostType extends CustomPostTypeBase {
 
         foreach( $tax_names as $name ) {
             $terms = get_the_terms( $post->ID, $name );
-            if ( $terms ) {
+
+            if ( !is_wp_error( $terms ) && !empty( $terms )) {
                 foreach( $terms as $term )
                     $classes[] = $name . '-' . $term->term_id;
-            }
+            } 
         }
         
         return $classes;
@@ -568,7 +570,8 @@ $task->taxonomy = array(
         'post_type' => 'task'
         ),        
     array(
-        'name' => 'c-category',
+        'name' => 'Category',
+        'taxonomy' => 'c-category',
         'post_type' => 'collectible'
         ),
     array( 
