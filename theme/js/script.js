@@ -246,14 +246,9 @@ jQuery(document).ready(function( $ ){
             $( "#archive_table tbody tr" ).not('.no-results').fadeIn().addClass('task-active');
         } 
         if( !$("#archive_table tbody tr.task-active").length ) {
-            if( !$("#archive_table tbody tr.no-results").length ) {
-                $("#archive_table tbody")
-                    .append('<tr class="no-results"><td colspan="6"><em>No Tasks match the selected criteria.</em></td></tr>');
-            } else {
-                $("#archive_table tbody tr.no-results").fadeIn();
-            }
-        } else {
             $("#archive_table tbody tr.no-results").fadeOut();
+        } else {
+            $("#archive_table tbody tr.no-results").fadeIn();
         }
     }        
 
