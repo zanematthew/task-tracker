@@ -156,10 +156,13 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         foreach ( $this->taxonomy as $taxonomy ) {
             
             if ( empty( $taxonomy['taxonomy'] ) )
-                $taxonomy['taxonomy'] = strtolower( $taxonomy['name'] );
+                $taxonomy['taxonomy'] = strtolower( str_replace( " ", "-", $taxonomy['name'] ) );
 
-            if ( empty( $taxonomy['slug'] ) || empty( $taxonomy['singular_name'] ) )
-                $taxonomy['slug'] =  $taxonomy['singular_name'] = $taxonomy['name'];
+            if ( empty( $taxonomy['slug'] ) )
+                $taxonomy['slug'] = $taxonomy['taxonomy'];
+            
+            if ( empty( $taxonomy['singular_name'] ) )
+                $taxonomy['singular_name'] = $taxonomy['name'];
 
             if ( empty( $taxonomy['plural_name'] ) )
                 $taxonomy['plural_name'] = $taxonomy['name'] . 's';
@@ -537,42 +540,13 @@ $task->post_type = array(
                 'author',
                 'comments'
         )        
-    ),
-    array(
-        'name' => 'Collectible',
-        'type' => 'collectible',
-        'supports' => array(
-                'title',
-                'editor',
-                'comments'
-        )
     )    
 );
 
-/*
-$task = new CustomPostType();
-$task->post_type = array(
-    array(
-        'name' => 'Task',
-        'type' => 'task',
-        'supports' => array(
-                'title',
-                'editor',
-                'author',
-                'comments'
-        )
-    )
-);
-*/
 $task->taxonomy = array(
     array(
         'name' => 'assigned', 
         'post_type' => 'task'
-        ),        
-    array(
-        'name' => 'Category',
-        'taxonomy' => 'c-category',
-        'post_type' => 'collectible'
         ),
     array( 
         'name' => 'phase', 
