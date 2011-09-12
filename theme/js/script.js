@@ -238,6 +238,24 @@ jQuery(document).ready(function( $ ){
         searchTemp( searchClass );
     });
 
+    function checkNoResults() {
+        console.log("cnr called");
+        // Check No Results works off of the task-active class.
+        // Be sure that all tasks that are showing have .task-active
+        // and all tasks that are hidden do not have the task
+
+        if( $("#archive_table tbody tr.task-active").length ) {
+            $("#archive_table tbody tr.no-results").fadeOut();
+        } else {
+            if( $("#archive_table tbody tr.no-results").length ) {
+                $("#archive_table tbody tr.no-results").fadeIn();
+            } else {
+                $("#archive_table tbody")
+                    .append('<tr class="no-results"><td colspan="6"><em>No Tasks match the selected criteria.</em></td></tr>');
+            }
+        }
+    }
+
     function searchTemp( searchClass ) {        
         if ( searchClass != '' ) {            
             $( "#archive_table tbody tr" + searchClass ).fadeIn().addClass('task-active');
@@ -245,18 +263,15 @@ jQuery(document).ready(function( $ ){
         } else {
             $( "#archive_table tbody tr" ).not('.no-results').fadeIn().addClass('task-active');
         } 
-        if( !$("#archive_table tbody tr.task-active").length ) {
-            $("#archive_table tbody tr.no-results").fadeOut();
-        } else {
-            $("#archive_table tbody tr.no-results").fadeIn();
-        }
+        checkNoResults();
     }        
 
     $( window ).load(function(){
                     
         // @todo if we have a hash store it to filter on later
-        if ( window.location[ 'hash' ] )
-            var search_on = window.location['hash'].split('-');            
+        if ( window.location[ 'hash' ] ) {
+            var search_on = window.location['hash'].substr(1).split('-');
+        }
 
         /** @todo load [task] archive: needs to be part of class for dialog */    
         if ( $('.sample').length ) {
@@ -276,12 +291,13 @@ jQuery(document).ready(function( $ ){
                     if ( search_on ) {
                         for( var i in _task ) {
                             // @todo would be better to tell it '#' vs. 1
-                            if ( _task[i][search_on[0].substr( 1 ) ] == search_on[1] ) {
-                                $( ".post-" + i ).fadeIn();
+                            if ( _task[i][ search_on[0] ] == search_on[1] ) {
+                                $( ".post-" + i ).fadeIn().addClass('task-active');
                             } else {
-                                $( ".post-" + i ).fadeOut();
+                                $( ".post-" + i ).fadeOut().removeClass('task-active');
                             }
                         } // End 'for'          
+                        checkNoResults();
                     }
                 } // End 'suckit' 
             });
