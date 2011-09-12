@@ -2,6 +2,20 @@
  * Run jQuery in no-conflict mode but still have access to $
  */
 var _plugindir = "theme/";
+var _filters = {};
+
+// @todo if we have a hash store it to filter on later
+if ( window.location[ 'hash' ] ) {
+    var hash = window.location['hash'].substr(1).split('/');
+    var thishash;
+    for(var i in hash) {
+        if(hash[i].indexOf('__') > -1) {
+            thishash = hash[i].split('__');
+            _filters[ thishash[0] ] = thishash[1];
+        }
+    }
+}
+
 
 jQuery(document).ready(function( $ ){
     $('a[title]').qtip();
@@ -186,7 +200,7 @@ jQuery(document).ready(function( $ ){
                 $.ajax({
                     data: data,
                     success: function( msg ){
-                        $('#tt_main_target').fadeIn().html( msg );
+                        $('#tt_main_target').html( msg ).fadeIn();
                     }
                 });
                 return false;
@@ -219,7 +233,13 @@ jQuery(document).ready(function( $ ){
                 $.ajax({
                     data: data,
                     success: function( msg ){
-                        $('#tt_filter_target').fadeIn().html( msg );
+                        $('#tt_filter_target').html( msg ).fadeIn();
+                        if(_filters != {}) {
+                            for(var j in _filters) {
+                                _filterClass = "option.taxonomy-" + j + ".term-" + _filters[j];
+                                $(_filterClass).attr("selected", "selected");
+                            }
+                        }
                     }
                 });            
             });                    
@@ -234,12 +254,28 @@ jQuery(document).ready(function( $ ){
             if( $( this ).val() != "" ) 
                 searchClass += "." + $(this).val(); 
         }); 
-        
+        $thisclass = $( "option:selected", this ).eq(0).attr("class");
+        if($thisclass.indexOf("taxonomy-") > -1 && $thisclass.indexOf("term-") > -1) {
+            $thisclass = $thisclass.split(/\s+/);
+            $term = "";
+            $taxonomy = "";
+            for (i = 0; i < $thisclass.length; i++) {
+                if($thisclass[i].indexOf('taxonomy-') === 0) {
+                    $taxonomy = $thisclass[i].replace("taxonomy-", "");
+                }
+                if($thisclass[i].indexOf('term-') === 0) {
+                    $term = $thisclass[i].replace("term-", "");
+                }
+            }
+            if($taxonomy != "" && $term != "") {
+                _filters[$taxonomy] = $term;
+                changeHash($taxonomy, $term);
+            }
+        }
         searchTemp( searchClass );
     });
 
     function checkNoResults() {
-        console.log("cnr called");
         // Check No Results works off of the task-active class.
         // Be sure that all tasks that are showing have .task-active
         // and all tasks that are hidden do not have the task
@@ -256,6 +292,14 @@ jQuery(document).ready(function( $ ){
         }
     }
 
+    function changeHash() {
+        var hash = "/";
+        for(var j in _filters) {
+            hash += j + "__" + _filters[j] + "/";
+        }
+        window.location.hash = hash;
+    }
+
     function searchTemp( searchClass ) {        
         if ( searchClass != '' ) {            
             $( "#archive_table tbody tr" + searchClass ).fadeIn().addClass('task-active');
@@ -267,11 +311,7 @@ jQuery(document).ready(function( $ ){
     }        
 
     $( window ).load(function(){
-                    
-        // @todo if we have a hash store it to filter on later
-        if ( window.location[ 'hash' ] ) {
-            var search_on = window.location['hash'].substr(1).split('-');
-        }
+
 
         /** @todo load [task] archive: needs to be part of class for dialog */    
         if ( $('.sample').length ) {
@@ -287,11 +327,22 @@ jQuery(document).ready(function( $ ){
            $.ajax({
                 data: data,
                 success: function( msg ){
+
+                    var match = true;
+
                     $('#tt_main_target').fadeIn().html( msg );
-                    if ( search_on ) {
+                    if ( _filters != {} ) {
                         for( var i in _task ) {
+                            match = true;
+                            for( var j in _filters) {
+                                if ( typeof _task[i][ j.toLowerCase() ] !== "undefined") {
+                                    if ( _task[i][ j.toLowerCase() ] != _filters[j].toLowerCase()) {
+                                        match = false;
+                                    }
+                                }
+                            }
                             // @todo would be better to tell it '#' vs. 1
-                            if ( _task[i][ search_on[0] ] == search_on[1] ) {
+                            if ( match ) {
                                 $( ".post-" + i ).fadeIn().addClass('task-active');
                             } else {
                                 $( ".post-" + i ).fadeOut().removeClass('task-active');
