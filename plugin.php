@@ -540,7 +540,16 @@ $task->post_type = array(
                 'author',
                 'comments'
         )        
-    )    
+    ),
+    array(
+        'name' => 'Collectible',
+        'type' => 'collectible',
+        'supports' => array(
+                'title',
+                'editor',
+                'comments'
+        )
+    )
 );
 
 $task->taxonomy = array(
@@ -571,5 +580,29 @@ $task->taxonomy = array(
     array( 
         'name' => 'ETA',
         'post_type' => 'task'
-        )
-    );
+        ),
+    array(
+       	'name' => 'Magazine',
+       	'post_type' => 'collectible'
+       	),
+    array( 
+       	'name' => 'Sneaker',
+       	'post_type' => 'collectible'
+         ),
+    array(
+       	'name' => 'BMX',
+       	'post_type' => 'collectible'
+         ),
+    array(
+       	'name' => 'Comic Book',
+       	'post_type' => 'collectible'
+         ),
+    array(
+        'name' => 'Trading Cards',
+        'post_type' => 'collectible'
+      	),
+    array(
+        'name' => 'Model Car',
+        'post_type' => 'collectible'
+    )
+);

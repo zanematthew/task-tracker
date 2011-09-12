@@ -226,7 +226,6 @@ a.login { font-size: 12px; margin: 10px 10px 0 0; display: inline-block; }
 ul.inline { list-style-type: none; margin: 0; padding: 0; }
 ul.inline li { float: left; }
 
-.no-results { display: none; }
 .tt_loading { background: url(images/w-loader.gif) no-repeat center center; float: left; height: 200px; width: 100%; }
 
 .ui-tooltip, 
