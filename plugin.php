@@ -83,12 +83,11 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 'custom-fields',
                 'trackbacks'
                 );
-                
-        if ( !empty( $this->taxonomy ) )
-            foreach( $this->taxonomy as $tax )
-                $taxonomies[] = $tax['name'];
-    
+                    
         foreach ( $this->post_type as $post_type ) {
+
+            if ( !empty( $post_type['taxonomies'] ) )                                
+                $taxonomies = $post_type['taxonomies'];            
         
             $post_type['type'] = strtolower( $post_type['type'] );
             
@@ -251,12 +250,17 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 load_template( STYLESHEETPATH . '/single.php' );
             exit;                    
         }
-
-        if ( is_post_type_archive( $current_post_type ) ) {
+        
+        // Default plugin template default-archive.php
+        // Custom plugin template task-archive.php    
+        // Default theme template archive-task.php
+        // Custom theme template archive.php        
+        // theme index index.php
+        if ( is_post_type_archive( $current_post_type ) ) {            
             if ( file_exists( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' ) )
                 load_template( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' );
-            elseif ( file_exists( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' ) )
-                load_template( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' );
+            elseif ( file_exists( MY_PLUGIN_DIR . 'theme/archive-default.php' ) )
+                load_template( MY_PLUGIN_DIR . 'theme/archive-default.php' );
             elseif ( file_exists( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' ) )
                 load_template( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' );                    
             elseif ( file_exists( STYLESHEETPATH . '/archive.php' ) )
@@ -535,19 +539,29 @@ $task->post_type = array(
         'name' => 'Task',
         'type' => 'task',
         'supports' => array(
-                'title',
-                'editor',
-                'author',
-                'comments'
+            'title',
+            'editor',
+            'author',
+            'comments'
         )        
     ),
     array(
         'name' => 'Collectible',
         'type' => 'collectible',
         'supports' => array(
-                'title',
-                'editor',
-                'comments'
+            'title',
+            'editor',
+            'comments'
+        ),
+
+        // yes, lame! but this is how WP is doing it for now also
+        'taxonomies' => array(            
+            'magazine',
+            'sneaker',
+            'bmx',
+            'comic-book',
+            'trading-cards',
+            'model-car'            
         )
     )
 );

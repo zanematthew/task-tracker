@@ -157,11 +157,14 @@ $id = 0;
         return;
     } else {
         foreach ( $terms as $term ) {
-            if ( isset( $link ) )
+            
+            if ( isset( $link ) && $link == 'javascript://' )
                 $my_link = 'javascript://';
-            else
+            elseif ( isset( $link ) && $link == 'anchor' )
+                $my_link = '#' . $term->taxonomy . '-'. $term->slug;            
+            else            
                 $my_link = get_term_link( $term, $taxonomy );
-
+                
             if ( is_wp_error( $my_link ) )
                 return $my_link;
 
