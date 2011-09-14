@@ -136,7 +136,7 @@ jQuery(document).ready(function( $ ){
 
             // @todo templating still handled via php, consider js templating?
             template = $(this).attr( 'tt_template' );
-    
+            
             data = { 
                 action: "loadTemplate",
                 template: template,
@@ -192,7 +192,7 @@ jQuery(document).ready(function( $ ){
         if ( link.substring( 0, 1 ) == '#' || link == 'javascript://' ) {
             if ( !$( '#archive_table' ).length ) {
                 $('#tt_main_target').fadeOut();
-                template = "theme/archive-table.php";
+                template = "theme/default/archive-table.php";
                 data = { 
                     action: "tt_load_template",
                     template: template

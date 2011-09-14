@@ -2,7 +2,7 @@
 <div class="zm-tt-container zm-tt-single-container">
     <div class="tt-glue">
         <div class="main-container">
-            <?php load_template( MY_PLUGIN_DIR . '/theme/navigation.php' ); ?>
+            <?php load_template( MY_PLUGIN_DIR . '/theme/default/navigation.php' ); ?>
             <div id="tt_main_target">
                 <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
                     <div <?php post_class('result')?>>
@@ -21,7 +21,7 @@
                             </ul>
                         </div>
                     </div>
-                    <?php load_template( MY_PLUGIN_DIR . '/theme/task-update.php' ); ?>
+                    <?php load_template( MY_PLUGIN_DIR . '/theme/custom/task-update.php' ); ?>
                 <?php endwhile; ?>
             </div>
         </div>

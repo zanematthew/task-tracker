@@ -3,16 +3,16 @@
     <div class="zm-tt-container zm-tt-archive-container">
         <div class="tt-glue">
             <div class="main-container">
-                <?php load_template( MY_PLUGIN_DIR . 'theme/navigation.php' ); ?>   
+                <?php load_template( MY_PLUGIN_DIR . 'theme/default/navigation.php' ); ?>   
                 <div class="tt-filter-container">
                     <ul class="inline">
-                        <li><a href="javascript://" id="filter_handle" tt_template="navigation-filter.php">Filter</a></li>                
+                        <li><a href="javascript://" id="filter_handle" tt_template="theme/default/navigation-filter.php">Filter</a></li>
                     </ul>
                 </div>
                 <div id="tt_filter_target"></div>                
                 <div id="tt_main_target">
                     <div class="tt_loading"></div>
--                    <div class="sample" tt_template="theme/archive-table.php"></div> 
+-                    <div class="sample" tt_template="theme/default/archive-table.php"></div> 
                     <div id="no_results">nothing here move on..</div>                        
                 </div>
             </div>
