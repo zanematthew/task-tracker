@@ -1,31 +1,36 @@
-<div class="zm-tt-form-container" id="task_create_form">
-    <form action="javascript://" id="create_task_form">
-        <input type="hidden" name="security" value="<?php print wp_create_nonce( 'tt-ajax-forms' );?>">
-        <div class="form-wrapper">
-        <input type="hidden" value="task" name="post_type" />
-        <p>
-            <label>Title</label>
-            <input type="text" name="post_title" id="post_title" />
-        </p>
-        <p>
-            <label>Description</label>
-            <textarea name="content"></textarea>
-        </p>        
-        <?php zm_base_build_radio('status', array( 'default' => 'New' )); ?>
-
-        <?php zm_base_build_input( array( 'taxonomy'=> 'priority', 'type'=> 'radio', 'default' => 'Medium' ) ); ?>
-
-        <?php zm_base_build_options('project'); ?>
-        <?php zm_base_build_options('phase'); ?>
-        <?php zm_base_build_options('assigned'); ?>
-        <?php zm_base_build_options('ETA'); ?>
-        </div>
-        <div class="button-container">
-            <div id="publishing-action">
-                <input id="pt_publish" class="button" type="submit" value="Save" accesskey="p" name="save" />
-                <a href="javascript://" id="clear" class="button">Clear</a>
-                <a href="javascript://" id="exit" tt_template="theme/default/archive-table.php" class="button">Exit</a>
+<?php if ( is_user_logged_in() ) : ?>
+    <div class="zm-tt-form-container default-update-container" id="tt_update_container">
+        <a name="update"></a>
+        <h3>Update Task <em><?php the_title(); ?></em></h3>
+        <form action="javascript://" method="POST" id="default_update">
+            <input type="hidden" name="PostID" id="post_id" value="<?php echo $post->ID; ?>" />
+            <?php zm_base_build_radio('status'); ?>
+            <?php zm_base_build_radio('priority'); ?>
+            <?php zm_base_build_options('project'); ?>
+            <?php zm_base_build_options('phase'); ?>
+            <?php zm_base_build_options('assigned'); ?>
+            <p><label class="zm-base-title">Note</label><br /><textarea tabindex="4" rows="10" cols="58" id="comment" name="comment"></textarea></p>    
+            <div class="button-container">
+                <div id="publishing-action">
+                    <input id="pt_publish" class="button" type="submit" value="Update" accesskey="p" name="save" />
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
+<?php endif; ?>
+
+<div class="comments-container">
+<h2>Notes</h2>
+<ul>
+    <?php
+    $comments = get_comments( array(
+      'post_id' => $post->ID,
+      'number'    => 10,
+      'status'    => 'approve'
+    ) );
+    foreach($comments as $comment) :
+        echo "<li>{$comment->comment_content}<br /><small>{$comment->comment_author} @ {$comment->comment_date}</small></li>";
+    endforeach;    
+    ?>
+</ul>
 </div>
