@@ -6,7 +6,7 @@
                 <?php load_template( MY_PLUGIN_DIR . 'theme/default/navigation.php' ); ?>   
                 <div class="tt-filter-container">
                     <ul class="inline">
-                        <li><a href="javascript://" id="filter_handle" tt_template="theme/default/navigation-filter.php">Filter</a></li>
+                        <li><a href="javascript://" id="filter_handle" tt_template="default/navigation-filter.php">Filter</a></li>
                     </ul>
                 </div>
                 <div id="tt_filter_target"></div>                

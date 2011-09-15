@@ -205,22 +205,12 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     } // End 'function'   
 
     /**
-     * Determines which template to redirct to.
+     * Get somethings and do a little bit of thinking before 
+     * calling the redirect methods.
      */
     public function templateRedirect() {
 
-        $current_post_type = get_query_var( 'post_type' ); // $current_post_type
-        
-        // @todo this will fuck me up later, it needs to be an array of CPTS with CTTs
-        $my_cpt = get_post_types( array( 'name' => $this->post_type[0]['type']), 'objects' );
-
-        foreach( $my_cpt as $myt )
-            $my_taxonomies = $myt->taxonomies;
-
-        // Quick and harsh error checking @todo again, needs to be an array, i think will fuck me later.
-        if ( !isset( $this->post_type ) ) wp_die( 'Need a CPT!' );
-        if ( !isset( $my_taxonomies ) ) wp_die( 'Need a CTT!' );
-
+        // @todo this needs to be generic
         wp_enqueue_style( 'qtip-nightly-style' );
         wp_enqueue_style( 'wp-jquery-ui-dialog' );
         wp_enqueue_style( 'tt-styles' );
@@ -228,19 +218,98 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         wp_enqueue_script( 'qtip-nightly' );
         wp_enqueue_script( 'jquery-ui-effects' );
 
+        $current_post_type = get_query_var( 'post_type' ); // $current_post_type
+        
+        // @todo this will fuck me up later, it needs to be an array of CPTS with CTTs
+
+        foreach( $this->post_type as $wtf ) {
+            $my_cpt = get_post_types( array( 'name' => $wtf['type']), 'objects' );                    
+            if ( is_tax( $wtf['taxonomies'] ) ) {                    
+                global $wp_query;
+                if ( in_array( $wp_query->query_vars['taxonomy'], $wtf['taxonomies'] ) ) {                    
+                    if ( file_exists( MY_PLUGIN_DIR . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' ) ) {
+                        load_template( MY_PLUGIN_DIR . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' );
+                    } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/default/taxonomy.php' ) ) {
+                        load_template( MY_PLUGIN_DIR . 'theme/default/taxonomy.php' );
+                    } elseif ( file_exists( STYLESHEETPATH . '/archive.php' ) ) {
+                        load_template( STYLESHEETPATH . '/archive.php' );
+                    } else {
+                        load_template( STYLESHEETPATH . '/index.php' );                                                
+                    }                        
+                } else {
+                    wp_die( 'Sorry the following taxonomies: ' . print_r( $wtf['taxonomies'] ) . ' are not in my array' );
+                }           
+                exit;         
+            }                    
+        }
+
+// print_r( $my_cpt );
+
+        $this->singleRedirect( $current_post_type );        
+        $this->archiveRedirect( $current_post_type );
+
+/*
+
+        foreach( $my_cpt as $myt )
+            $my_taxonomies = $myt->taxonomies;
+
         if ( is_tax( $my_taxonomies ) ) {
+     
             global $wp_query;
             if ( in_array( $wp_query->query_vars['taxonomy'], $my_taxonomies ) ) {
 
-                if ( file_exists( MY_PLUGIN_DIR . 'theme/' . $wp_query->posts[0]->post_type . '-taxonomy.php' ) )
+                if ( file_exists( MY_PLUGIN_DIR . 'theme/' . $wp_query->posts[0]->post_type . '-taxonomy.php' ) ) {
                     load_template( MY_PLUGIN_DIR . 'theme/' . $wp_query->posts[0]->post_type . '-taxonomy.php' );                        
-                elseif ( file_exists( STYLESHEETPATH . '/archive.php' ) )
+                } elseif ( file_exists( STYLESHEETPATH . '/archive.php' ) ) {
                     load_template( STYLESHEETPATH . '/archive.php' );
-                else
+                } else {
                     load_template( STYLESHEETPATH . '/index.php' );                                                
+                }
+            } else {
+                wp_die( 'Sorry the following taxonomies: ' . print_r( $my_taxonomies ) . ' are not in my array' );
             }
             exit;
         }
+*/
+        
+    } // End 'function templateRedirect'    
+
+    public function taxRedirect(){
+        
+
+    }
+
+    public function archiveRedirect( $current_post_type=null ) {
+
+        if ( is_null( $current_post_type ) )
+            wp_die( 'I need a CPT');
+
+        // Custom plugin template task-archive.php
+        // Custom theme template archive.php                    
+        // Default plugin template default-archive.php        
+        // theme index index.php
+        if ( is_post_type_archive( $current_post_type ) ) {            
+
+            // custom plugin theme
+            if ( file_exists( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' ) ) {
+                
+                load_template( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' );
+            
+            // custom theme
+            } elseif ( file_exists( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' ) ) {
+                load_template( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' );                    
+            
+            // default 
+            } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/default/archive-default.php' ) ) {
+                load_template( MY_PLUGIN_DIR . 'theme/default/archive-default.php' );
+            }
+            exit;   
+        }
+    }
+
+    public function singleRedirect( $current_post_type=null ) {        
+        if ( is_null( $current_post_type ) )
+            wp_die( 'I need a CPT');
 
         if ( is_single() ) {
             if ( file_exists( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' ) )
@@ -251,27 +320,8 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 load_template( STYLESHEETPATH . '/single.php' );
             exit;                    
         }
-        
-        // Default plugin template default-archive.php
-        // Custom plugin template task-archive.php    
-        // Default theme template archive-task.php
-        // Custom theme template archive.php        
-        // theme index index.php
-        if ( is_post_type_archive( $current_post_type ) ) {            
-            if ( file_exists( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' ) )
-                load_template( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' );
-            elseif ( file_exists( MY_PLUGIN_DIR . 'theme/archive-default.php' ) )
-                load_template( MY_PLUGIN_DIR . 'theme/archive-default.php' );
-            elseif ( file_exists( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' ) )
-                load_template( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' );                    
-            elseif ( file_exists( STYLESHEETPATH . '/archive.php' ) )
-                load_template( STYLESHEETPATH . '/archive.php' );
-            else
-                load_template( STYLESHEETPATH . '/index.php' );
-            exit;                    
-        }
-        
-    } // End 'function templateRedirect'    
+
+    }
     
 } // End 'CustomPostTypeBase'
 
@@ -544,7 +594,17 @@ $task->post_type = array(
             'editor',
             'author',
             'comments'
-        )        
+        ),
+        // @todo automate mother fuckergrrrrr
+        'taxonomies' => array(
+            'assigned', 
+            'phase', 
+            'priority', 
+            'project', 
+            'status', 
+            'type', 
+            'ETA'
+        )      
     ),
     array(
         'name' => 'Collectible',
@@ -554,8 +614,8 @@ $task->post_type = array(
             'editor',
             'comments'
         ),
-
         // yes, lame! but this is how WP is doing it for now also
+        // @todo automate mother fuckergrrrrr        
         'taxonomies' => array(            
             'magazine',
             'sneaker',

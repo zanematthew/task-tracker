@@ -42,11 +42,16 @@ jQuery(document).ready(function( $ ){
         $(this).find('.utility-container').addClass( 'zm-base-hidden wtf').removeClass( 'zm-base-visible');
     });
 
-    /** @todo update [task]: needs to be part of class for dialog */
+    /** 
+     * @todo update [task]: 
+     * needs to be part of class for dialog 
+     * This can be used as a default updating of CPT
+     *  - move to default.js
+     */
     /**
      * Updating a task
      */    
-    $( '#update_task' ).submit(function(){
+    $( '#default_update' ).submit(function(){
         /** @props petemilkman.com for being right, concatinate data */
         $.ajax({
             data: "action=postTypeUpdate&" + $(this).serialize(), 
@@ -80,8 +85,8 @@ jQuery(document).ready(function( $ ){
         $( '#login_dialog' ).dialog( 'close' ); 
     });
     
+    // @todo templating still handled via php, consider js templating?
     function temp_load( params ) {
-        // @todo templating still handled via php, consider js templating?
         data = { 
             action: "loadTemplate",
             template: params.template
@@ -225,6 +230,7 @@ jQuery(document).ready(function( $ ){
         } else {
             $( '#tt_filter_target' ).toggle( "slow", function(){                
                 template = _plugindir + $this.attr( 'tt_template' );
+console.log( 'loading: ' + template );
                 data = {
                     action: "loadTemplate",
                     template: template

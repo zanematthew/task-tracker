@@ -72,10 +72,12 @@ body.archive .zm-tt-navigation-container li.most-recent-task { background: #fff;
 .zm-tt-single-container .entry-utility ul { list-style-type: none; margin: 0; }
 .zm-tt-single-container .entry-utility ul li { float: left; margin: 0 20px 0 0; }
 
-.zm-tt-single-container .task-update-container { clear: both; float: left; margin-bottom: 20px; }
-.zm-tt-single-container .task-update-container h3 { color: #333; font-size: 16px; font-weight: bold; margin: 0 0 10px; }
-.zm-tt-single-container .task-update-container h3 em { color: #888; }
-.zm-tt-single-container .task-update-container form fieldset { width: 15%; }
+/*= Update Container
+-------------------------------------------------------------- */
+.default-update-container { clear: both; float: left; margin-bottom: 20px; }
+.default-update-container h3 { color: #333; font-size: 16px; font-weight: bold; margin: 0 0 10px; }
+.default-update-container h3 em { color: #888; }
+.default-update-container form fieldset { width: 15%; }
 
 /*= Archive
 -------------------------------------------------------------- */
