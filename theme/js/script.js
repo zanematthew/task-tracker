@@ -261,6 +261,7 @@ console.log( 'loading: ' + template );
                 searchClass += "." + $(this).val(); 
         }); 
         $thisclass = $( "option:selected", this ).eq(0).attr("class");
+        $thisclass = $thisclass ? $thisclass : "";
         if($thisclass.indexOf("taxonomy-") > -1 && $thisclass.indexOf("term-") > -1) {
             $thisclass = $thisclass.split(/\s+/);
             $term = "";
@@ -275,7 +276,7 @@ console.log( 'loading: ' + template );
             }
             if($taxonomy != "" && $term != "") {
                 _filters[$taxonomy] = $term;
-                changeHash($taxonomy, $term);
+                changeHash();
             }
         }
         searchTemp( searchClass );
