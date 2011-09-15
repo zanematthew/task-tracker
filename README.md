@@ -1,16 +1,20 @@
 TaskTracker -- A simple way to track your task.
 ====================================
 
-I built the TaskTracker plugin because I wanted a some features of project management software, along with a bug tracker but a simple interface and concept like a "todo list", out of frustration TaskTracker was born. Along the path an un-intended mini framework was built that allowed me to create an unlimited number of custom post types and taxonomies with some default templates the framework was born...and is still in its infancy.
+I built the TaskTracker plugin because I wanted a some features of a project management software, along with a bug tracker but a simple interface and concept like a "todo list", out of frustration TaskTracker was born. Along the path an un-intended mini framework was built that allowed me to create an unlimited number of custom post types and taxonomies with some default templates the framework was born...and is still in its infancy.
 
-An alpha version is in user [here] (http://zanematthew.com/task/).
-What I have going on in my [personal] (http://zanematthew.com/project/personal/) life.
-All [Open] (http://zanematthew.com/status/open/) Task I'm working on at the moment.
-What I'm doing at [home] (http://zanematthew.com/project/home/)
+Production Use:
 
-I can't stress enough that I am not trying to replace or bundle bug tracking, pm and todo list functions into one, but mainly have a place where I can have Task for myself such as; "meet with client", "put bugs into the Issue Tracker", "paint the bathroom". It's made my life easier.
+* An alpha version is in user [here] (http://zanematthew.com/task/).
+* What I have going on in my [personal] (http://zanematthew.com/project/personal/) life.
+* All [Open] (http://zanematthew.com/status/open/) Task I'm working on at the moment.
+* What I'm doing at [home] (http://zanematthew.com/project/home/)
 
-A proof of concept can be viewed by looking at my [collectibles] (http://zanematthew.com/collectible/). The following array structure (and alittle more code) gave me my collectibles, single view, archive view and taxonomy view.
+I can't stress enough that I am not trying to replace or bundle bug tracking, pm and todo list functions into one, but mainly have a place where I can have Task for myself such as; "meet with client", "put bugs into the Issue Tracker", "paint the bathroom". 
+
+It's made me alittle more organized hence, making my life easier.
+
+A proof of concept for the unlimited CPTs and CTTs can be viewed by looking at my [collectibles] (http://zanematthew.com/collectible/). The following array structure (and alittle more code) gave me my collectibles, single view, archive view and taxonomy view.
 <pre>$task = new CustomPostType();
 $task->post_type = array(
     array(
