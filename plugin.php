@@ -396,7 +396,13 @@ class CustomPostType extends CustomPostTypeBase {
     public function addPostClass( $classes ) {
         global $post;
 
-        $current_post_type = get_query_var( 'post_type' ); // $current_post_type
+        
+        if ( get_query_var( 'post_type' ) ) {
+            $current_post_type = get_query_var( 'post_type' );
+        } else {
+            $current_post_type = $this->post_type[0]['type'];
+        }
+                    
         $my_cpt = get_post_types( array( 'name' => $current_post_type), 'objects' );
 
         foreach( $my_cpt[ $current_post_type ]->taxonomies  as $name ) {
