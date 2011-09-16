@@ -230,7 +230,7 @@ jQuery(document).ready(function( $ ){
         } else {
             $( '#tt_filter_target' ).toggle( "slow", function(){                
                 template = _plugindir + $this.attr( 'tt_template' );
-console.log( 'loading: ' + template );
+//console.log( 'loading: ' + template );
                 data = {
                     action: "loadTemplate",
                     template: template
@@ -263,8 +263,9 @@ console.log( 'loading: ' + template );
             if( $("#archive_table tbody tr.no-results").length ) {
                 $("#archive_table tbody tr.no-results").fadeIn();
             } else {
+                var colspan = $("td", $("#archive_table tbody tr").eq(0)).length;
                 $("#archive_table tbody")
-                    .append('<tr class="no-results"><td colspan="6"><em>No Tasks match the selected criteria.</em></td></tr>');
+                    .append('<tr class="no-results"><td colspan="' + colspan + '"><em>No Tasks match the selected criteria.</em></td></tr>');
             }
         }
     }
