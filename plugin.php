@@ -395,32 +395,22 @@ class CustomPostType extends CustomPostTypeBase {
      */
     public function addPostClass( $classes ) {
         global $post;
-        $args = array(
-          'public'   => true,
-          '_builtin' => false  
-        ); 
-        $output = 'objects';
-        $tax_names = array();        
-        $taxonomies = get_taxonomies( $args, $output ); 
 
-        if ( $taxonomies ) {
-            foreach ($taxonomies  as $taxonomy )
-                $tax_names[] .= $taxonomy->labels->name;
-        }
+        $current_post_type = get_query_var( 'post_type' ); // $current_post_type
+        $my_cpt = get_post_types( array( 'name' => $current_post_type), 'objects' );
 
-        foreach( $tax_names as $name ) {
+        foreach( $my_cpt[ $current_post_type ]->taxonomies  as $name ) {
             $terms = get_the_terms( $post->ID, $name );
-
             if ( !is_wp_error( $terms ) && !empty( $terms )) {
-                foreach( $terms as $term )
+                foreach( $terms as $term ) {
                     $classes[] = $name . '-' . $term->term_id;
+                }
             } 
         }
         
         return $classes;
         
     } // End 'addPostClass'
-
     
     /**
      * Basic post submission for use with an ajax request
