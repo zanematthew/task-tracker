@@ -252,35 +252,6 @@ console.log( 'loading: ' + template );
         }
     });    
 
-    /** @todo filter [task] archive: needs to be part of class for dialog */    
-    $( '#tt_filter_target select' ).live( 'change', function() {   
-        var searchClass = '';     
-        
-        $( "#filter_task_form select" ).each(function() { 
-            if( $( this ).val() != "" ) 
-                searchClass += "." + $(this).val(); 
-        }); 
-        $thisclass = $( "option:selected", this ).eq(0).attr("class");
-        if($thisclass.indexOf("taxonomy-") > -1 && $thisclass.indexOf("term-") > -1) {
-            $thisclass = $thisclass.split(/\s+/);
-            $term = "";
-            $taxonomy = "";
-            for (i = 0; i < $thisclass.length; i++) {
-                if($thisclass[i].indexOf('taxonomy-') === 0) {
-                    $taxonomy = $thisclass[i].replace("taxonomy-", "");
-                }
-                if($thisclass[i].indexOf('term-') === 0) {
-                    $term = $thisclass[i].replace("term-", "");
-                }
-            }
-            if($taxonomy != "" && $term != "") {
-                _filters[$taxonomy] = $term;
-                changeHash($taxonomy, $term);
-            }
-        }
-        searchTemp( searchClass );
-    });
-
     function checkNoResults() {
         // Check No Results works off of the task-active class.
         // Be sure that all tasks that are showing have .task-active
@@ -306,15 +277,26 @@ console.log( 'loading: ' + template );
         window.location.hash = hash;
     }
 
-    function searchTemp( searchClass ) {        
-        if ( searchClass != '' ) {            
-            $( "#archive_table tbody tr" + searchClass ).fadeIn().addClass('task-active');
-            $( "#archive_table tbody tr" ).not(searchClass).fadeOut().removeClass('task-active'); 
+    function build_filters() {
+        var searchClasses = '';
+        _filters = {};
+        $( "#filter_task_form select" ).each(function() { 
+            if($(this).val()) {
+                searchClasses += "." + $(this).val();
+                _filters[this.name] = $('option:selected', this).attr("data-value");
+            }
+        });
+        if ( searchClasses != '' ) {
+            $( "#archive_table tbody tr" + searchClasses ).fadeIn().addClass('task-active');
+            $( "#archive_table tbody tr" ).not(searchClasses).fadeOut().removeClass('task-active'); 
         } else {
             $( "#archive_table tbody tr" ).not('.no-results').fadeIn().addClass('task-active');
         } 
         checkNoResults();
-    }        
+        changeHash();
+    }
+    /** @todo filter [task] archive: needs to be part of class for dialog */    
+    $( '#tt_filter_target select' ).live( 'change', build_filters );
 
     $( window ).load(function(){
 
