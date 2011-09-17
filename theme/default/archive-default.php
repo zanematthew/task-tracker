@@ -27,6 +27,7 @@
                                          <div class="utility-container zm-base-hidden">
                                              <?php edit_post_link('Admin Edit', '' , ' |'); ?>
                                              by <?php the_author(); ?> on <?php the_time(get_option('date_format')); ?> |
+                                             <a href="#delete" class="default_delete" data-post_id="<?php print $post->ID; ?>" data-security="<?php print wp_create_nonce( 'tt-ajax-forms' );?>">Delete</a>
                                          </div>
                                     </td>
                                     <?php

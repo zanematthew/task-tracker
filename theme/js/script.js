@@ -36,10 +36,12 @@ jQuery(document).ready(function( $ ){
     });
 
     /* @todo this needs to be tied down via a class? */
-    $( '.zm-tt-container tr' ).hover(function(){
-        $(this).find('.utility-container').addClass( 'zm-base-visible').removeClass( 'zm-base-hidden');
-    }, function(){
-        $(this).find('.utility-container').addClass( 'zm-base-hidden wtf').removeClass( 'zm-base-visible');
+    $( '.zm-tt-container tr' ).live( "mouseover mouseout", function( event ){
+        if ( event.type == "mouseover" ) {                
+            $(this).find('.utility-container').addClass( 'zm-base-visible').removeClass( 'zm-base-hidden');
+        } else {
+            $(this).find('.utility-container').addClass( 'zm-base-hidden wtf').removeClass( 'zm-base-visible');            
+        }
     });
 
     /** 
@@ -62,6 +64,23 @@ jQuery(document).ready(function( $ ){
         });    
     }); // End 'update'
     
+    $( '.default_delete' ).live( "click", function(){
+        var post_id = $( this ).attr( 'data-post_id');
+
+        data = {
+            action: "postTypeDelete",
+            post_id: $( this ).attr( 'data-post_id'),
+            security: $( this ).attr( 'data-security' )
+        };
+
+        $.ajax({            
+            data: data,
+            success: function( msg ){                
+                $( '.post-' + post_id ).fadeOut();
+            }
+        });            
+    });
+
     /** @todo create dialog defaults [task]: needs to be part of class for dialog */
     /** 
      * Setup our dialog for create a ticket 
