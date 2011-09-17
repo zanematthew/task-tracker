@@ -346,8 +346,9 @@ class CustomPostType extends CustomPostTypeBase {
         add_action( 'wp_footer', array( &$this, 'createPostTypeDiv' ) );            
         add_action( 'wp_footer', array( &$this, 'createLoginDiv' ) );            
         
-        add_action( 'wp_ajax_postTypeSubmit', array( &$this, 'postTypeSubmit' ) );        
+        add_action( 'wp_ajax_postTypeSubmit', array( &$this, 'postTypeSubmit' ) );                
         add_action( 'wp_ajax_postTypeUpdate', array( &$this, 'postTypeUpdate' ) );
+        add_action( 'wp_ajax_postTypeDelete', array( &$this, 'postTypeDelete' ) );
         add_action( 'wp_ajax_siteLoginSubmit', array( &$this, 'siteLoginSubmit' ) );        
         add_action( 'wp_ajax_nopriv_siteLoginSubmit', array( &$this, 'siteLoginSubmit' ) ); 
         
@@ -499,6 +500,31 @@ class CustomPostType extends CustomPostTypeBase {
         die();
     } // postTypeUpdate
 
+    public function postTypeDelete( $id=null ){
+        check_ajax_referer( 'tt-ajax-forms', 'security' );
+
+        $id = (int)$_POST['post_id'];
+
+        if ( !is_user_logged_in() )
+            return false;        
+
+        if ( is_null( $id )  ) {
+            wp_die( 'I need a post_id to kill!');
+        } else {        
+
+            // Yes we do what the mafia does, true == no trash, just kill the mofo
+            // and everyone that stood behind him! i.e. terms, meta, att. etc.
+            // if you had relations with her your dead to me!
+            $result = wp_delete_post( $id, true );
+            if ( is_wp_error( $result ) ) {                
+                print_r( $result );
+            } else {
+                print_r( $result );
+            }
+        }
+
+        die();
+    } // postTypeDelete
 
     /**
      * to be used in AJAX submission, gets the $_POST data and logs the user in.
