@@ -138,7 +138,6 @@ jQuery(document).ready(function( $ ){
     
         if ( !$( '#tt_update_container' ).length ) {
             $('#tt_main_target').fadeOut();   
-
             // @todo templating still handled via php, consider js templating?
             template = $(this).attr( 'tt_template' );
             
@@ -229,11 +228,14 @@ jQuery(document).ready(function( $ ){
             $( '#filter_task_form' ).toggle( 'slow' );
         } else {
             $( '#tt_filter_target' ).toggle( "slow", function(){                
+
                 template = _plugindir + $this.attr( 'tt_template' );
-//console.log( 'loading: ' + template );
+                type = $this.attr( 'data-post_type');
+
                 data = {
                     action: "loadTemplate",
-                    template: template
+                    template: template,
+                    post_type: type
                 };
            
                 $.ajax({

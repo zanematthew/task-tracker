@@ -4,16 +4,14 @@
         <div class="form-wrapper">
             <input type="hidden" value="task" name="post_type" />
             <?php
-            /*
-            $post_types = get_post_types( array( '_builtin' => false ), 'objects' );
-            foreach ( $post_types['task']->taxonomies as $tax ) {
-                zm_base_build_options( array( 'taxonomy' => strtolower( $tax ), 'prepend' => $tax.'-' ) );
+
+            $post_type = $_POST['post_type'];
+            $my_cpt = get_post_types( array( 'name' => $post_type ), 'objects' );                    
+
+            foreach( $my_cpt[ $post_type ]->taxonomies as $taxonomy ) {
+                zm_base_build_options( array( 'taxonomy' => $taxonomy, 'prepend' => $taxonomy.'-' ) );
             }
-            */
             ?>
-            <?php zm_base_build_options( array( 'taxonomy' => 'status', 'prepend' => 'status-' ) ); ?>
-            <?php zm_base_build_options( array( 'taxonomy' => 'priority', 'prepend' => 'priority-' ) ); ?>
-            <?php zm_base_build_options( array( 'taxonomy' => 'project', 'prepend' => 'project-' ) ); ?>            
         </div>
     </form>
 </div>
