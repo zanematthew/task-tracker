@@ -242,34 +242,8 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             }                    
         }
 
-// print_r( $my_cpt );
-
         $this->singleRedirect( $current_post_type );        
         $this->archiveRedirect( $current_post_type );
-
-/*
-
-        foreach( $my_cpt as $myt )
-            $my_taxonomies = $myt->taxonomies;
-
-        if ( is_tax( $my_taxonomies ) ) {
-     
-            global $wp_query;
-            if ( in_array( $wp_query->query_vars['taxonomy'], $my_taxonomies ) ) {
-
-                if ( file_exists( MY_PLUGIN_DIR . 'theme/' . $wp_query->posts[0]->post_type . '-taxonomy.php' ) ) {
-                    load_template( MY_PLUGIN_DIR . 'theme/' . $wp_query->posts[0]->post_type . '-taxonomy.php' );                        
-                } elseif ( file_exists( STYLESHEETPATH . '/archive.php' ) ) {
-                    load_template( STYLESHEETPATH . '/archive.php' );
-                } else {
-                    load_template( STYLESHEETPATH . '/index.php' );                                                
-                }
-            } else {
-                wp_die( 'Sorry the following taxonomies: ' . print_r( $my_taxonomies ) . ' are not in my array' );
-            }
-            exit;
-        }
-*/
         
     } // End 'function templateRedirect'    
 
@@ -552,6 +526,7 @@ class CustomPostType extends CustomPostTypeBase {
      * uh, why not make it ajaxy? :D
      */
     public function loadTemplate() {
+
         $template = $_POST['template'];
     
         if ( $template == null )
@@ -579,8 +554,8 @@ class CustomPostType extends CustomPostTypeBase {
     
 } // End 'CustomPostType'
 
-$task = new CustomPostType();
-$task->post_type = array(
+$_GLOBALS['task'] = new CustomPostType();
+$_GLOBALS['task']->post_type = array(
     array(
         'name' => 'Task',
         'type' => 'task',
@@ -622,7 +597,7 @@ $task->post_type = array(
     )
 );
 
-$task->taxonomy = array(
+$_GLOBALS['task']->taxonomy = array(
     array(
         'name' => 'assigned', 
         'post_type' => 'task'
