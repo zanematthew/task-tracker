@@ -62,6 +62,25 @@ jQuery(document).ready(function( $ ){
         });    
     }); // End 'update'
     
+    $( '.default_delete' ).click(function(){
+        
+        var post_id = $( this ).attr( 'data-post_id');
+
+        data = {
+            action: "postTypeDelete",
+            post_id: $( this ).attr( 'data-post_id'),
+            security: $( this ).attr( 'data-security' )
+        };
+
+        $.ajax({            
+            data: data,
+            success: function( msg ){                
+                $( '.post-' + post_id ).fadeOut();
+            }
+        });    
+        
+    });
+
     /** @todo create dialog defaults [task]: needs to be part of class for dialog */
     /** 
      * Setup our dialog for create a ticket 

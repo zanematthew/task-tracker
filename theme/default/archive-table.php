@@ -28,7 +28,7 @@ $my_query = new WP_Query( $args );
                      <span class="comment-count"><?php comments_number(' '); ?></span>
                      <div class="utility-container zm-base-hidden">
                          <?php edit_post_link('Admin Edit', '' , ' |'); ?>
-                         by <?php the_author(); ?> on <?php the_time(get_option('date_format')); ?> |
+                         by <?php the_author(); ?> on <?php the_time(get_option('date_format')); ?> | <a href="#delete" class="default_delete" data-post_id="<?php print $post->ID; ?>" data-security="<?php print wp_create_nonce( 'tt-ajax-forms' );?>">Delete</a>
                      </div>
                 </td>
                 <td>

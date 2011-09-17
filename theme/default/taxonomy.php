@@ -1,16 +1,23 @@
-<?php get_header(); ?>
-<?php get_template_part('header-container','index'); ?>
 <?php
 
 global $wp_query;
 
 // yes we are trusting that it is always the first index of our array std class crap
 $current_post_type = $wp_query->posts[0]->post_type;
+
+if ( is_null( $current_post_type ) ) {
+    $url = get_bloginfo('url');
+    header("Location: {$url}");
+}
+?>
+<?php get_header(); ?>
+<?php get_template_part('header-container','index'); ?>
+<?php
+
 $my_cpt = get_post_types( array( 'name' => $current_post_type), 'objects' );
 $my_cpt_taxes = $my_cpt[ $current_post_type ]->taxonomies;
 
 ?>
-
     <div class="zm-tt-container zm-tt-archive-container">
         <div class="tt-glue">
             <div class="main-container">
@@ -34,6 +41,7 @@ $my_cpt_taxes = $my_cpt[ $current_post_type ]->taxonomies;
                                          <div class="utility-container zm-base-hidden">
                                              <?php edit_post_link('Admin Edit', '' , ' |'); ?>
                                              by <?php the_author(); ?> on <?php the_time(get_option('date_format')); ?> |
+                                             <a href="#delete" class="default_delete" data-post_id="<?php print $post->ID; ?>" data-security="<?php print wp_create_nonce( 'tt-ajax-forms' );?>">Delete</a>
                                          </div>
                                     </td>
                                     <?php foreach( $my_cpt_taxes as $tax ) : ?>
