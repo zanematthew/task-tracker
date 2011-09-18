@@ -25,7 +25,6 @@ endif;
  */
 if ( ! function_exists( 'tt_json_feed' ) ) :
 function tt_json_feed( $post_type, $taxonomies=array() ) {
-
     if ( empty( $post_type ) || empty( $taxonomies ) )
         die( 'I need a fucking post type and a fucking array of taxonomies' );
     
@@ -54,6 +53,6 @@ function tt_json_feed( $post_type, $taxonomies=array() ) {
         }
     
     endwhile;
-    print '<script type="text/javascript">var _'.$post_type.' = ' . json_encode( $types ) . '</script>';
+    print '<script type="text/javascript">var _data = ' . json_encode( $types ) . '</script>';
 }
 endif;

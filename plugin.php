@@ -370,17 +370,11 @@ class CustomPostType extends CustomPostTypeBase {
      */
     public function addPostClass( $classes ) {
         global $post;
-
-        
-        if ( get_query_var( 'post_type' ) ) {
-            $current_post_type = get_query_var( 'post_type' );
-        } else {
-            $current_post_type = $this->post_type[0]['type'];
-        }
+        $cpt = $post->post_type;
                     
-        $my_cpt = get_post_types( array( 'name' => $current_post_type), 'objects' );
+        $cpt_obj = get_post_types( array( 'name' => $cpt ), 'objects' );
 
-        foreach( $my_cpt[ $current_post_type ]->taxonomies  as $name ) {
+        foreach( $cpt_obj[ $cpt ]->taxonomies  as $name ) {
             $terms = get_the_terms( $post->ID, $name );
             if ( !is_wp_error( $terms ) && !empty( $terms )) {
                 foreach( $terms as $term ) {
@@ -598,8 +592,7 @@ $_GLOBALS['task']->post_type = array(
             'priority', 
             'project', 
             'status', 
-            'type', 
-            'ETA'
+            'type'
         )      
     ),
     array(
@@ -648,10 +641,6 @@ $_GLOBALS['task']->taxonomy = array(
         'name' => 'type', 
         'post_type' => 'task'
         ),            
-    array( 
-        'name' => 'ETA',
-        'post_type' => 'task'
-        ),
     array(
        	'name' => 'Magazine',
        	'post_type' => 'collectible'
