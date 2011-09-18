@@ -598,8 +598,7 @@ $_GLOBALS['task']->post_type = array(
             'priority', 
             'project', 
             'status', 
-            'type', 
-            'ETA'
+            'type'
         )      
     ),
     array(
@@ -648,10 +647,6 @@ $_GLOBALS['task']->taxonomy = array(
         'name' => 'type', 
         'post_type' => 'task'
         ),            
-    array( 
-        'name' => 'ETA',
-        'post_type' => 'task'
-        ),
     array(
        	'name' => 'Magazine',
        	'post_type' => 'collectible'
