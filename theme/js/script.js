@@ -230,8 +230,8 @@ jQuery(document).ready(function( $ ){
             }
             var search_on = $( this ).attr( 'rel' );
             search_on = search_on.split( "_" );
-            for( var i in _task ) {
-                if ( _task[i][search_on[0]] == search_on[1] ) {
+            for( var i in _data ) {
+                if ( _data[i][search_on[0]] == search_on[1] ) {
                     $( ".post-" + i ).fadeIn();
                 } else {
                     $( ".post-" + i ).fadeOut();
@@ -347,11 +347,11 @@ jQuery(document).ready(function( $ ){
 
                     $('#tt_main_target').fadeIn().html( msg );
                     if ( _filters != {} ) {
-                        for( var i in _task ) {
+                        for( var i in _data ) {
                             match = true;
                             for( var j in _filters) {
-                                if ( typeof _task[i][ j.toLowerCase() ] !== "undefined") {
-                                    if ( _task[i][ j.toLowerCase() ] != _filters[j].toLowerCase()) {
+                                if ( typeof _data[i][ j.toLowerCase() ] !== "undefined") {
+                                    if ( _data[i][ j.toLowerCase() ] != _filters[j].toLowerCase()) {
                                         match = false;
                                     }
                                 }
