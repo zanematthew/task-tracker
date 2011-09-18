@@ -10,6 +10,7 @@ $args = array(
 );
 
 $my_query = null;
+$x = 0;
 $my_query = new WP_Query( $args );
 ?>
 <div class="zm-tt-archive-container" >
@@ -21,8 +22,7 @@ $my_query = new WP_Query( $args );
                     <th><span><?php print $tax; ?><br /></span></th>
                 <?php endforeach; ?>
             </tr>
-        </thead>
-        <?php $x = 0; ?>
+        </thead>    
         <?php if ( $my_query->have_posts() ) while ( $my_query->have_posts() ) : $my_query->the_post(); ?>
             <tr <?php post_class('result')?>>
                 <td><?php $x++; ?>
