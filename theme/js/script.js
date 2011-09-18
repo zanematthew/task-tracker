@@ -325,11 +325,16 @@ jQuery(document).ready(function( $ ){
 
         /** @todo load [task] archive: needs to be part of class for dialog */    
         if ( $('.sample').length ) {
-            template = $( '.sample' ).attr('tt_template');
+
+            template = $( '.sample' ).attr('tt_template');            
+            post_type = $( '.sample' ).attr('data-post_type');
+
+            if ( post_type == undefined || template == undefined )                
+                console.log( 'no post type, and/or tempalte: please use data-post_type/template="[your cpt]"');                            
 
             data = { 
                 action: "loadTemplate",
-                post_type: "task",
+                post_type: post_type,
                 post_status: "publish",
                 template: template
             };
