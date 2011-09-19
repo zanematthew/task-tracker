@@ -14,21 +14,24 @@ pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px
  * 
  */
 .zm-tt-container a.zm-base-priority-high { 
-    background: -moz-linear-gradient(center top , #FFC2B2, #FF704D) repeat scroll 0 0 white;
+    background: -moz-linear-gradient( top, #FFC2B2, #FF704D) white;
+    background: -webkit-linear-gradient( top, #FFC2B2, #FF704D) white;    
     border: 1px solid #E62E00;
     color: #FFFFFF;
     text-shadow: 1px 1px 0 #4C0F00;
     }
 
 .zm-tt-container a.zm-base-priority-low { 
-    background: -moz-linear-gradient(center top , #FFF0B2, #FFDB4D) repeat scroll 0 0 white;
+    background: -moz-linear-gradient( top , #FFF0B2, #FFDB4D) white;
+    background: -webkit-linear-gradient( top , #FFF0B2, #FFDB4D ) white;
     border: 1px solid #E6B800;
     color: #FFFFFF;
     text-shadow: 1px 1px 0 #B26B24;
     }
 
 .zm-tt-container a.zm-base-priority-medium { 
-    background: -moz-linear-gradient(center top , #FFE0C2, #FFB870) repeat scroll 0 0 white;
+    background: -moz-linear-gradient( top, #FFE0C2, #FFB870) white;
+    background: -webkit-linear-gradient( top, #FFE0C2, #FFB870) white;    
     border: 1px solid #FF9000;
     color: #FFFFFF;
     text-shadow: 1px 1px 0 #B26B24;
@@ -40,36 +43,41 @@ pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px
 
 /*= Status
 -------------------------------------------------------------- */
-.status-container a { min-width: 41px; }
+.status-container a { min-width: 60px; }
 
 a.zm-base-status-resolved { 
-    background: -moz-linear-gradient(center top , #B2F0E0, #4DDBB8) repeat scroll 0 0 white;
+    background: -moz-linear-gradient(top , #B2F0E0, #4DDBB8) white;
+    background: -webkit-linear-gradient(top , #B2F0E0, #4DDBB8) white;    
     border: 1px solid #00B88A;
     text-shadow: 1px 1px 0 #003D2E;
     }
 
 a.zm-base-status-aborted { 
-    background: -moz-linear-gradient(center top , #E0E0FF, #B8B8FF) white;    
+    background: -moz-linear-gradient( top, #E0E0FF, #B8B8FF) white;    
+    background: -webkit-linear-gradient( top, #E0E0FF, #B8B8FF) white;    
     border: 1px solid #7A7ACC;
     text-decoration: line-through;
     text-shadow: 1px 1px 0 #2E2E4C;
     }
 
 a.zm-base-status-open { 
-    background: -moz-linear-gradient(center top , #E0E0FF, #B8B8FF) white;    
+    background: -moz-linear-gradient( top , #E0E0FF, #B8B8FF) white;
+    background: -webkit-linear-gradient( top , #E0E0FF, #B8B8FF) white;
     border: 1px solid #7A7ACC;
     text-shadow: 1px 1px 0 #2E2E4C;
     }
 
 a.zm-base-status-new {
-    background: -moz-linear-gradient(center top , #EEEEEA, #B3B3B0) white;
+    background: -moz-linear-gradient( top , #EEEEEA, #B3B3B0) white;
+    background: -webkit-linear-gradient( top , #EEEEEA, #B3B3B0) white;    
     border: 1px solid #929291;
     color: #FFF;
     text-shadow: 1px 1px 0 #2E2E4C;
     }
 
 a.zm-base-status-closed {
-    background: -moz-linear-gradient(center top , #EEEEEA, #B3B3B0) white;
+    background: -moz-linear-gradient( top , #EEEEEA, #B3B3B0) white;
+    background: -webkit-linear-gradient( top , #EEEEEA, #B3B3B0) white;    
     border: 1px solid #929291;    
     color: #FFF;
     text-decoration: line-through;    
@@ -151,7 +159,8 @@ a.zm-base-type-personal { background: url('images/famfamfam/icons/user.png'); }
 .ui-widget-overlay { 
     background: -moz-radial-gradient(rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 35%, rgba(0, 0, 0, 0.7)); 
     background: -webkit-radial-gradient(rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 35%, rgba(0, 0, 0, 0.7)); 
-}
+    }
+    
 .ui-draggable .ui-dialog-titlebar { background: -moz-linear-gradient(center top , #E3E3E3, #F9F9F9) repeat scroll 0 0 transparent; border-bottom: 1px solid #E3E3E3; }
 /** default wp login form */
 #login_form input[type="password"], 
