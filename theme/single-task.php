@@ -17,6 +17,7 @@
                                 <li><div class="priority-container"><small>Priority</small><br /><?php print zm_base_get_the_term_list( $post->ID, 'priority'); ?></div></li>
                                 <li><div class="project-container"><small>Project</small><br /><?php print zm_base_get_the_term_list($post->ID, 'project'); ?></div></li>
                                 <li><div class="milestone-container"><small>Milestone</small><br /><?php print zm_base_get_the_term_list($post->ID, 'milestone'); ?></div></li>
+                                <li><div class="type-container"><small>Type</small><br /><?php print zm_base_get_the_term_list($post->ID, 'type'); ?></div></li>
                                 <li><div class="ticket-container"><?php print '<small>Ticket </small><br />#' . '<a href="'. get_permalink() .'">' . $post->ID . '</a>'; ?></div></li>
                                 <li><span class="ui-icon ui-icon-arrow"><a href="#top">Return to Top</a></span></li>
                             </ul>
