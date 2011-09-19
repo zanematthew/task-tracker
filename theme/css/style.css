@@ -19,6 +19,7 @@ pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px
 .type-container a { height: 16px; width: 16px; display: block; opacity: 0.5; text-indent: -999em; 
 -webkit-transition: opacity .5s ease-in-out; }
 
+a[class*='zm-base-type-photography-'],
 a.zm-base-type-photography { background: url('images/famfamfam/icons/camera.png'); } 
 a.zm-base-type-house { background: url('images/famfamfam/icons/house.png'); }
 a.zm-base-type-freelance { background: url('images/famfamfam/icons/money.png'); }
