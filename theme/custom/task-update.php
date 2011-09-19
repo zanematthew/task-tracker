@@ -9,6 +9,7 @@
             <?php zm_base_build_options('project'); ?>
             <?php zm_base_build_options('phase'); ?>
             <?php zm_base_build_options('assigned'); ?>
+            <?php zm_base_build_options('type'); ?>            
             <p><label class="zm-base-title">Note</label><br /><textarea tabindex="4" rows="10" cols="58" id="comment" name="comment"></textarea></p>    
             <div class="button-container">
                 <div id="publishing-action">

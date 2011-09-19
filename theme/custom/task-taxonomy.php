@@ -14,20 +14,21 @@
    <table id="archive_table">
         <thead>
             <tr>
-                <th id="title"><span>Title</span></th>
-                <th id="milestone"><span>Phase</span></th>
+                <th id="title"><span>Title</span></th>                
                 <th id="age"><span>Age</span></th>
                 <th id="status"><span>Status</span></th>
                 <th id="priority"><span>Priority</span></th>
-                <th id="project"><span>Project</span></th>
+                <th id="project"><span>Project</span></th>                
+                <th id="project"><span>Type</span></th>                                            
             </tr>
         </thead>
         <?php $x = 0; ?>
         <?php // if ( $my_query->have_posts() ) while ( $my_query->have_posts() ) : $my_query->the_post(); ?>
         
         <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
+            <?php $x++; ?>
             <tr <?php post_class('result')?>>
-                <td><?php $x++; ?>
+                <td>
                      <strong class="title"><a href="<?php the_permalink(); ?>" title="Link to project: <?php the_title(); ?>">#<?php the_ID(); ?> <?php the_title(); ?></a></strong>
                      <span class="comment-count"><?php comments_number(' '); ?></span>
                      <div class="utility-container zm-base-hidden">
@@ -35,11 +36,6 @@
                          by <?php the_author(); ?> on <?php the_time(get_option('date_format')); ?> |
                          <a href="#delete" class="default_delete" data-post_id="<?php print $post->ID; ?>" data-security="<?php print wp_create_nonce( 'tt-ajax-forms' );?>">Delete</a>
                      </div>
-                </td>
-                <td>
-                    <div class="milestone-container zm-base-item">
-                        <?php print zm_base_get_the_term_list( array( 'link' => true, 'post_id' => $post->ID, 'taxonomy' => 'phase' )); ?>
-                    </div>
                 </td>
                 <td>
                     <?php tt_task_age(); ?>
@@ -58,6 +54,11 @@
                         <?php print zm_base_get_the_term_list( array( 'link' => true, 'post_id' => $post->ID, 'taxonomy' => 'project' ) ); ?>
                     </div>
                 </td>
+                <td>
+                    <div class="type-container">
+                        <?php print zm_base_get_the_term_list( array( 'link' => true, 'post_id' => $post->ID, 'taxonomy' => 'type' ) ); ?>
+                    </div>
+                </td>                            
             </tr>
         <?php endwhile; ?>
     </table>
