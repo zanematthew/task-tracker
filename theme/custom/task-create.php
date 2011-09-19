@@ -18,7 +18,7 @@
         <?php zm_base_build_options('project'); ?>
         <?php zm_base_build_options('phase'); ?>
         <?php zm_base_build_options('assigned'); ?>
-        <?php zm_base_build_options('ETA'); ?>
+        <?php zm_base_build_options('type'); ?>
         </div>
         <div class="button-container">
             <div id="publishing-action">

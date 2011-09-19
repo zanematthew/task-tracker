@@ -4,7 +4,7 @@ pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px
 .zm-tt-container .status-container { font-size: 12px; }
 .zm-tt-container .status-container a { border-radius: 3px; font-weight: normal; opacity: 0.65; padding: 5px 7px; }
 .zm-tt-container .status-container a:hover { opacity: 1; }
-.zm-tt-container ..zm-base-status-aborted { background: #efeffd; box-shadow: 1px 1px 0 #C8C8FF; color: #c8c8ff; text-decoration: line-through; }
+.zm-tt-container .zm-base-status-aborted { background: #efeffd; box-shadow: 1px 1px 0 #C8C8FF; color: #c8c8ff; text-decoration: line-through; }
 .zm-tt-container a.zm-base-status-closed { background: #f0f0f0; box-shadow: 1px 1px 0 #d3d0d0; color: #d3d0d0; }
 .zm-tt-container .zm-base-status-resolved { background: #e5f6ed; box-shadow: 1px 1px 0 #67ca97; color: #67ca97; }
 .zm-tt-container a.zm-base-status-open { background: #efeffd; box-shadow: 1px 1px 0 #b0b0e6; color: #b0b0e6; }
@@ -15,6 +15,20 @@ pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px
 .zm-tt-container a.zm-base-priority-low { background: #fefeb8; box-shadow: 1px 1px 0 #ffd200; color: #ffd200; }
 .zm-base-hidden { visibility: hidden; }
 .zm-base-visible { visibility: visible; }
+
+.type-container a { height: 16px; width: 16px; display: block; opacity: 0.5; text-indent: -999em; 
+-webkit-transition: opacity .5s ease-in-out; }
+
+a.zm-base-type-photography { background: url('images/famfamfam/icons/camera.png'); } 
+a.zm-base-type-house { background: url('images/famfamfam/icons/house.png'); }
+a.zm-base-type-freelance { background: url('images/famfamfam/icons/money.png'); }
+a.zm-base-type-car { background: url('images/famfamfam/icons/car.png'); }
+a.zm-base-type-personal { background: url('images/famfamfam/icons/user.png'); }
+
+.type-container a:hover {   
+    opacity: 1; 
+    -webkit-transition: opacity .5s;
+    }
 
 /* twentytweelve mess up*/
 .zm-tt-single-container #respond { float: left; }
@@ -103,7 +117,7 @@ body.archive .zm-tt-navigation-container li.most-recent-task { background: #fff;
 .zm-tt-form-container form { font: 300 12px/1.4em sans-serif; }
 .zm-tt-form-container form p { float: left; width: 100%; margin: 0 0 20px 0; }
 .zm-tt-form-container form p label { float: left; margin-bottom: 5px; }
-.zm-tt-form-container form fieldset { border: 0; float: left; width: 20%; margin: 0 10px 10px 0; }
+.zm-tt-form-container form fieldset { border: 0; float: left; width: 18%; margin: 0 10px 10px 0; }
 .zm-tt-form-container form fieldset label { clear: both; float: left; font-weight: 300; margin: 0 0 4px 5px; }
 .zm-tt-form-container textarea { height: 200px; padding: 5px; width: 97%; }
 .zm-tt-form-container textarea,
@@ -122,7 +136,7 @@ clear: both; float: left; padding: 5px; width: 97%;
 .zm-tt-form-container textarea:focus { border-color: #939393; box-shadow: 0 0 3px #939393; }
 .zm-tt-form-container select,
 .zm-tt-form-container textarea { border: 1px solid #ddd; color: #888; padding: 5px; }
-.zm-tt-form-container select { font-weight: 300; font-size: 12px; margin-top: 5px; }
+.zm-tt-form-container select { font-weight: 300; font-size: 12px; margin-top: 5px; width: 90%; }
 
 .zm-tt-form-container .form-wrapper { float: left; padding: 30px; }
 
@@ -223,7 +237,7 @@ a.login { font-size: 12px; margin: 10px 10px 0 0; display: inline-block; }
 .main-container { float: left; width: 700px; margin-right: 10px; }
 .zm-tt-sidebar-container { float: right; width: 220px; margin-left: 10px; }
 
-.zm-tt-form-container #filter_task_form .form-wrapper { padding: 15px 0 35px 5px; }
+.zm-tt-form-container #filter_task_form .form-wrapper { float: left; padding: 15px 0 35px 5px; width: 100%;}
 .tt-filter-container { float: left; margin-bottom: 20px; width: 100%; }
 ul.inline { list-style-type: none; margin: 0; padding: 0; }
 ul.inline li { float: left; }
