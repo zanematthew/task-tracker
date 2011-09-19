@@ -256,7 +256,7 @@ jQuery(document).ready(function( $ ){
                     template: template,
                     post_type: type
                 };
-           
+
                 $.ajax({
                     data: data,
                     success: function( msg ){
