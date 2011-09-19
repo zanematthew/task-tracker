@@ -27,10 +27,21 @@
         
         <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
             <?php $x++; ?>
+<?php
+$comments_count = wp_count_comments( $post->ID);
+
+if ( $comments_count->total_comments == 1 ) 
+    $comment_class = 'comment-count';
+
+elseif ( $comments_count->total_comments > 1 ) 
+    $comment_class = 'comments-count';
+else 
+    $comment_class = '';
+?>            
             <tr <?php post_class('result')?>>
                 <td>
                      <strong class="title"><a href="<?php the_permalink(); ?>" title="Link to project: <?php the_title(); ?>">#<?php the_ID(); ?> <?php the_title(); ?></a></strong>
-                     <span class="comment-count"><?php comments_number(' '); ?></span>
+                     <span class="<?php print $comment_class; ?>"><a href="<?php the_permalink(); ?>#comments_target" title="<?php comments_number(); ?>"><?php comments_number(' '); ?></a></span>
                      <div class="utility-container zm-base-hidden">
                          <?php edit_post_link('Admin Edit', '' , ' |'); ?>
                          by <?php the_author(); ?> on <?php the_time(get_option('date_format')); ?> |

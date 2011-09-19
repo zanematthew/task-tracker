@@ -20,8 +20,8 @@
     </div>
 <?php endif; ?>
 
-<div class="comments-container">
-<h2>Notes</h2>
+<div class="comments-container" id="comments_target">
+<h2>Comments &amp; Notes</h2>
 <ul>
     <?php
     $comments = get_comments( array(
@@ -29,9 +29,13 @@
       'number'    => 10,
       'status'    => 'approve'
     ) );
-    foreach($comments as $comment) :
-        echo "<li>{$comment->comment_content}<br /><small>{$comment->comment_author} @ {$comment->comment_date}</small></li>";
-    endforeach;    
-    ?>
+    foreach($comments as $comment) : ?>
+        <li>
+            <div class="avatar-container"><?php print get_avatar( $comment, 32 ); ?></div>
+            <time><?php print $comment->comment_date; ?></time>            
+            <div class="content"><?php print $comment->comment_content; ?></div>
+            <div class="author"><?php print $comment->comment_author; ?></div>            
+        </li>
+    <?php endforeach; ?>
 </ul>
 </div>
