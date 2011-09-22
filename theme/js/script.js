@@ -16,10 +16,22 @@ if ( window.location[ 'hash' ] ) {
     }
 }
 
+jQuery('a[title]').live("mouseover", function() {
+    jQuery(this).qtip({
+        overwrite: false,
+        content: jQuery(this).attr("title"),
+        show: {
+            event: event.type,
+            ready: true
+        }
+    }, event);              
+}).each(function(i) {
+   jQuery.attr(this, 'oldtitle', jQuery.attr(this, 'title'));
+   this.removeAttribute('title');
+});
 
 jQuery(document).ready(function( $ ){
-    $('a[title]').qtip();
-    
+        
     /**
      * Default ajax setup
      */
