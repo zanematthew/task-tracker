@@ -45,7 +45,7 @@ $x++;
                     <span class="<?php print $comment_class; ?>"><a href="<?php the_permalink(); ?>#comments_target" title="<?php comments_number(); ?>"><?php comments_number(' '); ?></a></span>
 
                     <div class="utility-container zm-base-hidden">
-                        <?php edit_post_link('Admin Edit', '' , ' |'); ?>
+                        <?php edit_post_link('Edit', '' , ' |'); ?>
                         by <?php the_author(); ?> on <?php the_time(get_option('date_format')); ?> |
                         <a href="#delete" class="default_delete" data-post_id="<?php print $post->ID; ?>" data-security="<?php print wp_create_nonce( 'tt-ajax-forms' );?>">Delete</a>
                     </div>
