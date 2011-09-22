@@ -6,7 +6,7 @@ $cpt_obj = get_post_types( array( 'name' => $cpt), 'objects' );
 
 $args = array(
   'post_type' => $cpt,
-  'post_status' => $_POST['post_status']
+  'post_status' => 'publish'
 );
 
 $my_query = null;
