@@ -18,7 +18,7 @@
         <?php zm_base_build_options('project'); ?>
         <?php zm_base_build_options('phase'); ?>
         <?php zm_base_build_options('assigned'); ?>
-        <?php zm_base_build_options('type'); ?>
+        <?php zm_base_build_options( array( 'taxonomy' => 'type', 'label' => 'Category' ) ); ?>
         </div>
         <div class="button-container">
             <div id="publishing-action">
