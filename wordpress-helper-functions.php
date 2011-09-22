@@ -290,7 +290,13 @@ function zm_base_build_options( $taxonomy=null, $value='term_id' ) {
     // white list
     if ( empty( $prepend ) )
         $prepend = null; 
-        
+    
+    if ( !isset( $label ) )     
+        $label = $taxonomy;        
+
+// var_dump( $label );
+// wp_die('dead');
+   
     /** All Terms */
     $args = array(
         'orderby' => 'name',
@@ -310,7 +316,7 @@ function zm_base_build_options( $taxonomy=null, $value='term_id' ) {
     ?>
 	<?php if ( $terms ) : ?>
     <fieldset class="zm-base-<?php echo $taxonomy; ?>-container <?php echo $taxonomy; ?>-container">
-    <legend class="zm-base-title"><?php echo $taxonomy; ?></legend>	
+    <legend class="zm-base-title"><?php echo $label; ?></legend>	
 	<select name="<?php echo $taxonomy; ?>" id="select_<?php echo $taxonomy; ?>">
         <option value="">-- Choose a <?php echo $taxonomy; ?> --</option>              
 	    <?php foreach( $terms as $term ) : ?>

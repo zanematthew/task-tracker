@@ -17,14 +17,14 @@
 
         <?php zm_base_build_options('project'); ?>
         <?php zm_base_build_options('phase'); ?>
-        <?php zm_base_build_options('assigned'); ?>
-        <?php zm_base_build_options('type'); ?>
+        <?php zm_base_build_options( array( 'taxonomy' => 'assigned', 'label' => 'Assigned To' ) ); ?>
+        <?php zm_base_build_options( array( 'taxonomy' => 'type', 'label' => 'Category' ) ); ?>
         </div>
         <div class="button-container">
             <div id="publishing-action">
                 <input id="pt_publish" class="button" type="submit" value="Save" accesskey="p" name="save" />
                 <a href="javascript://" id="clear" class="button">Clear</a>
-                <a href="javascript://" id="exit" tt_template="theme/default/archive-table.php" class="button">Exit</a>
+                <a href="javascript://" id="exit" tt_template="theme/default/archive-table.php" class="button" data-post_type="task">Exit</a>
             </div>
         </div>
     </form>
