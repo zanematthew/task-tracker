@@ -47,7 +47,8 @@ $x++;
                     <div class="utility-container zm-base-hidden">
                         <?php edit_post_link('Edit', '' , ' |'); ?>
                         by <?php the_author(); ?> on <?php the_time(get_option('date_format')); ?> |
-                        <a href="#delete" class="default_delete" data-post_id="<?php print $post->ID; ?>" data-security="<?php print wp_create_nonce( 'tt-ajax-forms' );?>">Delete</a>
+                        <?php if ( is_user_logged_in() ) : ?>
+                        <a href="#delete" class="default_delete" data-post_id="<?php print $post->ID; ?>" data-security="<?php print wp_create_nonce( 'tt-ajax-forms' );?>">Delete</a><?php endif; ?>
                     </div>
                 </td>
                 <?php foreach ( $cpt_obj[$cpt]->taxonomies as $tax ) : ?>
