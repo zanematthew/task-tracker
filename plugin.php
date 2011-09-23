@@ -345,6 +345,7 @@ class CustomPostType extends CustomPostTypeBase {
         // Only our container divs are loaded, the contents is injected via ajax :)
         add_action( 'wp_footer', array( &$this, 'createPostTypeDiv' ) );            
         add_action( 'wp_footer', array( &$this, 'createLoginDiv' ) );            
+        add_action( 'wp_footer', array( &$this, 'createDeleteDiv' ) );            
         
         add_action( 'wp_ajax_postTypeSubmit', array( &$this, 'postTypeSubmit' ) );                
         add_action( 'wp_ajax_postTypeUpdate', array( &$this, 'postTypeUpdate' ) );
@@ -556,13 +557,23 @@ class CustomPostType extends CustomPostTypeBase {
         die();
     } // loadTemplate
 
-    public function createPostTypeDiv(){
-        print '<div id="create_ticket_dialog" class="dialog-container"><div id="create_ticket_target" style="display: none;">hi</div></div>';
-    }
+    public function createPostTypeDiv(){ ?>
+        <div id="create_ticket_dialog" class="dialog-container">
+            <div id="create_ticket_target" style="display: none;">hi</div>
+        </div>
+    <?php } 
 
-    public function createLoginDiv(){
-        print '<div id="login_dialog" class="dialog-container"><div id="login_target" style="display: none;">login hi</div></div>';
-    }
+    public function createLoginDiv(){ ?>
+        <div id="login_dialog" class="dialog-container">
+            <div id="login_target" style="display: none;">login hi</div>
+        </div>
+    <?php }
+
+    public function createDeleteDiv(){ ?>
+        <div id="delete_dialog" class="dialog-container">
+            <div id="delete_target" style="display: none">delete hi</div>
+        </div>
+    <?php }
     
     /**
      * Print our ajax url in the footer 
