@@ -108,6 +108,7 @@ jQuery(document).ready(function( $ ){
         autoOpen: false,
         title: 'Delete this item?',
         modal: true,
+        dialogClass: "confirmation-container",
         buttons: {
             "Delete this item": function() {
                 data = {

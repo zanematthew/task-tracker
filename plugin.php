@@ -571,6 +571,7 @@ class CustomPostType extends CustomPostTypeBase {
 
     public function createDeleteDiv(){ ?>
         <div id="delete_dialog" class="dialog-container">
+            <p>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
             <div id="delete_target" style="display: none">delete hi</div>
         </div>
     <?php }
