@@ -78,19 +78,10 @@ jQuery(document).ready(function( $ ){
     
     $( '.default_delete' ).live( "click", function(){
         var post_id = $( this ).attr( 'data-post_id');
-
-        data = {
-            action: "postTypeDelete",
-            post_id: $( this ).attr( 'data-post_id'),
-            security: $( this ).attr( 'data-security' )
-        };
-
-        $.ajax({            
-            data: data,
-            success: function( msg ){                
-                $( '.post-' + post_id ).fadeOut();
-            }
-        });            
+        $( "#delete_dialog" )
+            .attr("data-post_id", $(this).attr("data-post_id"))
+            .attr("data-security", $(this).attr("data-security"))
+            .dialog('open');
     });
 
     /** @todo create dialog defaults [task]: needs to be part of class for dialog */
@@ -110,6 +101,34 @@ jQuery(document).ready(function( $ ){
         autoOpen: false,
         title: 'Please <em>LTFO</em>',
         modal: true
+    });
+    
+    $( '#delete_dialog' ).dialog({ 
+        resizable: false,
+        autoOpen: false,
+        title: 'Delete this item?',
+        modal: true,
+        buttons: {
+            "Delete this item": function() {
+                data = {
+                    action: "postTypeDelete",
+                    post_id: $( this ).attr( 'data-post_id' ),
+                    security: $( this ).attr( 'data-security' )
+                };
+                var post_id = $( this ).attr( 'data-post_id');
+                $.ajax({            
+                    data: data,
+                    success: function( msg ){                
+                        $( '.post-' + post_id ).fadeOut();
+                    }
+                });            
+                $( this ).dialog( "close" );
+            },
+            Cancel: function() {
+                $( this ).dialog( "close" );
+            }
+        }
+
     });
     
     $( '#login_exit' ).live('click', function(){
