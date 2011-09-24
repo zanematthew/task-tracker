@@ -606,25 +606,6 @@ $_GLOBALS['task']->post_type = array(
             'status', 
             'type'
         )      
-    ),
-    array(
-        'name' => 'Collectible',
-        'type' => 'collectible',
-        'supports' => array(
-            'title',
-            'editor',
-            'comments'
-        ),
-        // yes, lame! but this is how WP is doing it for now also
-        // @todo automate mother fuckergrrrrr        
-        'taxonomies' => array(            
-            'magazine',
-            'sneaker',
-            'bmx',
-            'comic-book',
-            'trading-cards',
-            'model-car'            
-        )
     )
 );
 
@@ -652,29 +633,5 @@ $_GLOBALS['task']->taxonomy = array(
     array( 
         'name' => 'type', 
         'post_type' => 'task'
-        ),            
-    array(
-       	'name' => 'Magazine',
-       	'post_type' => 'collectible'
-       	),
-    array( 
-       	'name' => 'Sneaker',
-       	'post_type' => 'collectible'
-         ),
-    array(
-       	'name' => 'BMX',
-       	'post_type' => 'collectible'
-         ),
-    array(
-       	'name' => 'Comic Book',
-       	'post_type' => 'collectible'
-         ),
-    array(
-        'name' => 'Trading Cards',
-        'post_type' => 'collectible'
-      	),
-    array(
-        'name' => 'Model Car',
-        'post_type' => 'collectible'
-    )
+        )
 );
