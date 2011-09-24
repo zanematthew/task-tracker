@@ -3,6 +3,7 @@
     <form action="javascript://" id="login_form">
         <div class="form-wrapper">
         <input type="hidden" value="task" name="post_type" />
+        <input type="hidden" name="security" value="<?php print wp_create_nonce( 'tt-ajax-forms' );?>">        
         <p>
             <label>User Name</label>
             <input type="text" name="user_name" id="user_name" />

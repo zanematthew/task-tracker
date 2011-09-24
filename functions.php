@@ -48,8 +48,11 @@ function tt_json_feed( $post_type, $taxonomies=array() ) {
     
         foreach ( $taxonomies as $taxonomy ) {
             $term = wp_get_object_terms( $post->ID, $taxonomy );
-            $term = ( $term ) ? $term[0]->slug : 'none' ;
-            $types[$post->ID][$taxonomy] = $term;
+
+            if ( !is_wp_error( $term ) || empty( $term )) {                
+                $term = ( $term ) ? $term[0]->slug : 'none' ;
+                $types[$post->ID][$taxonomy] = $term;            
+            }
         }
     
     endwhile;

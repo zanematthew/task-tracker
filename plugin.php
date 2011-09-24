@@ -5,19 +5,27 @@ if ( is_admin() ) {
 }
 
 /**
- * Registers custom post type "Task", ...
+ * Registers custom post type: "Task" with custom taxonoimes: "Type", "Status", "Priority", "Milestone", "Assigned" and "Project".
  */
 
 /**
  * Plugin Name: Task Tracker
  * Plugin URI: --
  * Description: Turns WP into a Task Tracking system.
- * Version: 0.0.1
+ * Version: .1
  * Author: Zane M. Kolnik
  * Author URI: http://zanematthew.com/
  * License: GP
  */
-require_once 'wordpress-helper-functions.php';
+
+/**
+ * NON-SPECIFIC functions, a few useful WP functions I've come up with.
+ */
+ require_once 'wordpress-helper-functions.php';
+
+/**
+ * SPECIFIC functions for the TaskTracker, nothing OOP.
+ */
 require_once 'functions.php';
 
 /**
@@ -33,8 +41,8 @@ require_once 'functions.php';
  * - Provide a default archive template, which can be overriden by the theme, i.e template redirect
  * - Provide a default single template, which can be overriden by the theme 
  * - Activation script
- * - Deactivation script
- * - enqueue a base stylesheet
+ * - Deactivation script (to come)
+ * - enqueue a base stylesheet (to come)
  */
 interface ICustomPostType {
 
@@ -42,6 +50,7 @@ interface ICustomPostType {
     public function registerTaxonomy( $param=array() );        
     public function templateRedirect();
     public function regsiterActivation();
+    // public function regsiterDeactivation();
     // public function baseStyleSheet( $param=array() );
 
 } // End 'ICustomPostType'
@@ -218,9 +227,18 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         wp_enqueue_script( 'qtip-nightly' );
         wp_enqueue_script( 'jquery-ui-effects' );
 
-        $current_post_type = get_query_var( 'post_type' ); // $current_post_type
+        $current_post_type = get_query_var( 'post_type' );
+                
+        $this->taxonomyRedirect( $current_post_type );
+        $this->singleRedirect( $current_post_type );        
+        $this->archiveRedirect( $current_post_type );
         
-        // @todo this will fuck me up later, it needs to be an array of CPTS with CTTs
+    } // End 'function templateRedirect'    
+
+    public function taxonomyRedirect( $current_post_type=null ){
+
+        if ( is_null( $current_post_type ) )
+            wp_die( 'I need a CPT');
 
         foreach( $this->post_type as $wtf ) {
             $my_cpt = get_post_types( array( 'name' => $wtf['type']), 'objects' );                    
@@ -241,16 +259,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 }           
                 exit;         
             }                    
-        }
-
-        $this->singleRedirect( $current_post_type );        
-        $this->archiveRedirect( $current_post_type );
-        
-    } // End 'function templateRedirect'    
-
-    public function taxRedirect(){
-        
-
+        }        
     }
 
     public function archiveRedirect( $current_post_type=null ) {
@@ -314,7 +323,7 @@ class CustomPostType extends CustomPostTypeBase {
      * Every thing that is "custom" to our CPT goes here.
      */
     public function __construct() {
-        self::$instance = $this;       
+        //self::$instance = $this;       
 
         $this->plugin_dir = $this->plugin_dir . '/' . str_replace( basename( __FILE__ ), "", plugin_basename( __FILE__ ) );
         $this->plugin_url = $this->plugin_url . '/' . str_replace( basename( __FILE__ ), "", plugin_basename( __FILE__ ) );
@@ -355,8 +364,6 @@ class CustomPostType extends CustomPostTypeBase {
         add_action( 'wp_ajax_nopriv_siteLoginSubmit', array( &$this, 'siteLoginSubmit' ) ); 
 
         register_activation_hook( __FILE__, array( &$this, 'regsiterActivation') );        
-        // Just run the mofo on page load! to test
-        // add_action( 'init', array( &$this, 'regsiterActivation' ) );        
                 
         // add_action( 'admin_notices', 'tt_warning' );
         wp_register_style(  'tt-styles', $this->plugin_url . 'theme/css/style.css', $this->dependencies['style'], 'all' );
@@ -367,15 +374,21 @@ class CustomPostType extends CustomPostTypeBase {
     }
     
     public function regsiterActivation() {
-        
+
+        /**
+         * Dont forget registration hook is called 
+         * BEFORE! taxonomies are regsitered! therefore
+         * these terms and taxonomies are NOT derived from our object!
+         */
+        $taxonomies = array( 'priority', 'status', 'type' );
+        $this->registerTaxonomy( $taxonomies );
+                
         // Set to we know its been installed at least once before
         $installed = get_option( 'zm_tt_number_installed' );
 
         if ( $installed == '1' )
             return;
-
-        // Note "Assigned", "Milestone" and "Project" are left out.
-
+    
         // Priority 
         wp_insert_term( 'High',   'priority', array( 'description' => '', 'slug' => 'high' ) );
         wp_insert_term( 'Low',    'priority', array( 'description' => '', 'slug' => 'low' ) );
@@ -419,8 +432,7 @@ class CustomPostType extends CustomPostTypeBase {
             wp_set_post_terms( $post_id, $term_id, 'type' );
 
             update_option( 'zm_tt_number_installed', '1' );
-        }
-        
+        }        
     }    
 
     /**
@@ -586,6 +598,8 @@ class CustomPostType extends CustomPostTypeBase {
      * to be used in AJAX submission, gets the $_POST data and logs the user in.
      */    
     public function siteLoginSubmit() {
+        check_ajax_referer( 'tt-ajax-forms', 'security' );
+        
         $creds = array();
         $creds['user_login'] = $_POST['user_name'];
         $creds['user_password'] = $_POST['password'];
