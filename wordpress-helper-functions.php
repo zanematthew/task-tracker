@@ -199,6 +199,9 @@ function zm_base_list_terms( $taxonomy ) {
 
     /** @todo -- add support for rss link */
     // very fucking usefull http://php.net/manual/en/types.comparisons.php    
+    if ( is_wp_error( $terms ) )
+        return;
+            
     foreach( $terms as $term ) {
         
         if ( isset( $link ) && $link == 'javascript://' )
