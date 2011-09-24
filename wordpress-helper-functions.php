@@ -199,6 +199,9 @@ function zm_base_list_terms( $taxonomy ) {
 
     /** @todo -- add support for rss link */
     // very fucking usefull http://php.net/manual/en/types.comparisons.php    
+    if ( is_wp_error( $terms ) )
+        return;
+            
     foreach( $terms as $term ) {
         
         if ( isset( $link ) && $link == 'javascript://' )
@@ -240,7 +243,7 @@ function zm_base_current_term( $taxonomy ) {
         $my_terms = get_the_terms( $post->ID, $taxonomy );
         if ( $my_terms ) {
             if ( is_wp_error( $my_terms ) ) {
-                exit( "Opps..." . $my_terms->get_error_message() . "..dog, cmon, fix it!" );
+                return;
             }
             foreach( $my_terms as $my_term ) {
                 $current_term = $my_term->name;
@@ -357,6 +360,7 @@ function zm_base_build_radio( $taxonomy=null, $options=array() ) {
         
     /** @todo the below markup should be pulled out into a 'view' */ 
     ?>    
+    <?php if ( $terms ) : ?>
     <fieldset class="zm-base-<?php echo $taxonomy; ?>-container"><legend class="zm-base-title"><?php echo $taxonomy; ?></legend>
     <?php foreach( $terms as $term ) : ?>
         <?php /** Some cryptic short hand true:false */ ?>
@@ -367,6 +371,7 @@ function zm_base_build_radio( $taxonomy=null, $options=array() ) {
         <?php echo $term->name; ?></label>
     <?php endforeach; ?>
     </fieldset>
+    <?php endif; ?>
 <?php }
 
 
@@ -406,6 +411,7 @@ function zm_base_build_input( $taxonomy=null ) {
         
     /** @todo the below markup should be pulled out into a 'view' */ 
     ?>    
+    <?php if ( $terms ) : ?>    
     <fieldset class="zm-base-<?php echo $taxonomy; ?>-container"><legend class="zm-base-title"><?php echo $taxonomy; ?></legend>
     <?php foreach( $terms as $term ) : ?>
         <?php /** Some cryptic short hand true:false */ ?>
@@ -416,6 +422,7 @@ function zm_base_build_input( $taxonomy=null ) {
         <?php echo $term->name; ?></label>
     <?php endforeach; ?>
     </fieldset>
+    <?php endif; ?>
 <?php }
 
 /**

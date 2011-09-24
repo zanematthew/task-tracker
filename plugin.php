@@ -41,6 +41,7 @@ interface ICustomPostType {
     public function registerPostType( $param=array() );
     public function registerTaxonomy( $param=array() );        
     public function templateRedirect();
+    public function regsiterActivation();
     // public function baseStyleSheet( $param=array() );
 
 } // End 'ICustomPostType'
@@ -352,7 +353,11 @@ class CustomPostType extends CustomPostTypeBase {
         add_action( 'wp_ajax_postTypeDelete', array( &$this, 'postTypeDelete' ) );
         add_action( 'wp_ajax_siteLoginSubmit', array( &$this, 'siteLoginSubmit' ) );        
         add_action( 'wp_ajax_nopriv_siteLoginSubmit', array( &$this, 'siteLoginSubmit' ) ); 
-        
+
+        register_activation_hook( __FILE__, array( &$this, 'regsiterActivation') );        
+        // Just run the mofo on page load! to test
+        // add_action( 'init', array( &$this, 'regsiterActivation' ) );        
+                
         // add_action( 'admin_notices', 'tt_warning' );
         wp_register_style(  'tt-styles', $this->plugin_url . 'theme/css/style.css', $this->dependencies['style'], 'all' );
         wp_register_style(  'qtip-nightly-style', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.css', '', 'all' );
@@ -361,7 +366,63 @@ class CustomPostType extends CustomPostTypeBase {
         wp_register_script( 'qtip-nightly', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.js', $this->dependencies['script'], '0.0.1' );            
     }
     
-    
+    public function regsiterActivation() {
+        
+        // Set to we know its been installed at least once before
+        $installed = get_option( 'zm_tt_number_installed' );
+
+        if ( $installed == '1' )
+            return;
+
+        // Note "Assigned", "Milestone" and "Project" are left out.
+
+        // Priority 
+        wp_insert_term( 'High',   'priority', array( 'description' => '', 'slug' => 'high' ) );
+        wp_insert_term( 'Low',    'priority', array( 'description' => '', 'slug' => 'low' ) );
+        wp_insert_term( 'Medium', 'priority', array( 'description' => '', 'slug' => 'medium' ) );
+
+        // Status
+        wp_insert_term( 'Aborted',  'status', array( 'description' => 'A Task that will NOT be completed.', 'slug' => 'aborted' ) );
+        wp_insert_term( 'Closed',   'status', array( 'description' => 'A Task that has been resolved and reviewed is completed.', 'slug' => 'closed' ) );
+        wp_insert_term( 'New',      'status', array( 'description' => 'A New Task is a Task that is waiting to be worked on.', 'slug' => 'new' ) );
+        wp_insert_term( 'Open',     'status', array( 'description' => 'A Task that is currently being worked on.', 'slug' => 'open' ) );
+        wp_insert_term( 'Resolved', 'status', array( 'description' => 'The Task has been finished, but needs to be approved before it is closed.', 'slug' => 'resolved' ) );
+
+        // Type 
+        wp_insert_term( 'Car',         'type', array( 'description' => 'Anything related to your car, cleaning, vacuming, oil change and so on.') );
+        wp_insert_term( 'Computer',    'type', array( 'description' => 'Checking emails, programming, writing papers.' ) );
+        wp_insert_term( 'Freelance',   'type', array( 'description' => 'What ever makes you some extra side cash.' ) );
+        wp_insert_term( 'House',       'type', array( 'description' => 'House work, be it laundry, vacuuming or just cleaning.' ) );
+        wp_insert_term( 'Personal',    'type', array( 'description' => 'Anything you can think of.' ) );
+        wp_insert_term( 'Photography', 'type', array( 'description' => 'Taking photos, grooming your photo library or some quick editing.' ) );
+            
+        // insert sample task  
+        $author_ID = get_current_user_id();
+        $post = array(
+            'post_title' => 'Your first Task!',
+            'post_content' => 'This is a sample Task make it short and sweet, hopefully this system will help you get a tad more stuff done :D',
+            'post_author' => $author_ID,
+            'post_type' => 'task',
+            'post_status' => 'publish'
+        );
+        $post_id = wp_insert_post( $post, true );
+
+        // assign a term for our sample Task  
+        if ( isset( $post_id ) ) {
+            $term_id = term_exists( 'medium', 'priority' );
+            wp_set_post_terms( $post_id, $term_id, 'priority' );
+
+            $term_id = term_exists( 'new', 'status' );
+            wp_set_post_terms( $post_id, $term_id, 'status' );
+
+            $term_id = term_exists( 'personal', 'type' );
+            wp_set_post_terms( $post_id, $term_id, 'type' );
+
+            update_option( 'zm_tt_number_installed', '1' );
+        }
+        
+    }    
+
     /**
      * Add additional classes to post_class() for additional CSS styling and JavaScript manipulation.
      *
@@ -600,31 +661,12 @@ $_GLOBALS['task']->post_type = array(
         // @todo automate mother fuckergrrrrr
         'taxonomies' => array(
             'assigned', 
-            'phase', 
+            'milestone', 
             'priority', 
             'project', 
             'status', 
             'type'
         )      
-    ),
-    array(
-        'name' => 'Collectible',
-        'type' => 'collectible',
-        'supports' => array(
-            'title',
-            'editor',
-            'comments'
-        ),
-        // yes, lame! but this is how WP is doing it for now also
-        // @todo automate mother fuckergrrrrr        
-        'taxonomies' => array(            
-            'magazine',
-            'sneaker',
-            'bmx',
-            'comic-book',
-            'trading-cards',
-            'model-car'            
-        )
     )
 );
 
@@ -634,7 +676,7 @@ $_GLOBALS['task']->taxonomy = array(
         'post_type' => 'task'
         ),
     array( 
-        'name' => 'phase', 
+        'name' => 'milestone', 
         'post_type' => 'task'
          ),
     array( 
@@ -652,29 +694,5 @@ $_GLOBALS['task']->taxonomy = array(
     array( 
         'name' => 'type', 
         'post_type' => 'task'
-        ),            
-    array(
-       	'name' => 'Magazine',
-       	'post_type' => 'collectible'
-       	),
-    array( 
-       	'name' => 'Sneaker',
-       	'post_type' => 'collectible'
-         ),
-    array(
-       	'name' => 'BMX',
-       	'post_type' => 'collectible'
-         ),
-    array(
-       	'name' => 'Comic Book',
-       	'post_type' => 'collectible'
-         ),
-    array(
-        'name' => 'Trading Cards',
-        'post_type' => 'collectible'
-      	),
-    array(
-        'name' => 'Model Car',
-        'post_type' => 'collectible'
-    )
+        )
 );
