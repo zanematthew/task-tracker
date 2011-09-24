@@ -243,7 +243,7 @@ function zm_base_current_term( $taxonomy ) {
         $my_terms = get_the_terms( $post->ID, $taxonomy );
         if ( $my_terms ) {
             if ( is_wp_error( $my_terms ) ) {
-                exit( "Opps..." . $my_terms->get_error_message() . "..dog, cmon, fix it!" );
+                return;
             }
             foreach( $my_terms as $my_term ) {
                 $current_term = $my_term->name;
