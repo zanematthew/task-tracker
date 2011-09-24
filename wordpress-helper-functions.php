@@ -357,6 +357,7 @@ function zm_base_build_radio( $taxonomy=null, $options=array() ) {
         
     /** @todo the below markup should be pulled out into a 'view' */ 
     ?>    
+    <?php if ( $terms ) : ?>
     <fieldset class="zm-base-<?php echo $taxonomy; ?>-container"><legend class="zm-base-title"><?php echo $taxonomy; ?></legend>
     <?php foreach( $terms as $term ) : ?>
         <?php /** Some cryptic short hand true:false */ ?>
@@ -367,6 +368,7 @@ function zm_base_build_radio( $taxonomy=null, $options=array() ) {
         <?php echo $term->name; ?></label>
     <?php endforeach; ?>
     </fieldset>
+    <?php endif; ?>
 <?php }
 
 
@@ -406,6 +408,7 @@ function zm_base_build_input( $taxonomy=null ) {
         
     /** @todo the below markup should be pulled out into a 'view' */ 
     ?>    
+    <?php if ( $terms ) : ?>    
     <fieldset class="zm-base-<?php echo $taxonomy; ?>-container"><legend class="zm-base-title"><?php echo $taxonomy; ?></legend>
     <?php foreach( $terms as $term ) : ?>
         <?php /** Some cryptic short hand true:false */ ?>
@@ -416,6 +419,7 @@ function zm_base_build_input( $taxonomy=null ) {
         <?php echo $term->name; ?></label>
     <?php endforeach; ?>
     </fieldset>
+    <?php endif; ?>
 <?php }
 
 /**
