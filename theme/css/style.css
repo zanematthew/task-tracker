@@ -1,3 +1,4 @@
+a { color: #1982D1; }
 pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px/1em Courier; }
 .meta { font-size: 11px; font-family: lucida grande; }
 
@@ -129,12 +130,12 @@ a.zm-base-status-closed {
     }
 
 a[class*='zm-base-type-photography-'],
-a.zm-base-type-photography { background: url('images/famfamfam/icons/camera.png'); } 
-a.zm-base-type-house { background: url('images/famfamfam/icons/house.png'); }
-a.zm-base-type-freelance { background: url('images/famfamfam/icons/money.png'); }
-a.zm-base-type-car { background: url('images/famfamfam/icons/car.png'); }
-a.zm-base-type-code { background: url('images/famfamfam/icons/page_code.png'); }
-a.zm-base-type-personal { background: url('images/famfamfam/icons/user.png'); }
+a.zm-base-type-photography { background: url('images/famfamfam/icons/camera.png') no-repeat; } 
+a.zm-base-type-house { background: url('images/famfamfam/icons/house.png') no-repeat; }
+a.zm-base-type-freelance { background: url('images/famfamfam/icons/money.png') no-repeat; }
+a.zm-base-type-car { background: url('images/famfamfam/icons/car.png') no-repeat; }
+a.zm-base-type-code { background: url('images/famfamfam/icons/page_code.png') no-repeat; }
+.zm-base-type-personal { background: url('images/famfamfam/icons/user.png') no-repeat; }
 
 .type-container a:hover {   
     opacity: 1; 
@@ -282,21 +283,61 @@ clear: both; float: left; padding: 5px; width: 97%;
 -------------------------------------------------------------- */
 .zm-tt-container .zm-tt-sidebar-container { float: right; }
 .zm-tt-sidebar-container ul { list-style-type: none; margin: 0; }
-.zm-tt-sidebar-container li { margin-bottom: 3px; }
+.zm-tt-sidebar-container li { 
+    margin: 3px 0 10px 0;
+    clear: both;
+    float: left;
+    width: 100%;
+    }
+
+.zm-tt-sidebar-container .type-container a { 
+    float: left; 
+    text-indent: 20px; 
+    width: auto; 
+    }
+    
 .zm-tt-sidebar-container .zm-base-title { color: #444; text-transform: capitalize; }
-.zm-tt-sidebar-container ul { color: #444; border-bottom: 2px solid #EFEFEF; font-weight: bold; font-size: 13px; margin-bottom: 25px; padding-bottom: 25px; }
+.zm-tt-sidebar-container ul { color: #444; border-bottom: 2px solid #EFEFEF; font-weight: bold; font-size: 13px; 
+    float: left;
+    margin-bottom: 25px; 
+    padding-bottom: 25px; 
+    width: 100%; 
+    }
+    
 .zm-tt-sidebar-container .zm-base-count { border-radius: 4px; background: #ddd; color: #fff; float: right; font: bold 11px arial; margin: 0 0 0 10px; padding: 2px 3px; }
 .zm-tt-sidebar-container .zm-base-terms { font-size: 12px; font-weight: 300; }
 .zm-tt-sidebar-container .zm-base-terms a { color: #666; font-size: 12px; font-weight: 300; }
+
 .zm-tt-sidebar-container .priority a { font-weight: bold; }
 .zm-tt-sidebar-container .status a { font-weight: bold; }
-.zm-tt-sidebar-container .zm-base-closed a { color: #D3D0D0; }
-.zm-tt-sidebar-container .zm-base-open a { color: #B0B0E6; }
-.zm-tt-sidebar-container .zm-base-aborted a { text-decoration: line-through; }
-.zm-tt-sidebar-container .zm-base-medium a { color: #FF9000; }
-.zm-tt-sidebar-container .zm-base-low a { color: #FFD200; }
-.zm-tt-sidebar-container .zm-base-high a { color: #FF0000; }
-.zm-tt-sidebar-container .zm-base-meigh a { color: #f7701d; }
+
+.zm-tt-sidebar-container a.zm-base-status-closed { color: #D3D0D0; }
+.zm-tt-sidebar-container a.zm-base-status-new { color: #666; }
+.zm-tt-sidebar-container a.zm-base-status-open { color: #B0B0E6; }
+.zm-tt-sidebar-container a.zm-base-aborted { text-decoration: line-through; }
+
+.zm-tt-sidebar-container a.zm-base-priority-medium { color: #FF9000; }
+.zm-tt-sidebar-container a.zm-base-priority-low { color: #FFD200; }
+
+/* sort of like a reset */
+.zm-tt-sidebar-container a.zm-base-status-aborted,
+.zm-tt-sidebar-container a.zm-base-status-closed,
+.zm-tt-sidebar-container a.zm-base-status-new,
+.zm-tt-sidebar-container a.zm-base-status-open,
+.zm-tt-sidebar-container a.zm-base-priority-high,
+.zm-tt-sidebar-container a.zm-base-priority-medium,
+.zm-tt-sidebar-container a.zm-base-priority-low {
+    background: none;
+    border: 0 none;
+    box-shadow: 0 0 0 white;
+    font-weight: bold;
+    font-size: 13px;
+    padding: 0;
+    opactiy: 1;
+    text-shadow: 0 0 0;
+    text-align: left;
+    }
+.zm-tt-sidebar-container a.zm-base-priority-high { color: #FF0000; }
 
 /*= Reset fixes
 -------------------------------------------------------------- */

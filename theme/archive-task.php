@@ -22,6 +22,7 @@ get_template_part( 'header-container', 'single' );
             </div>
         </div>
         <div class="zm-tt-sidebar-container">
+            <?php zm_base_list_terms( array('taxonomy' => 'type' ) ); ?>
             <?php zm_base_list_terms( array('taxonomy' => 'status' ) ); ?>
             <?php zm_base_list_terms( array('taxonomy' => 'priority' ) ); ?>
             <?php zm_base_list_terms( array('taxonomy' => 'project' ) ); ?>
