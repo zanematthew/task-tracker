@@ -5,6 +5,7 @@ get_template_part( 'header-container', 'single' );
 
 ?>
 <div class="zm-tt-container zm-tt-archive-container">
+<div class="tt-wrapper">
     <div class="tt-glue">
         <div class="main-container">
             <?php load_template( MY_PLUGIN_DIR . 'theme/default/navigation.php' ); ?>   
@@ -21,6 +22,7 @@ get_template_part( 'header-container', 'single' );
             </div>
         </div>
         <div class="zm-tt-sidebar-container">
+            <?php zm_base_list_terms( array('taxonomy' => 'type' ) ); ?>
             <?php zm_base_list_terms( array('taxonomy' => 'status' ) ); ?>
             <?php zm_base_list_terms( array('taxonomy' => 'priority' ) ); ?>
             <?php zm_base_list_terms( array('taxonomy' => 'project' ) ); ?>
@@ -28,6 +30,7 @@ get_template_part( 'header-container', 'single' );
             <?php zm_base_list_terms( array('taxonomy' => 'assigned' ) ); ?>
         </div>
     </div>
+</div>
 </div>
 <?php 
 
