@@ -214,8 +214,8 @@ function zm_base_list_terms( $taxonomy ) {
                         
         $title = sprintf( '%1$s <br /><em>%2$s</em>', sprintf( __("View all %s"), $term->name), $term->description );
 
-        $html .= '<li class="zm-base-item zm-base-' . $term->slug . '">';
-        $html .= '<a href="' . $my_link . '" title="'.$title.'" rel="' . $term->taxonomy . '_' . $term->slug . '">' . $term->name . '</a>';
+        $html .= '<li class="zm-base-item ' . $term->taxonomy . '-container">';
+        $html .= '<a href="' . $my_link . '" title="'.$title.'" rel="' . $term->taxonomy . '_' . $term->slug . '" class="zm-base-' . $term->taxonomy .'-'.$term->slug . '">' . $term->name . '</a>';
         $html .= '<span class="zm-base-count">' . $term->count . '</span>';
         $html .= '</li>';
         $i++;
