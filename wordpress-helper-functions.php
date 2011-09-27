@@ -354,18 +354,21 @@ function zm_base_build_radio( $taxonomy=null, $options=array() ) {
         $current_term = $default;
     else 
         $current_term = zm_base_current_term( $taxonomy );
+
+    if ( !isset( $label ) )
+        $label = $taxonomy;
         
     /** @todo the below markup should be pulled out into a 'view' */ 
     ?>    
     <?php if ( $terms ) : ?>
-    <fieldset class="zm-base-<?php echo $taxonomy; ?>-container"><legend class="zm-base-title"><?php echo $taxonomy; ?></legend>
+    <fieldset class="<?php echo $taxonomy; ?>-container"><legend class="zm-base-title"><?php echo $label; ?></legend>
     <?php foreach( $terms as $term ) : ?>
         <?php /** Some cryptic short hand true:false */ ?>
         <?php $current_term == $term->name ? $selected = 'checked=checked' : $selected = null; ?>
-        <label for="<?php echo $term->$value; ?>">        
+        <label for="<?php echo $term->$value; ?>" class="zm-base-<?php echo $term->taxonomy; ?>-<?php echo $term->slug;?>" title="<?php echo $term->name;?>">
         <input type="radio" value="<?php echo $term->$value; ?>" id="<?php echo $term->term_id; ?>" my_term_id="<?php echo $term->term_id; ?>" name="<?php echo $taxonomy; ?>"
         <?php echo $selected; ?> />
-        <?php echo $term->name; ?></label>
+        <span><?php echo $term->name; ?></span></label>
     <?php endforeach; ?>
     </fieldset>
     <?php endif; ?>
