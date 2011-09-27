@@ -1,6 +1,7 @@
 <?php get_header(); ?>
 <?php get_template_part('header-container','index'); ?>
 <div class="zm-tt-container zm-tt-single-container">
+    <div class="tt-wrapper">
     <div class="tt-glue">
         <div class="main-container">
             <?php load_template( MY_PLUGIN_DIR . '/theme/default/navigation.php' ); ?>
@@ -35,6 +36,7 @@
             <?php zm_base_list_terms( array('taxonomy' => 'assigned', 'link' => false ) ); ?>
         </div>
     </div>
+</div>
 </div>
 <?php get_footer(); ?>
 

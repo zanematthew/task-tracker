@@ -11,14 +11,13 @@
             <label>Description</label>
             <textarea name="content"></textarea>
         </p>        
+        <?php zm_base_build_radio( 'type', array( 'label' => 'Category', 'default' => 'Personal' ) ); ?>
+
         <?php zm_base_build_radio('status', array( 'default' => 'New' )); ?>
-
         <?php zm_base_build_input( array( 'taxonomy'=> 'priority', 'type'=> 'radio', 'default' => 'Medium' ) ); ?>
-
         <?php zm_base_build_options('project'); ?>
         <?php zm_base_build_options('phase'); ?>
         <?php zm_base_build_options( array( 'taxonomy' => 'assigned', 'label' => 'Assigned To' ) ); ?>
-        <?php zm_base_build_options( array( 'taxonomy' => 'type', 'label' => 'Category' ) ); ?>
         </div>
         <div class="button-container">
             <div id="publishing-action">

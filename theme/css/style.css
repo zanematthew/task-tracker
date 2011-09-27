@@ -130,11 +130,11 @@ a.zm-base-status-closed {
     }
 
 a[class*='zm-base-type-photography-'],
-a.zm-base-type-photography { background: url('images/famfamfam/icons/camera.png') no-repeat; } 
-a.zm-base-type-house { background: url('images/famfamfam/icons/house.png') no-repeat; }
-a.zm-base-type-freelance { background: url('images/famfamfam/icons/money.png') no-repeat; }
-a.zm-base-type-car { background: url('images/famfamfam/icons/car.png') no-repeat; }
-a.zm-base-type-code { background: url('images/famfamfam/icons/page_code.png') no-repeat; }
+.zm-base-type-photography { background: url('images/famfamfam/icons/camera.png') no-repeat; } 
+.zm-base-type-house { background: url('images/famfamfam/icons/house.png') no-repeat; }
+.zm-base-type-freelance { background: url('images/famfamfam/icons/money.png') no-repeat; }
+.zm-base-type-car { background: url('images/famfamfam/icons/car.png') no-repeat; }
+.zm-base-type-computer { background: url('images/famfamfam/icons/page_code.png') no-repeat; }
 .zm-base-type-personal { background: url('images/famfamfam/icons/user.png') no-repeat; }
 
 .type-container a:hover {   
@@ -186,11 +186,9 @@ a.zm-base-type-code { background: url('images/famfamfam/icons/page_code.png') no
 .zm-tt-navigation-container ul li:hover > ul { background: #fff; display: block; }
 
 body.archive .zm-tt-navigation-container li.most-recent-task { background: #fff; border-radius: 5px 5px 0 0; border: solid #f4f4f4; border-width: 1px 1px 0; }
-.zm-tt-navigation-container li.create-ticket:hover { background: none; }
 
 .zm-tt-navigation-container nav.tt-navigation-container ul { list-style-type: none; margin: 0; padding: 0; }
 .zm-tt-navigation-container nav.tt-navigation-container ul li { float: left; list-style-type: none; }
-.zm-tt-navigation-container nav.tt-navigation-container li.create-ticket { float: right; padding: 0; }
 
 /*= Single
 -------------------------------------------------------------- */
@@ -238,7 +236,7 @@ body.archive .zm-tt-navigation-container li.most-recent-task { background: #fff;
 .zm-tt-form-container form { font: 300 12px/1.4em sans-serif; }
 .zm-tt-form-container form p { float: left; width: 100%; margin: 0 0 20px 0; }
 .zm-tt-form-container form p label { float: left; margin-bottom: 5px; }
-.zm-tt-form-container form fieldset { border: 0; float: left; width: 18%; margin: 0 10px 10px 0; }
+.zm-tt-form-container form fieldset { border: 0; float: left; width: 23%; margin: 0 10px 10px 0; }
 .zm-tt-form-container form fieldset label { clear: both; float: left; font-weight: 300; margin: 0 0 4px 5px; }
 .zm-tt-form-container textarea { height: 200px; padding: 5px; width: 97%; }
 .zm-tt-form-container textarea,
@@ -261,9 +259,20 @@ clear: both; float: left; padding: 5px; width: 97%;
 
 .zm-tt-form-container .form-wrapper { float: left; padding: 30px; }
 
+/* create */
+.zm-tt-form-container  fieldset label { cursor: pointer; }
+.zm-tt-form-container  fieldset.type-container { width: 17%; }
+.zm-tt-form-container .type-container label { background-position: 20px 2px; margin: 0 0 10px 4px; padding-top: 4px; }
+.zm-tt-form-container .type-container input { margin-right: 30px; }
+.zm-tt-form-container .type-container label span { display: none; }
+
+.zm-tt-navigation-container li.create-ticket:hover { background: none; }
+.zm-tt-navigation-container nav.tt-navigation-container li.create-ticket { float: right; padding: 0; }
 .zm-tt-form-container #create_task_form form p { float: left; margin: 0 0 20px; width: 100%; }
 .zm-tt-form-container #create_task_form .button-container { float: left; margin: 0; padding-right: 10px; width: 96.5%; }
 .zm-tt-form-container a.button { float: left; padding: 8px 20px; }
+
+.zm-tt-form-container .type-container label {}
 
 .confirmation-container button:last-child,
 .zm-tt-form-container #login_exit,
@@ -277,7 +286,7 @@ clear: both; float: left; padding: 5px; width: 97%;
 .zm-tt-form-container form p label,
 .zm-tt-form-container form p label .title,
 .zm-tt-form-container form p label option { color: #888; font-size: 12px; font-weight: normal; }
-.zm-tt-form-container form .zm-base-title { color: #444; font-weight: bold; font-size: 14px; text-transform: capitalize; margin-bottom: 4px; }
+.zm-tt-form-container form .zm-base-title { color: #444; float: left; font-weight: bold; font-size: 14px; text-transform: capitalize; margin-bottom: 6px; }
 
 /*= Sidebar
 -------------------------------------------------------------- */
