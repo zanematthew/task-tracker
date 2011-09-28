@@ -120,6 +120,8 @@ a.zm-base-status-closed {
 /*= Type
 -------------------------------------------------------------- */
 .type-container { margin-top: 10px; }
+
+.icon-container,
 .type-container a { 
     height: 16px; width: 16px; display: block; opacity: 0.5; text-indent: -999em; 
     -webkit-transition: opacity .5s;     
@@ -137,6 +139,10 @@ a[class*='zm-base-type-photography-'],
 .zm-base-type-computer { background: url('images/famfamfam/icons/page_code.png') no-repeat; }
 .zm-base-type-personal { background: url('images/famfamfam/icons/user.png') no-repeat; }
 
+li.icon-container { text-indent: 0; width: auto; }
+.icon-find { background: url('images/famfamfam/icons/find.png') no-repeat 0 -2px; padding-left: 20px; opacity: 1; }
+
+.icon-container a:hover,
 .type-container a:hover {   
     opacity: 1; 
     -webkit-transition: opacity .5s;
@@ -409,7 +415,7 @@ clear: both; float: left; padding: 5px; width: 97%;
 a.login { font-size: 12px; margin: 10px 10px 0 0; display: inline-block; }
 
 .zm-tt-container { margin: 0 auto; width: 920px; }
-.main-container { float: left; margin-right: 10px; width: 635px; }
+.zm-tt-container .main-container { float: left; margin-right: 10px; width: 635px; }
 .zm-tt-sidebar-container { float: right; width: 220px; margin-left: 10px; }
 
 .zm-tt-form-container #filter_task_form .form-wrapper { float: left; padding: 15px 0 35px 5px; width: 100%;}
@@ -477,3 +483,6 @@ ul.inline li { float: left; }
 .confirmation-container .ui-dialog-buttonpane { width: 97%; }
 
 .tt-wrapper { float: left; background: #f2f2f2; padding: 10px; }
+
+table .type-container { margin: 0; }
+table .type-container a {}
