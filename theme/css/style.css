@@ -1,3 +1,8 @@
+/*= Reset 
+-------------------------------------------------------------- */ 
+*:focus{outline:none;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}button,input,legend,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}table{border-collapse:collapse;border-spacing:0; }sup,sub{vertical-align:baseline; }html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,textarea,caption,table,tbody,tfoot,thead,tr,th,td{font-family:inherit;font-size:inherit;}
+
+a { color: #1982D1; text-decoration: none; }
 pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px/1em Courier; }
 .meta { font-size: 11px; font-family: lucida grande; }
 
@@ -8,7 +13,8 @@ pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px
  * 1. Pick a color
  * 2. 4 up from #fff to get the top color, i.e. fade from
  * 3. 4 up from the color from step 1 to get the bottom color, i.e. "fade to color"
- * 4. 4 down from #000 to get the text-shadw and border color
+ * 4. 4 down from #000
+  to get the text-shadw and border color
  *
  * Eveything has a system :D
  * 
@@ -333,7 +339,10 @@ clear: both; float: left; padding: 5px; width: 97%;
     -o-transition: border-top-color 0.218s,border-right-color 0.218s,border-bottom-color 0.218s,border-left-color .218s;
     -moz-transition: border-top-color 0.218s,border-right-color 0.218s,border-bottom-color 0.218s,border-left-color .218s;
     -webkit-transition: border-top-color 0.218s,border-right-color 0.218s,border-bottom-color 0.218s,border-left-color .218s;
-    border: 1px solid; border-color: #ccc #bbb #a0a0a0; border-left: 1px solid #bbb; border-radius: 5px; cursor: pointer; 
+    border: 1px solid; 
+    border-color: #ccc #bbb #a0a0a0; 
+    border-left: 1px solid #bbb; 
+    border-radius: 5px; cursor: pointer; 
     font: bold 15px/1 "Helvetica Neue", sans-serif, arial; 
     margin-right: 10px; 
     padding: 8px 20px; 
@@ -360,7 +369,7 @@ clear: both; float: left; padding: 5px; width: 97%;
 
 a.login { font-size: 12px; margin: 10px 10px 0 0; display: inline-block; }
 
-.zm-tt-container { margin: 0 auto; width: 960px; }
+.zm-tt-container { margin: 20px auto 40px; width: 960px; }
 .main-container { float: left; width: 700px; margin-right: 10px; }
 .zm-tt-sidebar-container { float: right; width: 220px; margin-left: 10px; }
 
@@ -428,3 +437,6 @@ ul.inline li { float: left; }
 .confirmation-container p { font-size: 12px; margin-bottom: 0; padding: 15px; }
 .confirmation-container .ui-dialog-buttonpane { width: 97%; }
 
+.ui-tooltip .ui-tooltip-tip, 
+.ui-tooltip .ui-tooltip-tip *,
+.ui-tooltip { font: normal 11px/1.2em arial; }
