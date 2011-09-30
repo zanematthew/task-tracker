@@ -44,6 +44,8 @@ require_once 'functions.php';
  * - Deactivation script (to come)
  * - enqueue a base stylesheet (to come)
  */
+ 
+ // @todo namespace
 interface ICustomPostType {
 
     public function registerPostType( $param=array() );
@@ -130,7 +132,8 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             $capabilities = array(
                 'edit_article'
                 );
-                         
+             
+            // @todo make defaults optional
             $args = array(
                 'labels' => $labels,
                 'public' => true,
@@ -194,10 +197,11 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 'new_item_name'     => __( 'New ' . $taxonomy['singular_name'] . ' Name' )
                 );
 
+// @todo needs options
             $args = array(
                 'labels'  => $labels,
                 // 'hierarchical' => $taxonomy['hierarchical'],
-                'hierarchical' => true,
+                'hierarchical' => true, // non-hierarchical taxes break alot of stuff
                 'query_var' => true,
                 'public' => true,
                 'rewrite' => array('slug' => $taxonomy['slug']),
@@ -231,12 +235,17 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         $current_post_type = get_query_var( 'post_type' );
                 
         $this->taxonomyRedirect( $current_post_type );
+        // @todo single template first
         $this->singleRedirect( $current_post_type );        
         $this->archiveRedirect( $current_post_type );
         
     } // End 'function templateRedirect'    
 
-    public function taxonomyRedirect( $current_post_type=null ){
+    // Did I make one?
+    // Use MY default?
+    // Use WP archive
+    // Use WP index
+    public function taxonomyRedirect( $current_post_type=null ) {
 
         if ( is_null( $current_post_type ) )
             wp_die( 'I need a CPT');
@@ -245,15 +254,30 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             $my_cpt = get_post_types( array( 'name' => $wtf['type']), 'objects' );                    
             if ( is_tax( $wtf['taxonomies'] ) ) {                    
                 global $wp_query;
-                if ( in_array( $wp_query->query_vars['taxonomy'], $wtf['taxonomies'] ) ) {                    
+                if ( in_array( $wp_query->query_vars['taxonomy'], $wtf['taxonomies'] ) )
+                    
+                    // custom plugin theme
                     if ( file_exists( MY_PLUGIN_DIR . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' ) ) {
+                        
+                        // @todo enqueue needed css/js
                         load_template( MY_PLUGIN_DIR . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' );
+                    
+                    // default plugin theme               
                     } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/default/taxonomy.php' ) ) {
+                        
+                        // @todo enqueue needed css/js
                         load_template( MY_PLUGIN_DIR . 'theme/default/taxonomy.php' );
+                    
+                    // theme archive
                     } elseif ( file_exists( STYLESHEETPATH . '/archive.php' ) ) {
-                        load_template( STYLESHEETPATH . '/archive.php' );
+                    
+                        load_template( STYLESHEETPATH . '/archive.php' );                    
+                    
+                    // theme index
                     } else {
+                        
                         load_template( STYLESHEETPATH . '/index.php' );                                                
+                        
                     }                        
                 } else {
                     wp_die( 'Sorry the following taxonomies: ' . print_r( $wtf['taxonomies'] ) . ' are not in my array' );
@@ -261,51 +285,72 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 exit;         
             }                    
         }        
-    }
+    } // End 'taxonomyRedirect'
 
+    // Did I make one?
+    // Did you make one?
+    // Use MY default
     public function archiveRedirect( $current_post_type=null ) {
 
         if ( is_null( $current_post_type ) )
             wp_die( 'I need a CPT');
 
-        // Custom plugin template task-archive.php
-        // Custom theme template archive.php                    
-        // Default plugin template default-archive.php        
-        // theme index index.php
+        // @todo this needs a loop for cpt's
         if ( is_post_type_archive( $current_post_type ) ) {            
 
             // custom plugin theme
             if ( file_exists( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' ) ) {
                 
+                // @todo enqueue css/js
                 load_template( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' );
             
             // custom theme
             } elseif ( file_exists( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' ) ) {
+                
                 load_template( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' );                    
             
             // default 
             } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/default/archive-default.php' ) ) {
+                
+                // @todo enqueue css/js
                 load_template( MY_PLUGIN_DIR . 'theme/default/archive-default.php' );
+                
             }
             exit;   
         }
-    }
+    } // End 'archiveRedirect'
 
+    // Did I make one?
+    // Did you make one?
+    // Use the default
     public function singleRedirect( $current_post_type=null ) {        
         if ( is_null( $current_post_type ) )
             wp_die( 'I need a CPT');
 
+        // @todo this needs a loop for cpt's
         if ( is_single() ) {
-            if ( file_exists( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' ) )
+            
+            // custom template from plugin
+            if ( file_exists( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' ) ) {
+                
+                // @todo enqueue css/js
                 load_template( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' );
-            elseif ( file_exists( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php'  ) )
-                load_template( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php' );
-            else
-                load_template( STYLESHEETPATH . '/single.php' );
+            
+            // custom template from theme
+            } elseif ( file_exists( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php'  ) ) {
+                
+                load_template( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php' ); {
+                    
+            } else {
+                
+                // default templte
+                load_template( STYLESHEETPATH . '/single.php' );            
+            
+            }
             exit;                    
         }
 
-    }
+    } // End 'singleRedirect'
     
 } // End 'CustomPostTypeBase'
 
@@ -314,6 +359,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
  */
 class CustomPostType extends CustomPostTypeBase { 
     
+    // @todo do we need this?
     static $instance;
 
     public $plugin_dir = WP_PLUGIN_DIR;
@@ -349,25 +395,39 @@ class CustomPostType extends CustomPostTypeBase {
         
         /** @todo consider, moving the following to the abstract */
         add_action( 'wp_head', array( &$this, 'baseAjaxUrl' ) );        
+        
+        // @todo move to abstract
         add_action( 'wp_ajax_loadTemplate', array( &$this, 'loadTemplate' ) ); 
+        
+        // @todo move to abstract
         add_action( 'wp_ajax_nopriv_loadTemplate', array( &$this, 'loadTemplate' ) ); // for public use
+        
+        // @todo move to abstract
         add_filter( 'post_class', array( &$this, 'addPostClass' ) );
                         
         // Only our container divs are loaded, the contents is injected via ajax :)
+        // @todo createDiv( $element_id=null )
         add_action( 'wp_footer', array( &$this, 'createPostTypeDiv' ) );            
         add_action( 'wp_footer', array( &$this, 'createLoginDiv' ) );            
         add_action( 'wp_footer', array( &$this, 'createDeleteDiv' ) );            
         
+        // @todo see if we can move this to the abstract
         add_action( 'wp_ajax_postTypeSubmit', array( &$this, 'postTypeSubmit' ) );                
         add_action( 'wp_ajax_postTypeUpdate', array( &$this, 'postTypeUpdate' ) );
         add_action( 'wp_ajax_postTypeDelete', array( &$this, 'postTypeDelete' ) );
+        
         add_action( 'wp_ajax_siteLoginSubmit', array( &$this, 'siteLoginSubmit' ) );        
         add_action( 'wp_ajax_nopriv_siteLoginSubmit', array( &$this, 'siteLoginSubmit' ) ); 
 
         register_activation_hook( __FILE__, array( &$this, 'regsiterActivation') );        
                 
         // add_action( 'admin_notices', 'tt_warning' );
+        
+        // @todo break css into; single.css, taxonomy.css, archvie.css, base.css only load on pages that need them
+        // let total cache or what ever combine your css
         wp_register_style(  'tt-styles', $this->plugin_url . 'theme/css/style.css', $this->dependencies['style'], 'all' );
+        
+        // this is global to our plugin
         wp_register_style(  'qtip-nightly-style', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.css', '', 'all' );
         wp_register_script( 'tt-script', $this->plugin_url . 'theme/js/script.js', $this->dependencies['script'], '1.0' );        
         wp_register_script( 'jquery-ui-effects', $this->plugin_url . 'library/js/jquery-ui/jquery-ui-1.8.13.effects.min.js', $this->dependencies['script'], '1.8.13' );
@@ -466,6 +526,7 @@ class CustomPostType extends CustomPostTypeBase {
      * Basic post submission for use with an ajax request
      */
     public function postTypeSubmit() {
+        // @todo needs to be generic for cpt
         check_ajax_referer( 'tt-ajax-forms', 'security' );
     
         if ( !is_user_logged_in() )
@@ -524,6 +585,7 @@ class CustomPostType extends CustomPostTypeBase {
      * Simple form submission to be used in AJAX request!
      */
     public function postTypeUpdate( $post ) {
+        // @todo add check_ajax_referer
 
         if ( !is_user_logged_in() )
             return false;
@@ -569,7 +631,8 @@ class CustomPostType extends CustomPostTypeBase {
         die();
     } // postTypeUpdate
 
-    public function postTypeDelete( $id=null ){
+    public function postTypeDelete( $id=null ) {
+        // @todo needs to be generic for cpt
         check_ajax_referer( 'tt-ajax-forms', 'security' );
 
         $id = (int)$_POST['post_id'];
@@ -599,7 +662,9 @@ class CustomPostType extends CustomPostTypeBase {
      * to be used in AJAX submission, gets the $_POST data and logs the user in.
      */    
     public function siteLoginSubmit() {
+        // @todo needs to be generic for cpt
         check_ajax_referer( 'tt-ajax-forms', 'security' );
+        
         // @todo this should include EVEERYTHING needed for ajax login to work!
         // js, css, actions etc.
         $creds = array();
@@ -658,6 +723,8 @@ class CustomPostType extends CustomPostTypeBase {
      * @todo baseAjaxUrl() consider moving to abstract
      */
     public function baseAjaxUrl() {
+        // @todo use localize for this
+        // http://www.garyc40.com/2010/03/5-tips-for-using-ajax-in-wordpress/#js-global
         print '<script type="text/javascript"> var ajaxurl = "'. admin_url("admin-ajax.php") .'"; var _pluginurl="'. MY_PLUGIN_URL.'";</script>';    
     } // End 'baseAjaxUrl'
     
