@@ -48,6 +48,7 @@ interface ICustomPostType {
 
     public function registerPostType( $param=array() );
     public function registerTaxonomy( $param=array() );        
+    // @todo http://codex.wordpress.org/Function_Reference/locate_template
     public function templateRedirect();
     public function regsiterActivation();
     // public function regsiterDeactivation();
@@ -599,7 +600,8 @@ class CustomPostType extends CustomPostTypeBase {
      */    
     public function siteLoginSubmit() {
         check_ajax_referer( 'tt-ajax-forms', 'security' );
-        
+        // @todo this should include EVEERYTHING needed for ajax login to work!
+        // js, css, actions etc.
         $creds = array();
         $creds['user_login'] = $_POST['user_name'];
         $creds['user_password'] = $_POST['password'];
