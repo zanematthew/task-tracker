@@ -22,6 +22,7 @@ pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px
 .zm-tt-container a.zm-base-priority-high { 
     background: -moz-linear-gradient( top, #FFC2B2, #FF704D) white;
     background: -webkit-linear-gradient( top, #FFC2B2, #FF704D) white;    
+    background-color: #FF704D;
     border: 1px solid #E62E00;
     color: #FFFFFF;
     text-shadow: 1px 1px 0 #4C0F00;
@@ -30,6 +31,7 @@ pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px
 .zm-tt-container a.zm-base-priority-low { 
     background: -moz-linear-gradient( top , #FFF0B2, #FFDB4D) white;
     background: -webkit-linear-gradient( top , #FFF0B2, #FFDB4D ) white;
+    background-color: #FFDB4D;
     border: 1px solid #E6B800;
     color: #FFFFFF;
     text-shadow: 1px 1px 0 #B26B24;
@@ -38,6 +40,7 @@ pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px
 .zm-tt-container a.zm-base-priority-medium { 
     background: -moz-linear-gradient( top, #FFE0C2, #FFB870) white;
     background: -webkit-linear-gradient( top, #FFE0C2, #FFB870) white;    
+    background-color: #FFB870;
     border: 1px solid #FF9000;
     color: #FFFFFF;
     text-shadow: 1px 1px 0 #B26B24;
@@ -54,6 +57,7 @@ pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px
 a.zm-base-status-resolved { 
     background: -moz-linear-gradient(top , #B2F0E0, #4DDBB8) white;
     background: -webkit-linear-gradient(top , #B2F0E0, #4DDBB8) white;    
+    background-color: #4DDBB8;
     border: 1px solid #00B88A;
     text-shadow: 1px 1px 0 #003D2E;
     }
@@ -61,6 +65,7 @@ a.zm-base-status-resolved {
 a.zm-base-status-aborted { 
     background: -moz-linear-gradient( top, #E0E0FF, #B8B8FF) white;    
     background: -webkit-linear-gradient( top, #E0E0FF, #B8B8FF) white;    
+    background-color: #B8B8FF;
     border: 1px solid #7A7ACC;
     text-decoration: line-through;
     text-shadow: 1px 1px 0 #2E2E4C;
@@ -69,13 +74,15 @@ a.zm-base-status-aborted {
 a.zm-base-status-open { 
     background: -moz-linear-gradient( top , #E0E0FF, #B8B8FF) white;
     background: -webkit-linear-gradient( top , #E0E0FF, #B8B8FF) white;
+    background-color: #B8B8FF;
     border: 1px solid #7A7ACC;
     text-shadow: 1px 1px 0 #2E2E4C;
     }
 
 a.zm-base-status-new {
     background: -moz-linear-gradient( top , #EEEEEA, #B3B3B0) white;
-    background: -webkit-linear-gradient( top , #EEEEEA, #B3B3B0) white;    
+    background: -webkit-linear-gradient( top , #EEEEEA, #B3B3B0) white;        
+    background-color: #B3B3B0;
     border: 1px solid #929291;
     color: #FFF;
     text-shadow: 1px 1px 0 #2E2E4C;
@@ -84,6 +91,7 @@ a.zm-base-status-new {
 a.zm-base-status-closed {
     background: -moz-linear-gradient( top , #EEEEEA, #B3B3B0) white;
     background: -webkit-linear-gradient( top , #EEEEEA, #B3B3B0) white;    
+    background-color: #B3B3B0;
     border: 1px solid #929291;    
     color: #FFF;
     text-decoration: line-through;    
@@ -229,6 +237,7 @@ body.archive .zm-tt-navigation-container li.most-recent-task { background: #fff;
 .zm-tt-archive-container table tr:nth-child(2n) { 
     background-image: -webkit-linear-gradient(top , #FAFAFA, #EFEFEF); 
     background-image: -moz-linear-gradient(center top , #FAFAFA, #EFEFEF);     
+    background-color: #EFEFEF;    
     }
 
 .zm-tt-archive-container table tr:hover { background: #e0ffe0; }
