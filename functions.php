@@ -11,7 +11,7 @@
  */
 if ( ! function_exists( 'tt_task_age' ) ) :
 function tt_task_age() {
-    printf( __( '<span class="meta">Age <span class="%1$s">%2$s</span></span>', 'Task' ),
+    printf( __( '<span class="meta"><span class="%1$s">%2$s</span></span>', 'Task' ),
         'meta-prep-author',
         sprintf( '<span class="date">%1$s</span>',
             esc_attr( human_time_diff( get_the_time('U'), current_time('timestamp') ) )
