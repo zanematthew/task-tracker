@@ -5,11 +5,11 @@
             <li class="create-ticket">
                 <?php if ( is_user_logged_in() ) : ?>
                     <div class="zm-tt-form-container">
-                        <a href="javascript://" id="create_ticket" tt_template="theme/custom/task-create.php" class="button">Create a Task</a>
+                        <a href="javascript://" id="create_ticket" tt_template="theme/custom/task-create.php" class="button">Create a task</a>
                     </div>
                 <?php else : ?>
                     <div class="zm-tt-form-container">
-                        <a href="javascript://" id="ltfo_handle" class="login" tt_template="theme/default/login.php" title="Click to login and create a Task">LTFI to create a Task</a>
+                        <a href="javascript://" id="ltfo_handle" class="login" tt_template="theme/default/login.php" title="Click to login and create a task">Login to create a task</a>
                     </div>
                 <?php endif ?>
             </li>
