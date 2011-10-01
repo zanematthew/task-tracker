@@ -54,7 +54,7 @@ else
     <div class="zm-tt-container zm-tt-archive-container">
         <div class="tt-glue">
             <div class="main-container">
-                <?php load_template( MY_PLUGIN_DIR . 'theme/default/navigation.php' ); ?>   
+                <?php load_template( MY_PLUGIN_DIR . 'theme/default/navigation.php' ); ?>
                 <div class="tt-filter-container">
                     <ul class="inline">
                         <li><a href="#filter-task" id="filter_handle" tt_template="default/navigation-filter.php" data-post_type="<?php global $wp_query; print $wp_query->posts[0]->post_type; ?>">Filter</a></li>                        
