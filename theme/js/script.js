@@ -16,7 +16,7 @@ if ( window.location[ 'hash' ] ) {
     }
 }
 
-jQuery('a[title]').live("mouseover", function() {
+jQuery('a[title], label[title]').live("mouseover", function() {
     jQuery(this).qtip({
         overwrite: false,
         content: jQuery(this).attr("title"),
