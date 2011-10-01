@@ -226,8 +226,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
 
         // @todo this needs to be generic
         wp_enqueue_style( 'qtip-nightly-style' );
-        wp_enqueue_style( 'wp-jquery-ui-dialog' );
-        wp_enqueue_style( 'tt-styles' );
+        wp_enqueue_style( 'tt-base-style' );
         wp_enqueue_script( 'tt-script' );
         wp_enqueue_script( 'qtip-nightly' );
         wp_enqueue_script( 'jquery-ui-effects' );
@@ -375,10 +374,6 @@ class CustomPostType extends CustomPostTypeBase {
             'jquery-ui-dialog'
         );
 
-        $this->dependencies['style'] = array(
-            'wp-jquery-ui-dialog'
-        );
-        
         // @todo the abstract should possibly be responsible for doing this
         add_action( 'init', array( &$this, 'registerPostType' ) );        
         add_action( 'init', array( &$this, 'registerTaxonomy' ) );                            
@@ -399,7 +394,6 @@ class CustomPostType extends CustomPostTypeBase {
         // Only our container divs are loaded, the contents is injected via ajax :)
         // @todo createDiv( $element_id=null )
         add_action( 'wp_footer', array( &$this, 'createPostTypeDiv' ) );            
-        add_action( 'wp_footer', array( &$this, 'createLoginDiv' ) );            
         add_action( 'wp_footer', array( &$this, 'createDeleteDiv' ) );            
         
         // @todo see if we can move this to the abstract
@@ -407,22 +401,21 @@ class CustomPostType extends CustomPostTypeBase {
         add_action( 'wp_ajax_postTypeUpdate', array( &$this, 'postTypeUpdate' ) );
         add_action( 'wp_ajax_postTypeDelete', array( &$this, 'postTypeDelete' ) );
         
-        add_action( 'wp_ajax_siteLoginSubmit', array( &$this, 'siteLoginSubmit' ) );        
-        add_action( 'wp_ajax_nopriv_siteLoginSubmit', array( &$this, 'siteLoginSubmit' ) ); 
-
         register_activation_hook( __FILE__, array( &$this, 'regsiterActivation') );        
                 
         // add_action( 'admin_notices', 'tt_warning' );
         
         // @todo break css into; single.css, taxonomy.css, archvie.css, base.css only load on pages that need them
         // let total cache or what ever combine your css
-        wp_register_style(  'tt-styles', $this->plugin_url . 'theme/css/style.css', $this->dependencies['style'], 'all' );
+        wp_register_style(  'tt-base-style', $this->plugin_url . 'theme/css/style.css', '', 'all' );
         
         // this is global to our plugin
         wp_register_style(  'qtip-nightly-style', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.css', '', 'all' );
         wp_register_script( 'tt-script', $this->plugin_url . 'theme/js/script.js', $this->dependencies['script'], '1.0' );        
-        wp_register_script( 'jquery-ui-effects', $this->plugin_url . 'library/js/jquery-ui/jquery-ui-1.8.13.effects.min.js', $this->dependencies['script'], '1.8.13' );
         wp_register_script( 'qtip-nightly', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.js', $this->dependencies['script'], '0.0.1' );            
+        wp_register_script( 'jquery-ui-effects', $this->plugin_url . 'library/js/jquery-ui/jquery-ui-1.8.13.effects.min.js', $this->dependencies['script'], '1.8.13' );        
+        
+        $this->loginSetup();
     }
     
     public function regsiterActivation() {
@@ -650,6 +643,31 @@ class CustomPostType extends CustomPostTypeBase {
     } // postTypeDelete
 
     /**
+     * Login set-up
+     */
+    public function loginSetup() {
+        add_action( 'wp_footer', array( &$this, 'createLoginDiv' ) );            
+        add_action( 'wp_ajax_siteLoginSubmit', array( &$this, 'siteLoginSubmit' ) );        
+        add_action( 'wp_ajax_nopriv_siteLoginSubmit', array( &$this, 'siteLoginSubmit' ) ); 
+
+        $dependencies['style'] = array(
+            'tt-base-style',
+            'wp-jquery-ui-dialog'
+        );
+        
+        wp_enqueue_style( 'wp-jquery-ui-dialog' );
+        wp_register_style( 'tt-login-style', $this->plugin_url . 'theme/css/login.css', $dependencies['style'], 'all' );        
+        wp_enqueue_script( 'jquery-ui-effects' );        
+        
+    } // End 'loginSetup'
+
+    public function createLoginDiv(){ ?>
+    <div id="login_dialog" class="dialog-container">
+            <div id="login_target" style="display: none;">login hi</div>
+        </div>
+    <?php }
+
+    /**
      * to be used in AJAX submission, gets the $_POST data and logs the user in.
      */    
     public function siteLoginSubmit() {
@@ -695,12 +713,6 @@ class CustomPostType extends CustomPostTypeBase {
             <div id="create_ticket_target" style="display: none;">hi</div>
         </div>
     <?php } 
-
-    public function createLoginDiv(){ ?>
-        <div id="login_dialog" class="dialog-container">
-            <div id="login_target" style="display: none;">login hi</div>
-        </div>
-    <?php }
 
     public function createDeleteDiv(){ ?>
         <div id="delete_dialog" class="dialog-container">
