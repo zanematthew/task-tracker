@@ -6,7 +6,7 @@
             <input type="hidden" name="PostID" id="post_id" value="<?php echo $post->ID; ?>" />
             <?php zm_base_build_radio('status'); ?>
             <?php zm_base_build_radio('priority'); ?>
-            <?php zm_base_build_radio('type'); ?>            
+            <?php zm_base_build_options('type'); ?>            
             <?php zm_base_build_options('project'); ?>
             <?php zm_base_build_options('phase'); ?>
             <?php zm_base_build_options('assigned'); ?>

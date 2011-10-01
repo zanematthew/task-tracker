@@ -134,8 +134,6 @@ a.zm-base-status-closed {
 
 /*= Type
 -------------------------------------------------------------- */
-.type-container { margin-top: 10px; }
-
 .icon-container,
 .type-container a { 
     height: 16px; width: 16px; display: block; opacity: 0.5; text-indent: -999em; 
@@ -190,7 +188,7 @@ li.icon-container { text-indent: 0; width: auto; }
 
 /*= Navigation
 -------------------------------------------------------------- */
-.zm-tt-navigation-container { background: #e9f7f7; border-radius: 5px; float: left; margin-bottom: 20px; width: 100%; }
+.zm-tt-navigation-container { background: #e9f7f7; border-radius: 5px; float: left; margin-bottom: 40px; width: 100%; }
 
 .zm-tt-navigation-container li { color: #00aecf; font-size: 14px; margin: 5px 5px 0; padding: 10px; }
 .zm-tt-navigation-container li a { color: #00aecf; }
@@ -294,8 +292,9 @@ li.icon-container { text-indent: 0; width: auto; }
     text-indent: 20px; 
     width: auto; 
     }
-    
-.zm-tt-sidebar-container .zm-base-title { color: #444; text-transform: capitalize; }
+
+.zm-tt-sidebar-container .text { color: #888; font-weight: normal; }
+.zm-tt-sidebar-container .zm-base-title { color: #444; font-weight: bold; text-transform: capitalize; }
 .zm-tt-sidebar-container ul { color: #444; border-bottom: 2px solid #EFEFEF; font-weight: bold; font-size: 13px; float: left; margin-bottom: 25px; padding-bottom: 25px;width: 100%; }
     
 .zm-tt-sidebar-container .zm-base-count { border-radius: 4px; background: #ddd; color: #fff; float: right; font: bold 11px arial; margin: 0 0 0 10px; padding: 2px 3px; }
@@ -471,3 +470,18 @@ table .type-container { margin: 0; }
 .tt-wrapper { float: left; background: #f2f2f2; padding: 10px; }
 ul.inline { list-style-type: none; margin: 0; padding: 0; }
 ul.inline li { float: left; }
+
+.mini-button { border-radius: 5px;
+background: #DADADA;
+font-size: 10px;
+padding: 1px 5px;
+text-shadow: 1px 1px 0 #A9A9A9;
+box-shadow: 1px 1px 0 #A9A9A9;
+margin-right: 10px; 
+}
+.zm-tt-archive-container .text p,
+.zm-tt-single-container .text p { color: #bbb; font-size: 12px; margin-bottom: 5px; }
+.mini-button a { color: #fff; }
+.mini-button a:hover { text-decoration: none;}
+a:hover { text-decoration: none; }
+.age-icon { background: url('images/famfamfam/icons/calendar.png') no-repeat; display: inline-block; padding-left: 20px; }
