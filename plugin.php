@@ -644,6 +644,10 @@ class CustomPostType extends CustomPostTypeBase {
 
     /**
      * Login set-up
+     * 
+     * Note this does NOT hook into the default WordPress login! In essence 
+     * you will need custom mark-up. Telling it which template to call
+     * and create you own, see theme/default/login.php 
      */
     public function loginSetup() {
         add_action( 'wp_footer', array( &$this, 'createLoginDiv' ) );            
