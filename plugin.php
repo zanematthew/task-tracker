@@ -232,10 +232,9 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         wp_enqueue_script( 'jquery-ui-effects' );
 
         $current_post_type = get_query_var( 'post_type' );
-                
-        $this->taxonomyRedirect( $current_post_type );
-        // @todo single template first
-        $this->singleRedirect( $current_post_type );        
+        
+        $this->singleRedirect( $current_post_type );                        
+        $this->taxonomyRedirect( $current_post_type );        
         $this->archiveRedirect( $current_post_type );
         
     } // End 'function templateRedirect'    
@@ -245,23 +244,33 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     // Use WP archive
     // Use WP index
     public function taxonomyRedirect( $current_post_type=null ) {
+        global $wp_query;
+
+        wp_register_style( 'tt-taxonomy-style', $this->plugin_url . 'theme/css/taxonomy.css', $this->dependencies['style'] , 'all' );   
+        wp_register_style( 'tt-taxonomy-default-style', $this->plugin_url . 'theme/css/taxonomy-default.css', $this->dependencies['style'] , 'all' );   
 
         if ( is_null( $current_post_type ) )
             wp_die( 'I need a CPT');
 
         foreach( $this->post_type as $wtf ) {
+            
             $my_cpt = get_post_types( array( 'name' => $wtf['type']), 'objects' );                    
-            if ( is_tax( $wtf['taxonomies'] ) ) {                    
-                global $wp_query;
+
+            if ( is_tax( $wtf['taxonomies'] ) ) {                                
+                
                 if ( in_array( $wp_query->query_vars['taxonomy'], $wtf['taxonomies'] ) ) {                    
-                    // custom plugin theme
+                    // custom plugin theme                    
                     if ( file_exists( MY_PLUGIN_DIR . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' ) ) {                        
-                        // @todo enqueue needed css/js
+                                            
+                        wp_enqueue_style( 'tt-taxonomy-style' );
                         load_template( MY_PLUGIN_DIR . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' );                    
+
                     // default plugin theme               
-                    } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/default/taxonomy.php' ) ) {                        
-                        // @todo enqueue needed css/js
+                    } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/default/taxonomy.php' ) ) {                                                
+
+                        wp_enqueue_style( 'tt-taxonomy-default-style' );
                         load_template( MY_PLUGIN_DIR . 'theme/default/taxonomy.php' );                    
+
                     // theme archive
                     } elseif ( file_exists( STYLESHEETPATH . '/archive.php' ) ) {                    
                         load_template( STYLESHEETPATH . '/archive.php' );                                        
@@ -282,6 +291,9 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     // Use MY default
     public function archiveRedirect( $current_post_type=null ) {
 
+        wp_register_style( 'tt-archive-style', $this->plugin_url . 'theme/css/archive.css', $this->dependencies['style'] , 'all' );   
+        wp_register_style( 'tt-archive-default-style', $this->plugin_url . 'theme/css/archive-default.css', $this->dependencies['style'] , 'all' );   
+
         if ( is_null( $current_post_type ) )
             wp_die( 'I need a CPT');
 
@@ -291,18 +303,18 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             // custom plugin theme
             if ( file_exists( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' ) ) {
                 
-                // @todo enqueue css/js
+                wp_enqueue_style( 'tt-archive-style' );
                 load_template( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' );
             
             // custom theme
             } elseif ( file_exists( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' ) ) {
-                
+                                
                 load_template( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' );                    
             
             // default 
             } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/default/archive-default.php' ) ) {
-                
-                // @todo enqueue css/js
+                            
+                wp_enqueue_style( 'tt-archive-default-style' );
                 load_template( MY_PLUGIN_DIR . 'theme/default/archive-default.php' );
                 
             }
@@ -313,7 +325,10 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     // Did I make one?
     // Did you make one?
     // Use the default
-    public function singleRedirect( $current_post_type=null ) {        
+    public function singleRedirect( $current_post_type=null ) {     
+        
+        wp_register_style( 'tt-single-style', $this->plugin_url . 'theme/css/single.css', $this->dependencies['style'] , 'all' );   
+
         if ( is_null( $current_post_type ) )
             wp_die( 'I need a CPT');
 
@@ -322,20 +337,20 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             
             // custom template from plugin
             if ( file_exists( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' ) ) {
-                
-                // @todo enqueue css/js
+                                
+                wp_enqueue_style( 'tt-single-style' );
                 load_template( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' );
             
             // custom template from theme
-            } elseif ( file_exists( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php'  ) ) {
-                
-                load_template( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php' );
-                    
-            } else {
-                
-                // default templte
-                load_template( STYLESHEETPATH . '/single.php' );            
-            
+            } elseif ( file_exists( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php'  ) ) {                
+
+                load_template( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php' );                    
+
+            // default templte
+            } else {                                
+
+                load_template( STYLESHEETPATH . '/single.php' );                        
+
             }
          exit;
         }
@@ -373,6 +388,10 @@ class CustomPostType extends CustomPostTypeBase {
             'jquery-ui-core',
             'jquery-ui-dialog'
         );
+
+        $this->dependencies['style'] = array(
+            'tt-base-style'
+            );
 
         // @todo the abstract should possibly be responsible for doing this
         add_action( 'init', array( &$this, 'registerPostType' ) );        
