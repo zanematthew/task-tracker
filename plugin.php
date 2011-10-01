@@ -254,37 +254,28 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             $my_cpt = get_post_types( array( 'name' => $wtf['type']), 'objects' );                    
             if ( is_tax( $wtf['taxonomies'] ) ) {                    
                 global $wp_query;
-                if ( in_array( $wp_query->query_vars['taxonomy'], $wtf['taxonomies'] ) )
-                    
+                if ( in_array( $wp_query->query_vars['taxonomy'], $wtf['taxonomies'] ) ) {                    
                     // custom plugin theme
-                    if ( file_exists( MY_PLUGIN_DIR . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' ) ) {
-                        
+                    if ( file_exists( MY_PLUGIN_DIR . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' ) ) {                        
                         // @todo enqueue needed css/js
-                        load_template( MY_PLUGIN_DIR . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' );
-                    
+                        load_template( MY_PLUGIN_DIR . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' );                    
                     // default plugin theme               
-                    } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/default/taxonomy.php' ) ) {
-                        
+                    } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/default/taxonomy.php' ) ) {                        
                         // @todo enqueue needed css/js
-                        load_template( MY_PLUGIN_DIR . 'theme/default/taxonomy.php' );
-                    
+                        load_template( MY_PLUGIN_DIR . 'theme/default/taxonomy.php' );                    
                     // theme archive
-                    } elseif ( file_exists( STYLESHEETPATH . '/archive.php' ) ) {
-                    
-                        load_template( STYLESHEETPATH . '/archive.php' );                    
-                    
+                    } elseif ( file_exists( STYLESHEETPATH . '/archive.php' ) ) {                    
+                        load_template( STYLESHEETPATH . '/archive.php' );                                        
                     // theme index
-                    } else {
-                        
-                        load_template( STYLESHEETPATH . '/index.php' );                                                
-                        
+                    } else {                        
+                        load_template( STYLESHEETPATH . '/index.php' );                                                                        
                     }                        
                 } else {
                     wp_die( 'Sorry the following taxonomies: ' . print_r( $wtf['taxonomies'] ) . ' are not in my array' );
-                }           
-                exit;         
-            }                    
-        }        
+                }  
+                exit;
+            }      
+        }
     } // End 'taxonomyRedirect'
 
     // Did I make one?
@@ -339,7 +330,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             // custom template from theme
             } elseif ( file_exists( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php'  ) ) {
                 
-                load_template( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php' ); {
+                load_template( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php' );
                     
             } else {
                 
@@ -347,7 +338,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 load_template( STYLESHEETPATH . '/single.php' );            
             
             }
-            exit;                    
+         exit;
         }
 
     } // End 'singleRedirect'
