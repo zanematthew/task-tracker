@@ -1,0 +1,5 @@
+/** default wp login form */
+#login_form input[type="password"], 
+#login_form input[type="text"] { width: 93%; }
+#login_form .form-wrapper { padding-bottom: 0; }
+#login_form .button-container { padding: 10px; width: 93%; }

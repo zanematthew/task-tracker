@@ -656,7 +656,7 @@ class CustomPostType extends CustomPostTypeBase {
         );
         
         wp_enqueue_style( 'wp-jquery-ui-dialog' );
-        wp_register_style( 'tt-login-style', $this->plugin_url . 'theme/css/login.css', $dependencies['style'], 'all' );        
+        wp_enqueue_style( 'tt-login-style', $this->plugin_url . 'theme/css/login.css', $dependencies['style'], 'all' );        
         wp_enqueue_script( 'jquery-ui-effects' );        
         
     } // End 'loginSetup'
