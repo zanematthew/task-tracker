@@ -202,9 +202,10 @@ jQuery(document).ready(function( $ ){
      */
     $( '#exit' ).live('click', function(){
     
-        if ( !$( '#tt_update_container' ).length ) {
+        if ( $( '#tt_update_container' ).length != 0 ) {
+
             $('#tt_main_target').fadeOut();   
-            // @todo templating still handled via php, consider js templating?
+
             template = $(this).attr( 'tt_template' );
             
             data = { 
@@ -221,6 +222,7 @@ jQuery(document).ready(function( $ ){
                     $('#tt_main_target').fadeIn().html( msg );
                 }
             });
+
             return false;
         } else {
             $('#create_ticket_dialog').dialog('close');                
