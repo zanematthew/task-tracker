@@ -13,22 +13,22 @@ else
 	$id = $post->ID;
 ?>
 <ul class="inline">
-    <li>
-    	<?php 
-    	/*
-    	 @todo tt_task_age does not work when this file is loaded via ajax
-    	 This is just a quick hack until we add support in functions.php for tt_task_age()
-    	 to except a post_id as a param and get the age of a CPT
-    	 */
-    	?>
-		<?php if ( empty( $_POST['post_id'] ) ) : ?>    	
+    <?php 
+    /*
+     @todo tt_task_age does not work when this file is loaded via ajax
+     This is just a quick hack until we add support in functions.php for tt_task_age()
+     to except a post_id as a param and get the age of a CPT
+     */
+    ?>
+    <?php if ( empty( $_POST['post_id'] ) ) : ?>        
+    <li>	
     	<div class="age-container">
     		<small>Age</small><br />
     		<span class="age-icon"><?php tt_task_age(); ?></span>
     	</div>
-    	<?php endif; ?>
     </li>                              
-    
+    <?php endif; ?>    
+
     <li>
 	    <div class="status-container"><small>Status</small><br /> 
 	    	<?php print zm_base_get_the_term_list( array( 'post_id' => $id , 'taxonomy' => 'status') ); ?>
@@ -41,21 +41,27 @@ else
     	</div>
     </li>
     <li>
-    	<div class="project-container"><small>Project</small><br />
+    	<div class="project-container">
+            <small>Project</small><br />
     		<?php print zm_base_get_the_term_list( array( 'post_id' => $id, 'taxonomy' => 'project' ) ); ?>
     	</div>
     </li>
     <li>
-    	<div class="milestone-container"><small>Milestone</small><br />
+    	<div class="milestone-container">
+            <small>Milestone</small><br />
     		<?php print zm_base_get_the_term_list( array( 'post_id' => $id, 'taxonomy' => 'milestone' ) ); ?>
     	</div>
     </li>
     <li>
-    	<div class="type-container"><small>Type</small><br />
+     <small>Type</small><br />
+    	<div class="type-container">           
     		<?php print zm_base_get_the_term_list(array( 'post_id' => $id, 'taxonomy' => 'type' ) ); ?>
     	</div>
     </li>
     <li>
-    	<span class="ui-icon ui-icon-arrow"><a href="#top">Return to Top</a></span>
+        <small>Comment</small><br />
+        <div class="icon-container">            
+            <span class="comment-count" id="task_comment_handle" data-template="theme/custom/comment.php"><a href="javascript://"></a></span>
+        </div>
     </li>
 </ul>

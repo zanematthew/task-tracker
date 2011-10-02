@@ -432,13 +432,12 @@ jQuery(document).ready(function( $ ){
             temp_load( params );
         } // End 'check for entry utility'
 
-    }); // End 'window.load'
-        
-    $('#task_update_handle').click(function(){
+    }); // End 'window.load'        
+
+    $('#task_comment_handle').live('click', function(){
         params = {};
-        params.target_div = '#task_update_target';
-        params.template = $( this ).attr( 'data-template' );
+        params.target_div = '#task_comment_target';
+        params.template = $( '#task_comment_handle' ).attr( 'data-template' );
         temp_load( params );
-        $(this).fadeOut();
     });
 });

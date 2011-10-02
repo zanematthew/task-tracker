@@ -135,14 +135,20 @@ a.zm-base-status-closed {
 /*= Type
 -------------------------------------------------------------- */
 .icon-container,
-.type-container a { 
-    height: 16px; width: 16px; display: block; opacity: 0.5; text-indent: -999em; 
+.type-container { 
+    min-height: 16px; 
+    min-width: 16px; 
+    display: block; 
+    opacity: 0.5; 
     -webkit-transition: opacity .5s;     
     -moz-transition: opacity .5s;
     -o-transition: opacity .5s;
     -ms-transition: opacity .5s;
     transition: opacity .5s;
     }
+
+.icon-container a,
+.type-container a { display: block; text-indent: 20px; }
 
 a[class*='zm-base-type-photography-'],
 .zm-base-type-photography { background: url('images/famfamfam/icons/camera.png') no-repeat; } 
@@ -398,7 +404,10 @@ a.login { font-size: 12px; margin: 10px 10px 0 0; display: inline-block; }
 
 .tt-filter-container { float: left; margin-bottom: 20px; width: 100%; }
 
-.tt_loading { background: url(images/w-loader.gif) no-repeat center center; float: left; height: 200px; width: 100%; }
+.tt_loading { background: url(images/w-loader.gif) no-repeat center center; min-height: 20px; }
+
+table .tt_loading { float: left; height: 200px; width: 100%; }
+.tt_loading { float: left; width: 100%; }
 
 /*= Comments
 -------------------------------------------------------------- */
@@ -424,8 +433,8 @@ a.login { font-size: 12px; margin: 10px 10px 0 0; display: inline-block; }
 .comments-container time,
 .comments-container .author { display: none; }
 
-.comment-count a,
-.comments-count a {     
+table .comment-count a,
+table .comments-count a {     
     height: 16px; 
     width: 16px; 
     display: block; 
@@ -440,8 +449,8 @@ a.login { font-size: 12px; margin: 10px 10px 0 0; display: inline-block; }
     transition: opacity .5s;
     }
 
-.comment-count a { background: url('images/famfamfam/icons/comment.png'); }
-.comments-count a { background: url('images/famfamfam/icons/comments.png'); }
+.comment-count a { background: url('images/famfamfam/icons/comment.png')  no-repeat; min-height: 20px; min-width: 20px; }
+.comments-count a { background: url('images/famfamfam/icons/comments.png')  no-repeat; min-height: 20px; min-width: 20px; }
 
 .comment-count a:hover,
 .comments-count a:hover {     
@@ -471,17 +480,33 @@ table .type-container { margin: 0; }
 ul.inline { list-style-type: none; margin: 0; padding: 0; }
 ul.inline li { float: left; }
 
-.mini-button { border-radius: 5px;
-background: #DADADA;
-font-size: 10px;
-padding: 1px 5px;
-text-shadow: 1px 1px 0 #A9A9A9;
-box-shadow: 1px 1px 0 #A9A9A9;
-margin-right: 10px; 
-}
 .zm-tt-archive-container .text p,
 .zm-tt-single-container .text p { color: #bbb; font-size: 12px; margin-bottom: 5px; }
-.mini-button a { color: #fff; }
-.mini-button a:hover { text-decoration: none;}
+
+.mini-button-container { 
+    font-size: 10px;
+    margin-right: 10px; 
+    }
+
+.mini-button-container .default {    
+    background: #DADADA;
+    border-radius: 5px;    
+    padding: 1px 5px;
+    text-shadow: 1px 1px 0 #A9A9A9;
+    box-shadow: 1px 1px 0 #A9A9A9;
+    }
+
+.mini-button-container .high {
+    background-color: #FF704D;
+    border-radius: 5px;    
+    border: 1px solid #E62E00;    
+    padding: 1px 5px;    
+    text-shadow: 1px 1px 0 #4C0F00;
+    }
+
+.mini-button-container a { color: #fff; }
+.mini-button-container a:hover { text-decoration: none;}
+
 a:hover { text-decoration: none; }
 .age-icon { background: url('images/famfamfam/icons/calendar.png') no-repeat; display: inline-block; padding-left: 20px; }
+

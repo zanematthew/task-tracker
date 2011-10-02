@@ -22,13 +22,11 @@
                             </div>
                         </div>
 
-                        <div id="task_update_target"></div>
-
-                        <?php // load_template( MY_PLUGIN_DIR . '/theme/custom/task-update.php' ); ?>
+                        <div id="task_update_target"></div>                        
 
                     </div>
-                    
-                    <?php load_template( MY_PLUGIN_DIR . '/theme/custom/comment.php' ); ?>
+                                        
+                    <div id="task_comment_target"></div>
 
                 <?php endwhile; ?>
             </div>
