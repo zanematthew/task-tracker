@@ -14,41 +14,26 @@
                         </div>
 
                         <div class="entry-utility" title="Click to Edit" id="task_entry_utility_handle" data-post_id="<?php echo $post->ID;?>" data-template="theme/custom/task-entry-utility.php">                
-                            <div id="task_entry_utility_target" style="text-align: center;">
+                            <div id="task_entry_utility_target">
+                                <div style="text-align: center;">
                                 <div class="tt_loading"></div>
                                 Loading entry utility...
+                                </div>
                             </div>
                         </div>
 
                         <div id="task_update_target"></div>
 
-<?php // load_template( MY_PLUGIN_DIR . '/theme/custom/task-update.php' ); ?>
+                        <?php // load_template( MY_PLUGIN_DIR . '/theme/custom/task-update.php' ); ?>
 
                     </div>
-<div class="comments-container" id="comments_target">
-<!-- <h2>Comments &amp; Notes</h2> -->
-<?php //load_template( MY_PLUGIN_DIR . '/theme/custom/comment.php' ); ?>
-<ul>
-    <?php
-    $comments = get_comments( array(
-      'post_id' => $post->ID,
-      'number'    => 10,
-      'status'    => 'approve'
-    ) );
-    foreach($comments as $comment) : ?>
-        <li>
-            <div class="avatar-container"><?php print get_avatar( $comment, 32 ); ?></div>
-            <time><?php print $comment->comment_date; ?></time>            
-            <div class="content"><?php print $comment->comment_content; ?></div>
-            <div class="author"><?php print $comment->comment_author; ?></div>            
-        </li>
-    <?php endforeach; ?>
-</ul>
-</div>
+                    
+                    <?php load_template( MY_PLUGIN_DIR . '/theme/custom/comment.php' ); ?>
 
                 <?php endwhile; ?>
             </div>
         </div>
+
         <div class="zm-tt-sidebar-container">
             <ul class="text">
                 <li class="zm-base-title">Info</li>
@@ -84,4 +69,3 @@
 </div>
 </div>
 <?php get_footer(); ?>
-
