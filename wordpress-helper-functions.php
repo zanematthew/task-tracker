@@ -138,18 +138,13 @@ function zm_base_image_src( $size=null ) {
  * @param int $id=0, 
  * @param string $taxonomy, $before, $sep, $after
  */
-function zm_base_get_the_term_list( $id = 0, $taxonomy=null, $before = '', $sep = ', ', $after = '' ) {
+function zm_base_get_the_term_list( $post_id=null, $taxonomy=null, $before = '', $sep = ', ', $after = '' ) {
 
-    if ( is_array( $id ) )
-        extract( $id );
+    if ( is_array( $post_id ) )
+        extract( $post_id );
 
-// @todo wtf
-$id = 0;
-
-// @todo mo wtf
-//    $terms = get_the_terms( $id, $taxonomy, $before, $sep, $after);
-
-    $terms = get_the_terms( $id, $taxonomy );
+    $terms = get_the_terms( $post_id, $taxonomy );
+    
     $my_link = null;
 
     if ( is_wp_error( $terms ) || empty( $terms ) ) {
