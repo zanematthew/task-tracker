@@ -461,9 +461,8 @@ jQuery(document).ready(function( $ ){
 
         $.ajax({
             data: data, 
-            success: function( msg ){
-                console.log( msg );
-           //     location.reload( true );
+            success: function( msg ){            
+                location.reload( true );
             },
             error: function( xhr ) {
                 console.log( 'XHR Error: ' + xhr );
