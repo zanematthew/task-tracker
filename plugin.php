@@ -419,7 +419,9 @@ class CustomPostType extends CustomPostTypeBase {
         add_action( 'wp_ajax_postTypeSubmit', array( &$this, 'postTypeSubmit' ) );                
         add_action( 'wp_ajax_postTypeUpdate', array( &$this, 'postTypeUpdate' ) );
         add_action( 'wp_ajax_postTypeDelete', array( &$this, 'postTypeDelete' ) );
-        
+        add_action( 'wp_ajax_defaultUtilityUpdate', array( &$this, 'defaultUtilityUpdate' ) );        
+        add_action( 'wp_ajax_addComment', array( &$this, 'addComment' ) );
+                
         register_activation_hook( __FILE__, array( &$this, 'regsiterActivation') );        
                 
         // add_action( 'admin_notices', 'tt_warning' );
@@ -634,6 +636,87 @@ class CustomPostType extends CustomPostTypeBase {
         die();
     } // postTypeUpdate
 
+    public function addComment() {
+        
+        if ( !is_user_logged_in() )
+            return false;
+        
+        if ( !empty( $_POST['comment'] ) ) {
+
+            $current_user = wp_get_current_user();
+            
+            $post_id = (int)$_POST['post_id'];
+
+            $time = current_time('mysql');
+            $data = array(
+                'comment_post_ID' => $post_id,
+                'comment_author' => $current_user->user_nicename,
+                'comment_author_email' => $current_user->user_email,
+                'comment_author_url' => $current_user->user_url,
+                'comment_content' => $_POST['comment'],
+                'comment_type' => '',
+                'comment_parent' => 0,
+                'user_id' => $current_user->ID,
+                'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
+                'comment_agent' => $_SERVER['HTTP_USER_AGENT'],
+                'comment_date' => $time,
+                'comment_approved' => 1
+                );
+
+print_r( $data );
+                
+            wp_insert_comment( $data );
+        }
+        die();
+    } // End 'commentAdd'
+
+    public function defaultUtilityUpdate(){
+print_r( $_POST );
+die();
+        if ( !is_user_logged_in() )
+            return false;
+
+        if ( current_user_can( 'publish_posts' ) )
+            $status = 'publish';
+        else
+            $status = 'pending';
+
+        $post_id = (int)$_POST['PostID'];
+        $comment = $_POST['comment'];
+    
+        /** What's left is our taxonomies */
+        unset( $_POST['action'] );
+        unset( $_POST['PostID'] );
+        unset( $_POST['comment'] );
+        $taxonomies = $_POST;
+    
+        /** insert terms */
+        /** @todo should only do the insert if they change? */
+        foreach( $taxonomies as $taxonomy => $term )
+            wp_set_post_terms( $post_id, $term, &$taxonomy );
+    
+        if ( !empty( $comment ) ) {
+            $current_user = wp_get_current_user();
+            $time = current_time('mysql');
+            $data = array(
+                'comment_post_ID' => $post_id,
+                'comment_author' => $current_user->user_nicename,
+                'comment_author_email' => $current_user->user_email,
+                'comment_author_url' => $current_user->user_url,
+                'comment_content' => $comment,
+                'comment_type' => '',
+                'comment_parent' => 0,
+                'user_id' => $current_user->ID,
+                'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
+                'comment_agent' => $_SERVER['HTTP_USER_AGENT'],
+                'comment_date' => $time,
+                'comment_approved' => 1
+                );
+            wp_insert_comment( $data );
+        }        
+        die();
+    } // entryUtilityUpdate
+
     public function postTypeDelete( $id=null ) {
         // @todo needs to be generic for cpt
         check_ajax_referer( 'tt-ajax-forms', 'security' );
@@ -650,7 +733,7 @@ class CustomPostType extends CustomPostTypeBase {
             // Yes we do what the mafia does, true == no trash, just kill the mofo
             // and everyone that stood behind him! i.e. terms, meta, att. etc.
             // if you had relations with her your dead to me!
-            $result = wp_delete_post( $id, true );
+            $result = wp_trash_post( $id );
             if ( is_wp_error( $result ) ) {                
                 print_r( $result );
             } else {

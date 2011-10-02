@@ -434,10 +434,40 @@ jQuery(document).ready(function( $ ){
 
     }); // End 'window.load'        
 
+    /**
+     * Load comments and comment form when user clicks on the comment icon
+     */
     $('#task_comment_handle').live('click', function(){
-        params = {};
-        params.target_div = '#task_comment_target';
-        params.template = $( '#task_comment_handle' ).attr( 'data-template' );
-        temp_load( params );
+        // Quick check to make sure its not already loaded
+        if ( $( '.comments-container' ).length == 0 ) {
+            params = {};
+            params.target_div = '#task_comment_target';
+            params.template = $( '#task_comment_handle' ).attr( 'data-template' );
+            params.post_id = $( '#task_comment_handle' ).attr( 'data-post_id' );
+            temp_load( params );
+        }
+    });
+
+    /**
+     * Submit new comment, note comments are loaded via ajax
+     */
+     $( '#default_add_comment_form' ).live( 'submit', function(){
+
+        data = {
+            action: "addComment",
+            post_id: _post_id,
+            comment: $( '#comment' ).val()
+        };
+
+        $.ajax({
+            data: data, 
+            success: function( msg ){
+                console.log( msg );
+           //     location.reload( true );
+            },
+            error: function( xhr ) {
+                console.log( 'XHR Error: ' + xhr );
+            }
+        });
     });
 });
