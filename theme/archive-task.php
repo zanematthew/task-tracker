@@ -35,9 +35,13 @@ get_template_part( 'header-container', 'single' );
                         <p><?php global $user_login; get_currentuserinfo(); ?>Welcome back <em><?php echo $user_login; ?></em>!</p>
                         <p class="utility-container">
                             <?php if ( current_user_can( 'administrator' ) ) : ?>
-                                <span class="mini-button"><a href="<?php bloginfo('wpurl');?>/wp-admin" title="Click to go to WordPress admin">WordPress Admin</a></span>
+                                <span class="mini-button-container">
+                                    <a href="<?php bloginfo('wpurl');?>/wp-admin" class="default" title="Click to go to WordPress admin">WordPress Admin</a>
+                                </span>
                             <?php endif; ?>
-                            <span class="mini-button"><a href="<?php echo wp_logout_url( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ); ?>" title="Click here to Log the fuck out">Logout</a></span>
+                            <span class="mini-button-container">
+                                <a href="<?php echo wp_logout_url( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ); ?>" title="Click here to Log the fuck out" class="high">Logout</a>
+                            </span>
                         </p>
                     <?php endif; ?>
                 </li>
