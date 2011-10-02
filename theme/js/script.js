@@ -75,6 +75,16 @@ jQuery(document).ready(function( $ ){
             }
         });    
     }); // End 'update'
+
+    $( '#default_utility_udpate_form' ).live('submit', function(){
+        $.ajax({
+            data: "action=defaultUtilityUpdate&" + $(this).serialize(), 
+            success: function( msg ){
+                console.log( msg );
+                //location.reload( true );
+            }
+        });    
+    });
     
     $( '.default_delete' ).live( "click", function(){
         var post_id = $( this ).attr( 'data-post_id');
@@ -138,15 +148,20 @@ jQuery(document).ready(function( $ ){
     
     // @todo templating still handled via php, consider js templating?
     function temp_load( params ) {
+        
         data = { 
             action: "loadTemplate",
-            template: params.template
+            template: params.template,
+            post_id: params.post_id
         };
 
         $.ajax({
             data: data,
             success: function( msg ){
                 $( params.target_div ).fadeIn().html( msg );
+            },
+            error: function( xhr ){
+                console.log( 'XHR Error: ' + xhr );
             }
         });    
     }
@@ -401,5 +416,27 @@ jQuery(document).ready(function( $ ){
             });
             return false;
         } // End 'if'
+
+        /**
+         * If we're on a single task page load our entry utility.         
+         * @todo define: "entry utility"
+         */
+        if ( $('#task_entry_utility_handle').length ) {
+
+            params = {};
+            params.target_div = '#task_entry_utility_target';
+            params.template = $( '#task_entry_utility_handle' ).attr( 'data-template' );
+            params.post_id = $( '#task_entry_utility_handle' ).attr( 'data-post_id' );
+            temp_load( params );
+        } // End 'check for entry utility'
+
+    }); // End 'window.load'
+        
+    $('#task_update_handle').click(function(){
+        params = {};
+        params.target_div = '#task_update_target';
+        params.template = $( this ).attr( 'data-template' );
+        temp_load( params );
+        $(this).fadeOut();
     });
 });

@@ -16,9 +16,12 @@
 .zm-tt-single-container .entry-utility { color: lightGrey;
 float: left;
 margin: 0 0 20px;
-width: 100%;
+width: 97%;
 border-top: 2px solid #EFEFEF;
-padding: 10px 0 15px;
+padding: 10px 5px 15px;
 border-bottom: 1px solid #EFEFEF; }
+
 .zm-tt-single-container .entry-utility ul { list-style-type: none; margin: 0; }
 .zm-tt-single-container .entry-utility ul li { float: left; margin: 0 20px 0 0; }
+.entry-utility { background-color: #fff; -webkit-transition: linear background-color 0.5s; }
+.entry-utility:hover { background-color: #fffcc3; -webkit-transition: linear background-color 0.5s; cursor: pointer; }
