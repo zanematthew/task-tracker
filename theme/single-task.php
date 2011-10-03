@@ -7,12 +7,12 @@
             <?php load_template( MY_PLUGIN_DIR . '/theme/default/navigation.php' ); ?>
             <div id="tt_main_target">
                 <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
-
-<script type="text/javascript">
-var _post_id = <?php print $post->ID; ?>
-</script>
                 
+<script type="text/javascript">
+_post_id = "<?php print $post->ID; ?>";
+</script>                
                     <div <?php post_class('result')?>>
+
                         <div class="content">
                             <h1 class="title"><?php the_title(); ?></h1>
                             <?php the_content(); ?>

@@ -666,8 +666,6 @@ class CustomPostType extends CustomPostTypeBase {
                 'comment_date' => $time,
                 'comment_approved' => 1
                 );
-
-print_r( $data );
                 
             wp_insert_comment( $data );
         }
@@ -684,8 +682,8 @@ print_r( $data );
         else
             $status = 'pending';
 
-        $post_id = (int)$_POST['PostID'];
-    
+        $post_id = (int)$_POST['PostID'];    
+
         /** What's left is our taxonomies */
         unset( $_POST['action'] );
         unset( $_POST['PostID'] );
@@ -694,9 +692,43 @@ print_r( $data );
 
         /** insert terms */
         /** @todo should only do the insert if they change? */
-        foreach( $taxonomies as $taxonomy => $term )
+        
+        // add check to see if terms are new
+        foreach( $taxonomies as $taxonomy => $term ) {
             wp_set_post_terms( $post_id, $term, &$taxonomy );
-                   
+            $new_terms[]['term'] = get_term_by( 'id', $term, &$taxonomy );
+        }
+
+        // Add some markup to the new terms
+        $comment = null;
+        foreach( $new_terms as $nt ) {            
+            if ( $nt['term'] ) {
+                $comment .= '<div class="utility-revision-conatiner">Changing <span class="taxonomy">' . $nt['term']->taxonomy . '</span> to <span class="term">' . $nt['term']->name . '</span></div>';
+            }
+        }    
+        
+        if ( !is_null( $comment ) ) {            
+            $current_user = wp_get_current_user();
+                        
+            $time = current_time('mysql');
+
+            $data = array(
+                'comment_post_ID' => $post_id,
+                'comment_author' => $current_user->user_nicename,
+                'comment_author_email' => $current_user->user_email,
+                'comment_author_url' => $current_user->user_url,
+                'comment_content' => $comment,
+                'comment_type' => '',
+                'comment_parent' => 0,
+                'user_id' => $current_user->ID,
+                'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
+                'comment_agent' => $_SERVER['HTTP_USER_AGENT'],
+                'comment_date' => $time,
+                'comment_approved' => 1
+                );
+
+                wp_insert_comment( $data );
+            }           
         die();
     } // entryUtilityUpdate
 

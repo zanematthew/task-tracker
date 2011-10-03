@@ -150,12 +150,16 @@ function zm_base_get_the_term_list( $post_id=null, $taxonomy=null, $before = '',
     if ( $terms && !is_wp_error( $terms ) ) {
         foreach ( $terms as $term ) {
             
-                if ( isset( $link ) && $link == 'javascript://' )
+                if ( isset( $link ) && $link == 'javascript://' ) {
                     $my_link = 'javascript://';
-                elseif ( isset( $link ) && $link == 'anchor' )
+                } elseif ( isset( $link ) && $link == 'anchor' ) {
+                    if ( !$post_type )
+                        die( 'I need a post type for anchor' );                                            
+                    
                     $my_link = home_url() . '/' . $post_type.  '/#/' . $term->taxonomy . '__'. $term->slug;                
-                else            
+                } else {
                     $my_link = get_term_link( $term, $taxonomy );
+                }
                     
                 if ( is_wp_error( $my_link ) )
                     return $my_link;

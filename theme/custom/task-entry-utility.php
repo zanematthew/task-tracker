@@ -62,7 +62,7 @@ else
     <li>
      <small>Type</small><br />
     	<div class="type-container">           
-    		<?php print zm_base_get_the_term_list(array( 'post_id' => $id, 'taxonomy' => 'type' ) ); ?>
+    		<?php print zm_base_get_the_term_list(array( 'post_id' => $id, 'taxonomy' => 'type', 'link' => 'anchor', 'post_type' => $post_type ) ); ?>
     	</div>
     </li>
     <li>
