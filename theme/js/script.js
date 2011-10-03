@@ -99,12 +99,12 @@ jQuery(document).ready(function( $ ){
      * Setup our dialog for create a ticket 
      */
     $( '#create_ticket_dialog' ).dialog({ 
-        autoOpen: false,
-        minWidth: 750,
-        maxWidth: 800,
+        autoOpen: false,        
+        minWidth: 600,
+        maxWidth: 600,
         minHeight: 630,
         title: 'Create a <em>Task</em>',
-        modal: true
+        modal: true        
     });
 
     $( '#login_dialog' ).dialog({ 
@@ -244,7 +244,7 @@ jQuery(document).ready(function( $ ){
     $( '#clear' ).live('click', clear_form);
 
     /** @todo create [task]: needs to be part of class for dialog */
-    $( '#create_task_form' ).live('submit', function(){
+    $( '#save_add' ).live( 'submit', function(){        
         $.ajax({
             data: "action=postTypeSubmit&" + $(this).serialize(), 
             success: function( msg ){

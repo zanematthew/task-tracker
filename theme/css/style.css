@@ -249,9 +249,20 @@ li.icon-container { text-indent: 0; width: auto; }
 .zm-tt-form-container textarea { border: 1px solid #ddd; color: #888; padding: 5px; }
 .zm-tt-form-container select { font-weight: 300; font-size: 12px; margin-top: 5px; width: 90%; }
 
-
+.zm-tt-form-container .button-container .left input { float: left; }
+.zm-tt-form-container .button-container .left { float: left; width: 52%; }
+.zm-tt-form-container .button-container .right { float: right; text-align: right; }
+.zm-tt-form-container .button-container ul { list-style-type: none; line-height: 2em;}
+.zm-tt-form-container .button-container ul li { color: #333;
+float: left;
+font-weight: normal;
+margin-right: 5px;
+font-size: 12px; }
+.zm-tt-form-container .button-container ul li a { color: #888; margin-right: 5px; }
 /* create */
-.zm-tt-form-container a.button { float: left; padding: 8px 20px; }
+.zm-tt-form-container a.button { float: left; padding: 5px 10px; }
+
+.zm-tt-navigation-container .zm-tt-form-container a.button { font-size: 15px; float: left; padding: 8px 20px; }
 
 .zm-tt-form-container fieldset label { cursor: pointer; }
 .zm-tt-form-container fieldset.type-container { width: 17%; }
@@ -266,13 +277,15 @@ li.icon-container { text-indent: 0; width: auto; }
 .confirmation-container button:last-child,
 
 .zm-tt-form-container #login_exit,
-.zm-tt-form-container a#exit { color: red; float: right; }
+.zm-tt-form-container a#exit { color: red; }
 
 .confirmation-container button:first-child,
 
 #login_form #login_button,
 .zm-tt-form-container input#wp-submit,
-.zm-tt-form-container input#pt_publish { color: green; }
+.zm-tt-form-container input#save_exit,
+.zm-tt-form-container input#save_add { color: green; }
+
 
 .zm-tt-form-container form p label,
 .zm-tt-form-container form p label .title,
@@ -359,7 +372,6 @@ li.icon-container { text-indent: 0; width: auto; }
     padding: 10px;
     }
 
-
 .ui-button,
 .zm-tt-form-container .button,
 .zm-tt-form-container .button a { color: #00aecf; font-weight: bold; letter-spacing: 0.3px; text-shadow: 1px 1px 0 #fff; }
@@ -379,9 +391,9 @@ li.icon-container { text-indent: 0; width: auto; }
     border-color: #ccc #bbb #a0a0a0; 
     border-left: 1px solid #bbb; 
     border-radius: 5px; cursor: pointer; 
-    font: bold 15px/1 "Helvetica Neue", sans-serif, arial; 
-    margin-right: 10px; 
-    padding: 8px 20px; 
+    font: bold 12px/1 "Helvetica Neue", sans-serif, arial; 
+    margin-right: 20px; 
+    padding: 5px 10px; 
     }
     
 .ui-button:hover,

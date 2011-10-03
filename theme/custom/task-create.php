@@ -21,9 +21,16 @@
         </div>
         <div class="button-container">
             <div id="publishing-action">
-                <input id="pt_publish" class="button" type="submit" value="Save" accesskey="p" name="save" />
-                <a href="javascript://" id="clear" class="button">Clear</a>
-                <a href="javascript://" id="exit" tt_template="theme/default/archive-table.php" class="button" data-post_type="task">Exit</a>
+                <div class="left">                    
+                    <input id="save_exit" class="button" type="button" value="Save &amp; Close" accesskey="p" name="save_exit" />
+                    <ul class="entry-utility-container">
+                        <li><a id="save_add" href="javascript://">Add Another</a>|</li>
+                        <li><a href="javascript://" id="clear">Clear</a>|</li>
+                        <li><a href="javascript://" id="exit" tt_template="theme/default/archive-table.php" data-post_type="task">Exit</a></li>
+                    </ul>
+                </div>
+                <div class="right">
+                </div>                
             </div>
         </div>
     </form>
