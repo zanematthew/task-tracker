@@ -26,7 +26,7 @@
                     <ul class="entry-utility-container">
                         <li><a id="save_add" href="javascript://">Add Another</a>|</li>
                         <li><a href="javascript://" id="clear">Clear</a>|</li>
-                        <li><a href="javascript://" id="exit" tt_template="theme/default/archive-table.php" data-post_type="task">Exit</a></li>
+                        <li><a href="javascript://" id="exit" data-template="theme/custom/archive-table.php" data-post_type="task">Exit</a></li>
                     </ul>
                 </div>
                 <div class="right">

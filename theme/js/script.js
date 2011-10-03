@@ -202,11 +202,11 @@ jQuery(document).ready(function( $ ){
      */
     $( '#exit' ).live('click', function(){
     
-        if ( $( '#task_update_container' ).length ) {
+        if ( $( '#archive_table' ).length ) {
 
             $('#tt_main_target').fadeOut();   
 
-            template = $(this).attr( 'tt_template' );
+            template = $(this).attr( 'data-template' );
             
             data = { 
                 action: "loadTemplate",
@@ -215,6 +215,8 @@ jQuery(document).ready(function( $ ){
                 post_status: "published"
             };
     
+    console.log( data );
+
             $.ajax({
                 data: data,
                 success: function( msg ){
@@ -427,7 +429,8 @@ jQuery(document).ready(function( $ ){
             temp_load({
                 "target_div": "#task_entry_utility_target",
                 "template": $( '#task_entry_utility_handle' ).attr( 'data-template' ),
-                "post_id": $( '#task_entry_utility_handle' ).attr( 'data-post_id' )
+                "post_id": $( '#task_entry_utility_handle' ).attr( 'data-post_id' ),
+                "post_type": $( '#task_entry_utility_handle' ).attr( 'data-post_type' )
             });
         } // End 'check for entry utility'
 
