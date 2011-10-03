@@ -147,26 +147,22 @@ function zm_base_get_the_term_list( $post_id=null, $taxonomy=null, $before = '',
     
     $my_link = null;
 
-    if ( is_wp_error( $terms ) || empty( $terms ) ) {
-        print '&mdash;';
-        return;
-    } else {
-        
+    if ( $terms && !is_wp_error( $terms ) ) {
         foreach ( $terms as $term ) {
             
-            if ( isset( $link ) && $link == 'javascript://' )
-                $my_link = 'javascript://';
-            elseif ( isset( $link ) && $link == 'anchor' )
-                $my_link = home_url() . '/' . $post_type.  '/#/' . $term->taxonomy . '__'. $term->slug;                
-            else            
-                $my_link = get_term_link( $term, $taxonomy );
-                
-            if ( is_wp_error( $my_link ) )
-                return $my_link;
+                if ( isset( $link ) && $link == 'javascript://' )
+                    $my_link = 'javascript://';
+                elseif ( isset( $link ) && $link == 'anchor' )
+                    $my_link = home_url() . '/' . $post_type.  '/#/' . $term->taxonomy . '__'. $term->slug;                
+                else            
+                    $my_link = get_term_link( $term, $taxonomy );
+                    
+                if ( is_wp_error( $my_link ) )
+                    return $my_link;
 
-            $title = sprintf( '%1$s <br /><em>%2$s</em>', sprintf( __("View all %s"), $term->name), $term->description );
+                $title = sprintf( '%1$s <br /><em>%2$s</em>', sprintf( __("View all %s"), $term->name), $term->description );
 
-            $term_links[] = '<a href="' . $my_link . '" title="'.$title.'" rel="'.$term->taxonomy . '_' . $term->slug.'" class="zm-base-'. $taxonomy.'-'.$term->slug .'">' . $term->name . '</a>';
+                $term_links[] = '<a href="' . $my_link . '" title="'.$title.'" rel="'.$term->taxonomy . '_' . $term->slug.'" class="zm-base-'. $taxonomy.'-'.$term->slug .'">' . $term->name . '</a>';            
         }
         $term_links = apply_filters( "term_links-$taxonomy", $term_links );
         return $before . join( $sep, $term_links ) . $after;
