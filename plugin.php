@@ -225,11 +225,13 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     public function templateRedirect() {
 
         // @todo this needs to be generic
-        wp_enqueue_style( 'qtip-nightly-style' );
-        wp_enqueue_style( 'tt-base-style' );
-        wp_enqueue_script( 'tt-script' );
-        wp_enqueue_script( 'qtip-nightly' );
-        wp_enqueue_script( 'jquery-ui-effects' );
+        if ( !is_admin() ) {
+            wp_enqueue_style( 'qtip-nightly-style' );
+            wp_enqueue_style( 'tt-base-style' );
+            wp_enqueue_script( 'tt-script' );
+            wp_enqueue_script( 'qtip-nightly' );
+            wp_enqueue_script( 'jquery-ui-effects' );
+        }
 
         $current_post_type = get_query_var( 'post_type' );
         
@@ -246,8 +248,8 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     public function taxonomyRedirect( $current_post_type=null ) {
         global $wp_query;
 
-        wp_register_style( 'tt-taxonomy-style', $this->plugin_url . 'theme/css/taxonomy.css', $this->dependencies['style'] , 'all' );   
-        wp_register_style( 'tt-taxonomy-default-style', $this->plugin_url . 'theme/css/taxonomy-default.css', $this->dependencies['style'] , 'all' );   
+        //wp_register_style( 'tt-taxonomy-style', $this->plugin_url . 'theme/css/taxonomy.css', $this->dependencies['style'] , 'all' );   
+        //wp_register_style( 'tt-taxonomy-default-style', $this->plugin_url . 'theme/css/taxonomy-default.css', $this->dependencies['style'] , 'all' );   
 
         if ( is_null( $current_post_type ) )
             wp_die( 'I need a CPT');
@@ -428,7 +430,9 @@ class CustomPostType extends CustomPostTypeBase {
         
         // @todo break css into; single.css, taxonomy.css, archvie.css, base.css only load on pages that need them
         // let total cache or what ever combine your css
-        wp_register_style(  'tt-base-style', $this->plugin_url . 'theme/css/style.css', '', 'all' );
+        if ( !is_admin() ) {
+            wp_register_style(  'tt-base-style', $this->plugin_url . 'theme/css/style.css', '', 'all' );
+        }
         
         // this is global to our plugin
         wp_register_style(  'qtip-nightly-style', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.css', '', 'all' );
