@@ -13,7 +13,7 @@
                 <div id="publishing-action">
                     <div class="mini-button-container">
                         <input class="update" type="submit" value="Update" accesskey="p" name="save" />                    
-                        <a href="javascript://" id="task_entry_utility_update_exit" class="high">Cancel</a>
+                        <a href="javascript://" id="task_entry_utility_update_exit" class="high">Exit</a>
                     </div>
                 </div>
             </div>

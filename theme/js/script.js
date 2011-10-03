@@ -147,7 +147,7 @@ jQuery(document).ready(function( $ ){
         $.ajax({
             data: "action=defaultUtilityUpdate&" + $(this).serialize(), 
             success: function( msg ){                
-                location.reload( true );
+               // location.reload( true );
             }
         });    
     });

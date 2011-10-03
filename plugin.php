@@ -692,7 +692,14 @@ class CustomPostType extends CustomPostTypeBase {
 
         /** insert terms */
         /** @todo should only do the insert if they change? */
-        
+
+// print_r( get_post( $post_id ) );
+foreach ( $taxonomies as $taxonomy ) {
+    print $taxonomy;
+    // print_r( wp_get_post_terms( $post_id, &$taxonomy ) );
+}
+die();        
+
         // add check to see if terms are new
         foreach( $taxonomies as $taxonomy => $term ) {
             wp_set_post_terms( $post_id, $term, &$taxonomy );
