@@ -494,7 +494,8 @@ jQuery(document).ready(function( $ ){
         $.ajax({
             data: data, 
             success: function( msg ){            
-                location.reload( true );
+                $('#comments_target ul').append('<li><div class="content">' + data.comment + '</div></li>').slideDown();
+                // location.reload( true );
             },
             error: function( xhr ) {
                 console.log( 'XHR Error: ' + xhr );

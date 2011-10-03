@@ -448,7 +448,7 @@ table .tt_loading { float: left; height: 200px; width: 100%; }
     padding: 10px; }
 
 .comments-container time,
-.comments-container .author { display: none; }
+.comments-container .author { }
 
 table .comment-count a,
 table .comments-count a {     

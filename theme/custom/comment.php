@@ -11,7 +11,9 @@ if ( !empty( $_POST['post_id']) ) {
         $comments = get_comments( array(
           'post_id' => $id,
           'number'    => 10,
-          'status'    => 'approve'
+          'status'    => 'approve',
+          'order' => 'ASC',
+          'orderby' => 'comment_date_gmt'
         ) );
         foreach($comments as $comment) : ?>
             <li>
@@ -21,6 +23,7 @@ if ( !empty( $_POST['post_id']) ) {
                 <div class="author"><?php print $comment->comment_author; ?></div>            
             </li>
         <?php endforeach; ?>
+
     </ul>    
     <div class="zm-tt-form-container">        
         <form action="javascript://" method="POST" id="default_add_comment_form">
