@@ -175,7 +175,7 @@ jQuery(document).ready(function( $ ){
         },
         "login_dialog": { 
             autoOpen: false,
-            title: 'Please <em>LTFO</em>',
+            title: 'Please <em>Login</em>',
             modal: true
         },
         "delete_dialog": { 

@@ -6,7 +6,6 @@ if ( !empty( $_POST['post_id']) ) {
     $id = $post->ID;
 }
 ?>
-    <h2>Comments</h2>
     <ul>
         <?php
         $comments = get_comments( array(
@@ -30,7 +29,7 @@ if ( !empty( $_POST['post_id']) ) {
             </p>    
             <div class="button-container">
                 <div id="publishing-action">
-                    <input id="comment_add" class="button" type="submit" value="Update" accesskey="p" name="save" />
+                    <input id="comment_add" class="button" type="submit" value="Add Comment" accesskey="p" name="save" />
                 </div>
             </div>
         </form>

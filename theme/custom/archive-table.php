@@ -46,14 +46,16 @@ $x++;
                     </div>
                 </td>            
                 <td>
-                    <strong class="title"><a href="<?php the_permalink(); ?>" title="Link to project: <?php the_title(); ?>"><?php the_title(); ?></a></strong>
+                    <strong class="title"><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></strong>
                     <span class="<?php print $comment_class; ?>"><a href="<?php the_permalink(); ?>#comments_target" title="<?php comments_number(); ?>"><?php comments_number(' '); ?></a></span>
 
                     <div class="utility-container zm-base-hidden">
                         
-                        <span class="mini-button-container">
-                            <span class="default"><?php edit_post_link('WordPress Admin Edit', '' ); ?></span>
-                        </span>
+                        <?php if ( is_user_logged_in() ) : ?>
+                            <span class="mini-button-container">
+                                <span class="default"><?php edit_post_link('WordPress Admin Edit', '' ); ?></span>
+                            </span>
+                        <?php endif; ?>
 
                         <?php if ( is_user_logged_in() ) : ?>
                             <span class="mini-button-container">

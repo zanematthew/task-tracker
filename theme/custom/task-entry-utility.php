@@ -72,8 +72,10 @@ else
         </div>
     </li>
     <li class="right">
+        <?php if ( is_user_logged_in() ) : ?>
         <span class="mini-button-container">
-            <a href="javascript://" class="default" id="utiliy_update_handle">Click to Edit</a>
+            <a href="javascript://" class="default" id="utiliy_update_handle">Click to Edit</a>        
         </span>
+        <?php endif; ?>
     </li>
 </ul>

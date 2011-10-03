@@ -18,7 +18,7 @@ get_template_part( 'header-container', 'single' );
             <div id="tt_main_target">
                 <div class="tt_loading"></div>
                 <div class="sample" tt_template="theme/custom/archive-table.php" data-post_type="<?php print get_query_var( 'post_type' ); ?>"></div> 
-                <div id="no_results">nothing here move on..</div>                        
+                <div id="no_results"></div>                        
             </div>
         </div>
         <div class="zm-tt-sidebar-container">

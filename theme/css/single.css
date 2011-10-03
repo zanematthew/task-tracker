@@ -24,3 +24,4 @@
 .entry-utility .update-button { color: green; }
 
 .zm-tt-single-container .entry-utility ul li.right { float: right; margin: 15px 0 0; }
+.zm-tt-single-container textarea { width: 620px; }
