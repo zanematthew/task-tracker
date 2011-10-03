@@ -690,23 +690,14 @@ class CustomPostType extends CustomPostTypeBase {
         
         $taxonomies = $_POST;
 
-        /** insert terms */
-        /** @todo should only do the insert if they change? */
-
-// print_r( get_post( $post_id ) );
-foreach ( $taxonomies as $taxonomy ) {
-    print $taxonomy;
-    // print_r( wp_get_post_terms( $post_id, &$taxonomy ) );
-}
-die();        
-
         // add check to see if terms are new
         foreach( $taxonomies as $taxonomy => $term ) {
             wp_set_post_terms( $post_id, $term, &$taxonomy );
-            $new_terms[]['term'] = get_term_by( 'id', $term, &$taxonomy );
+            //$new_terms[]['term'] = get_term_by( 'id', $term, &$taxonomy );
         }
 
         // Add some markup to the new terms
+        /*
         $comment = null;
         foreach( $new_terms as $nt ) {            
             if ( $nt['term'] ) {
@@ -735,7 +726,9 @@ die();
                 );
 
                 wp_insert_comment( $data );
-            }           
+        }
+        */
+                   
         die();
     } // entryUtilityUpdate
 
