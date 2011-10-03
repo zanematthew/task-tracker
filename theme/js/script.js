@@ -430,21 +430,11 @@ jQuery(document).ready(function( $ ){
          * @todo define: "entry utility"
          */
         if ( $('#task_entry_utility_handle').length ) {
-<<<<<<< HEAD
-
-            params = {};
-            params.target_div = '#task_entry_utility_target';
-            params.template = $( '#task_entry_utility_handle' ).attr( 'data-template' );
-            params.post_id = $( '#task_entry_utility_handle' ).attr( 'data-post_id' );
-            params.post_type = $( '#task_entry_utility_handle' ).attr( 'data-post_type' );
-            temp_load( params );
-=======
             temp_load({
                 "target_div": "#task_entry_utility_target",
                 "template": $( '#task_entry_utility_handle' ).attr( 'data-template' ),
                 "post_id": $( '#task_entry_utility_handle' ).attr( 'data-post_id' )
             });
->>>>>>> c6253580dec349ba7066c8c2196eb3c3b38d9dc8
         } // End 'check for entry utility'
 
     }); // End 'window.load'        
