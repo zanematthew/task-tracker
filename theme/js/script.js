@@ -100,7 +100,7 @@ jQuery(document).ready(function( $ ){
     /** 
      * Setup our dialog for create a ticket 
      */
-     dialogs = {
+    dialogs = {
         "create_ticket_dialog":  { 
             autoOpen: false,        
             minWidth: 600,
@@ -141,7 +141,7 @@ jQuery(document).ready(function( $ ){
                 }
             }
         }
-     };
+    };
 
     $( '#create_ticket_dialog, #login_dialog, #delete_dialog' ).each(function() {
         $(this).dialog(dialogs[this.id]);
@@ -175,19 +175,19 @@ jQuery(document).ready(function( $ ){
     /** @todo create dialog [task]: needs to be part of class for dialog */
     $( '#create_ticket' ).click(function(){
         $('#create_ticket_dialog').dialog('open');        
-        var params  = {};
-        params.target_div = '#create_ticket_target';
-        params.template = $( this ).attr( 'tt_template' );
-        temp_load( params );         
+        temp_load({
+            "target_div": "#create_ticket_target",
+            "template": $( this ).attr("tt_template")
+        });
     });   
 
     // @todo look up^^ very similar!
     $( '#ltfo_handle' ).click(function(){
         $( '#login_dialog' ).dialog( 'open' );
-        var params  = {};
-        params.target_div = '#login_target';
-        params.template = $( this ).attr( 'tt_template' );
-        temp_load( params );        
+        temp_load({
+            "target_div": "#login_target",
+            "template": $( this ).attr( 'tt_template' )
+        });        
     });
     
 
@@ -429,12 +429,11 @@ jQuery(document).ready(function( $ ){
          * @todo define: "entry utility"
          */
         if ( $('#task_entry_utility_handle').length ) {
-
-            params = {};
-            params.target_div = '#task_entry_utility_target';
-            params.template = $( '#task_entry_utility_handle' ).attr( 'data-template' );
-            params.post_id = $( '#task_entry_utility_handle' ).attr( 'data-post_id' );
-            temp_load( params );
+            temp_load({
+                "target_div": "#task_entry_utility_target",
+                "template": $( '#task_entry_utility_handle' ).attr( 'data-template' ),
+                "post_id": $( '#task_entry_utility_handle' ).attr( 'data-post_id' )
+            });
         } // End 'check for entry utility'
 
     }); // End 'window.load'        
@@ -445,11 +444,11 @@ jQuery(document).ready(function( $ ){
     $('#task_comment_handle').live('click', function(){
         // Quick check to make sure its not already loaded
         if ( $( '.comments-container' ).length == 0 ) {
-            params = {};
-            params.target_div = '#task_comment_target';
-            params.template = $( '#task_comment_handle' ).attr( 'data-template' );
-            params.post_id = $( '#task_comment_handle' ).attr( 'data-post_id' );
-            temp_load( params );
+            temp_load({
+                "target_div": "#task_comment_target",
+                "template": $( '#task_comment_handle' ).attr( 'data-template' ),
+                "post_id": $( '#task_comment_handle' ).attr( 'data-post_id' )
+            });
         }
     });
 
