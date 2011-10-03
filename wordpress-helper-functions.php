@@ -151,12 +151,13 @@ function zm_base_get_the_term_list( $post_id=null, $taxonomy=null, $before = '',
         print '&mdash;';
         return;
     } else {
+        
         foreach ( $terms as $term ) {
             
             if ( isset( $link ) && $link == 'javascript://' )
                 $my_link = 'javascript://';
             elseif ( isset( $link ) && $link == 'anchor' )
-                $my_link = '#/' . $term->taxonomy . '__'. $term->slug;            
+                $my_link = home_url() . '/' . $post_type.  '/#/' . $term->taxonomy . '__'. $term->slug;                
             else            
                 $my_link = get_term_link( $term, $taxonomy );
                 
@@ -179,6 +180,8 @@ function zm_base_get_the_term_list( $post_id=null, $taxonomy=null, $before = '',
  * @param string $taxonomy
  */
 function zm_base_list_terms( $taxonomy ) {
+    
+    global $post;
 
     if ( is_array( $taxonomy ) )
         extract( $taxonomy );
@@ -198,11 +201,11 @@ function zm_base_list_terms( $taxonomy ) {
         return;
             
     foreach( $terms as $term ) {
-        
+                
         if ( isset( $link ) && $link == 'javascript://' )
             $my_link = 'javascript://';
         elseif ( isset( $link ) && $link == 'anchor' )
-            $my_link = '#' . $term->taxonomy . '-'. $term->slug;            
+            $my_link = home_url() . '/' . $post->post_type.  '/#/' . $term->taxonomy . '__'. $term->slug;            
         else            
             $my_link = get_term_link( $term->slug, $term->taxonomy );                                        
 
@@ -213,7 +216,7 @@ function zm_base_list_terms( $taxonomy ) {
         $title = sprintf( '%1$s <br /><em>%2$s</em>', sprintf( __("View all %s"), $term->name), $term->description );
 
         $html .= '<li class="zm-base-item ' . $term->taxonomy . '-container">';
-        $html .= '<a href="' . $my_link . '" title="'.$title.'" rel="' . $term->taxonomy . '_' . $term->slug . '" class="zm-base-' . $term->taxonomy .'-'.$term->slug . '">' . $term->name . '</a>';
+        $html .= '<a href="' . $my_link . '" title="'.$title.'" rel="' . $term->taxonomy . '__' . $term->slug . '" class="zm-base-' . $term->taxonomy .'-'.$term->slug . '">' . $term->name . '</a>';
         $html .= '<span class="zm-base-count">' . $term->count . '</span>';
         $html .= '</li>';
         $i++;

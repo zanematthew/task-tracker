@@ -152,7 +152,8 @@ jQuery(document).ready(function( $ ){
         data = { 
             action: "loadTemplate",
             template: params.template,
-            post_id: params.post_id
+            post_id: params.post_id,
+            post_type: params.post_type
         };
 
         $.ajax({
@@ -429,6 +430,7 @@ jQuery(document).ready(function( $ ){
             params.target_div = '#task_entry_utility_target';
             params.template = $( '#task_entry_utility_handle' ).attr( 'data-template' );
             params.post_id = $( '#task_entry_utility_handle' ).attr( 'data-post_id' );
+            params.post_type = $( '#task_entry_utility_handle' ).attr( 'data-post_type' );
             temp_load( params );
         } // End 'check for entry utility'
 

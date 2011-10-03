@@ -18,7 +18,7 @@ var _post_id = <?php print $post->ID; ?>
                             <?php the_content(); ?>
                         </div>
 
-                        <div class="entry-utility" title="Click to Edit" id="task_entry_utility_handle" data-post_id="<?php echo $post->ID;?>" data-template="theme/custom/task-entry-utility.php">                
+                        <div class="entry-utility" title="Click to Edit" id="task_entry_utility_handle" data-post_id="<?php echo $post->ID;?>" data-post_type="<?php echo $post->post_type; ?>" data-template="theme/custom/task-entry-utility.php">
                             <div id="task_entry_utility_target">
                                 <div style="text-align: center;">
                                 <div class="tt_loading"></div>
@@ -28,6 +28,8 @@ var _post_id = <?php print $post->ID; ?>
                         </div>
 
                         <div id="task_update_target"></div>                        
+
+            <?php load_template( MY_PLUGIN_DIR . '/theme/custom/task-update.php' ); ?>
 
                     </div>
                                         
@@ -61,12 +63,13 @@ var _post_id = <?php print $post->ID; ?>
                         </p>
                     <?php endif; ?>
                 </li>
-            </ul>        
-            <?php zm_base_list_terms( array('taxonomy' => 'status' ) ); ?>
-            <?php zm_base_list_terms( array('taxonomy' => 'priority', 'link' => false ) ); ?>
-            <?php zm_base_list_terms( array('taxonomy' => 'project', 'link' => false ) ); ?>
-            <?php zm_base_list_terms( array('taxonomy' => 'phase', 'link' => false ) ); ?>
-            <?php zm_base_list_terms( array('taxonomy' => 'assigned', 'link' => false ) ); ?>
+            </ul>                    
+            <?php zm_base_list_terms( array('taxonomy' => 'type', 'link' => 'anchor', 'post_id' => $post->ID, 'post_type' => $post->post_type ) ); ?>
+            <?php zm_base_list_terms( array('taxonomy' => 'status', 'link' => 'anchor', 'post_id' => $post->ID ) ); ?>
+            <?php zm_base_list_terms( array('taxonomy' => 'priority', 'link' => 'anchor', 'post_id' => $post->ID ) ); ?>
+            <?php zm_base_list_terms( array('taxonomy' => 'project','link' => 'anchor', 'post_id' => $post->ID ) ); ?>
+            <?php zm_base_list_terms( array('taxonomy' => 'phase','link' => 'anchor', 'post_id' => $post->ID ) ); ?>
+            <?php zm_base_list_terms( array('taxonomy' => 'assigned','link' => 'anchor', 'post_id' => $post->ID ) ); ?>
         </div>
     </div>
 </div>

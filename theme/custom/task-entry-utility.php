@@ -7,10 +7,17 @@
  * and therefore need a post_id and maybe even alittle more
  *
  */
+
 if ( !empty( $_POST['post_id'] ) )
 	$id = (int)$_POST['post_id'];
 else 
 	$id = $post->ID;
+
+if ( !empty( $_POST['post_type'] ) )
+    $post_type = $_POST['post_type'];
+else 
+    $post_type = null;
+
 ?>
 <ul class="inline">
     <?php 
@@ -31,25 +38,25 @@ else
 
     <li>
 	    <div class="status-container"><small>Status</small><br /> 
-	    	<?php print zm_base_get_the_term_list( array( 'post_id' => $id , 'taxonomy' => 'status') ); ?>
+	    	<?php print zm_base_get_the_term_list( array( 'post_id' => $id , 'post_type' => $post_type, 'taxonomy' => 'status', 'link' => 'anchor') ); ?>
 	    </div>
     </li>
 
     <li>
     	<div class="priority-container"><small>Priority</small><br />
-    		<?php print zm_base_get_the_term_list( array( 'post_id' => $id, 'taxonomy' => 'priority') ); ?>
+    		<?php print zm_base_get_the_term_list( array( 'post_id' => $id, 'taxonomy' => 'priority', 'post_type' => $post_type, 'link' => 'anchor' ) ); ?>
     	</div>
     </li>
     <li>
     	<div class="project-container">
             <small>Project</small><br />
-    		<?php print zm_base_get_the_term_list( array( 'post_id' => $id, 'taxonomy' => 'project' ) ); ?>
+    		<?php print zm_base_get_the_term_list( array( 'post_id' => $id, 'taxonomy' => 'project', 'post_type' => $post_type, 'link' => 'anchor'  ) ); ?>
     	</div>
     </li>
     <li>
     	<div class="milestone-container">
             <small>Milestone</small><br />
-    		<?php print zm_base_get_the_term_list( array( 'post_id' => $id, 'taxonomy' => 'milestone' ) ); ?>
+    		<?php print zm_base_get_the_term_list( array( 'post_id' => $id, 'taxonomy' => 'milestone', 'post_type' => $post_type, 'link' => 'anchor'  ) ); ?>
     	</div>
     </li>
     <li>

@@ -42,7 +42,7 @@ $x++;
             <tr <?php post_class('result')?>>
                 <td>
                     <div class="type-container zm-base-item">
-                        <?php print zm_base_get_the_term_list( array( 'post_id' => $post->ID, 'taxonomy' => 'type' )); ?>
+                        <?php print zm_base_get_the_term_list( array( 'post_id' => $post->ID, 'link' => 'anchor', 'taxonomy' => 'type', 'post_type' => $cpt )); ?>
                     </div>
                 </td>            
                 <td>
@@ -67,12 +67,12 @@ $x++;
                 </td>
                     <td>
                         <div class="status-container zm-base-item">
-                            <?php print zm_base_get_the_term_list( array( 'post_id' => $post->ID, 'taxonomy' => 'status', 'link' => 'anchor' )); ?>
+                            <?php print zm_base_get_the_term_list( array( 'post_id' => $post->ID, 'taxonomy' => 'status', 'link' => 'anchor', 'post_type' => $cpt )); ?>
                         </div>
                     </td>
                     <td>
                         <div class="priority-container zm-base-item">
-                            <?php print zm_base_get_the_term_list( array( 'post_id' => $post->ID, 'taxonomy' => 'priority', 'link' => 'anchor' )); ?>
+                            <?php print zm_base_get_the_term_list( array( 'post_id' => $post->ID, 'taxonomy' => 'priority', 'link' => 'anchor', 'post_type' => $cpt  )); ?>
                         </div>
                     </td>
             </tr>            
