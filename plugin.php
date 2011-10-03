@@ -671,8 +671,7 @@ print_r( $data );
     } // End 'commentAdd'
 
     public function defaultUtilityUpdate(){
-print_r( $_POST );
-die();
+
         if ( !is_user_logged_in() )
             return false;
 
@@ -682,38 +681,18 @@ die();
             $status = 'pending';
 
         $post_id = (int)$_POST['PostID'];
-        $comment = $_POST['comment'];
     
         /** What's left is our taxonomies */
         unset( $_POST['action'] );
         unset( $_POST['PostID'] );
-        unset( $_POST['comment'] );
+        
         $taxonomies = $_POST;
-    
+
         /** insert terms */
         /** @todo should only do the insert if they change? */
         foreach( $taxonomies as $taxonomy => $term )
             wp_set_post_terms( $post_id, $term, &$taxonomy );
-    
-        if ( !empty( $comment ) ) {
-            $current_user = wp_get_current_user();
-            $time = current_time('mysql');
-            $data = array(
-                'comment_post_ID' => $post_id,
-                'comment_author' => $current_user->user_nicename,
-                'comment_author_email' => $current_user->user_email,
-                'comment_author_url' => $current_user->user_url,
-                'comment_content' => $comment,
-                'comment_type' => '',
-                'comment_parent' => 0,
-                'user_id' => $current_user->ID,
-                'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
-                'comment_agent' => $_SERVER['HTTP_USER_AGENT'],
-                'comment_date' => $time,
-                'comment_approved' => 1
-                );
-            wp_insert_comment( $data );
-        }        
+                   
         die();
     } // entryUtilityUpdate
 
