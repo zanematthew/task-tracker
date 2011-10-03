@@ -208,7 +208,7 @@ jQuery(document).ready(function( $ ){
      */
     $( '#exit' ).live('click', function(){
     
-        if ( $( '#tt_update_container' ).length != 0 ) {
+        if ( $( '#tt_update_container' ).length ) {
 
             $('#tt_main_target').fadeOut();   
 
@@ -444,7 +444,7 @@ jQuery(document).ready(function( $ ){
      */
     $('#task_comment_handle').live('click', function(){
         // Quick check to make sure its not already loaded
-        if ( $( '.comments-container' ).length == 0 ) {
+        if ( !$( '.comments-container' ).length ) {
             temp_load({
                 "target_div": "#task_comment_target",
                 "template": $( '#task_comment_handle' ).attr( 'data-template' ),
