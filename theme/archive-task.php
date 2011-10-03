@@ -27,7 +27,7 @@ get_template_part( 'header-container', 'single' );
                 <li>
                     <?php if ( !is_user_logged_in() ) : ?>
                         <div class="zm-tt-form-container">
-                            <a href="javascript://" id="ltfo_handle" class="login" tt_template="theme/default/login.php" title="Click to login and create a task">Login to create a task</a>
+                            <a href="javascript://" id="ltfo_handle" class="login" data-template="theme/default/login.php" title="Click to login and create a task">Login to create a task</a>
                         </div>
                     <?php endif; ?>
 
