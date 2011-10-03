@@ -560,7 +560,9 @@ class CustomPostType extends CustomPostTypeBase {
         unset( $_POST['post_author'] );
         unset( $_POST['post_type'] );
         unset( $_POST['security'] );
-    
+        
+        $taxonomies = $_POST;
+
         $author_ID = get_current_user_id();
     
         $post = array(
@@ -570,7 +572,7 @@ class CustomPostType extends CustomPostTypeBase {
             'post_type' => $type,
             'post_status' => $status
         );
-        
+
         $post_id = wp_insert_post( $post, true );
         
         if ( is_wp_error( $post_id ) )
@@ -580,7 +582,6 @@ class CustomPostType extends CustomPostTypeBase {
          * if insert was successful we take everything left in post and submit, yeah, should be while listed, I'm dumb or lazy
          */
         if ( !empty( $post_id ) ) {
-            $taxonomies = $_POST;
             foreach( $taxonomies as $taxonomy => $term ) {
                 if ( isset( $term ) )
                     wp_set_post_terms( $post_id, $term, &$taxonomy );

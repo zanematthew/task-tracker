@@ -309,22 +309,32 @@ jQuery(document).ready(function( $ ){
     /** @todo clear [task] event: needs to be part of class for dialog */    
     $( '#clear' ).live('click', clear_form);
 
-    /** @todo create [task]: needs to be part of class for dialog */
-    $( '#create_task_form' ).live( 'submit', function(){        
-        console.log('this being called');
-        $.ajax({
-            data: "action=postTypeSubmit&" + $(this).serialize()
-        });    
-    });
+    function submit_boo( payload ){
+        console.log( payload );
+        $.ajax({            
+            data: "action=postTypeSubmit&" + payload,
+            success: function( msg ) {
+                console.log( data );
+                console.log( msg );
+            }
+        });                    
+    }    
     
     $( '#save_exit' ).live( 'click', function(){        
-        $( '#create_task_form' ).submit();
+        
+        submit_boo( $( '#create_task_form' ).serialize() );
+        
         $('#create_ticket_dialog').dialog('close');
+        
+        location.reload( true );
+                
     });
 
-    $( '#save_add' ).live( 'click', function(){        
-        $( '#create_task_form' ).submit();
-        clear_form();
+    $( '#save_add' ).live( 'click', function(){                
+
+        submit_boo( $( '#create_task_form' ).serialize() );
+
+        // clear_form();
     }); 
 
     /** @todo filter [task] onclick: needs to be part of class for dialog */    
