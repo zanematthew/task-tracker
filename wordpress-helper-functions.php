@@ -156,7 +156,7 @@ function zm_base_get_the_term_list( $post_id=null, $taxonomy=null, $before = '',
             if ( isset( $link ) && $link == 'javascript://' )
                 $my_link = 'javascript://';
             elseif ( isset( $link ) && $link == 'anchor' )
-                $my_link = '#' . $term->taxonomy . '-'. $term->slug;            
+                $my_link = '#/' . $term->taxonomy . '__'. $term->slug;            
             else            
                 $my_link = get_term_link( $term, $taxonomy );
                 

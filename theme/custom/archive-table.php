@@ -67,12 +67,12 @@ $x++;
                 </td>
                     <td>
                         <div class="status-container zm-base-item">
-                            <?php print zm_base_get_the_term_list( array( 'post_id' => $post->ID, 'taxonomy' => 'status' )); ?>
+                            <?php print zm_base_get_the_term_list( array( 'post_id' => $post->ID, 'taxonomy' => 'status', 'link' => 'anchor' )); ?>
                         </div>
                     </td>
                     <td>
                         <div class="priority-container zm-base-item">
-                            <?php print zm_base_get_the_term_list( array( 'post_id' => $post->ID, 'taxonomy' => 'priority' )); ?>
+                            <?php print zm_base_get_the_term_list( array( 'post_id' => $post->ID, 'taxonomy' => 'priority', 'link' => 'anchor' )); ?>
                         </div>
                     </td>
             </tr>            
