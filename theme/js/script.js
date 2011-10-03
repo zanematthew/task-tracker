@@ -153,16 +153,11 @@ jQuery(document).ready(function( $ ){
     
     // @todo templating still handled via php, consider js templating?
     function temp_load( params ) {
-        
-        data = { 
-            action: "loadTemplate",
-            template: params.template,
-            post_id: params.post_id,
-            post_type: params.post_type
-        };
+
+        params.action = "loadTemplate";        
 
         $.ajax({
-            data: data,
+            data: params,
             success: function( msg ){
                 $( params.target_div ).fadeIn().html( msg );
             },
