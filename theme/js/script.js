@@ -152,16 +152,11 @@ jQuery(document).ready(function( $ ){
     
     // @todo templating still handled via php, consider js templating?
     function temp_load( params ) {
-        
-        data = { 
-            action: "loadTemplate",
-            template: params.template,
-            post_id: params.post_id,
-            post_type: params.post_type
-        };
+
+        params.action = "loadTemplate";        
 
         $.ajax({
-            data: data,
+            data: params,
             success: function( msg ){
                 $( params.target_div ).fadeIn().html( msg );
             },
@@ -207,7 +202,7 @@ jQuery(document).ready(function( $ ){
      */
     $( '#exit' ).live('click', function(){
     
-        if ( $( '#task_update_container' ).length != 0 ) {
+        if ( $( '#task_update_container' ).length ) {
 
             $('#tt_main_target').fadeOut();   
 
@@ -453,7 +448,7 @@ jQuery(document).ready(function( $ ){
      */
     $('#task_comment_handle').live('click', function(){
         // Quick check to make sure its not already loaded
-        if ( $( '.comments-container' ).length == 0 ) {
+        if ( !$( '.comments-container' ).length ) {
             temp_load({
                 "target_div": "#task_comment_target",
                 "template": $( '#task_comment_handle' ).attr( 'data-template' ),
