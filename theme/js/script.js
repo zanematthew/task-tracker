@@ -226,6 +226,7 @@ jQuery(document).ready(function( $ ){
                 $( params.target_div ).fadeIn().html( msg );
             },
             error: function( xhr ){
+                console.log( params );
                 console.log( 'XHR Error: ' + xhr );
             }
         });    
@@ -246,7 +247,7 @@ jQuery(document).ready(function( $ ){
         $( '#login_dialog' ).dialog( 'open' );
         temp_load({
             "target_div": "#login_target",
-            "template": $( this ).attr( 'tt_template' )
+            "template": $( this ).attr( 'data-template' )            
         });        
     });
     
