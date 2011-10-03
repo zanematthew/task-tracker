@@ -2,21 +2,86 @@
  * Run jQuery in no-conflict mode but still have access to $
  */
 var _plugindir = "theme/";
+
+/* BEGIN Hash Tag Stuff */
 var _filters = {};
 
 // @todo if we have a hash store it to filter on later
 function addHash( hash ) {
     if ( hash ) {
         var thishash;
-        for(var i in hash) {
-            if(hash[i].indexOf('__') > -1) {
-                thishash = hash[i].split('__');
+        var thesehashes = hash.split('/');
+        for(var i = 0; i < thesehashes.length; i++) {
+            if(thesehashes[i].indexOf('__') > -1) {
+                thishash = thesehashes[i].split('__');
                 _filters[ thishash[0] ] = thishash[1];
+                jQuery("#select_" + thishash[0] + " option[data-value=" + thishash[1].toLowerCase() + "]").attr("selected", "selected");
             }
         }
     }
 }
+function changeHash() {
+    var hash = "/";
+    for(var j in _filters) {
+        hash += j + "__" + _filters[j] + "/";
+    }
+    window.location.hash = hash;
+}
+
+function filterRows() {
+    var showhide;
+    var noResults = true;
+    for( var i in _data ) {
+        showhide = true;
+        for(var j in _filters) {
+            if ( _data[i][j] != _filters[j] ) {
+                showhide = false;
+            }
+        }
+        if(showhide) {
+            noResults = false;
+            jQuery( ".post-" + i ).fadeIn();
+        } else {
+            jQuery( ".post-" + i ).fadeOut();
+        }
+    }
+    if(noResults) {
+        if( jQuery("#archive_table tbody tr.no-results").length ) {
+            jQuery("#archive_table tbody tr.no-results").fadeIn();
+        } else {
+            var colspan = jQuery("td", jQuery("#archive_table tbody tr").eq(0)).length;
+            jQuery("#archive_table tbody")
+                .append('<tr class="no-results"><td colspan="' + colspan + '"><em>No Tasks match the selected criteria.</em></td></tr>');
+        }
+    } else {
+        jQuery("#archive_table tbody tr.no-results").fadeOut();
+    }
+    changeHash();
+}
+
+function build_filters() {
+    var searchClasses = '';
+    _filters = {};
+    jQuery( "#filter_task_form select" ).each(function() { 
+        if(jQuery(this).val()) {
+//            searchClasses += "." + jQuery(this).val();
+            _filters[this.name] = jQuery('option:selected', this).attr("data-value");
+        }
+    });
+    filterRows();
+}
+
 addHash(window.location.hash);
+
+jQuery('a[href*="http://' + location.host + location.pathname + '#/"]').live('click', function() {
+    addHash(
+        jQuery(this).attr('href').replace('http://' + location.host + location.pathname, '')
+    );
+    filterRows();
+    return false;
+});
+
+/* END Hash Tag Stuff */
 
 jQuery('a[title], label[title]').live("mouseover", function() {
     jQuery(this).qtip({
@@ -330,50 +395,6 @@ jQuery(document).ready(function( $ ){
         }
     });    
 
-    function checkNoResults() {
-        // Check No Results works off of the task-active class.
-        // Be sure that all tasks that are showing have .task-active
-        // and all tasks that are hidden do not have the task
-
-        if( $("#archive_table tbody tr.task-active").length ) {
-            $("#archive_table tbody tr.no-results").fadeOut();
-        } else {
-            if( $("#archive_table tbody tr.no-results").length ) {
-                $("#archive_table tbody tr.no-results").fadeIn();
-            } else {
-                var colspan = $("td", $("#archive_table tbody tr").eq(0)).length;
-                $("#archive_table tbody")
-                    .append('<tr class="no-results"><td colspan="' + colspan + '"><em>No Tasks match the selected criteria.</em></td></tr>');
-            }
-        }
-    }
-
-    function changeHash() {
-        var hash = "/";
-        for(var j in _filters) {
-            hash += j + "__" + _filters[j] + "/";
-        }
-        window.location.hash = hash;
-    }
-
-    function build_filters() {
-        var searchClasses = '';
-        _filters = {};
-        $( "#filter_task_form select" ).each(function() { 
-            if($(this).val()) {
-                searchClasses += "." + $(this).val();
-                _filters[this.name] = $('option:selected', this).attr("data-value");
-            }
-        });
-        if ( searchClasses != '' ) {
-            $( "#archive_table tbody tr" + searchClasses ).fadeIn().addClass('task-active');
-            $( "#archive_table tbody tr" ).not(searchClasses).fadeOut().removeClass('task-active'); 
-        } else {
-            $( "#archive_table tbody tr" ).not('.no-results').fadeIn().addClass('task-active');
-        } 
-        checkNoResults();
-        changeHash();
-    }
     /** @todo filter [task] archive: needs to be part of class for dialog */    
     $( '#tt_filter_target select' ).live( 'change', build_filters );
 
@@ -403,25 +424,7 @@ jQuery(document).ready(function( $ ){
                     var match = true;
 
                     $('#tt_main_target').fadeIn().html( msg );
-                    if ( _filters != {} ) {
-                        for( var i in _data ) {
-                            match = true;
-                            for( var j in _filters) {
-                                if ( typeof _data[i][ j.toLowerCase() ] !== "undefined") {
-                                    if ( _data[i][ j.toLowerCase() ] != _filters[j].toLowerCase()) {
-                                        match = false;
-                                    }
-                                }
-                            }
-                            // @todo would be better to tell it '#' vs. 1
-                            if ( match ) {
-                                $( ".post-" + i ).fadeIn().addClass('task-active');
-                            } else {
-                                $( ".post-" + i ).fadeOut().removeClass('task-active');
-                            }
-                        } // End 'for'          
-                        checkNoResults();
-                    }
+                    filterRows();
                 } // End 'suckit' 
             });
             return false;
