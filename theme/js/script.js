@@ -215,8 +215,6 @@ jQuery(document).ready(function( $ ){
                 post_status: "published"
             };
     
-    console.log( data );
-
             $.ajax({
                 data: data,
                 success: function( msg ){
@@ -246,14 +244,22 @@ jQuery(document).ready(function( $ ){
     $( '#clear' ).live('click', clear_form);
 
     /** @todo create [task]: needs to be part of class for dialog */
-    $( '#save_add' ).live( 'submit', function(){        
+    $( '#create_task_form' ).live( 'submit', function(){        
+        console.log('this being called');
         $.ajax({
-            data: "action=postTypeSubmit&" + $(this).serialize(), 
-            success: function( msg ){
-                clear_form();                    
-            }
+            data: "action=postTypeSubmit&" + $(this).serialize()
         });    
     });
+    
+    $( '#save_exit' ).live( 'click', function(){        
+        $( '#create_task_form' ).submit();
+        $('#create_ticket_dialog').dialog('close');
+    });
+
+    $( '#save_add' ).live( 'click', function(){        
+        $( '#create_task_form' ).submit();
+        clear_form();
+    }); 
 
     /** @todo filter [task] onclick: needs to be part of class for dialog */    
     $(".zm-base-item a").live("click", function() {

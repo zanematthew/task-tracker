@@ -22,9 +22,9 @@
         <div class="button-container">
             <div id="publishing-action">
                 <div class="left">                    
-                    <input id="save_exit" class="button" type="button" value="Save &amp; Close" accesskey="p" name="save_exit" />
+                    <input id="save_exit" class="button" type="submit" value="Save &amp; Close" accesskey="p" name="save_exit" />
                     <ul class="entry-utility-container">
-                        <li><a id="save_add" href="javascript://">Add Another</a>|</li>
+                        <li><a id="save_add" href="javascript://">Save &amp; add another</a>|</li>
                         <li><a href="javascript://" id="clear">Clear</a>|</li>
                         <li><a href="javascript://" id="exit" data-template="theme/custom/archive-table.php" data-post_type="task">Exit</a></li>
                     </ul>
