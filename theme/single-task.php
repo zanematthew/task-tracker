@@ -18,18 +18,15 @@ var _post_id = <?php print $post->ID; ?>
                             <?php the_content(); ?>
                         </div>
 
-                        <div class="entry-utility" title="Click to Edit" id="task_entry_utility_handle" data-post_id="<?php echo $post->ID;?>" data-post_type="<?php echo $post->post_type; ?>" data-template="theme/custom/task-entry-utility.php">
+                        <div class="entry-utility" id="task_entry_utility_handle" data-post_id="<?php echo $post->ID;?>" data-post_type="<?php echo $post->post_type; ?>" data-template="theme/custom/task-entry-utility.php">
                             <div id="task_entry_utility_target">
                                 <div style="text-align: center;">
                                 <div class="tt_loading"></div>
                                 Loading entry utility...
                                 </div>
                             </div>
+                            <?php load_template( MY_PLUGIN_DIR . '/theme/custom/task-update.php' ); ?>                            
                         </div>
-
-                        <div id="task_update_target"></div>                        
-
-            <?php load_template( MY_PLUGIN_DIR . '/theme/custom/task-update.php' ); ?>
 
                     </div>
                                         

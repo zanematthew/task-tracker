@@ -134,8 +134,13 @@ a.zm-base-status-closed {
 
 /*= Type
 -------------------------------------------------------------- */
-.icon-container,
 .type-container { 
+    min-height: 16px; 
+    min-width: 16px; 
+    display: block; 
+    }
+
+.icon-container {
     min-height: 16px; 
     min-width: 16px; 
     display: block; 
@@ -215,7 +220,7 @@ li.icon-container { text-indent: 0; width: auto; }
 
 /*= Update Container
 -------------------------------------------------------------- */
-.default-update-container { clear: both; float: left; margin-bottom: 20px; }
+.default-update-container { clear: both; float: left; }
 .default-update-container h3 { color: #333; font-size: 16px; font-weight: bold; margin: 0 0 10px; }
 .default-update-container h3 em { color: #888; }
 .default-update-container form fieldset { width: 15%; }
@@ -277,10 +282,10 @@ font-size: 12px; }
 .confirmation-container button:last-child,
 
 .zm-tt-form-container #login_exit,
-.zm-tt-form-container a#exit { color: red; }
+.zm-tt-form-container a#exit,
+.zm-tt-form-container .button-container ul li a.exit { color: red; }
 
 .confirmation-container button:first-child,
-
 #login_form #login_button,
 .zm-tt-form-container input#wp-submit,
 .zm-tt-form-container input#save_exit,
@@ -500,13 +505,22 @@ ul.inline li { float: left; }
     margin-right: 10px; 
     }
 
+.zm-tt-form-container .mini-button-container input[type="submit"], 
 .mini-button-container .default {    
     background: #DADADA;
-    border-radius: 5px;    
+    border-radius: 5px;   
+    color: #fff;
+    font-weight: normal;
+    font-size: 10px; 
     padding: 1px 5px;
     text-shadow: 1px 1px 0 #A9A9A9;
     box-shadow: 1px 1px 0 #A9A9A9;
     }
+
+.mini-button-container .update,
+.mini-button-container input.update {}
+
+.zm-tt-form-container .mini-button-container input.default {}
 
 .mini-button-container .high {
     background-color: #FF704D;

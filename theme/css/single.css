@@ -13,15 +13,14 @@
 .zm-tt-single-container .nav-previous-container .next { float: right; text-align: right; width: 30%; }
 .zm-tt-single-container .nav-previous-container .previous { float: left; width: 30%; }
 
-.zm-tt-single-container .entry-utility { color: lightGrey;
-float: left;
-margin: 0 0 20px;
-width: 97%;
-border-top: 2px solid #EFEFEF;
-padding: 10px 5px 15px;
-border-bottom: 1px solid #EFEFEF; }
-
+.zm-tt-single-container .entry-utility { color: lightGrey; float: left; margin: 0 0 20px; width: 97%; border-top: 2px solid #EFEFEF; padding: 10px 5px 15px; border-bottom: 1px solid #EFEFEF; }
 .zm-tt-single-container .entry-utility ul { list-style-type: none; margin: 0; }
 .zm-tt-single-container .entry-utility ul li { float: left; margin: 0 20px 0 0; }
-.entry-utility { background-color: #fff; -webkit-transition: linear background-color 0.5s; }
-.entry-utility:hover { background-color: #fffcc3; -webkit-transition: linear background-color 0.5s; cursor: pointer; }
+
+.entry-utility .zm-tt-form-container form select { margin: 0; }
+.entry-utility .zm-tt-form-container form .zm-base-title { font-size: 11px; }
+
+.entry-utility .button-container { float: right; margin: 15px 0 0; width: 20%; }
+.entry-utility .update-button { color: green; }
+
+.zm-tt-single-container .entry-utility ul li.right { float: right; margin: 15px 0 0; }

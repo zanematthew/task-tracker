@@ -81,9 +81,8 @@ jQuery(document).ready(function( $ ){
     $( '#default_utility_udpate_form' ).live('submit', function(){
         $.ajax({
             data: "action=defaultUtilityUpdate&" + $(this).serialize(), 
-            success: function( msg ){
-                console.log( msg );
-                //location.reload( true );
+            success: function( msg ){                
+                location.reload( true );
             }
         });    
     });
@@ -208,7 +207,7 @@ jQuery(document).ready(function( $ ){
      */
     $( '#exit' ).live('click', function(){
     
-        if ( $( '#tt_update_container' ).length != 0 ) {
+        if ( $( '#task_update_container' ).length != 0 ) {
 
             $('#tt_main_target').fadeOut();   
 
@@ -438,6 +437,16 @@ jQuery(document).ready(function( $ ){
         } // End 'check for entry utility'
 
     }); // End 'window.load'        
+
+    $( '#utiliy_update_handle' ).live('click', function(){
+        $( '#task_entry_utility_target' ).fadeOut();
+        $( '#task_update_container' ).fadeIn();
+    });    
+
+    $( '#task_entry_utility_update_exit').live( 'click', function(){        
+        $( '#task_entry_utility_target' ).fadeIn();
+        $( '#task_update_container' ).fadeOut();
+    });
 
     /**
      * Load comments and comment form when user clicks on the comment icon

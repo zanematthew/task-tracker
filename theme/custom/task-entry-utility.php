@@ -71,4 +71,9 @@ else
             <span class="comment-count" id="task_comment_handle" data-post_id="<?php echo $id; ?>" data-template="theme/custom/comment.php"><a href="javascript://"></a></span>
         </div>
     </li>
+    <li class="right">
+        <span class="mini-button-container">
+            <a href="javascript://" class="default" id="utiliy_update_handle">Click to Edit</a>
+        </span>
+    </li>
 </ul>
