@@ -5,16 +5,18 @@ var _plugindir = "theme/";
 var _filters = {};
 
 // @todo if we have a hash store it to filter on later
-if ( window.location[ 'hash' ] ) {
-    var hash = window.location['hash'].substr(1).split('/');
-    var thishash;
-    for(var i in hash) {
-        if(hash[i].indexOf('__') > -1) {
-            thishash = hash[i].split('__');
-            _filters[ thishash[0] ] = thishash[1];
+function addHash( hash ) {
+    if ( hash ) {
+        var thishash;
+        for(var i in hash) {
+            if(hash[i].indexOf('__') > -1) {
+                thishash = hash[i].split('__');
+                _filters[ thishash[0] ] = thishash[1];
+            }
         }
     }
 }
+addHash(window.location.hash);
 
 jQuery('a[title], label[title]').live("mouseover", function() {
     jQuery(this).qtip({
@@ -98,50 +100,53 @@ jQuery(document).ready(function( $ ){
     /** 
      * Setup our dialog for create a ticket 
      */
-    $( '#create_ticket_dialog' ).dialog({ 
-        autoOpen: false,        
-        minWidth: 600,
-        maxWidth: 600,
-        minHeight: 630,
-        title: 'Create a <em>Task</em>',
-        modal: true        
-    });
-
-    $( '#login_dialog' ).dialog({ 
-        autoOpen: false,
-        title: 'Please <em>LTFO</em>',
-        modal: true
-    });
-    
-    $( '#delete_dialog' ).dialog({ 
-        resizable: false,
-        autoOpen: false,
-        title: 'Delete this item?',
-        modal: true,
-        dialogClass: "confirmation-container",
-        buttons: {
-            "Delete this item": function() {
-                data = {
-                    action: "postTypeDelete",
-                    post_id: $( this ).attr( 'data-post_id' ),
-                    security: $( this ).attr( 'data-security' )
-                };
-                var post_id = $( this ).attr( 'data-post_id');
-                $.ajax({            
-                    data: data,
-                    success: function( msg ){                
-                        $( '.post-' + post_id ).fadeOut();
-                    }
-                });            
-                $( this ).dialog( "close" );
-            },
-            Cancel: function() {
-                $( this ).dialog( "close" );
+     dialogs = {
+        "create_ticket_dialog":  { 
+            autoOpen: false,        
+            minWidth: 600,
+            maxWidth: 600,
+            minHeight: 630,
+            title: 'Create a <em>Task</em>',
+            modal: true        
+        },
+        "login_dialog": { 
+            autoOpen: false,
+            title: 'Please <em>LTFO</em>',
+            modal: true
+        },
+        "delete_dialog": { 
+            resizable: false,
+            autoOpen: false,
+            title: 'Delete this item?',
+            modal: true,
+            dialogClass: "confirmation-container",
+            buttons: {
+                "Delete this item": function() {
+                    data = {
+                        action: "postTypeDelete",
+                        post_id: $( this ).attr( 'data-post_id' ),
+                        security: $( this ).attr( 'data-security' )
+                    };
+                    var post_id = $( this ).attr( 'data-post_id');
+                    $.ajax({            
+                        data: data,
+                        success: function( msg ){                
+                            $( '.post-' + post_id ).fadeOut();
+                        }
+                    });            
+                    $( this ).dialog( "close" );
+                },
+                Cancel: function() {
+                    $( this ).dialog( "close" );
+                }
             }
         }
+     };
 
+    $( '#create_ticket_dialog, #login_dialog, #delete_dialog' ).each(function() {
+        $(this).dialog(dialogs[this.id]);
     });
-    
+
     $( '#login_exit' ).live('click', function(){
         $( '#login_dialog' ).dialog( 'close' ); 
     });
