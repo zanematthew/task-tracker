@@ -46,12 +46,12 @@ get_template_part( 'header-container', 'single' );
                     <?php endif; ?>
                 </li>
             </ul>        
-            <?php zm_base_list_terms( array('taxonomy' => 'type' ) ); ?>
-            <?php zm_base_list_terms( array('taxonomy' => 'status' ) ); ?>
-            <?php zm_base_list_terms( array('taxonomy' => 'priority' ) ); ?>
-            <?php zm_base_list_terms( array('taxonomy' => 'project' ) ); ?>
-            <?php zm_base_list_terms( array('taxonomy' => 'phase' ) ); ?>
-            <?php zm_base_list_terms( array('taxonomy' => 'assigned' ) ); ?>
+            <?php zm_base_list_terms( array('taxonomy' => 'type', 'link' => 'anchor', 'post_id' => $post->ID ) ); ?>
+            <?php zm_base_list_terms( array('taxonomy' => 'status', 'link' => 'anchor', 'post_id' => $post->ID ) ); ?>
+            <?php zm_base_list_terms( array('taxonomy' => 'priority', 'link' => 'anchor', 'post_id' => $post->ID ) ); ?>
+            <?php zm_base_list_terms( array('taxonomy' => 'project','link' => 'anchor', 'post_id' => $post->ID ) ); ?>
+            <?php zm_base_list_terms( array('taxonomy' => 'phase','link' => 'anchor', 'post_id' => $post->ID ) ); ?>
+            <?php zm_base_list_terms( array('taxonomy' => 'assigned','link' => 'anchor', 'post_id' => $post->ID ) ); ?>
         </div>
     </div>
 </div>
