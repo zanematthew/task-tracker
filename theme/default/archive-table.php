@@ -41,14 +41,17 @@ $x++;
         ?>
             <tr <?php post_class('result')?>>
                 <td>
-                    <strong class="title"><a href="<?php the_permalink(); ?>" title="Link to project: <?php the_title(); ?>"><?php the_title(); ?></a></strong>
+                    <strong class="title"><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></strong>
                     <span class="<?php print $comment_class; ?>"><a href="<?php the_permalink(); ?>#comments_target" title="<?php comments_number(); ?>"><?php comments_number(' '); ?></a></span>
 
                     <div class="utility-container zm-base-hidden">
                         <?php edit_post_link('Edit', '' , ' |'); ?>
                         by <?php the_author(); ?> on <?php the_time(get_option('date_format')); ?> |
                         <?php if ( is_user_logged_in() ) : ?>
-                        <a href="#delete" class="default_delete" data-post_id="<?php print $post->ID; ?>" data-security="<?php print wp_create_nonce( 'tt-ajax-forms' );?>">Delete</a><?php endif; ?>
+                        <span class="mini-button">
+                            <a href="#delete" class="default_delete" data-post_id="<?php print $post->ID; ?>" data-security="<?php print wp_create_nonce( 'tt-ajax-forms' );?>">Delete</a>
+                        </span>
+                        <?php endif; ?>
                     </div>
                 </td>
                 <?php foreach ( $cpt_obj[$cpt]->taxonomies as $tax ) : ?>

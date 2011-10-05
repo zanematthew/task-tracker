@@ -13,7 +13,7 @@
             <input type="password" name="password" id="password" />
         </p>
         <p>
-            <label>Remember</label>
+            <label>Remember</label> &nbsp;
             <input type="checkbox" name="remember" id="remember" />
         </p>
         </div>

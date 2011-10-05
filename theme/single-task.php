@@ -7,36 +7,68 @@
             <?php load_template( MY_PLUGIN_DIR . '/theme/default/navigation.php' ); ?>
             <div id="tt_main_target">
                 <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
+                
+<script type="text/javascript">
+_post_id = "<?php print $post->ID; ?>";
+</script>                
                     <div <?php post_class('result')?>>
-                        <h1 class="title"><?php the_title(); ?></h1>
-                        <?php the_content(); ?>
-                    <div class="nav-previous-container">
-                    </div>
-                        <div class="entry-utility" id="utility">
-                            <ul class="inline">
-                                <li><div class="status-container"><small>Status</small><br /> <?php print zm_base_get_the_term_list($post->ID, 'status'); ?></div></li>
-                                <li><div class="priority-container"><small>Priority</small><br /><?php print zm_base_get_the_term_list( $post->ID, 'priority'); ?></div></li>
-                                <li><div class="project-container"><small>Project</small><br /><?php print zm_base_get_the_term_list($post->ID, 'project'); ?></div></li>
-                                <li><div class="milestone-container"><small>Milestone</small><br /><?php print zm_base_get_the_term_list($post->ID, 'milestone'); ?></div></li>
-                                <li><div class="type-container"><small>Type</small><br /><?php print zm_base_get_the_term_list($post->ID, 'type'); ?></div></li>
-                                <li><div class="ticket-container"><?php print '<small>Ticket </small><br />#' . '<a href="'. get_permalink() .'">' . $post->ID . '</a>'; ?></div></li>
-                                <li><span class="ui-icon ui-icon-arrow"><a href="#top">Return to Top</a></span></li>
-                            </ul>
+
+                        <div class="content">
+                            <h1 class="title"><?php the_title(); ?></h1>
+                            <?php the_content(); ?>
                         </div>
+
+                        <div class="entry-utility" id="task_entry_utility_handle" data-post_id="<?php echo $post->ID;?>" data-post_type="<?php echo $post->post_type; ?>" data-template="theme/custom/task-entry-utility.php">
+                            <div id="task_entry_utility_target">
+                                <div style="text-align: center;">
+                                <div class="tt_loading"></div>
+                                Loading entry utility...
+                                </div>
+                            </div>
+                            <?php load_template( MY_PLUGIN_DIR . '/theme/custom/task-update.php' ); ?>                            
+                        </div>
+
                     </div>
-                    <?php load_template( MY_PLUGIN_DIR . '/theme/custom/task-update.php' ); ?>
+                                        
+                    <div id="task_comment_target"></div>
+
                 <?php endwhile; ?>
             </div>
         </div>
+
         <div class="zm-tt-sidebar-container">
-            <?php zm_base_list_terms( array('taxonomy' => 'status' ) ); ?>
-            <?php zm_base_list_terms( array('taxonomy' => 'priority', 'link' => false ) ); ?>
-            <?php zm_base_list_terms( array('taxonomy' => 'project', 'link' => false ) ); ?>
-            <?php zm_base_list_terms( array('taxonomy' => 'phase', 'link' => false ) ); ?>
-            <?php zm_base_list_terms( array('taxonomy' => 'assigned', 'link' => false ) ); ?>
+            <ul class="text">
+                <li class="zm-base-title">Info</li>
+                <li>
+                    <?php if ( !is_user_logged_in() ) : ?>
+                        <div class="zm-tt-form-container">
+                            <a href="javascript://" id="ltfo_handle" class="login" data-template="theme/default/login.php" title="Click to login and create a task">Login to create a task</a>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if ( is_user_logged_in() ) : ?>
+                        <p><?php global $user_login; get_currentuserinfo(); ?>Welcome back <em><?php echo $user_login; ?></em>!</p>
+                        <p class="utility-container">
+                            <?php if ( current_user_can( 'administrator' ) ) : ?>
+                                <span class="mini-button-container">
+                                    <a href="<?php bloginfo('wpurl');?>/wp-admin" class="default" title="Click to go to WordPress admin">WordPress Admin</a>
+                                </span>
+                            <?php endif; ?>
+                            <span class="mini-button-container">
+                                <a href="<?php echo wp_logout_url( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ); ?>" title="Click here to Log the fuck out" class="high">Logout</a>
+                            </span>
+                        </p>
+                    <?php endif; ?>
+                </li>
+            </ul>                    
+            <?php zm_base_list_terms( array('taxonomy' => 'type', 'link' => 'anchor', 'post_id' => $post->ID, 'post_type' => $post->post_type ) ); ?>
+            <?php zm_base_list_terms( array('taxonomy' => 'status', 'link' => 'anchor', 'post_id' => $post->ID ) ); ?>
+            <?php zm_base_list_terms( array('taxonomy' => 'priority', 'link' => 'anchor', 'post_id' => $post->ID ) ); ?>
+            <?php zm_base_list_terms( array('taxonomy' => 'project','link' => 'anchor', 'post_id' => $post->ID ) ); ?>
+            <?php zm_base_list_terms( array('taxonomy' => 'phase','link' => 'anchor', 'post_id' => $post->ID ) ); ?>
+            <?php zm_base_list_terms( array('taxonomy' => 'assigned','link' => 'anchor', 'post_id' => $post->ID ) ); ?>
         </div>
     </div>
 </div>
 </div>
 <?php get_footer(); ?>
-

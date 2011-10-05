@@ -1,0 +1,27 @@
+/*= Single
+-------------------------------------------------------------- */
+/* twentytweelve mess up*/
+.zm-tt-single-container #respond { float: left; }
+.zm-tt-single-container .hentry { float: left; padding: 0; width: 100%; }
+.zm-tt-single-container .content { margin-bottom: 40px; }
+.zm-tt-single-container h1 { font: bold 14px/1 sans-serif; color: #333; margin: 0 0 10px; }
+.zm-tt-single-container p { font-size: 14px; margin-bottom: 5px; }
+.zm-tt-single-container small { color: #d3d3d3; font: normal 11px/1 lucida grande; margin: 0 0 5px 0;}
+
+.zm-tt-single-container .nav-previous-container { float: left; margin: 10px 0 20px 0; width: 100%; }
+.zm-tt-single-container .nav-previous-container ul { list-style-type: none; margin: 0; }
+.zm-tt-single-container .nav-previous-container .next { float: right; text-align: right; width: 30%; }
+.zm-tt-single-container .nav-previous-container .previous { float: left; width: 30%; }
+
+.zm-tt-single-container .entry-utility { color: lightGrey; float: left; margin: 0 0 20px; width: 97%; border-top: 2px solid #EFEFEF; padding: 10px 5px 15px; border-bottom: 1px solid #EFEFEF; }
+.zm-tt-single-container .entry-utility ul { list-style-type: none; margin: 0; }
+.zm-tt-single-container .entry-utility ul li { float: left; margin: 0 20px 0 0; }
+
+.entry-utility .zm-tt-form-container form select { margin: 0; }
+.entry-utility .zm-tt-form-container form .zm-base-title { font-size: 11px; }
+
+.entry-utility .button-container { float: right; margin: 15px 0 0; width: 20%; }
+.entry-utility .update-button { color: green; }
+
+.zm-tt-single-container .entry-utility ul li.right { float: right; margin: 15px 0 0; }
+.zm-tt-single-container textarea { width: 620px; }

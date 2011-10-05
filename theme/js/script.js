@@ -2,19 +2,86 @@
  * Run jQuery in no-conflict mode but still have access to $
  */
 var _plugindir = "theme/";
+
+/* BEGIN Hash Tag Stuff */
 var _filters = {};
 
 // @todo if we have a hash store it to filter on later
-if ( window.location[ 'hash' ] ) {
-    var hash = window.location['hash'].substr(1).split('/');
-    var thishash;
-    for(var i in hash) {
-        if(hash[i].indexOf('__') > -1) {
-            thishash = hash[i].split('__');
-            _filters[ thishash[0] ] = thishash[1];
+function addHash( hash ) {
+    if ( hash ) {
+        var thishash;
+        var thesehashes = hash.split('/');
+        for(var i = 0; i < thesehashes.length; i++) {
+            if(thesehashes[i].indexOf('__') > -1) {
+                thishash = thesehashes[i].split('__');
+                _filters[ thishash[0] ] = thishash[1];
+                jQuery("#select_" + thishash[0] + " option[data-value=" + thishash[1].toLowerCase() + "]").attr("selected", "selected");
+            }
         }
     }
 }
+function changeHash() {
+    var hash = "/";
+    for(var j in _filters) {
+        hash += j + "__" + _filters[j] + "/";
+    }
+    window.location.hash = hash;
+}
+
+function filterRows() {
+    var showhide;
+    var noResults = true;
+    for( var i in _data ) {
+        showhide = true;
+        for(var j in _filters) {
+            if ( _data[i][j] != _filters[j] ) {
+                showhide = false;
+            }
+        }
+        if(showhide) {
+            noResults = false;
+            jQuery( ".post-" + i ).fadeIn();
+        } else {
+            jQuery( ".post-" + i ).fadeOut();
+        }
+    }
+    if(noResults) {
+        if( jQuery("#archive_table tbody tr.no-results").length ) {
+            jQuery("#archive_table tbody tr.no-results").fadeIn();
+        } else {
+            var colspan = jQuery("td", jQuery("#archive_table tbody tr").eq(0)).length;
+            jQuery("#archive_table tbody")
+                .append('<tr class="no-results"><td colspan="' + colspan + '"><em>No Tasks match the selected criteria.</em></td></tr>');
+        }
+    } else {
+        jQuery("#archive_table tbody tr.no-results").fadeOut();
+    }
+    changeHash();
+}
+
+function build_filters() {
+    var searchClasses = '';
+    _filters = {};
+    jQuery( "#filter_task_form select" ).each(function() { 
+        if(jQuery(this).val()) {
+//            searchClasses += "." + jQuery(this).val();
+            _filters[this.name] = jQuery('option:selected', this).attr("data-value");
+        }
+    });
+    filterRows();
+}
+
+addHash(window.location.hash);
+
+jQuery('a[href*="http://' + location.host + location.pathname + '#/"]').live('click', function() {
+    addHash(
+        jQuery(this).attr('href').replace('http://' + location.host + location.pathname, '')
+    );
+    filterRows();
+    return false;
+});
+
+/* END Hash Tag Stuff */
 
 jQuery('a[title], label[title]').live("mouseover", function() {
     jQuery(this).qtip({
@@ -75,6 +142,15 @@ jQuery(document).ready(function( $ ){
             }
         });    
     }); // End 'update'
+
+    $( '#default_utility_udpate_form' ).live('submit', function(){
+        $.ajax({
+            data: "action=defaultUtilityUpdate&" + $(this).serialize(), 
+            success: function( msg ){                
+               // location.reload( true );
+            }
+        });    
+    });
     
     $( '.default_delete' ).live( "click", function(){
         var post_id = $( this ).attr( 'data-post_id');
@@ -88,65 +164,70 @@ jQuery(document).ready(function( $ ){
     /** 
      * Setup our dialog for create a ticket 
      */
-    $( '#create_ticket_dialog' ).dialog({ 
-        autoOpen: false,
-        minWidth: 750,
-        maxWidth: 800,
-        minHeight: 630,
-        title: 'Create a <em>Task</em>',
-        modal: true
-    });
-
-    $( '#login_dialog' ).dialog({ 
-        autoOpen: false,
-        title: 'Please <em>LTFO</em>',
-        modal: true
-    });
-    
-    $( '#delete_dialog' ).dialog({ 
-        resizable: false,
-        autoOpen: false,
-        title: 'Delete this item?',
-        modal: true,
-        dialogClass: "confirmation-container",
-        buttons: {
-            "Delete this item": function() {
-                data = {
-                    action: "postTypeDelete",
-                    post_id: $( this ).attr( 'data-post_id' ),
-                    security: $( this ).attr( 'data-security' )
-                };
-                var post_id = $( this ).attr( 'data-post_id');
-                $.ajax({            
-                    data: data,
-                    success: function( msg ){                
-                        $( '.post-' + post_id ).fadeOut();
-                    }
-                });            
-                $( this ).dialog( "close" );
-            },
-            Cancel: function() {
-                $( this ).dialog( "close" );
+    dialogs = {
+        "create_ticket_dialog":  { 
+            autoOpen: false,        
+            minWidth: 600,
+            maxWidth: 600,
+            minHeight: 630,
+            title: 'Create a <em>Task</em>',
+            modal: true        
+        },
+        "login_dialog": { 
+            autoOpen: false,
+            title: 'Please <em>Login</em>',
+            modal: true
+        },
+        "delete_dialog": { 
+            resizable: false,
+            autoOpen: false,
+            title: 'Delete this item?',
+            modal: true,
+            dialogClass: "confirmation-container",
+            buttons: {
+                "Delete this item": function() {
+                    data = {
+                        action: "postTypeDelete",
+                        post_id: $( this ).attr( 'data-post_id' ),
+                        security: $( this ).attr( 'data-security' )
+                    };
+                    var post_id = $( this ).attr( 'data-post_id');
+                    $.ajax({            
+                        data: data,
+                        success: function( msg ){                
+                            $( '.post-' + post_id ).fadeOut();
+                        }
+                    });            
+                    $( this ).dialog( "close" );
+                },
+                Cancel: function() {
+                    $( this ).dialog( "close" );
+                }
             }
         }
+    };
 
+    $( '#create_ticket_dialog, #login_dialog, #delete_dialog' ).each(function() {
+        $(this).dialog(dialogs[this.id]);
     });
-    
+
     $( '#login_exit' ).live('click', function(){
         $( '#login_dialog' ).dialog( 'close' ); 
     });
     
     // @todo templating still handled via php, consider js templating?
     function temp_load( params ) {
-        data = { 
-            action: "loadTemplate",
-            template: params.template
-        };
+
+        params.action = "loadTemplate";        
 
         $.ajax({
-            data: data,
+            data: params,
             success: function( msg ){
                 $( params.target_div ).fadeIn().html( msg );
+            },
+            error: function( xhr ){
+                console.log( params );
+                console.log( 'XHR Error: ' + xhr );
             }
         });    
     }
@@ -155,19 +236,19 @@ jQuery(document).ready(function( $ ){
     /** @todo create dialog [task]: needs to be part of class for dialog */
     $( '#create_ticket' ).click(function(){
         $('#create_ticket_dialog').dialog('open');        
-        var params  = {};
-        params.target_div = '#create_ticket_target';
-        params.template = $( this ).attr( 'tt_template' );
-        temp_load( params );         
+        temp_load({
+            "target_div": "#create_ticket_target",
+            "template": $( this ).attr("tt_template")
+        });
     });   
 
     // @todo look up^^ very similar!
     $( '#ltfo_handle' ).click(function(){
         $( '#login_dialog' ).dialog( 'open' );
-        var params  = {};
-        params.target_div = '#login_target';
-        params.template = $( this ).attr( 'tt_template' );
-        temp_load( params );        
+        temp_load({
+            "target_div": "#login_target",
+            "template": $( this ).attr( 'data-template' )            
+        });        
     });
     
 
@@ -187,10 +268,11 @@ jQuery(document).ready(function( $ ){
      */
     $( '#exit' ).live('click', function(){
     
-        if ( !$( '#tt_update_container' ).length ) {
+        if ( $( '#archive_table' ).length ) {
+
             $('#tt_main_target').fadeOut();   
-            // @todo templating still handled via php, consider js templating?
-            template = $(this).attr( 'tt_template' );
+
+            template = $(this).attr( 'data-template' );
             
             data = { 
                 action: "loadTemplate",
@@ -206,6 +288,7 @@ jQuery(document).ready(function( $ ){
                     $('#tt_main_target').fadeIn().html( msg );
                 }
             });
+
             return false;
         } else {
             $('#create_ticket_dialog').dialog('close');                
@@ -226,15 +309,33 @@ jQuery(document).ready(function( $ ){
     /** @todo clear [task] event: needs to be part of class for dialog */    
     $( '#clear' ).live('click', clear_form);
 
-    /** @todo create [task]: needs to be part of class for dialog */
-    $( '#create_task_form' ).live('submit', function(){
-        $.ajax({
-            data: "action=postTypeSubmit&" + $(this).serialize(), 
-            success: function( msg ){
-                clear_form();                    
+    function submit_boo( payload ){
+        console.log( payload );
+        $.ajax({            
+            data: "action=postTypeSubmit&" + payload,
+            success: function( msg ) {
+                console.log( data );
+                console.log( msg );
             }
-        });    
+        });                    
+    }    
+    
+    $( '#save_exit' ).live( 'click', function(){        
+        
+        submit_boo( $( '#create_task_form' ).serialize() );
+        
+        $('#create_ticket_dialog').dialog('close');
+        
+        location.reload( true );
+                
     });
+
+    $( '#save_add' ).live( 'click', function(){                
+
+        submit_boo( $( '#create_task_form' ).serialize() );
+
+        // clear_form();
+    }); 
 
     /** @todo filter [task] onclick: needs to be part of class for dialog */    
     $(".zm-base-item a").live("click", function() {
@@ -305,50 +406,6 @@ jQuery(document).ready(function( $ ){
         }
     });    
 
-    function checkNoResults() {
-        // Check No Results works off of the task-active class.
-        // Be sure that all tasks that are showing have .task-active
-        // and all tasks that are hidden do not have the task
-
-        if( $("#archive_table tbody tr.task-active").length ) {
-            $("#archive_table tbody tr.no-results").fadeOut();
-        } else {
-            if( $("#archive_table tbody tr.no-results").length ) {
-                $("#archive_table tbody tr.no-results").fadeIn();
-            } else {
-                var colspan = $("td", $("#archive_table tbody tr").eq(0)).length;
-                $("#archive_table tbody")
-                    .append('<tr class="no-results"><td colspan="' + colspan + '"><em>No Tasks match the selected criteria.</em></td></tr>');
-            }
-        }
-    }
-
-    function changeHash() {
-        var hash = "/";
-        for(var j in _filters) {
-            hash += j + "__" + _filters[j] + "/";
-        }
-        window.location.hash = hash;
-    }
-
-    function build_filters() {
-        var searchClasses = '';
-        _filters = {};
-        $( "#filter_task_form select" ).each(function() { 
-            if($(this).val()) {
-                searchClasses += "." + $(this).val();
-                _filters[this.name] = $('option:selected', this).attr("data-value");
-            }
-        });
-        if ( searchClasses != '' ) {
-            $( "#archive_table tbody tr" + searchClasses ).fadeIn().addClass('task-active');
-            $( "#archive_table tbody tr" ).not(searchClasses).fadeOut().removeClass('task-active'); 
-        } else {
-            $( "#archive_table tbody tr" ).not('.no-results').fadeIn().addClass('task-active');
-        } 
-        checkNoResults();
-        changeHash();
-    }
     /** @todo filter [task] archive: needs to be part of class for dialog */    
     $( '#tt_filter_target select' ).live( 'change', build_filters );
 
@@ -378,28 +435,71 @@ jQuery(document).ready(function( $ ){
                     var match = true;
 
                     $('#tt_main_target').fadeIn().html( msg );
-                    if ( _filters != {} ) {
-                        for( var i in _data ) {
-                            match = true;
-                            for( var j in _filters) {
-                                if ( typeof _data[i][ j.toLowerCase() ] !== "undefined") {
-                                    if ( _data[i][ j.toLowerCase() ] != _filters[j].toLowerCase()) {
-                                        match = false;
-                                    }
-                                }
-                            }
-                            // @todo would be better to tell it '#' vs. 1
-                            if ( match ) {
-                                $( ".post-" + i ).fadeIn().addClass('task-active');
-                            } else {
-                                $( ".post-" + i ).fadeOut().removeClass('task-active');
-                            }
-                        } // End 'for'          
-                        checkNoResults();
-                    }
+                    filterRows();
                 } // End 'suckit' 
             });
             return false;
         } // End 'if'
+
+        /**
+         * If we're on a single task page load our entry utility.         
+         * @todo define: "entry utility"
+         */
+        if ( $('#task_entry_utility_handle').length ) {
+            temp_load({
+                "target_div": "#task_entry_utility_target",
+                "template": $( '#task_entry_utility_handle' ).attr( 'data-template' ),
+                "post_id": $( '#task_entry_utility_handle' ).attr( 'data-post_id' ),
+                "post_type": $( '#task_entry_utility_handle' ).attr( 'data-post_type' )
+            });
+        } // End 'check for entry utility'
+
+    }); // End 'window.load'        
+
+    $( '#utiliy_update_handle' ).live('click', function(){
+        $( '#task_entry_utility_target' ).fadeOut();
+        $( '#task_update_container' ).fadeIn();
+    });    
+
+    $( '#task_entry_utility_update_exit').live( 'click', function(){        
+        $( '#task_entry_utility_target' ).fadeIn();
+        $( '#task_update_container' ).fadeOut();
+    });
+
+    /**
+     * Load comments and comment form when user clicks on the comment icon
+     */
+    $('#task_comment_handle').live('click', function(){
+        // Quick check to make sure its not already loaded
+        if ( !$( '.comments-container' ).length ) {
+            temp_load({
+                "target_div": "#task_comment_target",
+                "template": $( '#task_comment_handle' ).attr( 'data-template' ),
+                "post_id": $( '#task_comment_handle' ).attr( 'data-post_id' )
+            });
+        }
+    });
+
+    /**
+     * Submit new comment, note comments are loaded via ajax
+     */
+     $( '#default_add_comment_form' ).live( 'submit', function(){
+
+        data = {
+            action: "addComment",
+            post_id: _post_id,
+            comment: $( '#comment' ).val()
+        };
+
+        $.ajax({
+            data: data, 
+            success: function( msg ){            
+                $('#comments_target ul').append('<li><div class="content">' + data.comment + '</div></li>').slideDown();
+                // location.reload( true );
+            },
+            error: function( xhr ) {
+                console.log( 'XHR Error: ' + xhr );
+            }
+        });
     });
 });
