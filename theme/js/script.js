@@ -238,7 +238,7 @@ jQuery(document).ready(function( $ ){
         $('#create_ticket_dialog').dialog('open');        
         temp_load({
             "target_div": "#create_ticket_target",
-            "template": $( this ).attr("tt_template")
+            "template": $( this ).attr("data-template")
         });
     });   
 
@@ -381,7 +381,7 @@ jQuery(document).ready(function( $ ){
         } else {
             $( '#tt_filter_target' ).toggle( "slow", function(){                
 
-                template = _plugindir + $this.attr( 'tt_template' );
+                template = _plugindir + $this.attr( 'data-template' );
                 type = $this.attr( 'data-post_type');
 
                 data = {
@@ -415,7 +415,7 @@ jQuery(document).ready(function( $ ){
         /** @todo load [task] archive: needs to be part of class for dialog */    
         if ( $('.sample').length ) {
 
-            template = $( '.sample' ).attr('tt_template');            
+            template = $( '.sample' ).attr('data-template');            
             post_type = $( '.sample' ).attr('data-post_type');
 
             if ( post_type == undefined || template == undefined )                

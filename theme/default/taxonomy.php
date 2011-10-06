@@ -3,26 +3,25 @@
 global $wp_query;
 
 // yes we are trusting that it is always the first index of our array std class crap
-$current_post_type = $wp_query->posts[0]->post_type;
+$cpt = $wp_query->posts[0]->post_type;
 
-if ( is_null( $current_post_type ) ) {
+if ( is_null( $cpt ) ) {
+
     $url = get_bloginfo('url');
     header("Location: {$url}");
+
 }
+
 ?>
 <?php get_header(); ?>
 <?php get_template_part('header-container','index'); ?>
-<?php
-$my_cpt = get_post_types( array( 'name' => $current_post_type), 'objects' );
-$my_cpt_taxes = $my_cpt[ $current_post_type ]->taxonomies;
-?>
 <div class="zm-tt-container zm-tt-archive-container">
     <div class="tt-glue">
         <div class="main-container">
             
             <div class="tt-filter-container">
                 <ul class="inline">
-                    <li><a href="javascript://" id="filter_handle" tt_template="default/navigation-filter.php" data-post_type="<?php print  $current_post_type; ?>">Advanced Filter</a></li>
+                    <li><a href="javascript://" id="filter_handle" data-template="default/navigation-filter.php" data-post_type="<?php print  $cpt; ?>">Advanced Filter</a></li>
                 </ul>
             </div>
 
@@ -33,8 +32,9 @@ $my_cpt_taxes = $my_cpt[ $current_post_type ]->taxonomies;
                    <table id="archive_table">
                         <thead>
                             <tr>
-                                <th id="title"><span>Title</span></th>
-                                <?php foreach ( $my_cpt_taxes as $tax ) : ?>
+                                <th id="title"><span>Title</span></th>                                
+                                <?php $cpt_obj = get_post_types( array( 'name' => $cpt), 'objects' ); ?>
+                                <?php foreach ( $cpt_obj[ $cpt ]->taxonomies as $tax ) : ?>
                                     <th><span><?php print str_replace( "-", " ", $tax ); ?></span></th>
                                 <?php endforeach; ?>
                             </tr>
@@ -51,7 +51,7 @@ $my_cpt_taxes = $my_cpt[ $current_post_type ]->taxonomies;
                                          <a href="#delete" class="default_delete" data-post_id="<?php print $post->ID; ?>" data-security="<?php print wp_create_nonce( 'tt-ajax-forms' );?>">Delete</a>
                                      </div>
                                 </td>
-                                <?php foreach( $my_cpt_taxes as $tax ) : ?>
+                                <?php foreach( $cpt_obj[ $cpt ]->taxonomies as $tax ) : ?>
                                     <td>
                                         <div class="milestone-container zm-base-item">
                                             <?php print zm_base_get_the_term_list( array( 'post_id' => $post->ID, 'taxonomy' => $tax )); ?>
@@ -64,11 +64,10 @@ $my_cpt_taxes = $my_cpt[ $current_post_type ]->taxonomies;
                 </div>
             </div>
         </div>
-        <div class="zm-tt-sidebar-container">
-            <?php foreach ( $my_cpt_taxes as $tax ) : ?>
-                <?php zm_base_list_terms( array('taxonomy' => $tax ) ); ?>
-            <?php endforeach; ?>        
-        </div>
+
+        <?php load_template( plugin_dir_path( __FILE__ ) . 'sidebar.php' ); ?>   
+
     </div>
 </div>
+<?php tt_json_feed( $cpt,  $cpt_obj[ $cpt ]->taxonomies ); ?>
 <?php get_footer(); ?>
