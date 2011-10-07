@@ -282,10 +282,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             }      
         }
     } // End 'taxonomyRedirect'
-
-    // Did I make one?
-    // Did you make one?
-    // Use MY default
+    
     public function archiveRedirect( $current_post_type=null ) {
 
         wp_register_style( 'tt-archive-style', $this->plugin_url . 'theme/css/archive.css', $this->dependencies['style'] , 'all' );   
@@ -297,18 +294,18 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         // @todo this needs a loop for cpt's
         if ( is_post_type_archive( $current_post_type ) ) {            
 
-            // custom plugin theme
-            if ( file_exists( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' ) ) {
-                
-                wp_enqueue_style( 'tt-archive-style' );
-                load_template( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' );
-            
-            // custom theme
-            } elseif ( file_exists( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' ) ) {
+            // Did you make a custom one?    
+            if ( file_exists( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' ) ) {
                                 
                 load_template( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' );                    
+
+            // Did I make a custom one?    
+            } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' ) ) {
+                
+                wp_enqueue_style( 'tt-archive-style' );
+                load_template( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' );            
             
-            // default 
+            // Use MY default
             } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/default/archive-default.php' ) ) {
                             
                 wp_enqueue_style( 'tt-archive-default-style' );
@@ -319,9 +316,6 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         }
     } // End 'archiveRedirect'
 
-    // Did I make one?
-    // Did you make one?
-    // Use the default
     public function singleRedirect( $current_post_type=null ) {     
         
         wp_register_style( 'tt-single-style', $this->plugin_url . 'theme/css/single.css', $this->dependencies['style'] , 'all' );   
@@ -332,18 +326,18 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         // @todo this needs a loop for cpt's
         if ( is_single() ) {
             
-            // custom template from plugin
-            if ( file_exists( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' ) ) {
+            // Did you make one?
+            if ( file_exists( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php'  ) ) {                
+
+                load_template( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php' );                    
+            
+            // Did I make one?
+            } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' ) ) {
                                 
                 wp_enqueue_style( 'tt-single-style' );
                 load_template( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' );
             
-            // custom template from theme
-            } elseif ( file_exists( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php'  ) ) {                
-
-                load_template( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php' );                    
-
-            // default templte
+            // Use the the curent themes single template
             } else {                                
 
                 load_template( STYLESHEETPATH . '/single.php' );                        
@@ -872,6 +866,21 @@ $_GLOBALS['task']->post_type = array(
             'status', 
             'type'
         )      
+    ),
+    array(
+        'name' => 'Collectible',
+        'type' => 'collectible',
+        'supports' => array(
+            'title',
+            'editor',            
+            'comments'
+        ),
+        // @todo automate mother fuckergrrrrr
+        'taxonomies' => array(
+            'magazine', 
+            'bmx', 
+            'sneaker'
+        )              
     )
 );
 
@@ -899,5 +908,17 @@ $_GLOBALS['task']->taxonomy = array(
     array( 
         'name' => 'type', 
         'post_type' => 'task'
-        )
+        ),
+    array( 
+        'name' => 'magazine', 
+        'post_type' => 'collectible'
+         ),            
+    array( 
+        'name' => 'bmx', 
+        'post_type' => 'collectible'
+        ),            
+    array( 
+        'name' => 'sneaker', 
+        'post_type' => 'task'
+        )        
 );
