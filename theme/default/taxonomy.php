@@ -17,6 +17,8 @@ if ( is_null( $cpt ) ) {
 <?php get_template_part('header-container','index'); ?>
 <div class="zm-tt-container zm-tt-archive-container">
     <div class="tt-glue">
+        <div class="zm-tt-archive-container">
+
         <div class="main-container">
             
             <div class="tt-filter-container">
@@ -66,7 +68,7 @@ if ( is_null( $cpt ) ) {
         </div>
 
         <?php load_template( plugin_dir_path( __FILE__ ) . 'sidebar.php' ); ?>   
-
+        </div>
     </div>
 </div>
 <?php tt_json_feed( $cpt,  $cpt_obj[ $cpt ]->taxonomies ); ?>

@@ -249,6 +249,8 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         if ( is_null( $current_post_type ) )
             wp_die( 'I need a CPT');
 
+        wp_register_style( 'tt-taxonomy-default-style', $this->plugin_url . 'theme/css/taxonomy.css', $this->dependencies['style'] , 'all' );   
+
         foreach( $this->post_type as $wtf ) {
             
             $my_cpt = get_post_types( array( 'name' => $wtf['type']), 'objects' );                    
@@ -258,13 +260,12 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 if ( in_array( $wp_query->query_vars['taxonomy'], $wtf['taxonomies'] ) ) {                    
                     // custom plugin theme                    
                     if ( file_exists( MY_PLUGIN_DIR . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' ) ) {                        
-                                            
-                        wp_enqueue_style( 'tt-taxonomy-style' );
+                                                                    
                         load_template( MY_PLUGIN_DIR . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' );                    
 
                     // default plugin theme               
                     } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/default/taxonomy.php' ) ) {                                                
-
+                        
                         wp_enqueue_style( 'tt-taxonomy-default-style' );
                         load_template( MY_PLUGIN_DIR . 'theme/default/taxonomy.php' );                    
 
