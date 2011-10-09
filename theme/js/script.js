@@ -311,7 +311,9 @@ jQuery(document).ready(function( $ ){
             data: "action=postTypeSubmit&" + payload,
             success: function( msg ) {
                 console.log( data );
-                console.log( msg );
+                console.log( msg );                   
+                $( '#error_message_target' ).fadeIn().html( msg );
+                $( '#post_title, textarea[name="content"]').addClass('status-required');
             }
         });                    
     }    

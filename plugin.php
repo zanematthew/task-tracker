@@ -374,6 +374,21 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         if ( !is_user_logged_in() )
             return false;
     
+        $error = null;        
+
+        if ( empty( $_POST['title'] ) ) {
+            $error .= '<div class="message">Please enter a fucking <em>title</em>.</div>';
+        }
+
+        if ( empty( $_POST['content'] ) ) {
+            $error .= '<div class="message">Please enter a some fucking <em>content</em>.</div>';
+        }
+
+        if ( !empty( $error ) ) {
+            print '<div class="error-container">' . $error . '</div>';
+            exit;
+        }
+
         if ( current_user_can( 'publish_posts' ) )
             $status = 'publish';
         else
@@ -401,15 +416,23 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         $post = array(
             'post_title' => $title,
             'post_content' => $content,
-            'post_author' => $author_ID,
+            'post_author' => $author_ID,            
             'post_type' => $type,
             'post_status' => $status
         );
 
         $post_id = wp_insert_post( $post, true );
         
-        if ( is_wp_error( $post_id ) )
-            return;
+        // Clean up our error message and return it
+        // This will be shown in the alert msg via js.
+        if ( is_wp_error( $post_id ) ) { 
+            //print_r( $post_id ); 
+            print_r( $post_id->get_error_message() );              
+            print_r( $post_id->get_error_messages() );              
+            print_r( $post_id->get_error_data() );              
+
+            //print $post_id->errors['empty_content'][0];     
+        }            
         
         /**
          * if insert was successful we take everything left in post and submit, yeah, should be while listed, I'm dumb or lazy
