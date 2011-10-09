@@ -51,10 +51,10 @@ $x++;
 
                     <div class="utility-container zm-base-hidden">
                         
-                        <?php if ( is_user_logged_in() ) : ?>
-                            <span class="mini-button-container">
-                                <span class="default"><?php edit_post_link('WordPress Admin Edit', '' ); ?></span>
-                            </span>
+                        <?php if ( is_user_logged_in() && current_user_can( 'administrator' ) ) : ?>
+                        <span class="mini-button-container">
+                            <span class="default"><?php edit_post_link('WordPress Admin Edit', '' ); ?></span>
+                        </span>
                         <?php endif; ?>
 
                         <?php if ( is_user_logged_in() ) : ?>
