@@ -25,20 +25,20 @@ $my_query = new WP_Query( $args );
             </tr>
         </thead>    
         <?php if ( $my_query->have_posts() ) while ( $my_query->have_posts() ) : $my_query->the_post(); ?>
-        <?php
+            <?php
 
-$comments_count = wp_count_comments( $post->ID);
+            $comments_count = wp_count_comments( $post->ID);
 
-if ( $comments_count->total_comments == 1 ) 
-    $comment_class = 'comment-count';
+            if ( $comments_count->total_comments == 1 ) 
+                $comment_class = 'comment-count';
 
-elseif ( $comments_count->total_comments > 1 ) 
-    $comment_class = 'comments-count';
-else 
-    $comment_class = '';
+            elseif ( $comments_count->total_comments > 1 ) 
+                $comment_class = 'comments-count';
+            else 
+                $comment_class = '';
 
-$x++;
-        ?>
+            $x++;
+            ?>
             <tr <?php post_class('result')?>>
                 <td>
                     <strong class="title"><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></strong>
