@@ -336,6 +336,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' ) ) {
                                 
                 wp_enqueue_style( 'tt-single-style' );
+                wp_enqueue_script( 'tt-inplace-edit' );
                 load_template( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' );
             
             // Use the the curent themes single template
@@ -710,10 +711,16 @@ class CustomPostType extends CustomPostTypeBase {
         wp_register_script( 'tt-script', $this->plugin_url . 'theme/js/script.js', $this->dependencies['script'], '1.0' );        
         wp_register_script( 'qtip-nightly', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.js', $this->dependencies['script'], '0.0.1' );            
         wp_register_script( 'jquery-ui-effects', $this->plugin_url . 'library/js/jquery-ui/jquery-ui-1.8.13.effects.min.js', $this->dependencies['script'], '1.8.13' );        
+        wp_register_script( 'tt-inplace-edit', $this->plugin_url . 'theme/js/inplaceedit.js', $this->dependencies['script'], '0.1' );        
+
+        // @todo consider
+        // add_action( 'init', array( &$this, 'pluginInit' ) );
+        // add_action( 'after_setup_theme', array( &$this, 'pluginAfter') );
         
-        $this->loginSetup();
+        $this->loginSetup();                
     }
-    
+        
+
     public function regsiterActivation() {
 
         /**
@@ -835,6 +842,7 @@ class CustomPostType extends CustomPostTypeBase {
      * and create you own, see theme/default/login.php 
      */
     public function loginSetup() {
+
         add_action( 'wp_footer', array( &$this, 'createLoginDiv' ) );            
         add_action( 'wp_ajax_siteLoginSubmit', array( &$this, 'siteLoginSubmit' ) );        
         add_action( 'wp_ajax_nopriv_siteLoginSubmit', array( &$this, 'siteLoginSubmit' ) ); 
