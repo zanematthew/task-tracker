@@ -8,6 +8,9 @@ var _filters = {};
 
 // @todo if we have a hash store it to filter on later
 function addHash( hash ) {
+    if( typeof arguments[1] !== "undefined" && arguments[1] == true) {
+        _filters = {};
+    }
     if ( hash ) {
         var thishash;
         var thesehashes = hash.split('/');
@@ -71,11 +74,11 @@ function build_filters() {
     filterRows();
 }
 
-addHash(window.location.hash);
+addHash(window.location.hash, false);
 
 jQuery('a[href*="http://' + location.host + location.pathname + '#/"]').live('click', function() {
     addHash(
-        jQuery(this).attr('href').replace('http://' + location.host + location.pathname, '')
+        jQuery(this).attr('href').replace('http://' + location.host + location.pathname, ''), true
     );
     filterRows();
     return false;
