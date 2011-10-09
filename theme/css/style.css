@@ -239,7 +239,7 @@ li.icon-container { text-indent: 0; width: auto; }
 .zm-tt-form-container form fieldset { border: 0; float: left; width: 23%; margin: 0 10px 10px 0; }
 .zm-tt-form-container form fieldset label { clear: both; float: left; font-weight: 300; margin: 0 0 4px 5px; }
 
-.zm-tt-form-container textarea { height: 200px; padding: 5px; width: 97%; }
+.zm-tt-form-container textarea { line-height: 1.3em; height: 200px; padding: 5px; width: 97%; }
 
 .zm-tt-form-container textarea,
 .zm-tt-form-container input[type="password"],
