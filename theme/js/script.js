@@ -106,14 +106,15 @@ jQuery(document).ready(function( $ ){
         type: "POST",
         url: ajaxurl
     });
-    
-    /**
-     * Notification icon
-     */
-    $( '.tt_loading' ).ajaxStart(function(){
-        $( this ).fadeIn();
+
+    $('body').ajaxStart(function(){        
+        console.log( 'ajax started' );
     });
 
+    $('body').ajaxComplete(function(){
+        console.log( 'ajax complete' );
+    });
+    
     /* @todo this needs to be tied down via a class? */
     $( '.zm-tt-container tr' ).live( "mouseover mouseout", function( event ){
         if ( event.type == "mouseover" ) {                
@@ -472,6 +473,9 @@ jQuery(document).ready(function( $ ){
     $('#task_comment_handle').live('click', function(){
         // Quick check to make sure its not already loaded
         if ( !$( '.comments-container' ).length ) {
+            
+            $( '#task_comment_target .tt_loading').show();
+
             temp_load({
                 "target_div": "#task_comment_target",
                 "template": $( '#task_comment_handle' ).attr( 'data-template' ),

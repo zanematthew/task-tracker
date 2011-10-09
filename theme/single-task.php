@@ -29,7 +29,9 @@
 
                     </div>
                                         
-                    <div id="task_comment_target"></div>
+                    <div id="task_comment_target">
+                        <div class="tt_loading" style="display: none;"></div>
+                    </div>
 
                 <?php endwhile; ?>
             </div>
