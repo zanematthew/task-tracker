@@ -26,8 +26,9 @@
 .zm-tt-single-container .entry-utility ul li.right { float: right; margin: 15px 0 0; }
 .zm-tt-single-container textarea { width: 620px; }
 
-.zm-tt-single-container .comments-container .entry-utility { background: #f2f2f2; border-radius: 5px 5px 0px 0px; margin: 0 0 10px; border: 0; text-shadow: 1px 1px 0 #fff; padding: 10px; width: 96%; float: left; }
-.zm-tt-single-container .comments-container .entry-utility .author { font-weight: bold; float: left; }
-.zm-tt-single-container .comments-container .entry-utility time { float: right; }
+.zm-tt-single-container .comments-container .entry-utility { margin: 0; border: 0; text-shadow: 1px 1px 0 #fff; padding: 0; width: 100%; float: left; }
+.zm-tt-single-container .comments-container .entry-utility .author { font-weight: bold; float: left; padding: 10px; }
+.zm-tt-single-container .comments-container .entry-utility time { float: right; padding: 10px; }
 .zm-tt-single-container .comments-container .entry-utility small {}
+.zm-tt-single-container .comments-container .entry-utility-container { background: #f2f2f2; border-radius: 5px 5px 0px 0px; float: left; margin-bottom: 10px; width: 100%; }
 .zm-tt-single-container .comments-container .comment { margin: 10px; }
