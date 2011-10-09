@@ -5,8 +5,8 @@
                 this.inPlaceEdit.settings = $.extend({}, this.inPlaceEdit.defaults, options);
                 return this.each(function() {
                     var $element = $(this), element = this;
-                    if(!$element.hasClass('inPlaceEdit')) {
-                        $element.addClass('inPlaceEdit');
+                    if(!$element.hasClass('inplace-edit-container')) {
+                        $element.addClass('inplace-edit-container')
                     }
                     if(typeof $element.data("originalBGColor") === "undefined") {
                         var getPBG = $element;
