@@ -5,9 +5,6 @@
                 this.inPlaceEdit.settings = $.extend({}, this.inPlaceEdit.defaults, options);
                 return this.each(function() {
                     var $element = $(this), element = this;
-                    if(!$element.hasClass('inplace-edit-container')) {
-                        $element.addClass('inplace-edit-container')
-                    }
                     if(typeof $element.data("originalBGColor") === "undefined") {
                         var getPBG = $element;
                         while(!getPBG.css('backgroundColor') || getPBG.css('backgroundColor') == "rgba(0, 0, 0, 0)") {
@@ -34,6 +31,15 @@
                             } else if(options.field == "content") {
                                 formHTML += '<textarea class="inputtable" name="postContent">' + $element.text() + '</textarea>';
                             }
+                            formHTML += '<div class="zm-tt-form-container">';
+                            formHTML += '<div class="button-container">';
+                            formHTML += '<input type="submit" class="button save" value="Save" />';
+                            formHTML += '<ul class="entry-utility-container">';
+                            formHTML += '<li><a href="javascript://" id="exit_inplace_edit" class="exit">Exit</a></li>';
+                            formHTML += '</ul>';
+                            formHTML += '</div>';
+                            formHTML += '</div>';
+                            
                             formHTML += '</div>';
                             $element.after(formHTML);
                             $div = $("#" + divid);
