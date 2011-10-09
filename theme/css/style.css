@@ -270,11 +270,9 @@ font-size: 12px; }
 .zm-tt-navigation-container .zm-tt-form-container a.button { font-size: 15px; float: left; padding: 8px 20px; }
 
 .zm-tt-form-container fieldset label { cursor: pointer; }
-.zm-tt-form-container fieldset.type-container { width: 17%; }
 
 .zm-tt-form-container .type-container label { background-position: 20px 2px; margin: 0 0 10px 4px; padding-top: 4px; }
 .zm-tt-form-container .type-container input { margin-right: 30px; }
-.zm-tt-form-container .type-container label span { display: none; }
 
 .zm-tt-form-container #create_task_form form p { float: left; margin: 0 0 20px; width: 100%; }
 .zm-tt-form-container #create_task_form .button-container { float: left; margin: 0; padding-right: 10px; width: 96.5%; }
