@@ -13,8 +13,8 @@
                     <div <?php post_class('result')?>>
 
                         <div class="content">
-                            <h1 class="title"><?php the_title(); ?></h1>
-                            <?php the_content(); ?>
+                            <h1 class="title post-title"><?php the_title(); ?></h1>
+                            <div class="post-content"><?php the_content(); ?></div>
                         </div>
 
                         <div class="entry-utility" id="task_entry_utility_handle" data-post_id="<?php echo $post->ID;?>" data-post_type="<?php echo $post->post_type; ?>" data-template="theme/custom/task-entry-utility.php">
