@@ -28,11 +28,12 @@
                         </div>
 
                     </div>
-                                        
+                    
+                    <div id="task_comment_handle" data-post_id="<?php echo $id; ?>" data-template="theme/custom/comment.php">
                     <div id="task_comment_target">
                         <div class="tt_loading" style="display: none;"></div>
                     </div>
-
+                    </div>                    
                 <?php endwhile; ?>
             </div>
         </div>

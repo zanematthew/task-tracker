@@ -68,7 +68,7 @@ else
     <li>
         <small>Comment</small><br />
         <div class="icon-container">            
-            <span class="comment-count" id="task_comment_handle" data-post_id="<?php echo $id; ?>" data-template="theme/custom/comment.php"><a href="javascript://"></a></span>
+            <span class="comment-count" id="task_comment_handle"><a href="javascript://"></a></span>
         </div>
     </li>
     <li class="right">

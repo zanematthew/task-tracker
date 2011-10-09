@@ -106,14 +106,6 @@ jQuery(document).ready(function( $ ){
         type: "POST",
         url: ajaxurl
     });
-
-    $('body').ajaxStart(function(){        
-        console.log( 'ajax started' );
-    });
-
-    $('body').ajaxComplete(function(){
-        console.log( 'ajax complete' );
-    });
     
     /* @todo this needs to be tied down via a class? */
     $( '.zm-tt-container tr' ).live( "mouseover mouseout", function( event ){
@@ -148,7 +140,7 @@ jQuery(document).ready(function( $ ){
         $.ajax({
             data: "action=defaultUtilityUpdate&" + $(this).serialize(), 
             success: function( msg ){                
-               // location.reload( true );
+               location.reload( true );
             }
         });    
     });
@@ -455,6 +447,17 @@ jQuery(document).ready(function( $ ){
             });
         } // End 'check for entry utility'
 
+        if ( !$( '.comments-container' ).length ) {
+            
+            $( '#task_comment_target .tt_loading').show();
+
+            temp_load({
+                "target_div": "#task_comment_target",
+                "template": $( '#task_comment_handle' ).attr( 'data-template' ),
+                "post_id": $( '#task_comment_handle' ).attr( 'data-post_id' )
+            });
+        }
+
     }); // End 'window.load'        
 
     $( '#utiliy_update_handle' ).live('click', function(){
@@ -466,23 +469,7 @@ jQuery(document).ready(function( $ ){
         $( '#task_entry_utility_target' ).fadeIn();
         $( '#task_update_container' ).fadeOut();
     });
-
-    /**
-     * Load comments and comment form when user clicks on the comment icon
-     */
-    $('#task_comment_handle').live('click', function(){
-        // Quick check to make sure its not already loaded
-        if ( !$( '.comments-container' ).length ) {
-            
-            $( '#task_comment_target .tt_loading').show();
-
-            temp_load({
-                "target_div": "#task_comment_target",
-                "template": $( '#task_comment_handle' ).attr( 'data-template' ),
-                "post_id": $( '#task_comment_handle' ).attr( 'data-post_id' )
-            });
-        }
-    });
+        
 
     /**
      * Submit new comment, note comments are loaded via ajax
@@ -498,8 +485,8 @@ jQuery(document).ready(function( $ ){
         $.ajax({
             data: data, 
             success: function( msg ){            
-                $('#comments_target ul').append('<li><div class="content">' + data.comment + '</div></li>').slideDown();
-                // location.reload( true );
+                // $('#comments_target ul').append('<li><div class="content">' + data.comment + '</div></li>').slideDown();
+                location.reload( true );
             },
             error: function( xhr ) {
                 console.log( 'XHR Error: ' + xhr );
