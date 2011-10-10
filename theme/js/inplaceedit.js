@@ -33,9 +33,9 @@
                             }
                             formHTML += '<div class="zm-tt-form-container">';
                             formHTML += '<div class="button-container">';
-                            formHTML += '<input type="submit" class="button save" value="Save" />';
+                            formHTML += '<input type="submit" class="button save" value="Save"  id="save_' + divid + '" />';
                             formHTML += '<ul class="entry-utility-container">';
-                            formHTML += '<li><a href="javascript://" id="exit_inplace_edit" class="exit">Exit</a></li>';
+                            formHTML += '<li><a href="javascript://" class="exit">Exit</a></li>';
                             formHTML += '</ul>';
                             formHTML += '</div>';
                             formHTML += '</div>';

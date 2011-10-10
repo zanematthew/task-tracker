@@ -32,3 +32,5 @@
 .zm-tt-single-container .comments-container .entry-utility small {}
 .zm-tt-single-container .comments-container .entry-utility-container { background: #f2f2f2; border-radius: 5px 5px 0px 0px; float: left; margin-bottom: 10px; width: 100%; }
 .zm-tt-single-container .comments-container .comment { margin: 10px; }
+
+.post-content { font-size: 14px; line-height: 18px; }
