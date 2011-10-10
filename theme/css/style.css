@@ -1,11 +1,7 @@
 /*= Reset 
 -------------------------------------------------------------- */ 
-*:focus{outline:none;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}button,input,legend,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}table{border-collapse:collapse;border-spacing:0; }sup,sub{vertical-align:baseline; }html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,textarea,caption,table,tbody,tfoot,thead,tr,th,td{font-family:inherit;font-size:inherit;}
-
 a { color: #1982D1; text-decoration: none; }
 pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px/1em Courier; }
-
-
 
 
 /**
@@ -239,7 +235,7 @@ li.icon-container { text-indent: 0; width: auto; }
 .zm-tt-form-container form fieldset { border: 0; float: left; width: 23%; margin: 0 10px 10px 0; }
 .zm-tt-form-container form fieldset label { clear: both; float: left; font-weight: 300; margin: 0 0 4px 5px; }
 
-.zm-tt-form-container textarea { line-height: 1.3em; height: 200px; padding: 5px; width: 97%; }
+.zm-tt-form-container textarea { height: 200px; padding: 5px; width: 97%; }
 
 .zm-tt-form-container textarea,
 .zm-tt-form-container input[type="password"],
@@ -543,3 +539,6 @@ a:hover { text-decoration: none; }
 .zm-tt-form-container textarea.status-required, 
 .zm-tt-form-container input.status-required { border-color: red; }
 /* ----------------------------------------------------------- */
+
+
+.inplace-edit-container .button-container { margin-top: -20px; }
