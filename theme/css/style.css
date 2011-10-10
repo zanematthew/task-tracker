@@ -65,6 +65,7 @@ pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px
     text-shadow: 1px 1px 0 #B26B24;
     }
 
+.zm-tt-container a[class*='zm-base-priority-medium-'],
 .zm-tt-container a.zm-base-priority-medium { 
     background: -moz-linear-gradient( top, #FFE0C2, #FFB870) white;
     background: -webkit-linear-gradient( top, #FFE0C2, #FFB870) white;    
@@ -156,7 +157,10 @@ a[class*='zm-base-type-photography-'],
 .zm-base-type-house { background: url('images/famfamfam/icons/house.png') no-repeat; }
 .zm-base-type-freelance { background: url('images/famfamfam/icons/money.png') no-repeat; }
 .zm-base-type-car { background: url('images/famfamfam/icons/car.png') no-repeat; }
+
+a[class*='zm-base-type-code-'],
 .zm-base-type-computer { background: url('images/famfamfam/icons/page_code.png') no-repeat; }
+
 .zm-base-type-personal { background: url('images/famfamfam/icons/user.png') no-repeat; }
 
 li.icon-container { text-indent: 0; width: auto; }
@@ -340,6 +344,7 @@ font-size: 12px; }
 .zm-tt-sidebar-container a.zm-base-status-open,
 .zm-tt-sidebar-container a.zm-base-priority-high,
 .zm-tt-sidebar-container a.zm-base-priority-medium,
+.zm-tt-sidebar-container a[class*='zm-base-priority-medium-'],
 .zm-tt-sidebar-container a.zm-base-priority-low {
     background: none;
     border: 0 none;
