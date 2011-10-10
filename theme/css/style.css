@@ -1,11 +1,7 @@
 /*= Reset 
 -------------------------------------------------------------- */ 
-*:focus{outline:none;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}button,input,legend,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}table{border-collapse:collapse;border-spacing:0; }sup,sub{vertical-align:baseline; }html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,textarea,caption,table,tbody,tfoot,thead,tr,th,td{font-family:inherit;font-size:inherit;}
-
 a { color: #1982D1; text-decoration: none; }
 pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px/1em Courier; }
-
-
 
 
 /**
@@ -270,11 +266,9 @@ font-size: 12px; }
 .zm-tt-navigation-container .zm-tt-form-container a.button { font-size: 15px; float: left; padding: 8px 20px; }
 
 .zm-tt-form-container fieldset label { cursor: pointer; }
-.zm-tt-form-container fieldset.type-container { width: 17%; }
 
 .zm-tt-form-container .type-container label { background-position: 20px 2px; margin: 0 0 10px 4px; padding-top: 4px; }
 .zm-tt-form-container .type-container input { margin-right: 30px; }
-.zm-tt-form-container .type-container label span { display: none; }
 
 .zm-tt-form-container #create_task_form form p { float: left; margin: 0 0 20px; width: 100%; }
 .zm-tt-form-container #create_task_form .button-container { float: left; margin: 0; padding-right: 10px; width: 96.5%; }
@@ -536,3 +530,15 @@ ul.inline li { float: left; }
 a:hover { text-decoration: none; }
 .age-icon { background: url('images/famfamfam/icons/calendar.png') no-repeat; display: inline-block; padding-left: 20px; }
 
+
+/*= Error messages
+-------------------------------------------------------------- */
+.error-container { background: #FFEBEB; border: 1px solid red; border-radius: 4px; margin: 20px 20px 0; padding: 10px; }
+.error-container em { font-weight: bold; }
+
+.zm-tt-form-container textarea.status-required, 
+.zm-tt-form-container input.status-required { border-color: red; }
+/* ----------------------------------------------------------- */
+
+
+.inplace-edit-container .button-container { margin-top: -20px; }

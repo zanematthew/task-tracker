@@ -18,9 +18,21 @@ if ( !empty( $_POST['post_id']) ) {
         foreach($comments as $comment) : ?>
             <li>
                 <div class="avatar-container"><?php print get_avatar( $comment, 32 ); ?></div>
-                <time><?php print $comment->comment_date; ?></time>            
-                <div class="content"><?php print $comment->comment_content; ?></div>
-                <div class="author"><?php print $comment->comment_author; ?></div>            
+                <div class="content">
+                    <div class="entry-utility-container">
+                        <div class="entry-utility">
+                            <div class="author">
+                                <?php print $comment->comment_author; ?>
+                            </div>
+                            <time><?php 
+                            print human_time_diff( strtotime( $comment->comment_date ), current_time('timestamp') );                    
+                            ?></time>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <?php print $comment->comment_content; ?>
+                    </div>
+                </div>
             </li>
         <?php endforeach; ?>
 

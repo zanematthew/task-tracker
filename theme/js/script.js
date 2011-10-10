@@ -8,6 +8,9 @@ var _filters = {};
 
 // @todo if we have a hash store it to filter on later
 function addHash( hash ) {
+    if( typeof arguments[1] !== "undefined" && arguments[1] == true) {
+        _filters = {};
+    }
     if ( hash ) {
         var thishash;
         var thesehashes = hash.split('/');
@@ -71,11 +74,11 @@ function build_filters() {
     filterRows();
 }
 
-addHash(window.location.hash);
+addHash(window.location.hash, false);
 
 jQuery('a[href*="http://' + location.host + location.pathname + '#/"]').live('click', function() {
     addHash(
-        jQuery(this).attr('href').replace('http://' + location.host + location.pathname, '')
+        jQuery(this).attr('href').replace('http://' + location.host + location.pathname, ''), true
     );
     filterRows();
     return false;
@@ -97,8 +100,9 @@ jQuery('a[title], label[title]').live("mouseover", function() {
    this.removeAttribute('title');
 });
 
+
 jQuery(document).ready(function( $ ){
-        
+    
     /**
      * Default ajax setup
      */
@@ -107,13 +111,6 @@ jQuery(document).ready(function( $ ){
         url: ajaxurl
     });
     
-    /**
-     * Notification icon
-     */
-    $( '.tt_loading' ).ajaxStart(function(){
-        $( this ).fadeIn();
-    });
-
     /* @todo this needs to be tied down via a class? */
     $( '.zm-tt-container tr' ).live( "mouseover mouseout", function( event ){
         if ( event.type == "mouseover" ) {                
@@ -122,6 +119,11 @@ jQuery(document).ready(function( $ ){
             $(this).find('.utility-container').addClass( 'zm-base-hidden wtf').removeClass( 'zm-base-visible');            
         }
     });
+
+    if(typeof _post_id !== "undefined" && $(".post-title").length) {
+        $(".post-title").inPlaceEdit({ postId: _post_id, field: "title" });
+        $(".post-content").inPlaceEdit({ postId: _post_id, field: "content" });
+    }
 
     /** 
      * @todo update [task]: 
@@ -147,7 +149,7 @@ jQuery(document).ready(function( $ ){
         $.ajax({
             data: "action=defaultUtilityUpdate&" + $(this).serialize(), 
             success: function( msg ){                
-               // location.reload( true );
+               location.reload( true );
             }
         });    
     });
@@ -238,7 +240,7 @@ jQuery(document).ready(function( $ ){
         $('#create_ticket_dialog').dialog('open');        
         temp_load({
             "target_div": "#create_ticket_target",
-            "template": $( this ).attr("tt_template")
+            "template": $( this ).attr("data-template")
         });
     });   
 
@@ -315,7 +317,9 @@ jQuery(document).ready(function( $ ){
             data: "action=postTypeSubmit&" + payload,
             success: function( msg ) {
                 console.log( data );
-                console.log( msg );
+                console.log( msg );                   
+                $( '#error_message_target' ).fadeIn().html( msg );
+                $( '#post_title, textarea[name="content"]').addClass('status-required');
             }
         });                    
     }    
@@ -381,7 +385,7 @@ jQuery(document).ready(function( $ ){
         } else {
             $( '#tt_filter_target' ).toggle( "slow", function(){                
 
-                template = _plugindir + $this.attr( 'tt_template' );
+                template = _plugindir + $this.attr( 'data-template' );
                 type = $this.attr( 'data-post_type');
 
                 data = {
@@ -415,7 +419,7 @@ jQuery(document).ready(function( $ ){
         /** @todo load [task] archive: needs to be part of class for dialog */    
         if ( $('.sample').length ) {
 
-            template = $( '.sample' ).attr('tt_template');            
+            template = $( '.sample' ).attr('data-template');            
             post_type = $( '.sample' ).attr('data-post_type');
 
             if ( post_type == undefined || template == undefined )                
@@ -454,6 +458,17 @@ jQuery(document).ready(function( $ ){
             });
         } // End 'check for entry utility'
 
+        if ( !$( '.comments-container' ).length ) {
+            
+            $( '#task_comment_target .tt_loading').show();
+
+            temp_load({
+                "target_div": "#task_comment_target",
+                "template": $( '#task_comment_handle' ).attr( 'data-template' ),
+                "post_id": $( '#task_comment_handle' ).attr( 'data-post_id' )
+            });
+        }
+
     }); // End 'window.load'        
 
     $( '#utiliy_update_handle' ).live('click', function(){
@@ -465,20 +480,7 @@ jQuery(document).ready(function( $ ){
         $( '#task_entry_utility_target' ).fadeIn();
         $( '#task_update_container' ).fadeOut();
     });
-
-    /**
-     * Load comments and comment form when user clicks on the comment icon
-     */
-    $('#task_comment_handle').live('click', function(){
-        // Quick check to make sure its not already loaded
-        if ( !$( '.comments-container' ).length ) {
-            temp_load({
-                "target_div": "#task_comment_target",
-                "template": $( '#task_comment_handle' ).attr( 'data-template' ),
-                "post_id": $( '#task_comment_handle' ).attr( 'data-post_id' )
-            });
-        }
-    });
+        
 
     /**
      * Submit new comment, note comments are loaded via ajax
@@ -494,8 +496,8 @@ jQuery(document).ready(function( $ ){
         $.ajax({
             data: data, 
             success: function( msg ){            
-                $('#comments_target ul').append('<li><div class="content">' + data.comment + '</div></li>').slideDown();
-                // location.reload( true );
+                // $('#comments_target ul').append('<li><div class="content">' + data.comment + '</div></li>').slideDown();
+                location.reload( true );
             },
             error: function( xhr ) {
                 console.log( 'XHR Error: ' + xhr );

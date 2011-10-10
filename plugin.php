@@ -58,14 +58,13 @@ interface ICustomPostType {
 
 } // End 'ICustomPostType'
 
-
 /**
+ *
  * This is used to regsiter a custom post type, custom taxonomy and provide template redirecting.
  * 
- * Use the following templates if they exisits, fall back on normal WordPress template hierarchy:
- * plugin_dir/themes/single-[my custom post type].php
- * plugin_dir/themes/archive-[my custom post type].php 
- * plugin_dir/thems/taxonomy-[my custom taxonomy].php 
+ * This abstract class defines some base functions for using Custom Post Types. You should not have to
+ * edit this abstract, only add additional methods if need be. You must use what is provided for you
+ * in the interface.
  *
  */
 abstract class CustomPostTypeBase implements ICustomPostType {
@@ -162,7 +161,6 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         } // End 'foreach'         
 
         return $this->post_type;
-
     } // End 'function'
 
     public function registerTaxonomy( $args=NULL ) {
@@ -196,7 +194,6 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 'add_new_item'      => __( 'Add New ' . $taxonomy['singular_name'] . ''),
                 'new_item_name'     => __( 'New ' . $taxonomy['singular_name'] . ' Name' )
                 );
-
 // @todo needs options
             $args = array(
                 'labels'  => $labels,
@@ -214,8 +211,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             
         } // End 'foreach'
        
-        return $this->taxonomy;
-    
+        return $this->taxonomy;    
     } // End 'function'   
 
     /**
@@ -238,7 +234,6 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         $this->singleRedirect( $current_post_type );                        
         $this->taxonomyRedirect( $current_post_type );        
         $this->archiveRedirect( $current_post_type );
-        
     } // End 'function templateRedirect'    
 
     // Did I make one?
@@ -254,6 +249,8 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         if ( is_null( $current_post_type ) )
             wp_die( 'I need a CPT');
 
+        wp_register_style( 'tt-taxonomy-default-style', $this->plugin_url . 'theme/css/taxonomy.css', $this->dependencies['style'] , 'all' );   
+
         foreach( $this->post_type as $wtf ) {
             
             $my_cpt = get_post_types( array( 'name' => $wtf['type']), 'objects' );                    
@@ -263,13 +260,12 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 if ( in_array( $wp_query->query_vars['taxonomy'], $wtf['taxonomies'] ) ) {                    
                     // custom plugin theme                    
                     if ( file_exists( MY_PLUGIN_DIR . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' ) ) {                        
-                                            
-                        wp_enqueue_style( 'tt-taxonomy-style' );
+                                                                    
                         load_template( MY_PLUGIN_DIR . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' );                    
 
                     // default plugin theme               
                     } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/default/taxonomy.php' ) ) {                                                
-
+                        
                         wp_enqueue_style( 'tt-taxonomy-default-style' );
                         load_template( MY_PLUGIN_DIR . 'theme/default/taxonomy.php' );                    
 
@@ -287,10 +283,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             }      
         }
     } // End 'taxonomyRedirect'
-
-    // Did I make one?
-    // Did you make one?
-    // Use MY default
+    
     public function archiveRedirect( $current_post_type=null ) {
 
         wp_register_style( 'tt-archive-style', $this->plugin_url . 'theme/css/archive.css', $this->dependencies['style'] , 'all' );   
@@ -302,18 +295,18 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         // @todo this needs a loop for cpt's
         if ( is_post_type_archive( $current_post_type ) ) {            
 
-            // custom plugin theme
-            if ( file_exists( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' ) ) {
-                
-                wp_enqueue_style( 'tt-archive-style' );
-                load_template( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' );
-            
-            // custom theme
-            } elseif ( file_exists( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' ) ) {
+            // Did you make a custom one?    
+            if ( file_exists( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' ) ) {
                                 
                 load_template( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' );                    
+
+            // Did I make a custom one?    
+            } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' ) ) {
+                
+                wp_enqueue_style( 'tt-archive-style' );
+                load_template( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' );            
             
-            // default 
+            // Use MY default
             } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/default/archive-default.php' ) ) {
                             
                 wp_enqueue_style( 'tt-archive-default-style' );
@@ -324,9 +317,6 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         }
     } // End 'archiveRedirect'
 
-    // Did I make one?
-    // Did you make one?
-    // Use the default
     public function singleRedirect( $current_post_type=null ) {     
         
         wp_register_style( 'tt-single-style', $this->plugin_url . 'theme/css/single.css', $this->dependencies['style'] , 'all' );   
@@ -337,18 +327,19 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         // @todo this needs a loop for cpt's
         if ( is_single() ) {
             
-            // custom template from plugin
-            if ( file_exists( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' ) ) {
-                                
-                wp_enqueue_style( 'tt-single-style' );
-                load_template( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' );
-            
-            // custom template from theme
-            } elseif ( file_exists( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php'  ) ) {                
+            // Did you make one?
+            if ( file_exists( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php'  ) ) {                
 
                 load_template( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php' );                    
-
-            // default templte
+            
+            // Did I make one?
+            } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' ) ) {
+                                
+                wp_enqueue_style( 'tt-single-style' );
+                wp_enqueue_script( 'tt-inplace-edit' );
+                load_template( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' );
+            
+            // Use the the curent themes single template
             } else {                                
 
                 load_template( STYLESHEETPATH . '/single.php' );                        
@@ -356,180 +347,23 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             }
          exit;
         }
-
     } // End 'singleRedirect'
-    
-} // End 'CustomPostTypeBase'
 
-/**
- * Our class
- */
-class CustomPostType extends CustomPostTypeBase { 
-    
-    // @todo do we need this?
-    static $instance;
-
-    public $plugin_dir = WP_PLUGIN_DIR;
-    public $plugin_url = WP_PLUGIN_URL;    
-    public $dependencies = array();
-        
-    /**
-     * Every thing that is "custom" to our CPT goes here.
+/* Ajax stuff ********************************************************************/
+    /** 
+     * load our template 
+     * uh, why not make it ajaxy? :D
      */
-    public function __construct() {
-        //self::$instance = $this;       
+    public function loadTemplate() {
 
-        $this->plugin_dir = $this->plugin_dir . '/' . str_replace( basename( __FILE__ ), "", plugin_basename( __FILE__ ) );
-        $this->plugin_url = $this->plugin_url . '/' . str_replace( basename( __FILE__ ), "", plugin_basename( __FILE__ ) );
-        
-        define( 'MY_PLUGIN_DIR', $this->plugin_dir );
-        define( 'MY_PLUGIN_URL', $this->plugin_url );
-
-        $this->dependencies['script'] = array(
-            'jquery',
-            'jquery-ui-core',
-            'jquery-ui-dialog'
-        );
-
-        $this->dependencies['style'] = array(
-            'tt-base-style'
-            );
-
-        // @todo the abstract should possibly be responsible for doing this
-        add_action( 'init', array( &$this, 'registerPostType' ) );        
-        add_action( 'init', array( &$this, 'registerTaxonomy' ) );                            
-        add_action( 'template_redirect', array( &$this, 'templateRedirect' ) );        
-        
-        /** @todo consider, moving the following to the abstract */
-        add_action( 'wp_head', array( &$this, 'baseAjaxUrl' ) );        
-        
-        // @todo move to abstract
-        add_action( 'wp_ajax_loadTemplate', array( &$this, 'loadTemplate' ) ); 
-        
-        // @todo move to abstract
-        add_action( 'wp_ajax_nopriv_loadTemplate', array( &$this, 'loadTemplate' ) ); // for public use
-        
-        // @todo move to abstract
-        add_filter( 'post_class', array( &$this, 'addPostClass' ) );
-                        
-        // Only our container divs are loaded, the contents is injected via ajax :)
-        // @todo createDiv( $element_id=null )
-        add_action( 'wp_footer', array( &$this, 'createPostTypeDiv' ) );            
-        add_action( 'wp_footer', array( &$this, 'createDeleteDiv' ) );            
-        
-        // @todo see if we can move this to the abstract
-        add_action( 'wp_ajax_postTypeSubmit', array( &$this, 'postTypeSubmit' ) );                
-        add_action( 'wp_ajax_postTypeUpdate', array( &$this, 'postTypeUpdate' ) );
-        add_action( 'wp_ajax_postTypeDelete', array( &$this, 'postTypeDelete' ) );
-        add_action( 'wp_ajax_defaultUtilityUpdate', array( &$this, 'defaultUtilityUpdate' ) );        
-        add_action( 'wp_ajax_addComment', array( &$this, 'addComment' ) );
-                
-        register_activation_hook( __FILE__, array( &$this, 'regsiterActivation') );        
-                
-        // add_action( 'admin_notices', 'tt_warning' );
-        
-        // @todo break css into; single.css, taxonomy.css, archvie.css, base.css only load on pages that need them
-        // let total cache or what ever combine your css
-        if ( !is_admin() ) {
-            wp_register_style(  'tt-base-style', $this->plugin_url . 'theme/css/style.css', '', 'all' );
-        }
-        
-        // this is global to our plugin
-        wp_register_style(  'qtip-nightly-style', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.css', '', 'all' );
-        wp_register_script( 'tt-script', $this->plugin_url . 'theme/js/script.js', $this->dependencies['script'], '1.0' );        
-        wp_register_script( 'qtip-nightly', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.js', $this->dependencies['script'], '0.0.1' );            
-        wp_register_script( 'jquery-ui-effects', $this->plugin_url . 'library/js/jquery-ui/jquery-ui-1.8.13.effects.min.js', $this->dependencies['script'], '1.8.13' );        
-        
-        $this->loginSetup();
-    }
+        $template = $_POST['template'];
     
-    public function regsiterActivation() {
-
-        /**
-         * Dont forget registration hook is called 
-         * BEFORE! taxonomies are regsitered! therefore
-         * these terms and taxonomies are NOT derived from our object!
-         */
-        $taxonomies = array( 'priority', 'status', 'type' );
-        $this->registerTaxonomy( $taxonomies );
-                
-        // Set to we know its been installed at least once before
-        $installed = get_option( 'zm_tt_number_installed' );
-
-        if ( $installed == '1' )
-            return;
+        if ( $template == null )
+            tt_debug( 'Yo, you need a fucking template!');
     
-        // Priority 
-        wp_insert_term( 'High',   'priority', array( 'description' => '', 'slug' => 'high' ) );
-        wp_insert_term( 'Low',    'priority', array( 'description' => '', 'slug' => 'low' ) );
-        wp_insert_term( 'Medium', 'priority', array( 'description' => '', 'slug' => 'medium' ) );
-
-        // Status
-        wp_insert_term( 'Aborted',  'status', array( 'description' => 'A Task that will NOT be completed.', 'slug' => 'aborted' ) );
-        wp_insert_term( 'Closed',   'status', array( 'description' => 'A Task that has been resolved and reviewed is completed.', 'slug' => 'closed' ) );
-        wp_insert_term( 'New',      'status', array( 'description' => 'A New Task is a Task that is waiting to be worked on.', 'slug' => 'new' ) );
-        wp_insert_term( 'Open',     'status', array( 'description' => 'A Task that is currently being worked on.', 'slug' => 'open' ) );
-        wp_insert_term( 'Resolved', 'status', array( 'description' => 'The Task has been finished, but needs to be approved before it is closed.', 'slug' => 'resolved' ) );
-
-        // Type 
-        wp_insert_term( 'Car',         'type', array( 'description' => 'Anything related to your car, cleaning, vacuming, oil change and so on.') );
-        wp_insert_term( 'Computer',    'type', array( 'description' => 'Checking emails, programming, writing papers.' ) );
-        wp_insert_term( 'Freelance',   'type', array( 'description' => 'What ever makes you some extra side cash.' ) );
-        wp_insert_term( 'House',       'type', array( 'description' => 'House work, be it laundry, vacuuming or just cleaning.' ) );
-        wp_insert_term( 'Personal',    'type', array( 'description' => 'Anything you can think of.' ) );
-        wp_insert_term( 'Photography', 'type', array( 'description' => 'Taking photos, grooming your photo library or some quick editing.' ) );
-            
-        // insert sample task  
-        $author_ID = get_current_user_id();
-        $post = array(
-            'post_title' => 'Your first Task!',
-            'post_content' => 'This is a sample Task make it short and sweet, hopefully this system will help you get a tad more stuff done :D',
-            'post_author' => $author_ID,
-            'post_type' => 'task',
-            'post_status' => 'publish'
-        );
-        $post_id = wp_insert_post( $post, true );
-
-        // assign a term for our sample Task  
-        if ( isset( $post_id ) ) {
-            $term_id = term_exists( 'medium', 'priority' );
-            wp_set_post_terms( $post_id, $term_id, 'priority' );
-
-            $term_id = term_exists( 'new', 'status' );
-            wp_set_post_terms( $post_id, $term_id, 'status' );
-
-            $term_id = term_exists( 'personal', 'type' );
-            wp_set_post_terms( $post_id, $term_id, 'type' );
-
-            update_option( 'zm_tt_number_installed', '1' );
-        }        
-    }    
-
-    /**
-     * Add additional classes to post_class() for additional CSS styling and JavaScript manipulation.
-     *
-     * Adds public and NOT builtin terms to the post_class function call outputing the following:
-     * term_slug-taxonomy_id
-     * @todo addPostClass() consider moving this to the abstract
-     */
-    public function addPostClass( $classes ) {
-        global $post;
-        $cpt = $post->post_type;
-                    
-        $cpt_obj = get_post_types( array( 'name' => $cpt ), 'objects' );
-
-        foreach( $cpt_obj[ $cpt ]->taxonomies  as $name ) {
-            $terms = get_the_terms( $post->ID, $name );
-            if ( !is_wp_error( $terms ) && !empty( $terms )) {
-                foreach( $terms as $term ) {
-                    $classes[] = $name . '-' . $term->term_id;
-                }
-            } 
-        }
-        
-        return $classes;
-        
-    } // End 'addPostClass'
+        load_template( MY_PLUGIN_DIR . $template );
+        die();
+    } // loadTemplate
     
     /**
      * Basic post submission for use with an ajax request
@@ -541,6 +375,21 @@ class CustomPostType extends CustomPostTypeBase {
         if ( !is_user_logged_in() )
             return false;
     
+        $error = null;        
+
+        if ( empty( $_POST['title'] ) ) {
+            $error .= '<div class="message">Please enter a fucking <em>title</em>.</div>';
+        }
+
+        if ( empty( $_POST['content'] ) ) {
+            $error .= '<div class="message">Please enter a some fucking <em>content</em>.</div>';
+        }
+
+        if ( !empty( $error ) ) {
+            print '<div class="error-container">' . $error . '</div>';
+            exit;
+        }
+
         if ( current_user_can( 'publish_posts' ) )
             $status = 'publish';
         else
@@ -568,15 +417,23 @@ class CustomPostType extends CustomPostTypeBase {
         $post = array(
             'post_title' => $title,
             'post_content' => $content,
-            'post_author' => $author_ID,
+            'post_author' => $author_ID,            
             'post_type' => $type,
             'post_status' => $status
         );
 
         $post_id = wp_insert_post( $post, true );
         
-        if ( is_wp_error( $post_id ) )
-            return;
+        // Clean up our error message and return it
+        // This will be shown in the alert msg via js.
+        if ( is_wp_error( $post_id ) ) { 
+            //print_r( $post_id ); 
+            print_r( $post_id->get_error_message() );              
+            print_r( $post_id->get_error_messages() );              
+            print_r( $post_id->get_error_data() );              
+
+            //print $post_id->errors['empty_content'][0];     
+        }            
         
         /**
          * if insert was successful we take everything left in post and submit, yeah, should be while listed, I'm dumb or lazy
@@ -590,9 +447,8 @@ class CustomPostType extends CustomPostTypeBase {
         die();
     } // End 'postTypeSubmit'
 
-    
     /**
-     * Simple form submission to be used in AJAX request!
+     * Simple form submission to be used in AJAX request!0
      */
     public function postTypeUpdate( $post ) {
         // @todo add check_ajax_referer
@@ -761,34 +617,197 @@ class CustomPostType extends CustomPostTypeBase {
     } // postTypeDelete
 
     /**
-     * Login set-up
-     * 
-     * Note this does NOT hook into the default WordPress login! In essence 
-     * you will need custom mark-up. Telling it which template to call
-     * and create you own, see theme/default/login.php 
+     * Print our ajax url in the footer 
+     * @todo baseAjaxUrl() consider moving to abstract
      */
-    public function loginSetup() {
-        add_action( 'wp_footer', array( &$this, 'createLoginDiv' ) );            
-        add_action( 'wp_ajax_siteLoginSubmit', array( &$this, 'siteLoginSubmit' ) );        
-        add_action( 'wp_ajax_nopriv_siteLoginSubmit', array( &$this, 'siteLoginSubmit' ) ); 
+    public function baseAjaxUrl() {
+        // @todo use localize for this
+        // http://www.garyc40.com/2010/03/5-tips-for-using-ajax-in-wordpress/#js-global
+        print '<script type="text/javascript"> var ajaxurl = "'. admin_url("admin-ajax.php") .'"; var _pluginurl="'. MY_PLUGIN_URL.'";</script>';    
+    } // End 'baseAjaxUrl'
 
-        $dependencies['style'] = array(
-            'tt-base-style',
-            'wp-jquery-ui-dialog'
+/* Ajax stuff ********************************************************************/
+    
+} // End 'CustomPostTypeBase'
+
+/**
+ * Our class
+ */
+class CustomPostType extends CustomPostTypeBase { 
+    
+    // @todo do we need this?
+    static $instance;
+
+    public $plugin_dir = WP_PLUGIN_DIR;
+    public $plugin_url = WP_PLUGIN_URL;    
+    public $dependencies = array();
+        
+    /**
+     * Every thing that is "custom" to our CPT goes here.
+     */
+    public function __construct() {
+        
+        wp_localize_script( 'my-ajax-request', 'MyAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );                
+
+        //self::$instance = $this;       
+
+        $this->plugin_dir = $this->plugin_dir . '/' . str_replace( basename( __FILE__ ), "", plugin_basename( __FILE__ ) );
+        $this->plugin_url = $this->plugin_url . '/' . str_replace( basename( __FILE__ ), "", plugin_basename( __FILE__ ) );
+        
+        define( 'MY_PLUGIN_DIR', $this->plugin_dir );
+        define( 'MY_PLUGIN_URL', $this->plugin_url );
+
+        $this->dependencies['script'] = array(
+            'jquery',
+            'jquery-ui-core',
+            'jquery-ui-dialog'
         );
-        
-        wp_enqueue_style( 'wp-jquery-ui-dialog' );
-        wp_enqueue_style( 'tt-login-style', $this->plugin_url . 'theme/css/login.css', $dependencies['style'], 'all' );        
-        wp_enqueue_script( 'jquery-ui-effects' );        
-        
-    } // End 'loginSetup'
 
-    public function createLoginDiv(){ ?>
-    <div id="login_dialog" class="dialog-container">
-            <div id="login_target" style="display: none;">login hi</div>
-        </div>
-    <?php }
+        $this->dependencies['style'] = array(
+            'tt-base-style'
+            );
 
+        // @todo the abstract should possibly be responsible for doing this
+        add_action( 'init', array( &$this, 'registerPostType' ) );        
+        add_action( 'init', array( &$this, 'registerTaxonomy' ) );                            
+        add_action( 'template_redirect', array( &$this, 'templateRedirect' ) );        
+        
+        /** @todo consider, moving the following to the abstract */
+        add_action( 'wp_head', array( &$this, 'baseAjaxUrl' ) );        
+        
+        // @todo move to abstract
+        add_action( 'wp_ajax_loadTemplate', array( &$this, 'loadTemplate' ) ); 
+        
+        // @todo move to abstract
+        add_action( 'wp_ajax_nopriv_loadTemplate', array( &$this, 'loadTemplate' ) ); // for public use
+        
+        // @todo move to abstract
+        add_filter( 'post_class', array( &$this, 'addPostClass' ) );
+                        
+        // Only our container divs are loaded, the contents is injected via ajax :)
+        // @todo createDiv( $element_id=null )
+        add_action( 'wp_footer', array( &$this, 'createPostTypeDiv' ) );            
+        add_action( 'wp_footer', array( &$this, 'createDeleteDiv' ) );            
+        
+        // @todo see if we can move this to the abstract
+        add_action( 'wp_ajax_postTypeSubmit', array( &$this, 'postTypeSubmit' ) );                
+        add_action( 'wp_ajax_postTypeUpdate', array( &$this, 'postTypeUpdate' ) );
+        add_action( 'wp_ajax_postTypeDelete', array( &$this, 'postTypeDelete' ) );
+        add_action( 'wp_ajax_defaultUtilityUpdate', array( &$this, 'defaultUtilityUpdate' ) );        
+        add_action( 'wp_ajax_addComment', array( &$this, 'addComment' ) );
+                
+        register_activation_hook( __FILE__, array( &$this, 'regsiterActivation') );        
+                
+        // add_action( 'admin_notices', 'tt_warning' );
+        
+        // @todo break css into; single.css, taxonomy.css, archvie.css, base.css only load on pages that need them
+        // let total cache or what ever combine your css
+        if ( !is_admin() ) {
+            wp_register_style(  'tt-base-style', $this->plugin_url . 'theme/css/style.css', '', 'all' );
+        }
+        
+        // this is global to our plugin
+        wp_register_style(  'qtip-nightly-style', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.css', '', 'all' );
+        wp_register_script( 'tt-script', $this->plugin_url . 'theme/js/script.js', $this->dependencies['script'], '1.0' );        
+        wp_register_script( 'qtip-nightly', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.js', $this->dependencies['script'], '0.0.1' );            
+        wp_register_script( 'jquery-ui-effects', $this->plugin_url . 'library/js/jquery-ui/jquery-ui-1.8.13.effects.min.js', $this->dependencies['script'], '1.8.13' );        
+        wp_register_script( 'tt-inplace-edit', $this->plugin_url . 'theme/js/inplaceedit.js', $this->dependencies['script'], '0.1' );        
+
+        // @todo consider
+        // add_action( 'init', array( &$this, 'pluginInit' ) );
+        // add_action( 'after_setup_theme', array( &$this, 'pluginAfter') );
+        
+        $this->loginSetup();                
+    }
+        
+
+    public function regsiterActivation() {
+
+        /**
+         * Dont forget registration hook is called 
+         * BEFORE! taxonomies are regsitered! therefore
+         * these terms and taxonomies are NOT derived from our object!
+         */
+        $taxonomies = array( 'priority', 'status', 'type' );
+        $this->registerTaxonomy( $taxonomies );
+                
+        // Set to we know its been installed at least once before
+        $installed = get_option( 'zm_tt_number_installed' );
+
+        if ( $installed == '1' )
+            return;
+    
+        // Priority 
+        wp_insert_term( 'High',   'priority', array( 'description' => '', 'slug' => 'high' ) );
+        wp_insert_term( 'Low',    'priority', array( 'description' => '', 'slug' => 'low' ) );
+        wp_insert_term( 'Medium', 'priority', array( 'description' => '', 'slug' => 'medium' ) );
+
+        // Status
+        wp_insert_term( 'Aborted',  'status', array( 'description' => 'A Task that will NOT be completed.', 'slug' => 'aborted' ) );
+        wp_insert_term( 'Closed',   'status', array( 'description' => 'A Task that has been resolved and reviewed is completed.', 'slug' => 'closed' ) );
+        wp_insert_term( 'New',      'status', array( 'description' => 'A New Task is a Task that is waiting to be worked on.', 'slug' => 'new' ) );
+        wp_insert_term( 'Open',     'status', array( 'description' => 'A Task that is currently being worked on.', 'slug' => 'open' ) );
+        wp_insert_term( 'Resolved', 'status', array( 'description' => 'The Task has been finished, but needs to be approved before it is closed.', 'slug' => 'resolved' ) );
+
+        // Type 
+        wp_insert_term( 'Car',         'type', array( 'description' => 'Anything related to your car, cleaning, vacuming, oil change and so on.') );
+        wp_insert_term( 'Computer',    'type', array( 'description' => 'Checking emails, programming, writing papers.' ) );
+        wp_insert_term( 'Freelance',   'type', array( 'description' => 'What ever makes you some extra side cash.' ) );
+        wp_insert_term( 'House',       'type', array( 'description' => 'House work, be it laundry, vacuuming or just cleaning.' ) );
+        wp_insert_term( 'Personal',    'type', array( 'description' => 'Anything you can think of.' ) );
+        wp_insert_term( 'Photography', 'type', array( 'description' => 'Taking photos, grooming your photo library or some quick editing.' ) );
+            
+        // insert sample task  
+        $author_ID = get_current_user_id();
+        $post = array(
+            'post_title' => 'Your first Task!',
+            'post_content' => 'This is a sample Task make it short and sweet, hopefully this system will help you get a tad more stuff done :D',
+            'post_author' => $author_ID,
+            'post_type' => 'task',
+            'post_status' => 'publish'
+        );
+        $post_id = wp_insert_post( $post, true );
+
+        // assign a term for our sample Task  
+        if ( isset( $post_id ) ) {
+            $term_id = term_exists( 'medium', 'priority' );
+            wp_set_post_terms( $post_id, $term_id, 'priority' );
+
+            $term_id = term_exists( 'new', 'status' );
+            wp_set_post_terms( $post_id, $term_id, 'status' );
+
+            $term_id = term_exists( 'personal', 'type' );
+            wp_set_post_terms( $post_id, $term_id, 'type' );
+
+            update_option( 'zm_tt_number_installed', '1' );
+        }        
+    }    
+
+    /**
+     * Add additional classes to post_class() for additional CSS styling and JavaScript manipulation.
+     *
+     * Adds public and NOT builtin terms to the post_class function call outputing the following:
+     * term_slug-taxonomy_id
+     * @todo addPostClass() consider moving this to the abstract
+     */
+    public function addPostClass( $classes ) {
+        global $post;
+        $cpt = $post->post_type;
+                    
+        $cpt_obj = get_post_types( array( 'name' => $cpt ), 'objects' );
+
+        foreach( $cpt_obj[ $cpt ]->taxonomies  as $name ) {
+            $terms = get_the_terms( $post->ID, $name );
+            if ( !is_wp_error( $terms ) && !empty( $terms )) {
+                foreach( $terms as $term ) {
+                    $classes[] = $name . '-' . $term->term_id;
+                }
+            } 
+        }
+        
+        return $classes;        
+    } // End 'addPostClass'
+    
     /**
      * to be used in AJAX submission, gets the $_POST data and logs the user in.
      */    
@@ -815,20 +834,34 @@ class CustomPostType extends CustomPostTypeBase {
         die();
     } // siteLoginSubmit
 
-    /** 
-     * load our template 
-     * uh, why not make it ajaxy? :D
+    /**
+     * Login set-up
+     * 
+     * Note this does NOT hook into the default WordPress login! In essence 
+     * you will need custom mark-up. Telling it which template to call
+     * and create you own, see theme/default/login.php 
      */
-    public function loadTemplate() {
+    public function loginSetup() {
 
-        $template = $_POST['template'];
-    
-        if ( $template == null )
-            tt_debug( 'Yo, you need a fucking template!');
-    
-        load_template( MY_PLUGIN_DIR . $template );
-        die();
-    } // loadTemplate
+        add_action( 'wp_footer', array( &$this, 'createLoginDiv' ) );            
+        add_action( 'wp_ajax_siteLoginSubmit', array( &$this, 'siteLoginSubmit' ) );        
+        add_action( 'wp_ajax_nopriv_siteLoginSubmit', array( &$this, 'siteLoginSubmit' ) ); 
+
+        $dependencies['style'] = array(
+            'tt-base-style',
+            'wp-jquery-ui-dialog'
+        );
+        
+        wp_enqueue_style( 'wp-jquery-ui-dialog' );
+        wp_enqueue_style( 'tt-login-style', $this->plugin_url . 'theme/css/login.css', $dependencies['style'], 'all' );        
+        wp_enqueue_script( 'jquery-ui-effects' );                
+    } // End 'loginSetup'
+
+    public function createLoginDiv(){ ?>
+    <div id="login_dialog" class="dialog-container">
+            <div id="login_target" style="display: none;">login hi</div>
+        </div>
+    <?php }
 
     public function createPostTypeDiv(){ ?>
         <div id="create_ticket_dialog" class="dialog-container">
@@ -842,17 +875,7 @@ class CustomPostType extends CustomPostTypeBase {
             <div id="delete_target" style="display: none">delete hi</div>
         </div>
     <?php }
-    
-    /**
-     * Print our ajax url in the footer 
-     * @todo baseAjaxUrl() consider moving to abstract
-     */
-    public function baseAjaxUrl() {
-        // @todo use localize for this
-        // http://www.garyc40.com/2010/03/5-tips-for-using-ajax-in-wordpress/#js-global
-        print '<script type="text/javascript"> var ajaxurl = "'. admin_url("admin-ajax.php") .'"; var _pluginurl="'. MY_PLUGIN_URL.'";</script>';    
-    } // End 'baseAjaxUrl'
-    
+        
 } // End 'CustomPostType'
 
 $_GLOBALS['task'] = new CustomPostType();
@@ -875,6 +898,21 @@ $_GLOBALS['task']->post_type = array(
             'status', 
             'type'
         )      
+    ),
+    array(
+        'name' => 'Collectible',
+        'type' => 'collectible',
+        'supports' => array(
+            'title',
+            'editor',            
+            'comments'
+        ),
+        // @todo automate mother fuckergrrrrr
+        'taxonomies' => array(
+            'magazine', 
+            'bmx', 
+            'sneaker'
+        )              
     )
 );
 
@@ -902,5 +940,17 @@ $_GLOBALS['task']->taxonomy = array(
     array( 
         'name' => 'type', 
         'post_type' => 'task'
-        )
+        ),
+    array( 
+        'name' => 'magazine', 
+        'post_type' => 'collectible'
+         ),            
+    array( 
+        'name' => 'bmx', 
+        'post_type' => 'collectible'
+        ),            
+    array( 
+        'name' => 'sneaker', 
+        'post_type' => 'task'
+        )        
 );
