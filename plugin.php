@@ -951,6 +951,6 @@ $_GLOBALS['task']->taxonomy = array(
         ),            
     array( 
         'name' => 'sneaker', 
-        'post_type' => 'task'
+        'post_type' => 'collectible'
         )        
 );
