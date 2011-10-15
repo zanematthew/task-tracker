@@ -30,7 +30,7 @@ if ( !empty( $_POST['post_id']) ) {
                         </div>
                     </div>
                     <div class="comment">
-                        <?php print $comment->comment_content; ?>
+                        <?php print str_replace("\n", "<br />", $comment->comment_content); ?>
                     </div>
                 </div>
             </li>
