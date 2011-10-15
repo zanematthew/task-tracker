@@ -431,8 +431,34 @@ table .tt_loading { float: left; height: 200px; width: 100%; }
 .comments-container ul { list-style-type: none; margin: 0; }
 .comments-container ul li {     
     clear: both;
+    float: left;
+    position: relative;
     margin: 0;
-    width: 100%;
+    width: 100%;    
+    }
+
+.comments-container ul li .arrow-left-shadow {
+    float: left;
+    border-color: transparent #CCC transparent transparent;
+    border-width: 10px;
+    border-style: solid;
+    position: absolute;
+    left: 40px;
+    top: 10px;
+    height: 0;
+    width: 0;
+    }
+
+.comments-container ul li .arrow-left {
+    float: left;
+    border-color: transparent #F2F2F2 transparent transparent;
+    border-width: 10px;
+    border-style: solid;
+    position: absolute;
+    left: 41px;
+    top: 10px;
+    height: 0;
+    width: 0;
     }
 
 .comments-container .avatar-container { border: 1px solid #ccc; float: left; padding: 3px; }
@@ -440,11 +466,12 @@ table .tt_loading { float: left; height: 200px; width: 100%; }
 .comments-container .content {  
     border: 1px solid #CCC;
     border-radius: 4px 4px 4px 4px;
-    box-shadow: 2px 2px 1px #F4F4F4;
+    box-shadow: 2px 2px 5px #e1e1e1;
     float: left;
-    margin: 0 0 20px 20px;
+    margin: 0 0 20px 18px;
     max-width: 75%;
-    padding: 10px; }
+    padding: 10px; 
+    }
 
 .comments-container time,
 .comments-container .author { }
