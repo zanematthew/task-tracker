@@ -28,9 +28,9 @@
                             var formHTML = '<div class="inPlaceEdit" id="' + divid + '" style="display: none">';
                                 formHTML += '<form name="default_update" id="default_update" data-post_id="' + _post_id + '" data-field="' + options.field + '" class="update_content" action="javascript://" method="post">';
                                 if(options.field == "title") {
-                                    formHTML += '<input type="text" class="inputtable" id="' + divid + '-inputtable" name="postTitle" value="' + $element.text() + '" />';
+                                    formHTML += '<input type="text" class="inputtable" id="' + divid + '-inputtable" name="post_title" value="' + $element.text() + '" />';
                                 } else if(options.field == "content") {
-                                    formHTML += '<textarea class="inputtable" id="' + divid + '-inputtable" name="postContent">' + $element.text() + '</textarea>';
+                                    formHTML += '<textarea class="inputtable" id="' + divid + '-inputtable" name="post_content">' + $element.text() + '</textarea>';
                                 }
                                 formHTML += '<div class="zm-tt-form-container">';
                                     formHTML += '<div class="button-container">';
