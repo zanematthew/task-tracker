@@ -18,6 +18,8 @@ if ( !empty( $_POST['post_id']) ) {
         foreach($comments as $comment) : ?>
             <li>
                 <div class="avatar-container"><?php print get_avatar( $comment, 32 ); ?></div>
+                <div class="arrow-left-shadow"></div>
+                <div class="arrow-left"></div>
                 <div class="content">
                     <div class="entry-utility-container">
                         <div class="entry-utility">
