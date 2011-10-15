@@ -18,6 +18,8 @@ if ( !empty( $_POST['post_id']) ) {
         foreach($comments as $comment) : ?>
             <li>
                 <div class="avatar-container"><?php print get_avatar( $comment, 32 ); ?></div>
+                <div class="arrow-left-shadow"></div>
+                <div class="arrow-left"></div>
                 <div class="content">
                     <div class="entry-utility-container">
                         <div class="entry-utility">
@@ -37,6 +39,7 @@ if ( !empty( $_POST['post_id']) ) {
         <?php endforeach; ?>
 
     </ul>    
+    <?php if ( is_user_logged_in() ) : ?>
     <div class="zm-tt-form-container">        
         <form action="javascript://" method="POST" id="default_add_comment_form">
 			<p>
@@ -49,4 +52,5 @@ if ( !empty( $_POST['post_id']) ) {
             </div>
         </form>
     </div>
+    <?php endif; ?>
 </div>
