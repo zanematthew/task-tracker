@@ -463,10 +463,6 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             $status = 'pending';
 
         unset( $_POST['action'] );
-
-        /* change later */        
-        $_POST['post_content'] = $_POST['postContent'];
-        unset( $_POST['postContent'] );
         
         $white_list = array(
            'post_author',
@@ -493,7 +489,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
 
         $current_user = wp_get_current_user();                
         $_POST['post_author'] = $current_user->ID;
-//        $_POST['post_modified'] = current_time('mysql');                
+        $_POST['post_modified'] = current_time('mysql');                
             
 print_r( $_POST );
 print_r( $white_list );
