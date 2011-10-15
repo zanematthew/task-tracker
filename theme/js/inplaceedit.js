@@ -62,8 +62,6 @@
                                 paddingRight: $element.css("paddingRight"),
                                 paddingTop: $element.css("paddingTop"),
                                 paddingBottom: $element.css("paddingBottom")
-                            }).focusout(function() {
-                                $(this).parent().parent().css("display", "none");
                             }).keyup(function(event){
                                 if(event.keyCode === 27) {
                                     $divInput.blur();

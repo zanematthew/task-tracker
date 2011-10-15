@@ -336,7 +336,10 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' ) ) {
                                 
                 wp_enqueue_style( 'tt-single-style' );
-                wp_enqueue_script( 'tt-inplace-edit' );
+
+                if ( current_user_can( 'editor' ) )
+                    wp_enqueue_script( 'tt-inplace-edit' );
+
                 load_template( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' );
             
             // Use the the curent themes single template
