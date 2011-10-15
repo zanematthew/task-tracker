@@ -26,6 +26,7 @@
                             $divInput.focus();
                         } else {
                             var formHTML = '<div class="inPlaceEdit" id="' + divid + '" style="display: none">';
+                            formHTML += '<form name="default_update" id="default_update" action="javascript://" method="post">';
                             if(options.field == "title") {
                                 formHTML += '<input type="text" class="inputtable" name="postTitle" value="' + $element.text() + '" />';
                             } else if(options.field == "content") {
@@ -40,11 +41,14 @@
                             formHTML += '</div>';
                             formHTML += '</div>';
                             
+                            formHTML += '</form>';
                             formHTML += '</div>';
                             $element.after(formHTML);
                             $div = $("#" + divid);
+                            $(".exit", $div).click(function() {
+                                $div.css({ display: "none" });
+                            });
                             $divInput = $("#" + divid + " .inputtable");
-                            console.log($divInput);
                             $divInput.css({
                                 width: $element.innerWidth(),
                                 height: $element.innerHeight(),
@@ -58,6 +62,13 @@
                                 paddingRight: $element.css("paddingRight"),
                                 paddingTop: $element.css("paddingTop"),
                                 paddingBottom: $element.css("paddingBottom")
+                            }).focusout(function() {
+                                console.log('blurred!' + this.id);
+                                $(this).parent().css("display", "none");
+                            }).keyup(function(event){
+                                if(event.keyCode === 27) {
+                                    $divInput.blur();
+                                } 
                             });
                             $div.css({
                                 position: "absolute", 
@@ -67,16 +78,7 @@
                                 height: $element.innerHeight(),
                                 display: "block"
                             });
-                            $divInput.blur(function() {
-                                $div.css("display", "none");
-                            });
-                            $divInput.keyup(function(event){
-                                if(event.keyCode === 27) {
-                                    $divInput.blur();
-                                } 
-                            });
                         }
-
                     });
                 });
             }
