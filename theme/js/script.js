@@ -133,14 +133,17 @@ jQuery(document).ready(function( $ ){
      */
     /**
      * Updating a task
-     */    
-    $( '#default_update' ).submit(function(){
+     */       
+    $( '.update_content' ).live( 'submit', function(){
+        console.log( $(this).attr('data-post_id') );        
+        console.log( $(this).serialize() );        
         /** @props petemilkman.com for being right, concatinate data */
         $.ajax({
-            data: "action=postTypeUpdate&" + $(this).serialize(), 
+            data: "action=postTypeUpdate&ID=" + $(this).attr('data-post_id') + "&"+ $(this).serialize(), 
             success: function( msg ){
                 $('select', this).attr('disabled',' ');
-                location.reload( true );
+                console.log( msg );
+                //location.reload( true );
             }
         });    
     }); // End 'update'

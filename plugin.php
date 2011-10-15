@@ -1,6 +1,6 @@
 <?php
 if ( is_admin() ) {
-    ini_set('display_errors', 0);
+    ini_set('display_errors', 'on');
     error_reporting( E_ALL );
 }
 
@@ -451,7 +451,8 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      * Simple form submission to be used in AJAX request!0
      */
     public function postTypeUpdate( $post ) {
-        // @todo add check_ajax_referer
+        
+          // @todo add check_ajax_referer
 
         if ( !is_user_logged_in() )
             return false;
@@ -461,39 +462,48 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         else
             $status = 'pending';
 
-        $post_id = (int)$_POST['PostID'];
-        $comment = $_POST['comment'];
-    
-        /** What's left is our taxonomies */
         unset( $_POST['action'] );
-        unset( $_POST['PostID'] );
-        unset( $_POST['comment'] );
-        $taxonomies = $_POST;
-    
-        /** insert terms */
-        /** @todo should only do the insert if they change? */
-        foreach( $taxonomies as $taxonomy => $term )
-            wp_set_post_terms( $post_id, $term, &$taxonomy );
-    
-        if ( !empty( $comment ) ) {
-            $current_user = wp_get_current_user();
-            $time = current_time('mysql');
-            $data = array(
-                'comment_post_ID' => $post_id,
-                'comment_author' => $current_user->user_nicename,
-                'comment_author_email' => $current_user->user_email,
-                'comment_author_url' => $current_user->user_url,
-                'comment_content' => $comment,
-                'comment_type' => '',
-                'comment_parent' => 0,
-                'user_id' => $current_user->ID,
-                'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
-                'comment_agent' => $_SERVER['HTTP_USER_AGENT'],
-                'comment_date' => $time,
-                'comment_approved' => 1
-                );
-            wp_insert_comment( $data );
-        }
+
+        /* change later */        
+        $_POST['post_content'] = $_POST['postContent'];
+        unset( $_POST['postContent'] );
+        
+        $white_list = array(
+           'post_author',
+           'post_date',
+           'post_date_gmt',
+           'post_content',
+           'post_content_filtered',
+           'post_title',
+           'post_excerpt',
+           'post_status',
+           'post_type',
+           'comment_status',
+           'ping_status',
+           'post_password',
+           'post_name',
+           'to_ping',
+           'pinged',
+           'post_modified',
+           'post_modified_gmt',
+           'post_parent',
+           'menu_order',
+           'guid'
+        );
+
+        $current_user = wp_get_current_user();                
+        $_POST['post_author'] = $current_user->ID;
+//        $_POST['post_modified'] = current_time('mysql');                
+            
+print_r( $_POST );
+print_r( $white_list );
+$boo = array_diff_assoc( $_POST, $white_list );
+$update = wp_update_post( $boo );
+var_dump( $update );
+
+/*
+
+   */
         die();
     } // postTypeUpdate
 
