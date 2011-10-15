@@ -26,22 +26,22 @@
                             $divInput.focus();
                         } else {
                             var formHTML = '<div class="inPlaceEdit" id="' + divid + '" style="display: none">';
-                            formHTML += '<form name="default_update" id="default_update" action="javascript://" method="post">';
-                            if(options.field == "title") {
-                                formHTML += '<input type="text" class="inputtable" name="postTitle" value="' + $element.text() + '" />';
-                            } else if(options.field == "content") {
-                                formHTML += '<textarea class="inputtable" name="postContent">' + $element.text() + '</textarea>';
-                            }
-                            formHTML += '<div class="zm-tt-form-container">';
-                            formHTML += '<div class="button-container">';
-                            formHTML += '<input type="submit" class="button save" value="Save"  id="save_' + divid + '" />';
-                            formHTML += '<ul class="entry-utility-container">';
-                            formHTML += '<li><a href="javascript://" class="exit">Exit</a></li>';
-                            formHTML += '</ul>';
-                            formHTML += '</div>';
-                            formHTML += '</div>';
-                            
-                            formHTML += '</form>';
+                                formHTML += '<form name="default_update" id="default_update" data-post_id="' + _post_id + '" data-field="' + options.field + '" class="update_content" action="javascript://" method="post">';
+                                if(options.field == "title") {
+                                    formHTML += '<input type="text" class="inputtable" name="postTitle" value="' + $element.text() + '" />';
+                                } else if(options.field == "content") {
+                                    formHTML += '<textarea class="inputtable" name="postContent">' + $element.text() + '</textarea>';
+                                }
+                                formHTML += '<div class="zm-tt-form-container">';
+                                    formHTML += '<div class="button-container">';
+                                        formHTML += '<input type="submit" class="button save" value="Save"  id="save_' + divid + '" />';
+                                        formHTML += '<ul class="entry-utility-container">';
+                                            formHTML += '<li><a href="javascript://" class="exit">Exit</a></li>';
+                                        formHTML += '</ul>';
+                                    formHTML += '</div>';
+                                formHTML += '</div>';
+                                
+                                formHTML += '</form>';
                             formHTML += '</div>';
                             $element.after(formHTML);
                             $div = $("#" + divid);
