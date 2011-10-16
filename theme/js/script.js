@@ -123,6 +123,27 @@ jQuery(document).ready(function( $ ){
      * Check if the inPlaceEdit plugin is loaded    
      */
     if ( jQuery().inPlaceEdit ) {
+
+        var $overlay = $('<div class="ui-widget-overlay"></div>').hide().appendTo('body');
+
+        $('.post-title, .post-content').click(function(){        
+            $('.ui-widget-overlay').fadeIn();
+            setOverlayDimensionsToCurrentDocumentDimensions(); //remember to call this when the document dimensions change
+        });
+
+        $('.inplace-edit-container .exit').live( 'click', function(){
+            $('.ui-widget-overlay').fadeOut();
+        });
+
+        $(window).resize(function(){
+            setOverlayDimensionsToCurrentDocumentDimensions();
+        });
+
+        function setOverlayDimensionsToCurrentDocumentDimensions() {
+            $('.ui-widget-overlay').width($(document).width());
+            $('.ui-widget-overlay').height($(document).height());
+        }        
+
         if ( typeof _post_id !== "undefined" && $(".post-title").length ) {
             $(".post-title").inPlaceEdit({ 
                     postId: _post_id, 
@@ -149,9 +170,8 @@ jQuery(document).ready(function( $ ){
         $.ajax({
             data: "action=postTypeUpdate&ID=" + $(this).attr('data-post_id') + "&"+ $(this).serialize(), 
             success: function( msg ){
-                $('select', this).attr('disabled',' ');
-                console.log( msg );
-                location.reload( true );
+                //location.reload( true );            
+                $('.ui-widget-overlay').fadeOut();                
             }
         });    
     }); // End 'update'

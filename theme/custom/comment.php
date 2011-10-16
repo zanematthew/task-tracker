@@ -37,6 +37,7 @@ if ( !empty( $_POST['post_id']) ) {
         <?php endforeach; ?>
 
     </ul>    
+    <?php if ( is_user_logged_in() ) : ?>
     <div class="zm-tt-form-container">        
         <form action="javascript://" method="POST" id="default_add_comment_form">
 			<p>
@@ -49,4 +50,5 @@ if ( !empty( $_POST['post_id']) ) {
             </div>
         </form>
     </div>
+    <?php endif; ?>
 </div>
