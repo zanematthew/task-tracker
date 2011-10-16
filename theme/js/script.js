@@ -170,8 +170,8 @@ jQuery(document).ready(function( $ ){
         $.ajax({
             data: "action=postTypeUpdate&ID=" + $(this).attr('data-post_id') + "&"+ $(this).serialize(), 
             success: function( msg ){
-                //location.reload( true );            
-                $('.ui-widget-overlay').fadeOut();                
+                location.reload( true );            
+                //$('.ui-widget-overlay').fadeOut();                
             }
         });    
     }); // End 'update'

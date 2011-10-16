@@ -15,7 +15,7 @@
 
 .zm-tt-single-container .entry-utility { color: lightGrey; float: left; margin: 0 0 20px; width: 97%; border-top: 2px solid #EFEFEF; padding: 10px 5px 15px; border-bottom: 1px solid #EFEFEF; }
 .zm-tt-single-container .entry-utility ul { list-style-type: none; margin: 0; }
-.zm-tt-single-container .entry-utility ul li { float: left; margin: 0 20px 0 0; }
+.zm-tt-single-container .entry-utility ul li { float: left; margin: 0 20px 0 0; padding: 0; }
 
 .entry-utility .zm-tt-form-container form select { margin: 0; }
 .entry-utility .zm-tt-form-container form .zm-base-title { font-size: 11px; }
