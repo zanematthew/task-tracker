@@ -1,3 +1,4 @@
+
 <?php
 if ( is_admin() ) {
     ini_set('display_errors', 'on');
@@ -337,10 +338,10 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                                 
                 wp_enqueue_style( 'tt-single-style' );
 
-                if ( current_user_can( 'editor' ) ) {
+//                if ( current_user_can( 'editor' ) ) {
                     wp_enqueue_script( 'inplace-edit-script' );
                     wp_enqueue_style( 'inplace-edit-style' );
-                }
+//                }
 
                 load_template( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' );
             

@@ -45,6 +45,8 @@
                             formHTML += '</div>';
                             $element.after(formHTML);
                             $div = $("#" + divid);
+                            $("form", $div).eq(0).data("sourceElement", element);
+                            console.log($("form", $div).data("sourceElement"));
                             $(".exit", $div).click(function() {
                                 $(this).parents('.inplace-edit-container').eq(0).css("display", "none");
                             });
@@ -88,9 +90,7 @@
         } else {
             $.error( 'Method "' +  method + '" does not exist in inPlaceEdit!');
         }
-        $.fn.pluginName.defaults = {
-            foo: 'bar'
-        };
-        $.fn.pluginName.settings = {};
+        $.fn.inPlaceEditor.defaults = {};
+        $.fn.inPlaceEditor.settings = {};
     };
 })(jQuery);

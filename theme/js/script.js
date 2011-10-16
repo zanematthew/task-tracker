@@ -167,10 +167,19 @@ jQuery(document).ready(function( $ ){
      * Updating a task
      */       
     $( '.update_content' ).live( 'submit', function(){
+        var $originalElement = $($(this).data("sourceElement"));
+        var newText = $(".inputtable", this).val();
+        console.log(newText);
+        newText = newText.replace(/\n/g, "<br />");
+        console.log(newText);
+        var $containerDiv = $(this).parent();
         $.ajax({
             data: "action=postTypeUpdate&ID=" + $(this).attr('data-post_id') + "&"+ $(this).serialize(), 
             success: function( msg ){
-                location.reload( true );            
+                $originalElement.html(newText);
+                $('.ui-widget-overlay').fadeOut();
+                $containerDiv.css({ display: "none" });
+//                location.reload( true );            
                 //$('.ui-widget-overlay').fadeOut();                
             }
         });    
@@ -180,7 +189,7 @@ jQuery(document).ready(function( $ ){
         $.ajax({
             data: "action=defaultUtilityUpdate&" + $(this).serialize(), 
             success: function( msg ){                
-               location.reload( true );
+                location.reload( true );
             }
         });    
     });
