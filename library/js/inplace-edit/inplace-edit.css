@@ -1,0 +1,19 @@
+.inplace-edit-container { z-index: 9999; }
+.inplace-edit-container textarea { min-height: 200px; float: left; margin: 0; }
+.inplace-edit-container input[type="text"] { margin: 0; z-index: 9999; height: auto; }
+.inplace-edit-container .button-pane { float: left; }
+.inplace-edit-container .zm-tt-single-container textarea { position: relative; z-index: 10; }
+.inplace-edit-container .zm-tt-form-container { background: #F2F2F2;
+	float: left;
+	border-radius: 0 0 5px 5px;
+	width: 18%;
+	position: relative;
+	top: 0;
+	left: 10px;
+	padding: 5px;
+	border: solid #BBB;
+	border-image: initial;
+	box-shadow: 0px 3px 1px rgba(0,0,0,0.1) inset;
+	z-index: 0;
+	border-width: 0 1px 1px 1px;
+	}
