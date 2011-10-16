@@ -16,8 +16,7 @@ function addHash( hash ) {
         var thesehashes = hash.split('/');
         for(var i = 0; i < thesehashes.length; i++) {
             if(thesehashes[i].indexOf('__') > -1) {
-                thishash = thesehashes[i].split('__');
-                _filters[ thishash[0] ] = thishash[1];
+                thishash = thesehashes[i].split('__'); _filters[ thishash[0] ] = thishash[1];
                 jQuery("#select_" + thishash[0] + " option[data-value=" + thishash[1].toLowerCase() + "]").attr("selected", "selected");
             }
         }
@@ -120,9 +119,42 @@ jQuery(document).ready(function( $ ){
         }
     });
 
-    if(typeof _post_id !== "undefined" && $(".post-title").length) {
-        $(".post-title").inPlaceEdit({ postId: _post_id, field: "title" });
-        $(".post-content").inPlaceEdit({ postId: _post_id, field: "content" });
+    /**
+     * Check if the inPlaceEdit plugin is loaded    
+     */
+    if ( jQuery().inPlaceEdit ) {
+
+        var $overlay = $('<div class="ui-widget-overlay"></div>').hide().appendTo('body');
+
+        $('.post-title, .post-content').click(function(){        
+            $('.ui-widget-overlay').fadeIn();
+            setOverlayDimensionsToCurrentDocumentDimensions(); //remember to call this when the document dimensions change
+        });
+
+        $('.inplace-edit-container .exit').live( 'click', function(){
+            $('.ui-widget-overlay').fadeOut();
+        });
+
+        $(window).resize(function(){
+            setOverlayDimensionsToCurrentDocumentDimensions();
+        });
+
+        function setOverlayDimensionsToCurrentDocumentDimensions() {
+            $('.ui-widget-overlay').width($(document).width());
+            $('.ui-widget-overlay').height($(document).height());
+        }        
+
+        if ( typeof _post_id !== "undefined" && $(".post-title").length ) {
+            $(".post-title").inPlaceEdit({ 
+                    postId: _post_id, 
+                    field: "title" 
+            });
+
+            $(".post-content").inPlaceEdit({ 
+                    postId: _post_id, 
+                    field: "content" 
+            });
+        }
     }
 
     /** 
@@ -135,15 +167,11 @@ jQuery(document).ready(function( $ ){
      * Updating a task
      */       
     $( '.update_content' ).live( 'submit', function(){
-        console.log( $(this).attr('data-post_id') );        
-        console.log( $(this).serialize() );        
-        /** @props petemilkman.com for being right, concatinate data */
         $.ajax({
             data: "action=postTypeUpdate&ID=" + $(this).attr('data-post_id') + "&"+ $(this).serialize(), 
             success: function( msg ){
-                $('select', this).attr('disabled',' ');
-                console.log( msg );
-                //location.reload( true );
+                location.reload( true );            
+                //$('.ui-widget-overlay').fadeOut();                
             }
         });    
     }); // End 'update'

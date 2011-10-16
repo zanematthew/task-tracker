@@ -25,7 +25,7 @@
                             $div.css("display", "block");
                             $divInput.focus();
                         } else {
-                            var formHTML = '<div class="inPlaceEdit" id="' + divid + '" style="display: none">';
+                            var formHTML = '<div class="inplace-edit-container" id="' + divid + '" style="display: none">';
                                 formHTML += '<form name="default_update" id="default_update" data-post_id="' + _post_id + '" data-field="' + options.field + '" class="update_content" action="javascript://" method="post">';
                                 if(options.field == "title") {
                                     formHTML += '<input type="text" class="inputtable" id="' + divid + '-inputtable" name="post_title" value="' + $element.text() + '" />';
@@ -46,24 +46,23 @@
                             $element.after(formHTML);
                             $div = $("#" + divid);
                             $(".exit", $div).click(function() {
-                                $(this).parents('.inPlaceEdit').eq(0).css("display", "none");
+                                $(this).parents('.inplace-edit-container').eq(0).css("display", "none");
                             });
                             $divInput = $(".inputtable", $div).eq(0);
                             $divInput.css({
                                 width: $element.innerWidth(),
-                                height: $element.innerHeight(),
+                                // height: $element.innerHeight(),
                                 fontSize: $element.css("fontSize"),
+                                fontWeight: $element.css("fontWeight"),
                                 color: $element.css("color"),
                                 marginLeft: $element.css("marginLeft"),
                                 marginRight: $element.css("marginRight"),
                                 marginTop: $element.css("marginTop"),
-                                marginBottom: $element.css("marginBottom"),
+                                // marginBottom: $element.css("marginBottom"),
                                 paddingLeft: $element.css("paddingLeft"),
                                 paddingRight: $element.css("paddingRight"),
                                 paddingTop: $element.css("paddingTop"),
                                 paddingBottom: $element.css("paddingBottom")
-                            }).focusout(function() {
-                                $(this).parent().parent().css("display", "none");
                             }).keyup(function(event){
                                 if(event.keyCode === 27) {
                                     $divInput.blur();

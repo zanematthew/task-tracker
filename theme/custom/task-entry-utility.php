@@ -37,6 +37,12 @@ else
     <?php endif; ?>    
 
     <li>
+        <div class="status-container"><small>ID</small><br /> 
+            <?php print $id; ?>
+        </div>
+    </li>
+
+    <li>
 	    <div class="status-container"><small>Status</small><br /> 
 	    	<?php print zm_base_get_the_term_list( array( 'post_id' => $id , 'post_type' => $post_type, 'taxonomy' => 'status', 'link' => 'anchor') ); ?>
 	    </div>

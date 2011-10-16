@@ -336,7 +336,11 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' ) ) {
                                 
                 wp_enqueue_style( 'tt-single-style' );
-                wp_enqueue_script( 'tt-inplace-edit' );
+
+                if ( current_user_can( 'editor' ) )
+                    wp_enqueue_script( 'inplace-edit-script' );
+                    wp_enqueue_style( 'inplace-edit-style' );
+
                 load_template( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' );
             
             // Use the the curent themes single template
@@ -452,8 +456,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      */
     public function postTypeUpdate( $post ) {
         
-          // @todo add check_ajax_referer
-
+        // @todo add check_ajax_referer
         if ( !is_user_logged_in() )
             return false;
 
@@ -463,43 +466,15 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             $status = 'pending';
 
         unset( $_POST['action'] );
-        
-        $white_list = array(
-           'post_author',
-           'post_date',
-           'post_date_gmt',
-           'post_content',
-           'post_content_filtered',
-           'post_title',
-           'post_excerpt',
-           'post_status',
-           'post_type',
-           'comment_status',
-           'ping_status',
-           'post_password',
-           'post_name',
-           'to_ping',
-           'pinged',
-           'post_modified',
-           'post_modified_gmt',
-           'post_parent',
-           'menu_order',
-           'guid'
-        );
+                
+        // @todo validateWhiteList( $white_list, $data )
 
         $current_user = wp_get_current_user();                
         $_POST['post_author'] = $current_user->ID;
         $_POST['post_modified'] = current_time('mysql');                
-            
-print_r( $_POST );
-print_r( $white_list );
-$boo = array_diff_assoc( $_POST, $white_list );
-$update = wp_update_post( $boo );
-var_dump( $update );
 
-/*
+        $update = wp_update_post( $_POST );
 
-   */
         die();
     } // postTypeUpdate
 
@@ -670,7 +645,8 @@ class CustomPostType extends CustomPostTypeBase {
         );
 
         $this->dependencies['style'] = array(
-            'tt-base-style'
+            'tt-base-style',
+            'inplace-edit-style'
             );
 
         // @todo the abstract should possibly be responsible for doing this
@@ -717,7 +693,9 @@ class CustomPostType extends CustomPostTypeBase {
         wp_register_script( 'tt-script', $this->plugin_url . 'theme/js/script.js', $this->dependencies['script'], '1.0' );        
         wp_register_script( 'qtip-nightly', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.js', $this->dependencies['script'], '0.0.1' );            
         wp_register_script( 'jquery-ui-effects', $this->plugin_url . 'library/js/jquery-ui/jquery-ui-1.8.13.effects.min.js', $this->dependencies['script'], '1.8.13' );        
-        wp_register_script( 'tt-inplace-edit', $this->plugin_url . 'theme/js/inplaceedit.js', $this->dependencies['script'], '0.1' );        
+
+        wp_register_script( 'inplace-edit-script', $this->plugin_url . 'library/js/inplace-edit/inplace-edit.js', $this->dependencies['script'], '0.1' );        
+        wp_register_style( 'inplace-edit-style', $this->plugin_url . 'library/js/inplace-edit/inplace-edit.css', '', 'all' );
 
         // @todo consider
         // add_action( 'init', array( &$this, 'pluginInit' ) );
