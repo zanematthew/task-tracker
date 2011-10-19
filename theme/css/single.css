@@ -15,7 +15,7 @@
 
 .zm-tt-single-container .entry-utility { color: lightGrey; float: left; margin: 0 0 20px; width: 97%; border-top: 2px solid #EFEFEF; padding: 10px 5px 15px; border-bottom: 1px solid #EFEFEF; }
 .zm-tt-single-container .entry-utility ul { list-style-type: none; margin: 0; }
-.zm-tt-single-container .entry-utility ul li { float: left; margin: 0 20px 0 0; }
+.zm-tt-single-container .entry-utility ul li { float: left; margin: 0 20px 0 0; padding: 0; }
 
 .entry-utility .zm-tt-form-container form select { margin: 0; }
 .entry-utility .zm-tt-form-container form .zm-base-title { font-size: 11px; }
@@ -33,4 +33,5 @@
 .zm-tt-single-container .comments-container .entry-utility-container { background: #f2f2f2; border-radius: 5px 5px 0px 0px; float: left; margin-bottom: 10px; width: 100%; }
 .zm-tt-single-container .comments-container .comment { margin: 10px; }
 
-.post-content { font-size: 14px; line-height: 18px; }
+.post-title { font: bold 14px/1 sans-serif; color: #333; margin: 0 0 10px;padding: 10px; }
+.post-content { font-size: 14px; line-height: 18px; padding: 10px; }

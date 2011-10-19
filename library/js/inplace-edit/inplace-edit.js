@@ -21,43 +21,52 @@
                         var divid = 'inPlaceEdit-' + _post_id + '-' + options.field;
                         if($("#" + divid).length) {
                             $div = $("#" + divid);
-                            $divInput = $("#" + divid + " .inputtable");
+                            $divInput = $(".inputtable", $div).eq(0);
                             $div.css("display", "block");
                             $divInput.focus();
                         } else {
-                            var formHTML = '<div class="inPlaceEdit" id="' + divid + '" style="display: none">';
-                            if(options.field == "title") {
-                                formHTML += '<input type="text" class="inputtable" name="postTitle" value="' + $element.text() + '" />';
-                            } else if(options.field == "content") {
-                                formHTML += '<textarea class="inputtable" name="postContent">' + $element.text() + '</textarea>';
-                            }
-                            formHTML += '<div class="zm-tt-form-container">';
-                            formHTML += '<div class="button-container">';
-                            formHTML += '<input type="submit" class="button save" value="Save"  id="save_' + divid + '" />';
-                            formHTML += '<ul class="entry-utility-container">';
-                            formHTML += '<li><a href="javascript://" class="exit">Exit</a></li>';
-                            formHTML += '</ul>';
-                            formHTML += '</div>';
-                            formHTML += '</div>';
-                            
+                            var formHTML = '<div class="inplace-edit-container" id="' + divid + '" style="display: none">';
+                                formHTML += '<form name="default_update" id="default_update" data-post_id="' + _post_id + '" data-field="' + options.field + '" class="update_content" action="javascript://" method="post">';
+                                if(options.field == "title") {
+                                    formHTML += '<input type="text" class="inputtable" id="' + divid + '-inputtable" name="post_title" value="' + $element.text() + '" />';
+                                } else if(options.field == "content") {
+                                    formHTML += '<textarea class="inputtable" id="' + divid + '-inputtable" name="post_content">' + $element.text() + '</textarea>';
+                                }
+                                formHTML += '<div class="zm-tt-form-container">';
+                                    formHTML += '<div class="button-container">';
+                                        formHTML += '<input type="submit" class="button save" value="Save"  id="save_' + divid + '" />';
+                                        formHTML += '<ul class="entry-utility-container">';
+                                            formHTML += '<li><a href="javascript://" class="exit">Exit</a></li>';
+                                        formHTML += '</ul>';
+                                    formHTML += '</div>';
+                                formHTML += '</div>';
+                                
+                                formHTML += '</form>';
                             formHTML += '</div>';
                             $element.after(formHTML);
                             $div = $("#" + divid);
-                            $divInput = $("#" + divid + " .inputtable");
-                            console.log($divInput);
+                            $(".exit", $div).click(function() {
+                                $(this).parents('.inplace-edit-container').eq(0).css("display", "none");
+                            });
+                            $divInput = $(".inputtable", $div).eq(0);
                             $divInput.css({
                                 width: $element.innerWidth(),
-                                height: $element.innerHeight(),
+                                // height: $element.innerHeight(),
                                 fontSize: $element.css("fontSize"),
+                                fontWeight: $element.css("fontWeight"),
                                 color: $element.css("color"),
                                 marginLeft: $element.css("marginLeft"),
                                 marginRight: $element.css("marginRight"),
                                 marginTop: $element.css("marginTop"),
-                                marginBottom: $element.css("marginBottom"),
+                                // marginBottom: $element.css("marginBottom"),
                                 paddingLeft: $element.css("paddingLeft"),
                                 paddingRight: $element.css("paddingRight"),
                                 paddingTop: $element.css("paddingTop"),
                                 paddingBottom: $element.css("paddingBottom")
+                            }).keyup(function(event){
+                                if(event.keyCode === 27) {
+                                    $divInput.blur();
+                                } 
                             });
                             $div.css({
                                 position: "absolute", 
@@ -67,16 +76,7 @@
                                 height: $element.innerHeight(),
                                 display: "block"
                             });
-                            $divInput.blur(function() {
-                                $div.css("display", "none");
-                            });
-                            $divInput.keyup(function(event){
-                                if(event.keyCode === 27) {
-                                    $divInput.blur();
-                                } 
-                            });
                         }
-
                     });
                 });
             }

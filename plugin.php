@@ -1,6 +1,6 @@
 <?php
 if ( is_admin() ) {
-    ini_set('display_errors', 0);
+    ini_set('display_errors', 'on');
     error_reporting( E_ALL );
 }
 
@@ -336,7 +336,11 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' ) ) {
                                 
                 wp_enqueue_style( 'tt-single-style' );
-                wp_enqueue_script( 'tt-inplace-edit' );
+
+                if ( current_user_can( 'editor' ) )
+                    wp_enqueue_script( 'inplace-edit-script' );
+                    wp_enqueue_style( 'inplace-edit-style' );
+
                 load_template( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' );
             
             // Use the the curent themes single template
@@ -451,8 +455,8 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      * Simple form submission to be used in AJAX request!0
      */
     public function postTypeUpdate( $post ) {
+        
         // @todo add check_ajax_referer
-
         if ( !is_user_logged_in() )
             return false;
 
@@ -461,39 +465,16 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         else
             $status = 'pending';
 
-        $post_id = (int)$_POST['PostID'];
-        $comment = $_POST['comment'];
-    
-        /** What's left is our taxonomies */
         unset( $_POST['action'] );
-        unset( $_POST['PostID'] );
-        unset( $_POST['comment'] );
-        $taxonomies = $_POST;
-    
-        /** insert terms */
-        /** @todo should only do the insert if they change? */
-        foreach( $taxonomies as $taxonomy => $term )
-            wp_set_post_terms( $post_id, $term, &$taxonomy );
-    
-        if ( !empty( $comment ) ) {
-            $current_user = wp_get_current_user();
-            $time = current_time('mysql');
-            $data = array(
-                'comment_post_ID' => $post_id,
-                'comment_author' => $current_user->user_nicename,
-                'comment_author_email' => $current_user->user_email,
-                'comment_author_url' => $current_user->user_url,
-                'comment_content' => $comment,
-                'comment_type' => '',
-                'comment_parent' => 0,
-                'user_id' => $current_user->ID,
-                'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
-                'comment_agent' => $_SERVER['HTTP_USER_AGENT'],
-                'comment_date' => $time,
-                'comment_approved' => 1
-                );
-            wp_insert_comment( $data );
-        }
+                
+        // @todo validateWhiteList( $white_list, $data )
+
+        $current_user = wp_get_current_user();                
+        $_POST['post_author'] = $current_user->ID;
+        $_POST['post_modified'] = current_time('mysql');                
+
+        $update = wp_update_post( $_POST );
+
         die();
     } // postTypeUpdate
 
@@ -664,7 +645,8 @@ class CustomPostType extends CustomPostTypeBase {
         );
 
         $this->dependencies['style'] = array(
-            'tt-base-style'
+            'tt-base-style',
+            'inplace-edit-style'
             );
 
         // @todo the abstract should possibly be responsible for doing this
@@ -711,7 +693,9 @@ class CustomPostType extends CustomPostTypeBase {
         wp_register_script( 'tt-script', $this->plugin_url . 'theme/js/script.js', $this->dependencies['script'], '1.0' );        
         wp_register_script( 'qtip-nightly', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.js', $this->dependencies['script'], '0.0.1' );            
         wp_register_script( 'jquery-ui-effects', $this->plugin_url . 'library/js/jquery-ui/jquery-ui-1.8.13.effects.min.js', $this->dependencies['script'], '1.8.13' );        
-        wp_register_script( 'tt-inplace-edit', $this->plugin_url . 'theme/js/inplaceedit.js', $this->dependencies['script'], '0.1' );        
+
+        wp_register_script( 'inplace-edit-script', $this->plugin_url . 'library/js/inplace-edit/inplace-edit.js', $this->dependencies['script'], '0.1' );        
+        wp_register_style( 'inplace-edit-style', $this->plugin_url . 'library/js/inplace-edit/inplace-edit.css', '', 'all' );
 
         // @todo consider
         // add_action( 'init', array( &$this, 'pluginInit' ) );
