@@ -152,13 +152,13 @@ a.zm-base-status-closed {
 .icon-container a,
 .type-container a { display: block; text-indent: 20px; }
 
-a[class*='zm-base-type-photography-'],
+[class*='zm-base-type-photography-'],
 .zm-base-type-photography { background: url('images/famfamfam/icons/camera.png') no-repeat; } 
 .zm-base-type-house { background: url('images/famfamfam/icons/house.png') no-repeat; }
 .zm-base-type-freelance { background: url('images/famfamfam/icons/money.png') no-repeat; }
 .zm-base-type-car { background: url('images/famfamfam/icons/car.png') no-repeat; }
 
-a[class*='zm-base-type-code-'],
+[class*='zm-base-type-code-'],
 .zm-base-type-computer { background: url('images/famfamfam/icons/page_code.png') no-repeat; }
 
 .zm-base-type-personal { background: url('images/famfamfam/icons/user.png') no-repeat; }
@@ -229,7 +229,7 @@ li.icon-container { text-indent: 0; width: auto; }
 
 /*= Forms
 -------------------------------------------------------------- */
-.zm-tt-form-container .form-wrapper { float: left; padding: 30px; }
+.zm-tt-form-container .form-wrapper { float: left; padding: 30px 30px 0; }
 
 .zm-tt-form-container #filter_task_form .form-wrapper { float: left; padding: 15px 0 35px 5px; width: 100%;}
 
@@ -573,4 +573,3 @@ a:hover { text-decoration: none; }
 /* ----------------------------------------------------------- */
 
 
-.inplace-edit-container .button-container { margin-top: -20px; }
