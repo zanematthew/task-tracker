@@ -63,7 +63,6 @@ abstract class CustomPostTypeBase implements ICustomPostType {
 
             foreach ( $post_type['supports'] as $temp ) {
                 if ( in_array( $temp, $white_list['supports'] ) ) {
-                    print 'supporting: '. $temp . '<br />';
                     array_push( $supports, $temp );
                 } else {
                     $supports = 'hi';
