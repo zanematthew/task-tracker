@@ -18,15 +18,7 @@ if ( is_admin() ) {
  * License: GP
  */
 
-/**
- * NON-SPECIFIC functions, a few useful WP functions I've come up with.
- */
- require_once 'wordpress-helper-functions.php';
-
-/**
- * SPECIFIC functions for the TaskTracker, nothing OOP.
- */
-require_once 'functions.php';
+require_once 'wordpress-helper-functions.php';
 require_once 'interface.php';
 require_once 'abstract.php';
 require_once 'class.php';
@@ -51,21 +43,6 @@ $_GLOBALS['task']->post_type = array(
             'status', 
             'type'
         )      
-    ),
-    array(
-        'name' => 'Collectible',
-        'type' => 'collectible',
-        'supports' => array(
-            'title',
-            'editor',            
-            'comments'
-        ),
-        // @todo automate mother fuckergrrrrr
-        'taxonomies' => array(
-            'magazine', 
-            'bmx', 
-            'sneaker'
-        )              
     )
 );
 
@@ -93,17 +70,5 @@ $_GLOBALS['task']->taxonomy = array(
     array( 
         'name' => 'type', 
         'post_type' => 'task'
-        ),
-    array( 
-        'name' => 'magazine', 
-        'post_type' => 'collectible'
-         ),            
-    array( 
-        'name' => 'bmx', 
-        'post_type' => 'collectible'
-        ),            
-    array( 
-        'name' => 'sneaker', 
-        'post_type' => 'collectible'
-        )        
+        )
 );

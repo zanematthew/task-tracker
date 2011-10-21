@@ -105,6 +105,7 @@ endif;
  * @param int $user_id 
  * @param string $param
  */
+if ( ! function_exists( 'zm_base_userdata' ) ) :
 function zm_base_userdata($user_id=1, $param=null){
 
     if ( $param == null )
@@ -114,6 +115,7 @@ function zm_base_userdata($user_id=1, $param=null){
 	$user_info = get_userdata( $user_id );	
 	echo $user_info->$param ;
 }
+endif;
 
 /** 
  * Print the src to an image given a size. Must be used in the_loop!
@@ -121,6 +123,7 @@ function zm_base_userdata($user_id=1, $param=null){
  * @package helper 
  * @param $size
  */
+if ( ! function_exists( 'zm_base_image_src' ) ) :
 function zm_base_image_src( $size=null ) {
     /** @todo check for post->ID */
     /* @todo check against global image sizes */
@@ -130,6 +133,7 @@ function zm_base_image_src( $size=null ) {
 	$src = wp_get_attachment_image_src( get_post_thumbnail_id(), $size );
 	print $src[0];
 }
+endif;
 
 /** 
  * Prints semantically structured term list for a given POST.
@@ -138,6 +142,7 @@ function zm_base_image_src( $size=null ) {
  * @param int $id=0, 
  * @param string $taxonomy, $before, $sep, $after
  */
+if ( ! function_exists( 'zm_base_get_the_term_list' ) ) :
 function zm_base_get_the_term_list( $post_id=null, $taxonomy=null, $before = '', $sep = ', ', $after = '' ) {
 
     if ( is_array( $post_id ) )
@@ -172,6 +177,7 @@ function zm_base_get_the_term_list( $post_id=null, $taxonomy=null, $before = '',
         return $before . join( $sep, $term_links ) . $after;
     }
 }
+endif;
 
 /** 
  * This funtction will return a 'well' structured list of links for a given taxonomy 
@@ -179,6 +185,7 @@ function zm_base_get_the_term_list( $post_id=null, $taxonomy=null, $before = '',
  * @package helper
  * @param string $taxonomy
  */
+if ( ! function_exists( 'zm_base_list_terms' ) ) :
 function zm_base_list_terms( $taxonomy ) {
     
     global $post;
@@ -225,6 +232,7 @@ function zm_base_list_terms( $taxonomy ) {
     /** @todo make sure term used as class name is 'clean', i.e. no spaces! all lower case. */
     print '<ul>'.$html.'</ul>'; 
 }
+endif;
 
 /** 
  * Determine the current term, idk fucking no what I'm doing.
@@ -232,6 +240,7 @@ function zm_base_list_terms( $taxonomy ) {
  * @package helper 
  * @param string $taxonomy
  */
+if ( ! function_exists( 'zm_base_current_term' ) ) :
 function zm_base_current_term( $taxonomy ) {
     global $post;
     $current_term = null;
@@ -250,6 +259,7 @@ function zm_base_current_term( $taxonomy ) {
     }
     return $current_term;
 }
+endif;
 
 /** 
  * This mimics get_terms, but has shows error messages if we have one.
@@ -258,6 +268,7 @@ function zm_base_current_term( $taxonomy ) {
  * @param string $taxonomy
  * @todo $args should be a params, or look into using add_filter
  */
+if ( ! function_exists( 'zm_base_get_terms' ) ) :
 function zm_base_get_terms( $taxonomy ) {
 
     /** All Terms */
@@ -274,6 +285,7 @@ function zm_base_get_terms( $taxonomy ) {
 
     return $terms;
 }
+endif;
 
 /**
  * Build an option list of Terms based on a given Taxonomy.
@@ -283,6 +295,7 @@ function zm_base_get_terms( $taxonomy ) {
  * @param string $taxonomy
  * @param mixed $value, the value to be used in the form field, can be term_id or term_slug
  */
+if ( ! function_exists( 'zm_base_build_options' ) ) :
 function zm_base_build_options( $taxonomy=null, $value='term_id' ) {
     
     if ( is_array( $taxonomy ) )
@@ -329,6 +342,7 @@ function zm_base_build_options( $taxonomy=null, $value='term_id' ) {
     </fieldset>
     <?php endif; ?>
 <?php }
+endif;
 
 /**
  * Build radio buttons of Terms based on a given Taxonomy. Also will default current term.
@@ -339,6 +353,7 @@ function zm_base_build_options( $taxonomy=null, $value='term_id' ) {
  * @param string $taxonomy
  * @param string $value, The value to be used in the 'name' field of the form
  */
+if ( ! function_exists( 'zm_base_build_radio' ) ) :
 function zm_base_build_radio( $taxonomy=null, $options=array() ) {
 
     // @todo need an array of "choices" like value => array( 'term_id', 'term_name' )
@@ -374,8 +389,9 @@ function zm_base_build_radio( $taxonomy=null, $options=array() ) {
     </fieldset>
     <?php endif; ?>
 <?php }
+endif;
 
-
+if ( ! function_exists( 'zm_base_build_input' ) ) :
 function zm_base_build_input( $taxonomy=null ) {
 
     if ( is_array( $taxonomy ) )
@@ -425,6 +441,7 @@ function zm_base_build_input( $taxonomy=null ) {
     </fieldset>
     <?php endif; ?>
 <?php }
+endif;
 
 /**
  * Build radio buttons of Terms based on a given Taxonomy.
@@ -435,6 +452,7 @@ function zm_base_build_input( $taxonomy=null ) {
  * @param string $taxonomy
  * @param string $value, The value to be used in the 'name' field of the form
  */
+if ( ! function_exists( 'zm_base_build_checkbox' ) ) :
 function zm_base_build_checkbox( $taxonomy=null, $value='term_id' ) {
 
     /** All Terms */
@@ -464,12 +482,14 @@ function zm_base_build_checkbox( $taxonomy=null, $value='term_id' ) {
     <?php endforeach; ?>
     </fieldset>
 <?php }
+endif;
 
 /**
  * Retrive the next post type modified from TwentyTen
  *
  * @package helper
  */
+if ( ! function_exists( 'zm_next_post' ) ) :
 function zm_next_post() {
     global $post;
 
@@ -516,12 +536,14 @@ function zm_next_post() {
         print '</div>';
     }
 }
+endif;
 
 /**
  * Retrive the previous post type modified from TwentyTen
  *
  * @package helper
  */
+if ( ! function_exists( 'zm_previous_post' ) ) :
 function zm_previous_post() {
     global $post;
 
@@ -570,6 +592,7 @@ function zm_previous_post() {
             print '</div>';
     }
 }
+endif;
 
 /**
  * Template for comments and pingbacks.
@@ -630,6 +653,7 @@ endif;
  *
  * @package helper
  */
+if ( ! function_exists( 'zm_image_download' ) ) :
 function zm_image_download() {
 
     global $post;
@@ -660,12 +684,14 @@ function zm_image_download() {
         $i++;
     }
 }
+endif;
 
 /**
  * Provide a list of exif information for images
  *
  * @package helper
  */
+if ( ! function_exists( 'zm_image_exif' ) ) :
 function zm_image_exif() {
     global $post;
 
@@ -705,17 +731,20 @@ function zm_image_exif() {
         $i++;
     }
 }
+endif;
 
 /**
  * Creats a 'Back to Post' link
  *
  * @package helper 
  */
+if ( ! function_exists( 'zm_back_to_post_link' ) ) :
 function zm_back_to_post_link() {
     global $post; ?>
     <a href="<?php echo get_permalink( $post->post_parent ); ?>" title="<?php esc_attr( printf( __( 'Return to %s', 'zm_base' ), get_the_title( $post->post_parent ) ) ); ?>" rel="gallery">
     <?php printf( __( '<span class="meta-nav">&larr; </span> Return to: %s', 'collection' ), get_the_title( $post->post_parent ) ); ?></a>
 <?php }
+endif;
 
 /**
  * Truncate a content.
@@ -724,6 +753,7 @@ function zm_back_to_post_link() {
  * @param string $content, The content we want to truncate
  * @param int $size, The size we want to truncate to
  */
+if ( ! function_exists( 'zm_base_truncate' ) ) :
 function zm_base_truncate( $content, $size=35 ) {
     global $post;
     $content = get_post(get_post_thumbnail_id())->post_content;
@@ -731,6 +761,7 @@ function zm_base_truncate( $content, $size=35 ) {
     echo substr( $content, 0, $size);
     if ( $length > $size ) echo "...";
 }
+endif;
 
 /**
  * Returns a linked list of terms for a given taxonomy
@@ -738,6 +769,7 @@ function zm_base_truncate( $content, $size=35 ) {
  * @package helper 
  * @prama string $zm_term
  */
+if ( ! function_exists( 'zm_term_links' ) ) :
 function zm_term_links( $zm_term=null) {
 
     // Set our global, we'll use this to check the "current" state
@@ -788,3 +820,65 @@ function zm_term_links( $zm_term=null) {
 
     print '<ul>' . $html . '</ul>';
 }
+endif;
+
+/**
+ * Procedural code designed to be used at the "template" level.
+ *
+ * This file should only contain procedural code that is NOT part of any Hook/Action.
+ * Please place Hook/Action funcitons in the apropiate file.
+ */
+ 
+/**
+ * Prints the "age" of a Task from the current date to when it was posted
+ */
+if ( ! function_exists( 'tt_task_age' ) ) :
+function tt_task_age() {
+    printf( __( '<span class="meta"><span class="%1$s">%2$s</span></span>', 'Task' ),
+        'meta-prep-author',
+        sprintf( '<span class="date">%1$s</span>',
+            esc_attr( human_time_diff( get_the_time('U'), current_time('timestamp') ) )
+        )
+    );
+}
+endif;
+
+/**
+ * Prints a json dataset of Tasks
+ */
+if ( ! function_exists( 'tt_json_feed' ) ) :
+function tt_json_feed( $post_type, $taxonomies=array() ) {
+    if ( empty( $post_type ) || empty( $taxonomies ) )
+        die( 'I need a fucking post type and a fucking array of taxonomies' );
+    
+    global $wp_query, $post;
+    $my_query = null;
+    $types = array();
+
+    $args = array(
+       'post_type' => $post_type,
+       'post_status' => 'publish'
+    );
+        
+    $my_query = new WP_Query( $args );
+     
+    while ( $my_query->have_posts() ) : $my_query->the_post();
+    
+        $types[$post->ID] = array(
+            "id" => $post->ID,
+            "title" => $post->post_title
+            );
+    
+        foreach ( $taxonomies as $taxonomy ) {
+            $term = wp_get_object_terms( $post->ID, $taxonomy );
+
+            if ( !is_wp_error( $term ) || empty( $term )) {                
+                $term = ( $term ) ? $term[0]->slug : 'none' ;
+                $types[$post->ID][$taxonomy] = $term;            
+            }
+        }
+    
+    endwhile;
+    print '<script type="text/javascript">var _data = ' . json_encode( $types ) . '</script>';
+}
+endif;
