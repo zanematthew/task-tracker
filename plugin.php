@@ -30,7 +30,7 @@ $_GLOBALS['task']->post_type = array(
         'type' => 'task',
         'supports' => array(
             'title',
-            'editor',
+            'content',
             'author',
             'comments'
         ),
