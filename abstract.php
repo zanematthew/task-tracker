@@ -1,5 +1,4 @@
 <?php
-
 /** 
  * 
  * This is used to regsiter a custom post type, custom taxonomy and provide template redirecting.
@@ -10,9 +9,6 @@
  *
  */
 abstract class CustomPostTypeBase implements ICustomPostType {
-
-    public $plugin_url = WP_PLUGIN_URL;
-    public $plugin_dir = WP_PLUGIN_DIR;
     
     /**
      * Regsiter an unlimited number of CPTs based on an array of parmas.
@@ -243,10 +239,9 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 load_template( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' );                    
 
             // Did I make a custom one?    
-            } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' ) ) {
-                
+            } elseif ( file_exists( plugin_dir_path( __FILE__ ) . 'theme/archive-' . $current_post_type . '.php' ) ) {
                 wp_enqueue_style( 'tt-archive-style' );
-                load_template( MY_PLUGIN_DIR . 'theme/archive-' . $current_post_type . '.php' );            
+                load_template( plugin_dir_path( __FILE__ ) . 'theme/archive-' . $current_post_type . '.php' );            
             
             // Use MY default
             } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/default/archive-default.php' ) ) {
@@ -275,7 +270,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 load_template( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php' );                    
             
             // Did I make one?
-            } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' ) ) {
+            } elseif ( file_exists( plugin_dir_path( __FILE__ ) . 'theme/single-' . $current_post_type . '.php' ) ) {
                                 
                 wp_enqueue_style( 'tt-single-style' );
 
@@ -283,12 +278,12 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                     wp_enqueue_script( 'inplace-edit-script' );
                     wp_enqueue_style( 'inplace-edit-style' );
 
-                load_template( MY_PLUGIN_DIR . 'theme/single-' . $current_post_type . '.php' );
+                load_template( plugin_dir_path( __FILE__ ) . 'theme/single-' . $current_post_type . '.php' );
             
             // Use the the curent themes single template
             } else {                                
 
-                load_template( STYLESHEETPATH . '/single.php' );                        
+                load_template( plugin_dir_path( __FILE__ ) . '/single.php' );                        
 
             }
          exit;
@@ -305,9 +300,9 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         $template = $_POST['template'];
     
         if ( $template == null )
-            tt_debug( 'Yo, you need a fucking template!');
+            wp_die( 'Yo, you need a fucking template!');
     
-        load_template( MY_PLUGIN_DIR . $template );
+        load_template( plugin_dir_path( __FILE__ ) . $template );
         die();
     } // loadTemplate
     
@@ -514,7 +509,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     public function baseAjaxUrl() {
         // @todo use localize for this
         // http://www.garyc40.com/2010/03/5-tips-for-using-ajax-in-wordpress/#js-global
-        print '<script type="text/javascript"> var ajaxurl = "'. admin_url("admin-ajax.php") .'"; var _pluginurl="'. MY_PLUGIN_URL.'";</script>';    
+        print '<script type="text/javascript"> var ajaxurl = "'. admin_url("admin-ajax.php") .'"; var _pluginurl="'. plugin_dir_url( __FILE__ ) .'";</script>';    
     } // End 'baseAjaxUrl'
 
 /* Ajax stuff ********************************************************************/
