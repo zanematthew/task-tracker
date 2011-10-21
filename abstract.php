@@ -283,8 +283,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     } // End 'singleRedirect'
 
     /** 
-     * load our template 
-     * uh, why not make it ajaxy? :D
+     * loads a template from a specificed path
      */
     public function loadTemplate() {
 
@@ -434,7 +433,13 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         die();
     } // End 'commentAdd'
 
-    public function defaultUtilityUpdate(){
+    /**
+     * Updates the 'utiltily', i.e. taxonomies, of a post
+     *
+     * @param (int)post id
+     * @param (array)taxonomies
+     */
+    public function defaultUtilityUpdate( $post_id=null, $taxonomies=null) {
 
         if ( !is_user_logged_in() )
             return false;
@@ -452,16 +457,22 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         
         $taxonomies = $_POST;
 
-        // add check to see if terms are new
         foreach( $taxonomies as $taxonomy => $term ) {
             wp_set_post_terms( $post_id, $term, $taxonomy );
+            // add check to see if terms are new
             //$new_terms[]['term'] = get_term_by( 'id', $term, &$taxonomy );
         }
                    
         die();
     } // entryUtilityUpdate
 
+    /**
+     * Delets a post given the post ID, post will be moved to the trash
+     *
+     * @param (int) post id
+     */
     public function postTypeDelete( $id=null ) {
+        
         // @todo needs to be generic for cpt
         check_ajax_referer( 'tt-ajax-forms', 'security' );
 
@@ -473,10 +484,6 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         if ( is_null( $id )  ) {
             wp_die( 'I need a post_id to kill!');
         } else {        
-
-            // Yes we do what the mafia does, true == no trash, just kill the mofo
-            // and everyone that stood behind him! i.e. terms, meta, att. etc.
-            // if you had relations with her your dead to me!
             $result = wp_trash_post( $id );
             if ( is_wp_error( $result ) ) {                
                 print_r( $result );
@@ -499,11 +506,9 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     } // End 'baseAjaxUrl'
     
     /**
-     * Add additional classes to post_class() for additional CSS styling and JavaScript manipulation.
-     *
-     * Adds public and NOT builtin terms to the post_class function call outputing the following:
+     * Adds additional classes to post_class() for additional CSS styling and JavaScript manipulation.     
      * term_slug-taxonomy_id
-     * @todo addPostClass() consider moving this to the abstract
+     * @param 
      */
     public function addPostClass( $classes ) {
         global $post;
@@ -519,7 +524,6 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 }
             } 
         }        
-        return $classes;        
+        return $classes;
     } // End 'addPostClass'
-
 } // End 'CustomPostTypeBase'
