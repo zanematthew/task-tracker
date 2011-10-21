@@ -187,7 +187,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         if ( is_null( $current_post_type ) )
             wp_die( 'I need a CPT');
 
-        wp_register_style( 'tt-taxonomy-default-style', $this->plugin_url . 'theme/css/taxonomy.css', $this->dependencies['style'] , 'all' );   
+        wp_register_style( 'tt-taxonomy-default-style', plugin_dir_url( __FILE__ ) . 'theme/css/taxonomy.css', $this->dependencies['style'] , 'all' );   
 
         foreach( $this->post_type as $wtf ) {
             
@@ -224,8 +224,8 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     
     public function archiveRedirect( $current_post_type=null ) {
 
-        wp_register_style( 'tt-archive-style', $this->plugin_url . 'theme/css/archive.css', $this->dependencies['style'] , 'all' );   
-        wp_register_style( 'tt-archive-default-style', $this->plugin_url . 'theme/css/archive-default.css', $this->dependencies['style'] , 'all' );   
+        wp_register_style( 'tt-archive-style', plugin_dir_url( __FILE__ ) . 'theme/css/archive.css', $this->dependencies['style'] , 'all' );   
+        wp_register_style( 'tt-archive-default-style', plugin_dir_url( __FILE__ ) . 'theme/css/archive-default.css', $this->dependencies['style'] , 'all' );   
 
         if ( is_null( $current_post_type ) )
             wp_die( 'I need a CPT');
@@ -256,7 +256,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
 
     public function singleRedirect( $current_post_type=null ) {     
         
-        wp_register_style( 'tt-single-style', $this->plugin_url . 'theme/css/single.css', $this->dependencies['style'] , 'all' );   
+        wp_register_style( 'tt-single-style', plugin_dir_url( __FILE__ ) . 'theme/css/single.css', $this->dependencies['style'] , 'all' );   
 
         if ( is_null( $current_post_type ) )
             wp_die( 'I need a CPT');

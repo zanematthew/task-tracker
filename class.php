@@ -8,8 +8,6 @@ class CustomPostType extends CustomPostTypeBase {
     // @todo do we need this?
     static $instance;
 
-    public $plugin_dir = WP_PLUGIN_DIR;
-    public $plugin_url = WP_PLUGIN_URL;    
     public $dependencies = array();
         
     /**
@@ -20,13 +18,7 @@ class CustomPostType extends CustomPostTypeBase {
         wp_localize_script( 'my-ajax-request', 'MyAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );                
 
         //self::$instance = $this;       
-
-        $this->plugin_dir = $this->plugin_dir . '/' . str_replace( basename( __FILE__ ), "", plugin_basename( __FILE__ ) );
-        $this->plugin_url = $this->plugin_url . '/' . str_replace( basename( __FILE__ ), "", plugin_basename( __FILE__ ) );
         
-        define( 'MY_PLUGIN_DIR', $this->plugin_dir );
-        define( 'MY_PLUGIN_URL', $this->plugin_url );
-
         $this->dependencies['script'] = array(
             'jquery',
             'jquery-ui-core',
@@ -74,17 +66,17 @@ class CustomPostType extends CustomPostTypeBase {
         // @todo break css into; single.css, taxonomy.css, archvie.css, base.css only load on pages that need them
         // let total cache or what ever combine your css
         if ( !is_admin() ) {
-            wp_register_style(  'tt-base-style', $this->plugin_url . 'theme/css/style.css', '', 'all' );
+            wp_register_style(  'tt-base-style', plugin_dir_url( __FILE__ ) . 'theme/css/style.css', '', 'all' );
         }
         
         // this is global to our plugin
-        wp_register_style(  'qtip-nightly-style', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.css', '', 'all' );
-        wp_register_script( 'tt-script', $this->plugin_url . 'theme/js/script.js', $this->dependencies['script'], '1.0' );        
-        wp_register_script( 'qtip-nightly', $this->plugin_url . 'library/js/qtip-nightly/jquery.qtip.min.js', $this->dependencies['script'], '0.0.1' );            
-        wp_register_script( 'jquery-ui-effects', $this->plugin_url . 'library/js/jquery-ui/jquery-ui-1.8.13.effects.min.js', $this->dependencies['script'], '1.8.13' );        
+        wp_register_style(  'qtip-nightly-style', plugin_dir_url( __FILE__ ) . 'library/js/qtip-nightly/jquery.qtip.min.css', '', 'all' );
+        wp_register_script( 'tt-script', plugin_dir_url( __FILE__ ) . 'theme/js/script.js', $this->dependencies['script'], '1.0' );        
+        wp_register_script( 'qtip-nightly', plugin_dir_url( __FILE__ ) . 'library/js/qtip-nightly/jquery.qtip.min.js', $this->dependencies['script'], '0.0.1' );            
+        wp_register_script( 'jquery-ui-effects', plugin_dir_url( __FILE__ ) . 'library/js/jquery-ui/jquery-ui-1.8.13.effects.min.js', $this->dependencies['script'], '1.8.13' );        
 
-        wp_register_script( 'inplace-edit-script', $this->plugin_url . 'library/js/inplace-edit/inplace-edit.js', $this->dependencies['script'], '0.1' );        
-        wp_register_style( 'inplace-edit-style', $this->plugin_url . 'library/js/inplace-edit/inplace-edit.css', '', 'all' );
+        wp_register_script( 'inplace-edit-script', plugin_dir_url( __FILE__ ) . 'library/js/inplace-edit/inplace-edit.js', $this->dependencies['script'], '0.1' );        
+        wp_register_style( 'inplace-edit-style', plugin_dir_url( __FILE__ ) . 'library/js/inplace-edit/inplace-edit.css', '', 'all' );
 
         // @todo consider
         // add_action( 'init', array( &$this, 'pluginInit' ) );
@@ -226,7 +218,7 @@ class CustomPostType extends CustomPostTypeBase {
         );
         
         wp_enqueue_style( 'wp-jquery-ui-dialog' );
-        wp_enqueue_style( 'tt-login-style', $this->plugin_url . 'theme/css/login.css', $dependencies['style'], 'all' );        
+        wp_enqueue_style( 'tt-login-style', plugin_dir_url( __FILE__ ) . 'theme/css/login.css', $dependencies['style'], 'all' );        
         wp_enqueue_script( 'jquery-ui-effects' );                
     } // End 'loginSetup'
 
