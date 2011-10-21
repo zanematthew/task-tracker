@@ -121,8 +121,9 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 $taxonomy['plural_name'] = $taxonomy['name'] . 's';
 
             /** @todo if this as fasle fucks up on wp_set_post_terms() for submitting and updating a cpt */
-            if ( empty( $taxonomy['hierarchical']) )
-                $taxonomy['hierarchical'] = false;
+            if ( !isset( $taxonomy['hierarchical'] ) ) {
+                $taxonomy['hierarchical'] = true;
+            }
 
             $labels = array(
                 'name'              => _x( $taxonomy['name'], 'taxonomy general name' ),
@@ -137,10 +138,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 'new_item_name'     => __( 'New ' . $taxonomy['singular_name'] . ' Name' )
                 );
 
-            if ( !empty( $taxonomy['hierarchical'] ) )
-                $taxonomy['hierarchical'] = true;
-
-            $args = array(
+            $args = array(               
                 'labels'  => $labels,
                 'hierarchical' => $taxonomy['hierarchical'],
                 //'hierarchical' => true, // non-hierarchical taxes break alot of stuff
@@ -151,6 +149,9 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 'show_ui' => true,
                 'show_tagcloud' => true
                 );
+
+//            if ( $taxonomy['post_tag'] )
+                // register_taxonomy_for_object_type( 'post_tag', $taxonomy['post_type'] );
                 
             register_taxonomy( $taxonomy['taxonomy'], $taxonomy['post_type'], $args );
             
