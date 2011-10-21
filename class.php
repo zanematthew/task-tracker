@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Our class
  */
@@ -33,55 +32,32 @@ class CustomPostType extends CustomPostTypeBase {
         // @todo the abstract should possibly be responsible for doing this
         add_action( 'init', array( &$this, 'registerPostType' ) );        
         add_action( 'init', array( &$this, 'registerTaxonomy' ) );                            
-        add_action( 'template_redirect', array( &$this, 'templateRedirect' ) );        
-        
-        /** @todo consider, moving the following to the abstract */
-        add_action( 'wp_head', array( &$this, 'baseAjaxUrl' ) );        
-        
-        // @todo move to abstract
+        add_action( 'template_redirect', array( &$this, 'templateRedirect' ) );            
+        add_action( 'wp_head', array( &$this, 'baseAjaxUrl' ) );                    
         add_action( 'wp_ajax_loadTemplate', array( &$this, 'loadTemplate' ) ); 
-        
-        // @todo move to abstract
         add_action( 'wp_ajax_nopriv_loadTemplate', array( &$this, 'loadTemplate' ) ); // for public use
-        
-        // @todo move to abstract
-        add_filter( 'post_class', array( &$this, 'addPostClass' ) );
-                        
-        // Only our container divs are loaded, the contents is injected via ajax :)
-        // @todo createDiv( $element_id=null )
         add_action( 'wp_footer', array( &$this, 'createPostTypeDiv' ) );            
         add_action( 'wp_footer', array( &$this, 'createDeleteDiv' ) );            
-        
-        // @todo see if we can move this to the abstract
         add_action( 'wp_ajax_postTypeSubmit', array( &$this, 'postTypeSubmit' ) );                
         add_action( 'wp_ajax_postTypeUpdate', array( &$this, 'postTypeUpdate' ) );
         add_action( 'wp_ajax_postTypeDelete', array( &$this, 'postTypeDelete' ) );
         add_action( 'wp_ajax_defaultUtilityUpdate', array( &$this, 'defaultUtilityUpdate' ) );        
         add_action( 'wp_ajax_addComment', array( &$this, 'addComment' ) );
-                
+
+        add_filter( 'post_class', array( &$this, 'addPostClass' ) );
+                        
         register_activation_hook( __FILE__, array( &$this, 'regsiterActivation') );        
-                
-        // add_action( 'admin_notices', 'tt_warning' );
-        
-        // @todo break css into; single.css, taxonomy.css, archvie.css, base.css only load on pages that need them
-        // let total cache or what ever combine your css
+
         if ( !is_admin() ) {
-            wp_register_style(  'tt-base-style', plugin_dir_url( __FILE__ ) . 'theme/css/style.css', '', 'all' );
+            wp_register_style( 'tt-base-style',      plugin_dir_url( __FILE__ ) . 'theme/css/style.css', '', 'all' );
+            wp_register_style( 'qtip-nightly-style', plugin_dir_url( __FILE__ ) . 'library/js/qtip-nightly/jquery.qtip.min.css', '', 'all' );
+            wp_register_style( 'inplace-edit-style', plugin_dir_url( __FILE__ ) . 'library/js/inplace-edit/inplace-edit.css', '', 'all' );        
+            
+            wp_register_script( 'tt-script',           plugin_dir_url( __FILE__ ) . 'theme/js/script.js', $this->dependencies['script'], '1.0' );        
+            wp_register_script( 'qtip-nightly',        plugin_dir_url( __FILE__ ) . 'library/js/qtip-nightly/jquery.qtip.min.js', $this->dependencies['script'], '0.0.1' );            
+            wp_register_script( 'jquery-ui-effects',   plugin_dir_url( __FILE__ ) . 'library/js/jquery-ui/jquery-ui-1.8.13.effects.min.js', $this->dependencies['script'], '1.8.13' );        
+            wp_register_script( 'inplace-edit-script', plugin_dir_url( __FILE__ ) . 'library/js/inplace-edit/inplace-edit.js', $this->dependencies['script'], '0.1' );                
         }
-        
-        // this is global to our plugin
-        wp_register_style( 'qtip-nightly-style', plugin_dir_url( __FILE__ ) . 'library/js/qtip-nightly/jquery.qtip.min.css', '', 'all' );
-        wp_register_style( 'inplace-edit-style', plugin_dir_url( __FILE__ ) . 'library/js/inplace-edit/inplace-edit.css', '', 'all' );        
-
-        wp_register_script( 'tt-script',           plugin_dir_url( __FILE__ ) . 'theme/js/script.js', $this->dependencies['script'], '1.0' );        
-        wp_register_script( 'qtip-nightly',        plugin_dir_url( __FILE__ ) . 'library/js/qtip-nightly/jquery.qtip.min.js', $this->dependencies['script'], '0.0.1' );            
-        wp_register_script( 'jquery-ui-effects',   plugin_dir_url( __FILE__ ) . 'library/js/jquery-ui/jquery-ui-1.8.13.effects.min.js', $this->dependencies['script'], '1.8.13' );        
-        wp_register_script( 'inplace-edit-script', plugin_dir_url( __FILE__ ) . 'library/js/inplace-edit/inplace-edit.js', $this->dependencies['script'], '0.1' );                
-
-        // @todo consider
-        // add_action( 'init', array( &$this, 'pluginInit' ) );
-        // add_action( 'after_setup_theme', array( &$this, 'pluginAfter') );
-        
         $this->loginSetup();                
     }
         
