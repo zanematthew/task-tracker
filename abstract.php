@@ -12,6 +12,15 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     
     public function __construct() {
         add_filter( 'post_class', array( &$this, 'addPostClass' ) );        
+        add_action( 'wp_ajax_postTypeSubmit', array( &$this, 'postTypeSubmit' ) );                
+        add_action( 'wp_ajax_postTypeUpdate', array( &$this, 'postTypeUpdate' ) );
+        add_action( 'wp_ajax_postTypeDelete', array( &$this, 'postTypeDelete' ) );
+        add_action( 'wp_ajax_defaultUtilityUpdate', array( &$this, 'defaultUtilityUpdate' ) );                
+        add_action( 'wp_ajax_addComment', array( &$this, 'addComment' ) );        
+        add_action( 'wp_ajax_nopriv_loadTemplate', array( &$this, 'loadTemplate' ) );
+        add_action( 'wp_ajax_loadTemplate', array( &$this, 'loadTemplate' ) );         
+        add_action( 'wp_head', array( &$this, 'baseAjaxUrl' ) );                    
+        add_action( 'template_redirect', array( &$this, 'templateRedirect' ) );            
     }
 
     /**
@@ -145,7 +154,6 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             $args = array(               
                 'labels'  => $labels,
                 'hierarchical' => $taxonomy['hierarchical'],
-                //'hierarchical' => true, // non-hierarchical taxes break alot of stuff
                 'query_var' => true,
                 'public' => true,
                 'rewrite' => array('slug' => $taxonomy['slug']),
@@ -153,9 +161,6 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 'show_ui' => true,
                 'show_tagcloud' => true
                 );
-
-//            if ( $taxonomy['post_tag'] )
-                // register_taxonomy_for_object_type( 'post_tag', $taxonomy['post_type'] );
                 
             register_taxonomy( $taxonomy['taxonomy'], $taxonomy['post_type'], $args );
             
@@ -204,23 +209,14 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             $my_cpt = get_post_types( array( 'name' => $wtf['type']), 'objects' );                    
             
             if ( is_tax( $wtf['taxonomies'] ) ) {                                
-                
-                if ( in_array( $wp_query->query_vars['taxonomy'], $wtf['taxonomies'] ) ) {                    
-                    // custom plugin theme                    
+                if ( in_array( $wp_query->query_vars['taxonomy'], $wtf['taxonomies'] ) ) {                                        
                     if ( file_exists( MY_PLUGIN_DIR . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' ) ) {                        
-                                                                    
-                        load_template( MY_PLUGIN_DIR . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' );                    
-
-                    // default plugin theme               
+                        load_template( MY_PLUGIN_DIR . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' );                                        
                     } elseif ( file_exists( MY_PLUGIN_DIR . 'theme/default/taxonomy.php' ) ) {                                                
-                        
                         wp_enqueue_style( 'tt-taxonomy-default-style' );
-                        load_template( MY_PLUGIN_DIR . 'theme/default/taxonomy.php' );                    
-
-                    // theme archive
+                        load_template( MY_PLUGIN_DIR . 'theme/default/taxonomy.php' );                                        
                     } elseif ( file_exists( STYLESHEETPATH . '/archive.php' ) ) {                    
-                        load_template( STYLESHEETPATH . '/archive.php' );                                        
-                    // theme index
+                        load_template( STYLESHEETPATH . '/archive.php' );                                                            
                     } else {                        
                         load_template( STYLESHEETPATH . '/index.php' );                                                                        
                     }                        
@@ -232,6 +228,9 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         }
     } // End 'taxonomyRedirect'
     
+    // Did you make a custom one?    
+    // Did I make a custom one?    
+    // Use MY default
     public function archiveRedirect( $current_post_type=null ) {
 
         wp_register_style( 'tt-archive-style', plugin_dir_url( __FILE__ ) . 'theme/css/archive.css', $this->dependencies['style'] , 'all' );   
@@ -242,23 +241,14 @@ abstract class CustomPostTypeBase implements ICustomPostType {
 
         // @todo this needs a loop for cpt's
         if ( is_post_type_archive( $current_post_type ) ) {            
-
-            // Did you make a custom one?    
-            if ( file_exists( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' ) ) {
-                                
+            if ( file_exists( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' ) ) {                                
                 load_template( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' );                    
-
-            // Did I make a custom one?    
             } elseif ( file_exists( plugin_dir_path( __FILE__ ) . 'theme/archive-' . $current_post_type . '.php' ) ) {
                 wp_enqueue_style( 'tt-archive-style' );
-                load_template( plugin_dir_path( __FILE__ ) . 'theme/archive-' . $current_post_type . '.php' );            
-            
-            // Use MY default
-            } elseif ( file_exists( plugin_dir_path( __FILE__ ) . 'theme/default/archive-default.php' ) ) {
-                            
+                load_template( plugin_dir_path( __FILE__ ) . 'theme/archive-' . $current_post_type . '.php' );                                
+            } elseif ( file_exists( plugin_dir_path( __FILE__ ) . 'theme/default/archive-default.php' ) ) {                            
                 wp_enqueue_style( 'tt-archive-default-style' );
-                load_template( plugin_dir_path( __FILE__ ) . 'theme/default/archive-default.php' );
-                
+                load_template( plugin_dir_path( __FILE__ ) . 'theme/default/archive-default.php' );                
             }
             exit;   
         }
@@ -273,28 +263,20 @@ abstract class CustomPostTypeBase implements ICustomPostType {
 
         // @todo this needs a loop for cpt's
         if ( is_single() ) {
-            
-            // Did you make one?
+                        
             if ( file_exists( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php'  ) ) {                
-
-                load_template( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php' );                    
-            
-            // Did I make one?
-            } elseif ( file_exists( plugin_dir_path( __FILE__ ) . 'theme/single-' . $current_post_type . '.php' ) ) {                
-                                
+                load_template( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php' );                                
+            } elseif ( file_exists( plugin_dir_path( __FILE__ ) . 'theme/single-' . $current_post_type . '.php' ) ) {                                                
                 wp_enqueue_style( 'tt-single-style' );
 
-                if ( current_user_can( 'editor' ) )
+                if ( current_user_can( 'editor' ) ) {
                     wp_enqueue_script( 'inplace-edit-script' );
                     wp_enqueue_style( 'inplace-edit-style' );
-
                     load_template( plugin_dir_path( __FILE__ ) . 'theme/single-' . $current_post_type . '.php' );
-            
-            // Use the the curent themes single template
+                }
+                        
             } else {                                
-
                 load_template( STYLESHEETPATH . '/single.php' );                        
-
             }
          exit;
         }
@@ -375,15 +357,10 @@ abstract class CustomPostTypeBase implements ICustomPostType {
 
         $post_id = wp_insert_post( $post, true );
         
-        // Clean up our error message and return it
-        // This will be shown in the alert msg via js.
-        if ( is_wp_error( $post_id ) ) { 
-            //print_r( $post_id ); 
+        if ( is_wp_error( $post_id ) ) {         
             print_r( $post_id->get_error_message() );              
             print_r( $post_id->get_error_messages() );              
-            print_r( $post_id->get_error_data() );              
-
-            //print $post_id->errors['empty_content'][0];     
+            print_r( $post_id->get_error_data() );                      
         }            
         
         /**
@@ -521,7 +498,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         print '<script type="text/javascript"> var ajaxurl = "'. admin_url("admin-ajax.php") .'"; var _pluginurl="'. plugin_dir_url( __FILE__ ) .'";</script>';    
     } // End 'baseAjaxUrl'
     
-        /**
+    /**
      * Add additional classes to post_class() for additional CSS styling and JavaScript manipulation.
      *
      * Adds public and NOT builtin terms to the post_class function call outputing the following:

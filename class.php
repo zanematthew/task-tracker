@@ -16,7 +16,7 @@ class CustomPostType extends CustomPostTypeBase {
         
         wp_localize_script( 'my-ajax-request', 'MyAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );                
 
-        //self::$instance = $this;       
+        self::$instance = $this;       
         
         $this->dependencies['script'] = array(
             'jquery',
@@ -31,21 +31,11 @@ class CustomPostType extends CustomPostTypeBase {
         
         parent::__construct();
 
-        // @todo the abstract should possibly be responsible for doing this
         add_action( 'init', array( &$this, 'registerPostType' ) );        
-        add_action( 'init', array( &$this, 'registerTaxonomy' ) );                            
-        add_action( 'template_redirect', array( &$this, 'templateRedirect' ) );            
-        add_action( 'wp_head', array( &$this, 'baseAjaxUrl' ) );                    
-        add_action( 'wp_ajax_loadTemplate', array( &$this, 'loadTemplate' ) ); 
-        add_action( 'wp_ajax_nopriv_loadTemplate', array( &$this, 'loadTemplate' ) ); // for public use
+        add_action( 'init', array( &$this, 'registerTaxonomy' ) );                                    
         add_action( 'wp_footer', array( &$this, 'createPostTypeDiv' ) );            
         add_action( 'wp_footer', array( &$this, 'createDeleteDiv' ) );            
-        add_action( 'wp_ajax_postTypeSubmit', array( &$this, 'postTypeSubmit' ) );                
-        add_action( 'wp_ajax_postTypeUpdate', array( &$this, 'postTypeUpdate' ) );
-        add_action( 'wp_ajax_postTypeDelete', array( &$this, 'postTypeDelete' ) );
-        add_action( 'wp_ajax_defaultUtilityUpdate', array( &$this, 'defaultUtilityUpdate' ) );        
-        add_action( 'wp_ajax_addComment', array( &$this, 'addComment' ) );
-                        
+                                
         register_activation_hook( __FILE__, array( &$this, 'regsiterActivation') );        
 
         if ( !is_admin() ) {
