@@ -28,6 +28,8 @@ class CustomPostType extends CustomPostTypeBase {
             'tt-base-style',
             'inplace-edit-style'
             );
+        
+        parent::__construct();
 
         // @todo the abstract should possibly be responsible for doing this
         add_action( 'init', array( &$this, 'registerPostType' ) );        
@@ -43,8 +45,6 @@ class CustomPostType extends CustomPostTypeBase {
         add_action( 'wp_ajax_postTypeDelete', array( &$this, 'postTypeDelete' ) );
         add_action( 'wp_ajax_defaultUtilityUpdate', array( &$this, 'defaultUtilityUpdate' ) );        
         add_action( 'wp_ajax_addComment', array( &$this, 'addComment' ) );
-
-        add_filter( 'post_class', array( &$this, 'addPostClass' ) );
                         
         register_activation_hook( __FILE__, array( &$this, 'regsiterActivation') );        
 
@@ -59,8 +59,7 @@ class CustomPostType extends CustomPostTypeBase {
             wp_register_script( 'inplace-edit-script', plugin_dir_url( __FILE__ ) . 'library/js/inplace-edit/inplace-edit.js', $this->dependencies['script'], '0.1' );                
         }
         $this->loginSetup();                
-    }
-        
+    }        
 
     public function regsiterActivation() {
 
@@ -123,31 +122,6 @@ class CustomPostType extends CustomPostTypeBase {
             update_option( 'zm_tt_number_installed', '1' );
         }        
     }    
-
-    /**
-     * Add additional classes to post_class() for additional CSS styling and JavaScript manipulation.
-     *
-     * Adds public and NOT builtin terms to the post_class function call outputing the following:
-     * term_slug-taxonomy_id
-     * @todo addPostClass() consider moving this to the abstract
-     */
-    public function addPostClass( $classes ) {
-        global $post;
-        $cpt = $post->post_type;
-                    
-        $cpt_obj = get_post_types( array( 'name' => $cpt ), 'objects' );
-
-        foreach( $cpt_obj[ $cpt ]->taxonomies  as $name ) {
-            $terms = get_the_terms( $post->ID, $name );
-            if ( !is_wp_error( $terms ) && !empty( $terms )) {
-                foreach( $terms as $term ) {
-                    $classes[] = $name . '-' . $term->term_id;
-                }
-            } 
-        }
-        
-        return $classes;        
-    } // End 'addPostClass'
     
     /**
      * to be used in AJAX submission, gets the $_POST data and logs the user in.

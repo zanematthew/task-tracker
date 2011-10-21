@@ -10,6 +10,10 @@
  */
 abstract class CustomPostTypeBase implements ICustomPostType {
     
+    public function __construct() {
+        add_filter( 'post_class', array( &$this, 'addPostClass' ) );        
+    }
+
     /**
      * Regsiter an unlimited number of CPTs based on an array of parmas.
      * 
@@ -296,7 +300,6 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         }
     } // End 'singleRedirect'
 
-
     /** 
      * load our template 
      * uh, why not make it ajaxy? :D
@@ -518,4 +521,28 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         print '<script type="text/javascript"> var ajaxurl = "'. admin_url("admin-ajax.php") .'"; var _pluginurl="'. plugin_dir_url( __FILE__ ) .'";</script>';    
     } // End 'baseAjaxUrl'
     
+        /**
+     * Add additional classes to post_class() for additional CSS styling and JavaScript manipulation.
+     *
+     * Adds public and NOT builtin terms to the post_class function call outputing the following:
+     * term_slug-taxonomy_id
+     * @todo addPostClass() consider moving this to the abstract
+     */
+    public function addPostClass( $classes ) {
+        global $post;
+        $cpt = $post->post_type;
+                    
+        $cpt_obj = get_post_types( array( 'name' => $cpt ), 'objects' );
+
+        foreach( $cpt_obj[ $cpt ]->taxonomies  as $name ) {
+            $terms = get_the_terms( $post->ID, $name );
+            if ( !is_wp_error( $terms ) && !empty( $terms )) {
+                foreach( $terms as $term ) {
+                    $classes[] = $name . '-' . $term->term_id;
+                }
+            } 
+        }        
+        return $classes;        
+    } // End 'addPostClass'
+
 } // End 'CustomPostTypeBase'
