@@ -373,6 +373,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      * Basic post submission for use with an ajax request
      */
     public function postTypeSubmit() {
+
         // @todo needs to be generic for cpt
         check_ajax_referer( 'tt-ajax-forms', 'security' );
     
@@ -381,7 +382,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     
         $error = null;        
 
-        if ( empty( $_POST['title'] ) ) {
+        if ( empty( $_POST['post_title'] ) ) {
             $error .= '<div class="message">Please enter a fucking <em>title</em>.</div>';
         }
 
