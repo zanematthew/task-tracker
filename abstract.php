@@ -17,7 +17,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      * Full list @ http://codex.wordpress.org/Function_Reference/register_post_type     
      */
     public function registerPostType( $args=NULL ) {
-        $taxonomies = array();
+        $taxonomies = $supports = array();
 
         // our white list taken from http://codex.wordpress.org/Function_Reference/register_post_type see 'supports'
         $white_list = array();
@@ -61,11 +61,15 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 'parent_item_colon' => ''
                 );
 
-            if ( in_array( $post_type['supports'], $white_list['supports'] ) )
-                $supports = $post_type['supports'];
-            else
-                $supports = null;
-                
+            foreach ( $post_type['supports'] as $temp ) {
+                if ( in_array( $temp, $white_list['supports'] ) ) {
+                    print 'supporting: '. $temp . '<br />';
+                    array_push( $supports, $temp );
+                } else {
+                    $supports = 'hi';
+                }
+            }
+
             $capabilities = array(
                 'edit_article'
                 );
@@ -179,10 +183,8 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     // Use WP archive
     // Use WP index
     public function taxonomyRedirect( $current_post_type=null ) {
-        global $wp_query;
 
-        //wp_register_style( 'tt-taxonomy-style', $this->plugin_url . 'theme/css/taxonomy.css', $this->dependencies['style'] , 'all' );   
-        //wp_register_style( 'tt-taxonomy-default-style', $this->plugin_url . 'theme/css/taxonomy-default.css', $this->dependencies['style'] , 'all' );   
+        global $wp_query;
 
         if ( is_null( $current_post_type ) )
             wp_die( 'I need a CPT');
@@ -192,7 +194,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         foreach( $this->post_type as $wtf ) {
             
             $my_cpt = get_post_types( array( 'name' => $wtf['type']), 'objects' );                    
-
+            
             if ( is_tax( $wtf['taxonomies'] ) ) {                                
                 
                 if ( in_array( $wp_query->query_vars['taxonomy'], $wtf['taxonomies'] ) ) {                    
@@ -283,14 +285,14 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             // Use the the curent themes single template
             } else {                                
 
-                load_template( plugin_dir_path( __FILE__ ) . '/single.php' );                        
+                load_template( STYLESHEETPATH . '/single.php' );                        
 
             }
          exit;
         }
     } // End 'singleRedirect'
 
-/* Ajax stuff ********************************************************************/
+
     /** 
      * load our template 
      * uh, why not make it ajaxy? :D
@@ -511,7 +513,5 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         // http://www.garyc40.com/2010/03/5-tips-for-using-ajax-in-wordpress/#js-global
         print '<script type="text/javascript"> var ajaxurl = "'. admin_url("admin-ajax.php") .'"; var _pluginurl="'. plugin_dir_url( __FILE__ ) .'";</script>';    
     } // End 'baseAjaxUrl'
-
-/* Ajax stuff ********************************************************************/
     
 } // End 'CustomPostTypeBase'
