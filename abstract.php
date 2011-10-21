@@ -62,10 +62,11 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 );
 
             foreach ( $post_type['supports'] as $temp ) {
+
                 if ( in_array( $temp, $white_list['supports'] ) ) {
                     array_push( $supports, $temp );
                 } else {
-                    $supports = 'hi';
+                    wp_die('gtfo with this sh!t: <b>' . $temp . '</b> it ain\'t in my white list mofo!' );
                 }
             }
 
@@ -135,11 +136,14 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 'add_new_item'      => __( 'Add New ' . $taxonomy['singular_name'] . ''),
                 'new_item_name'     => __( 'New ' . $taxonomy['singular_name'] . ' Name' )
                 );
-// @todo needs options
+
+            if ( !empty( $taxonomy['hierarchical'] ) )
+                $taxonomy['hierarchical'] = true;
+
             $args = array(
                 'labels'  => $labels,
-                // 'hierarchical' => $taxonomy['hierarchical'],
-                'hierarchical' => true, // non-hierarchical taxes break alot of stuff
+                'hierarchical' => $taxonomy['hierarchical'],
+                //'hierarchical' => true, // non-hierarchical taxes break alot of stuff
                 'query_var' => true,
                 'public' => true,
                 'rewrite' => array('slug' => $taxonomy['slug']),
