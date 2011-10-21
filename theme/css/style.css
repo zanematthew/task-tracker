@@ -201,7 +201,7 @@ li.icon-container { text-indent: 0; width: auto; }
 -------------------------------------------------------------- */
 .zm-tt-navigation-container { background: #e9f7f7; border-radius: 5px; float: left; margin-bottom: 40px; width: 100%; }
 
-.zm-tt-navigation-container li { color: #00aecf; font-size: 14px; margin: 5px 5px 0; padding: 10px; }
+.zm-tt-navigation-container li { color: #00aecf; font-size: 14px; margin: 5px 5px 0; padding: 11px; }
 .zm-tt-navigation-container li a { color: #00aecf; }
 .zm-tt-navigation-container li.create-ticket:hover { background: none; }
 .zm-tt-navigation-container li:hover { background: #fff; border-radius: 5px 5px 0 0; }
