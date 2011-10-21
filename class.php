@@ -70,13 +70,13 @@ class CustomPostType extends CustomPostTypeBase {
         }
         
         // this is global to our plugin
-        wp_register_style(  'qtip-nightly-style', plugin_dir_url( __FILE__ ) . 'library/js/qtip-nightly/jquery.qtip.min.css', '', 'all' );
-        wp_register_script( 'tt-script', plugin_dir_url( __FILE__ ) . 'theme/js/script.js', $this->dependencies['script'], '1.0' );        
-        wp_register_script( 'qtip-nightly', plugin_dir_url( __FILE__ ) . 'library/js/qtip-nightly/jquery.qtip.min.js', $this->dependencies['script'], '0.0.1' );            
-        wp_register_script( 'jquery-ui-effects', plugin_dir_url( __FILE__ ) . 'library/js/jquery-ui/jquery-ui-1.8.13.effects.min.js', $this->dependencies['script'], '1.8.13' );        
+        wp_register_style( 'qtip-nightly-style', plugin_dir_url( __FILE__ ) . 'library/js/qtip-nightly/jquery.qtip.min.css', '', 'all' );
+        wp_register_style( 'inplace-edit-style', plugin_dir_url( __FILE__ ) . 'library/js/inplace-edit/inplace-edit.css', '', 'all' );        
 
-        wp_register_script( 'inplace-edit-script', plugin_dir_url( __FILE__ ) . 'library/js/inplace-edit/inplace-edit.js', $this->dependencies['script'], '0.1' );        
-        wp_register_style( 'inplace-edit-style', plugin_dir_url( __FILE__ ) . 'library/js/inplace-edit/inplace-edit.css', '', 'all' );
+        wp_register_script( 'tt-script',           plugin_dir_url( __FILE__ ) . 'theme/js/script.js', $this->dependencies['script'], '1.0' );        
+        wp_register_script( 'qtip-nightly',        plugin_dir_url( __FILE__ ) . 'library/js/qtip-nightly/jquery.qtip.min.js', $this->dependencies['script'], '0.0.1' );            
+        wp_register_script( 'jquery-ui-effects',   plugin_dir_url( __FILE__ ) . 'library/js/jquery-ui/jquery-ui-1.8.13.effects.min.js', $this->dependencies['script'], '1.8.13' );        
+        wp_register_script( 'inplace-edit-script', plugin_dir_url( __FILE__ ) . 'library/js/inplace-edit/inplace-edit.js', $this->dependencies['script'], '0.1' );                
 
         // @todo consider
         // add_action( 'init', array( &$this, 'pluginInit' ) );
