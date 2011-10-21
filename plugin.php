@@ -390,7 +390,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             $error .= '<div class="message">Please enter a some fucking <em>content</em>.</div>';
         }
 
-        if ( !empty( $error ) ) {
+        if ( !is_null( $error ) ) {
             print '<div class="error-container">' . $error . '</div>';
             exit;
         }

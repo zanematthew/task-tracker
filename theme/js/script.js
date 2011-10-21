@@ -346,11 +346,12 @@ jQuery(document).ready(function( $ ){
         console.log( payload );
         $.ajax({            
             data: "action=postTypeSubmit&" + payload,
-            success: function( msg ) {
-                console.log( data );
-                console.log( msg );                   
-                $( '#error_message_target' ).fadeIn().html( msg );
-                $( '#post_title, textarea[name="content"]').addClass('status-required');
+            success: function( msg ) {                
+                console.log( msg ); 
+                if ( msg.length ) {
+                    $( '#error_message_target' ).fadeIn().html( msg );
+                    $( '#post_title, textarea[name="content"]').addClass('status-required');
+                }
             }
         });                    
     }    
