@@ -505,12 +505,12 @@ jQuery(document).ready(function( $ ){
 
     $( '#utiliy_update_handle' ).live('click', function(){
         $( '#task_entry_utility_target' ).fadeOut();
-        $( '#task_update_container' ).fadeIn();
+        $( '#default_utility_update_container' ).fadeIn();
     });    
 
-    $( '#task_entry_utility_update_exit').live( 'click', function(){        
+    $( '#default_utility_update_exit').live( 'click', function(){        
         $( '#task_entry_utility_target' ).fadeIn();
-        $( '#task_update_container' ).fadeOut();
+        $( '#default_utility_update_container' ).fadeOut();
     });
         
 

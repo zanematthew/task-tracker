@@ -24,7 +24,7 @@
                                 Loading entry utility...
                                 </div>
                             </div>
-                            <?php load_template( plugin_dir_path( __FILE__ ) . 'custom/task-update.php' ); ?>                            
+                            <?php load_template( plugin_dir_path( __FILE__ ) . 'default/utility-update.php' ); ?>                            
                         </div>
 
                     </div>
