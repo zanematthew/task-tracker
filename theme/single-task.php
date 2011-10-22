@@ -17,7 +17,7 @@
                             <div class="post-content"><?php the_content(); ?></div>
                         </div>
 
-                        <div class="entry-utility" id="task_entry_utility_handle" data-post_id="<?php echo $post->ID;?>" data-post_type="<?php echo $post->post_type; ?>" data-template="theme/custom/task-entry-utility.php">
+                        <div class="entry-utility" id="task_entry_utility_handle" data-post_id="<?php echo $post->ID;?>" data-post_type="<?php echo $post->post_type; ?>" data-template="theme/default/utility.php">
                             <div id="task_entry_utility_target">
                                 <div style="text-align: center;">
                                 <div class="tt_loading"></div>
