@@ -277,7 +277,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             } elseif ( file_exists( plugin_dir_path( __FILE__ ) . 'theme/single-' . $current_post_type . '.php' ) ) {                                                
                 wp_enqueue_style( 'tt-single-style' );
 
-                if ( current_user_can( 'editor' ) ) {
+                if ( current_user_can( 'publish_posts' ) ) {
                     wp_enqueue_script( 'inplace-edit-script' );
                     wp_enqueue_style( 'inplace-edit-style' );
                 }
