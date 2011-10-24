@@ -85,18 +85,18 @@ jQuery('a[href*="http://' + location.host + location.pathname + '#/"]').live('cl
 
 /* END Hash Tag Stuff */
 
-jQuery('a[title], label[title]').live("mouseover", function() {
-    jQuery(this).qtip({
+jQuery( 'a[title], label[title]' ).live( "mouseover mouseout", function( event ) {
+    jQuery( this ).qtip({
         overwrite: false,
-        content: jQuery(this).attr("title"),
+        content: jQuery( this ).attr( "title" ),
         show: {
             event: event.type,
             ready: true
         }
     }, event);              
-}).each(function(i) {
-   jQuery.attr(this, 'oldtitle', jQuery.attr(this, 'title'));
-   this.removeAttribute('title');
+}).each(function( i ) {
+   jQuery.attr( this, 'oldtitle', jQuery.attr( this, 'title' ));
+   this.removeAttribute( 'title' );
 });
 
 
