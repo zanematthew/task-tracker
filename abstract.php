@@ -299,7 +299,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         $template = $_POST['template'];
     
         if ( $template == null )
-            wp_die( 'Yo, you need a fucking template!');
+            wp_die( 'Yo, you need a template!');
     
         load_template( plugin_dir_path( __FILE__ ) . $template );
         die();
@@ -319,11 +319,11 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         $error = null;        
 
         if ( empty( $_POST['post_title'] ) ) {
-            $error .= '<div class="message">Please enter a fucking <em>title</em>.</div>';
+            $error .= '<div class="message">Please enter a <em>title</em>.</div>';
         }
 
         if ( empty( $_POST['content'] ) ) {
-            $error .= '<div class="message">Please enter a some fucking <em>content</em>.</div>';
+            $error .= '<div class="message">Please enter a some <em>content</em>.</div>';
         }
 
         if ( !is_null( $error ) ) {
