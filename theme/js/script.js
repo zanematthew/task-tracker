@@ -250,19 +250,24 @@ jQuery(document).ready(function( $ ){
     
     // @todo templating still handled via php, consider js templating?
     function temp_load( params ) {
-
+console.log( params );
         params.action = "loadTemplate";        
+        
+        console.log( $('#tt_main_target') );
+
+console.log( jQuery );
 
         $.ajax({
             data: params,
             success: function( msg ){
+                console.log( msg );
                 $( params.target_div ).fadeIn().html( msg );
             },
             error: function( xhr ){
                 console.log( params );
                 console.log( 'XHR Error: ' + xhr );
             }
-        });    
+        });
     }
     
     /** Load dialog box and get create ticket form */
@@ -345,12 +350,10 @@ jQuery(document).ready(function( $ ){
     /** @todo clear [task] event: needs to be part of class for dialog */    
     $( '#clear' ).live('click', clear_form);
 
-    function submit_boo( payload ){
-        console.log( payload );
+    function submit_boo( payload ){        
         $.ajax({            
             data: "action=postTypeSubmit&" + payload,
-            success: function( msg ) {                
-                console.log( msg ); 
+            success: function( msg ) {                                 
                 if ( msg.length ) {
                     $( '#default_message_target' ).fadeIn().html( msg ).delay(1000).fadeOut();                    
                 }
@@ -358,16 +361,40 @@ jQuery(document).ready(function( $ ){
         }); 
     }    
     
-    $( '#save_exit' ).live( 'click', function(){                
+    $( '#save_exit' ).live( 'click', function(){
+
         submit_boo( $( '#create_task_form' ).serialize() );        
-        $('#create_ticket_dialog').dialog('close');        
-        template = "theme/custom/archive-table.php";
-        post_type = "task"; 
-        temp_load({
-            "target_div": "#tt_main_target",
-            "template": template,
-            "post_type": post_type
-        });
+        
+        $(this).delay( 2000 );
+
+        $('#create_ticket_dialog').dialog('close');
+
+        if ( $( '#archive_table' ).length ) {
+
+            $('#tt_main_target').fadeOut();   
+
+            template = $(this).attr( 'data-template' );
+            
+            data = { 
+                action: "loadTemplate",
+                template: template,
+                post_type: "task",
+                post_status: "published"
+            };
+    
+            $.ajax({
+                data: data,
+                success: function( msg ){
+                    $('#create_ticket_dialog').dialog('close');        
+                    $('#tt_main_target').fadeIn().html( msg );
+                }
+            });
+
+            return false;
+        } else {
+            $('#create_ticket_dialog').dialog('close');                
+        }
+
     });
 
     $( '#save_add' ).live( 'click', function(){                

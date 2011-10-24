@@ -24,8 +24,8 @@
             <div id="publishing-action">
                 <div class="left">                    
                     <input id="save_exit" class="button" type="submit" value="Save &amp; Close" accesskey="p" name="save_exit" data-template="theme/custom/archive-table.php" data-post_type="task"/>
-                    <ul class="entry-utility-container">
-                        <li><a id="save_add" href="javascript://">Save &amp; add another</a>|</li>
+                    <ul class="entry-utility-container">                        
+                        <li><a href="javascript://" id="save_add" data-template="theme/custom/archive-table.php" data-post_type="task">Save &amp; add another</a></li>                        
                         <li><a href="javascript://" id="clear">Clear</a>|</li>
                         <li><a href="javascript://" id="exit" data-template="theme/custom/archive-table.php" data-post_type="task">Exit</a></li>
                     </ul>
