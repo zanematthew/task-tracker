@@ -1,4 +1,4 @@
-<div class="zm-tt-form-container">
+<div class="zm-default-form-container">
     <form action="javascript://" id="filter_task_form">
         <input type="hidden" name="security" value="<?php print wp_create_nonce( 'tt-ajax-forms' );?>">
         <div class="form-wrapper">

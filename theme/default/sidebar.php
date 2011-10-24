@@ -3,7 +3,7 @@
         <li class="zm-base-title">Info</li>
         <li>
             <?php if ( !is_user_logged_in() ) : ?>
-                <div class="zm-tt-form-container">
+                <div class="zm-default-form-container">
                     <a href="javascript://" id="ltfo_handle" class="login" data-template="theme/default/login.php" title="Click to login and create a task">Login to create a task</a>
                 </div>
             <?php endif; ?>

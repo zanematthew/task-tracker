@@ -216,7 +216,7 @@ li.icon-container { text-indent: 0; width: auto; }
 .zm-default-navigation-container nav ul li { float: left; list-style-type: none; }
 .zm-default-navigation-container nav li.create-ticket { float: right; padding: 0; }
 
-.zm-default-navigation-container .zm-tt-form-container a.button { font-size: 15px; float: left; padding: 8px 20px; }
+.zm-default-navigation-container .zm-default-form-container a.button { font-size: 15px; float: left; padding: 8px 20px; }
 /* -------------------------------------------------------------- */
 
 
@@ -231,70 +231,70 @@ li.icon-container { text-indent: 0; width: auto; }
 
 /*= Forms
 -------------------------------------------------------------- */
-.zm-tt-form-container .form-wrapper { float: left; padding: 30px 30px 0; }
+.zm-default-form-container .form-wrapper { float: left; padding: 30px 30px 0; }
 
-.zm-tt-form-container #filter_task_form .form-wrapper { float: left; padding: 15px 0 35px 5px; width: 100%;}
+.zm-default-form-container #filter_task_form .form-wrapper { float: left; padding: 15px 0 35px 5px; width: 100%;}
 
-.zm-tt-form-container form { font: 300 12px/1.4em sans-serif; }
-.zm-tt-form-container form p { float: left; width: 100%; margin: 0 0 20px 0; }
-.zm-tt-form-container form p label { float: left; margin-bottom: 5px; }
-.zm-tt-form-container form fieldset { border: 0; float: left; width: 23%; margin: 0 10px 10px 0; }
-.zm-tt-form-container form fieldset label { clear: both; float: left; font-weight: 300; margin: 0 0 4px 5px; }
+.zm-default-form-container form { font: 300 12px/1.4em sans-serif; }
+.zm-default-form-container form p { float: left; width: 100%; margin: 0 0 20px 0; }
+.zm-default-form-container form p label { float: left; margin-bottom: 5px; }
+.zm-default-form-container form fieldset { border: 0; float: left; width: 23%; margin: 0 10px 10px 0; }
+.zm-default-form-container form fieldset label { clear: both; float: left; font-weight: 300; margin: 0 0 4px 5px; }
 
-.zm-tt-form-container textarea { height: 200px; padding: 5px; width: 97%; }
+.zm-default-form-container textarea { height: 200px; padding: 5px; width: 97%; }
 
-.zm-tt-form-container textarea,
-.zm-tt-form-container input[type="password"],
-.zm-tt-form-container input[type="text"] { background: #FAFAFA; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1) inset; border: 1px solid #ddd; border-radius: 3px; font: 300 15px/1.625 "Helvetica Neue",Helvetica,Arial,sans-serif; color: #888; clear: both; float: left; padding: 5px;width: 97%; }
-.zm-tt-form-container input[type="submit"] { float: left; }
+.zm-default-form-container textarea,
+.zm-default-form-container input[type="password"],
+.zm-default-form-container input[type="text"] { background: #FAFAFA; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1) inset; border: 1px solid #ddd; border-radius: 3px; font: 300 15px/1.625 "Helvetica Neue",Helvetica,Arial,sans-serif; color: #888; clear: both; float: left; padding: 5px;width: 97%; }
+.zm-default-form-container input[type="submit"] { float: left; }
 
-.zm-tt-form-container select:focus,
-.zm-tt-form-container input:focus[type="text"],
-.zm-tt-form-container textarea:focus { border-color: #939393; box-shadow: 0 0 3px #939393; }
+.zm-default-form-container select:focus,
+.zm-default-form-container input:focus[type="text"],
+.zm-default-form-container textarea:focus { border-color: #939393; box-shadow: 0 0 3px #939393; }
 
-.zm-tt-form-container select,
-.zm-tt-form-container textarea { border: 1px solid #ddd; color: #888; padding: 5px; }
-.zm-tt-form-container select { font-weight: 300; font-size: 12px; margin-top: 5px; width: 90%; }
+.zm-default-form-container select,
+.zm-default-form-container textarea { border: 1px solid #ddd; color: #888; padding: 5px; }
+.zm-default-form-container select { font-weight: 300; font-size: 12px; margin-top: 5px; width: 90%; }
 
-.zm-tt-form-container .button-container .left input { float: left; }
-.zm-tt-form-container .button-container .left { float: left; width: 58%; }
-.zm-tt-form-container .button-container .right { float: right; text-align: right; }
-.zm-tt-form-container .button-container ul { list-style-type: none; line-height: 2em;}
-.zm-tt-form-container .button-container ul li { color: #333;
+.zm-default-form-container .button-container .left input { float: left; }
+.zm-default-form-container .button-container .left { float: left; width: 58%; }
+.zm-default-form-container .button-container .right { float: right; text-align: right; }
+.zm-default-form-container .button-container ul { list-style-type: none; line-height: 2em;}
+.zm-default-form-container .button-container ul li { color: #333;
 float: left;
 font-weight: normal;
 margin-right: 5px;
 font-size: 12px; }
-.zm-tt-form-container .button-container ul li a { color: #888; margin-right: 5px; }
+.zm-default-form-container .button-container ul li a { color: #888; margin-right: 5px; }
 /* create */
-.zm-tt-form-container a.button { float: left; padding: 5px 10px; }
+.zm-default-form-container a.button { float: left; padding: 5px 10px; }
 
-.zm-tt-form-container fieldset label { cursor: pointer; }
+.zm-default-form-container fieldset label { cursor: pointer; }
 
-.zm-tt-form-container .type-container label { background-position: 20px 2px; margin: 0 0 10px 4px; padding-top: 4px; }
-.zm-tt-form-container .type-container input { margin-right: 30px; }
+.zm-default-form-container .type-container label { background-position: 20px 2px; margin: 0 0 10px 4px; padding-top: 4px; }
+.zm-default-form-container .type-container input { margin-right: 30px; }
 
-.zm-tt-form-container #create_task_form form p { float: left; margin: 0 0 20px; width: 100%; }
-.zm-tt-form-container #create_task_form .button-container { float: left; margin: 0; padding-right: 10px; width: 96.5%; }
+.zm-default-form-container #create_task_form form p { float: left; margin: 0 0 20px; width: 100%; }
+.zm-default-form-container #create_task_form .button-container { float: left; margin: 0; padding-right: 10px; width: 96.5%; }
 
 .confirmation-container button:last-child,
 
-.zm-tt-form-container #login_exit,
-.zm-tt-form-container a#exit,
-.zm-tt-form-container .button-container ul li a.exit { color: red; }
+.zm-default-form-container #login_exit,
+.zm-default-form-container a#exit,
+.zm-default-form-container .button-container ul li a.exit { color: red; }
 
 .confirmation-container button:first-child,
 #login_form #login_button,
-.zm-tt-form-container input#wp-submit,
-.zm-tt-form-container input#save_exit,
-.zm-tt-form-container input#save_add { color: green; }
+.zm-default-form-container input#wp-submit,
+.zm-default-form-container input#save_exit,
+.zm-default-form-container input#save_add { color: green; }
 
 
-.zm-tt-form-container form p label,
-.zm-tt-form-container form p label .title,
-.zm-tt-form-container form p label option { color: #888; font-size: 12px; font-weight: normal; }
-.zm-tt-form-container form .zm-base-title { color: #444; float: left; font-weight: bold; font-size: 14px; text-transform: capitalize; margin-bottom: 6px; }
-.zm-tt-form-container .button:last-child { margin-right: 0; }
+.zm-default-form-container form p label,
+.zm-default-form-container form p label .title,
+.zm-default-form-container form p label option { color: #888; font-size: 12px; font-weight: normal; }
+.zm-default-form-container form .zm-base-title { color: #444; float: left; font-weight: bold; font-size: 14px; text-transform: capitalize; margin-bottom: 6px; }
+.zm-default-form-container .button:last-child { margin-right: 0; }
 /* -------------------------------------------------------------- */
 
 
@@ -377,12 +377,12 @@ font-size: 12px; }
     }
 
 .ui-button,
-.zm-tt-form-container .button,
-.zm-tt-form-container .button a { color: #00aecf; font-weight: bold; letter-spacing: 0.3px; text-shadow: 1px 1px 0 #fff; }
+.zm-default-form-container .button,
+.zm-default-form-container .button a { color: #00aecf; font-weight: bold; letter-spacing: 0.3px; text-shadow: 1px 1px 0 #fff; }
 
 .ui-button,
-.zm-tt-form-container input[type="submit"],
-.zm-tt-form-container .button { 
+.zm-default-form-container input[type="submit"],
+.zm-default-form-container .button { 
     background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3); 
     background: -webkit-linear-gradient(top , #F9F9F9, #E3E3E3); 
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f9f9f9), color-stop(100%, #e3e3e3)); /* Safari 4+, Chrome 2+ */  
@@ -401,7 +401,7 @@ font-size: 12px; }
     }
     
 .ui-button:hover,
-.zm-tt-form-container .button:hover.button { 
+.zm-default-form-container .button:hover.button { 
     border-radius: 5px; 
     border-color: #939393; 
     border-style: solid; 
@@ -531,7 +531,7 @@ ul.inline li { float: left; }
     margin-right: 10px; 
     }
 
-.zm-tt-form-container .mini-button-container input[type="submit"], 
+.zm-default-form-container .mini-button-container input[type="submit"], 
 .mini-button-container .default {    
     background: #DADADA;
     border-radius: 5px;   
@@ -546,7 +546,7 @@ ul.inline li { float: left; }
 .mini-button-container .update,
 .mini-button-container input.update {}
 
-.zm-tt-form-container .mini-button-container input.default {}
+.zm-default-form-container .mini-button-container input.default {}
 
 .mini-button-container .high {
     background-color: #FF704D;
@@ -568,8 +568,8 @@ a:hover { text-decoration: none; }
 .error-container { background: #FFEBEB; border: 1px solid red; border-radius: 4px; margin: 20px 20px 0; padding: 10px; }
 .error-container em { font-weight: bold; }
 
-.zm-tt-form-container textarea.status-required, 
-.zm-tt-form-container input.status-required { border-color: red; }
+.zm-default-form-container textarea.status-required, 
+.zm-default-form-container input.status-required { border-color: red; }
 
 .success-container { background: #def2c5; border: 1px solid #4a892d; border-radius: 4px; margin: 20px 20px 0; padding: 20px; -moz-border-radius: 3px; } 
 /* ----------------------------------------------------------- */

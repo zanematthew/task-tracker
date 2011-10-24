@@ -40,7 +40,7 @@ if ( !empty( $_POST['post_id']) ) {
 
     </ul>    
     <?php if ( is_user_logged_in() ) : ?>
-    <div class="zm-tt-form-container">        
+    <div class="zm-default-form-container">        
         <form action="javascript://" method="POST" id="default_add_comment_form">
 			<p>
                 <textarea tabindex="4" rows="10" cols="58" id="comment" name="comment"></textarea>

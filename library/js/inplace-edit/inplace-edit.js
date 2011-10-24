@@ -32,7 +32,7 @@
                                 } else if(options.field == "content") {
                                     formHTML += '<textarea class="inputtable" id="' + divid + '-inputtable" name="post_content">' + $element.text() + '</textarea>';
                                 }
-                                formHTML += '<div class="zm-tt-form-container">';
+                                formHTML += '<div class="zm-default-form-container">';
                                     formHTML += '<div class="button-container">';
                                         formHTML += '<input type="submit" class="button save" value="Save"  id="save_' + divid + '" />';
                                         formHTML += '<ul class="entry-utility-container">';

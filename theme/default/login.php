@@ -1,4 +1,4 @@
-<div class="zm-tt-form-container">
+<div class="zm-default-form-container">
     <?php  // wp_login_form( array( 'redirect' => ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ) ); ?>
     <form action="javascript://" id="login_form">
         <div class="form-wrapper">
