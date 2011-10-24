@@ -43,7 +43,7 @@ else
     <div class="zm-default-container zm-default-archive-container">
         <div class="tt-glue">
             <div class="main-container">
-                <?php load_template( MY_PLUGIN_DIR . 'theme/default/navigation.php' ); ?>
+                <?php load_template( dirname( plugin_dir_path( __FILE__ ) ) . '/default/navigation.php' ); ?>
                 <div class="tt-filter-container">
                     <ul class="inline">
                         <li class="icon-container"><a href="#filter-task" id="filter_handle" class="icon-find" tt_template="default/navigation-filter.php" data-post_type="<?php global $wp_query; print $wp_query->posts[0]->post_type; ?>">Filter</a></li>                        
