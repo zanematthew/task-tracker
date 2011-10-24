@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 <?php get_template_part('header-container','index'); ?>
-<div class="zm-tt-container zm-tt-single-container">
+<div class="zm-default-container zm-default-single-container">
     <div class="tt-wrapper">
     <div class="tt-glue">
         <div class="main-container">

@@ -1,4 +1,4 @@
-<div class="zm-tt-sidebar-container">
+<div class="zm-default-sidebar-container">
     <ul class="text">
         <li class="zm-base-title">Info</li>
         <li>

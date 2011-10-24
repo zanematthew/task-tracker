@@ -111,7 +111,7 @@ jQuery(document).ready(function( $ ){
     });
     
     /* @todo this needs to be tied down via a class? */
-    $( '.zm-tt-container tr' ).live( "mouseover mouseout", function( event ){
+    $( '.zm-default-container tr' ).live( "mouseover mouseout", function( event ){
         if ( event.type == "mouseover" ) {                
             $(this).find('.utility-container').addClass( 'zm-base-visible').removeClass( 'zm-base-hidden');
         } else {

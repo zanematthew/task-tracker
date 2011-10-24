@@ -8,7 +8,7 @@ $cpt_obj = get_post_types( array( 'name' => $cpt), 'objects' );
 
 ?>
 
-<div class="zm-tt-container zm-tt-archive-container">
+<div class="zm-default-container zm-default-archive-container">
     <div class="tt-glue">
         <div class="main-container">        
 

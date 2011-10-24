@@ -2,7 +2,7 @@
 .inplace-edit-container textarea { min-height: 200px; float: left; margin: 0; }
 .inplace-edit-container input[type="text"] { margin: 0; z-index: 9999; height: auto; }
 .inplace-edit-container .button-pane { float: left; }
-.inplace-edit-container .zm-tt-single-container textarea { position: relative; z-index: 10; }
+.inplace-edit-container .zm-default-single-container textarea { position: relative; z-index: 10; }
 .inplace-edit-container .zm-default-form-container { background: #F2F2F2;
 	float: left;
 	border-radius: 0 0 5px 5px;

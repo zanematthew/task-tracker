@@ -14,7 +14,7 @@ $x = 0;
 $my_query = new WP_Query( $args );
 
 ?>
-<div class="zm-tt-archive-container" >
+<div class="zm-default-archive-container" >
    <table id="archive_table">
         <thead>
             <tr>

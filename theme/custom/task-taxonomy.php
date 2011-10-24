@@ -40,7 +40,7 @@ else
 
 ?>
 <?php get_template_part('header-container','index'); ?>
-    <div class="zm-tt-container zm-tt-archive-container">
+    <div class="zm-default-container zm-default-archive-container">
         <div class="tt-glue">
             <div class="main-container">
                 <?php load_template( MY_PLUGIN_DIR . 'theme/default/navigation.php' ); ?>
@@ -50,7 +50,7 @@ else
                     </ul>
                 </div>
                 <div id="tt_filter_target"></div>                
-                <div class="zm-tt-archive-container" >
+                <div class="zm-default-archive-container" >
                    <table id="archive_table">
                         <thead>
                             <tr>

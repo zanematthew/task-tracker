@@ -15,9 +15,9 @@ if ( is_null( $cpt ) ) {
 ?>
 <?php get_header(); ?>
 <?php get_template_part('header-container','index'); ?>
-<div class="zm-tt-container zm-tt-archive-container">
+<div class="zm-default-container zm-default-archive-container">
     <div class="tt-glue">
-        <div class="zm-tt-archive-container">
+        <div class="zm-default-archive-container">
 
         <div class="main-container">
             
@@ -30,7 +30,7 @@ if ( is_null( $cpt ) ) {
             <div id="tt_filter_target"></div>                            
 
             <div id="tt_main_target">
-                <div class="zm-tt-archive-container" >
+                <div class="zm-default-archive-container" >
                    <table id="archive_table">
                         <thead>
                             <tr>

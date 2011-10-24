@@ -4,7 +4,7 @@ get_header();
 get_template_part( 'header-container', 'single' ); 
 
 ?>
-<div class="zm-tt-container zm-tt-archive-container">
+<div class="zm-default-container zm-default-archive-container">
 <div class="tt-wrapper">
     <div class="tt-glue">
         <div class="main-container">
