@@ -336,7 +336,10 @@ jQuery(document).ready(function( $ ){
             .val('')
             .removeAttr('checked')
             .removeAttr('selected');   
-        $('.ui-dialog:first').effect("highlight", {}, 3000);            
+        
+        if ( $('.ui-dialog').css('display') != 'none' ) {
+            $('.ui-dialog:first').effect("highlight", {}, 3000);
+        }
     }
 
     /** @todo clear [task] event: needs to be part of class for dialog */    
