@@ -12,9 +12,8 @@
             <label>Description</label>
             <textarea name="content"></textarea>
         </p>        
-        <?php zm_base_build_radio( 'type', array( 'label' => 'Category', 'default' => 'Personal' ) ); ?>
-
-        <?php zm_base_build_radio('status', array( 'default' => 'New' )); ?>
+        <?php zm_base_build_input( array( 'taxonomy'=> 'type', 'type'=> 'checkbox', 'default' => 'Personal', 'label' => 'Category' ) ); ?>        
+        <?php zm_base_build_input( array( 'taxonomy'=> 'status', 'type'=> 'radio', 'default' => 'New' ) ); ?>        
         <?php zm_base_build_input( array( 'taxonomy'=> 'priority', 'type'=> 'radio', 'default' => 'Medium' ) ); ?>
         <?php zm_base_build_options('project'); ?>
         <?php zm_base_build_options('phase'); ?>

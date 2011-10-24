@@ -345,7 +345,7 @@ function zm_base_build_options( $taxonomy=null, $value='term_id' ) {
 endif;
 
 /**
- * Build radio buttons of Terms based on a given Taxonomy. Also will default current term.
+ * Build radio buttons or checkboxes of Terms based on a given Taxonomy.
  *
  * @package helper 
  * @uses zm_base_get_terms to return the terms with error checking 
@@ -353,49 +353,14 @@ endif;
  * @param string $taxonomy
  * @param string $value, The value to be used in the 'name' field of the form
  */
-if ( ! function_exists( 'zm_base_build_radio' ) ) :
-function zm_base_build_radio( $taxonomy=null, $options=array() ) {
-
-    // @todo need an array of "choices" like value => array( 'term_id', 'term_name' )
-    $defaults = array(
-        'default' => null,
-        'value' => 'term_id'
-    );
-    extract( $defaults );
-    extract( $options );
-
-    $terms = zm_base_get_terms( $taxonomy );
-    
-    if ( !empty( $default ) )
-        $current_term = $default;
-    else 
-        $current_term = zm_base_current_term( $taxonomy );
-
-    if ( !isset( $label ) )
-        $label = $taxonomy;
-        
-    /** @todo the below markup should be pulled out into a 'view' */ 
-    ?>    
-    <?php if ( $terms ) : ?>
-    <fieldset class="<?php echo $taxonomy; ?>-container"><legend class="zm-base-title"><?php echo $label; ?></legend>
-    <?php foreach( $terms as $term ) : ?>
-        <?php /** Some cryptic short hand true:false */ ?>
-        <?php $current_term == $term->name ? $selected = 'checked=checked' : $selected = null; ?>
-        <label for="<?php echo $term->$value; ?>" class="zm-base-<?php echo $term->taxonomy; ?>-<?php echo $term->slug;?>" title="<?php echo $term->name;?>">
-        <input type="radio" value="<?php echo $term->$value; ?>" id="<?php echo $term->term_id; ?>" my_term_id="<?php echo $term->term_id; ?>" name="<?php echo $taxonomy; ?>"
-        <?php echo $selected; ?> />
-        <span><?php echo $term->name; ?></span></label>
-    <?php endforeach; ?>
-    </fieldset>
-    <?php endif; ?>
-<?php }
-endif;
-
 if ( ! function_exists( 'zm_base_build_input' ) ) :
 function zm_base_build_input( $taxonomy=null ) {
 
     if ( is_array( $taxonomy ) )
         extract( $taxonomy );
+
+    if ( !isset( $label ) )     
+        $label = $taxonomy;        
 
     // @todo need to merge 
     $defaults = array(
@@ -426,10 +391,9 @@ function zm_base_build_input( $taxonomy=null ) {
     else 
         $current_term = zm_base_current_term( $taxonomy );
         
-    /** @todo the below markup should be pulled out into a 'view' */ 
     ?>    
     <?php if ( $terms ) : ?>    
-    <fieldset class="zm-base-<?php echo $taxonomy; ?>-container"><legend class="zm-base-title"><?php echo $taxonomy; ?></legend>
+    <fieldset class="zm-base-<?php echo $taxonomy; ?>-container"><legend class="zm-base-title"><?php echo $label; ?></legend>
     <?php foreach( $terms as $term ) : ?>
         <?php /** Some cryptic short hand true:false */ ?>
         <?php $current_term == $term->name ? $selected = 'checked=checked' : $selected = null; ?>
@@ -444,7 +408,7 @@ function zm_base_build_input( $taxonomy=null ) {
 endif;
 
 /**
- * Build radio buttons of Terms based on a given Taxonomy.
+ * Build checkbox of Terms based on a given Taxonomy.
  *
  * @package helper 
  * @uses zm_base_get_terms to return the terms with error checking 
