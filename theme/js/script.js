@@ -361,7 +361,13 @@ jQuery(document).ready(function( $ ){
     $( '#save_exit' ).live( 'click', function(){                
         submit_boo( $( '#create_task_form' ).serialize() );        
         $('#create_ticket_dialog').dialog('close');        
-        location.reload( true );                
+        template = "theme/custom/archive-table.php";
+        post_type = "task"; 
+        temp_load({
+            "target_div": "#tt_main_target",
+            "template": template,
+            "post_type": post_type
+        });
     });
 
     $( '#save_add' ).live( 'click', function(){                
