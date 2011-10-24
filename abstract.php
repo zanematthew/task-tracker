@@ -254,14 +254,22 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         }
     } // End 'archiveRedirect'
 
-    public function singleRedirect( $current_post_type=null ) {     
+    /**
+     * Load the single template and needed css/js based on the following hierarchy:
+     *
+     * wp-content/theme/[users theme]/single-[custom_post_type].php
+     * wp-content/plugins/task-tracker/theme/single-[$]custom_post_type].php
+     * wp-content/theme/[users theme]/single.php
+     *
+     * @param current_post_type
+     */
+    public function singleRedirect( $current_post_type=null ) {
         
         wp_register_style( 'tt-single-style', plugin_dir_url( __FILE__ ) . 'theme/css/single.css', $this->dependencies['style'] , 'all' );   
 
         if ( is_null( $current_post_type ) )
             wp_die( 'I need a CPT');
-
-        // @todo this needs a loop for cpt's
+                
         if ( is_single() ) {
                         
             if ( file_exists( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php'  ) ) {                
@@ -272,8 +280,9 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 if ( current_user_can( 'editor' ) ) {
                     wp_enqueue_script( 'inplace-edit-script' );
                     wp_enqueue_style( 'inplace-edit-style' );
-                    load_template( plugin_dir_path( __FILE__ ) . 'theme/single-' . $current_post_type . '.php' );
                 }
+                
+                load_template( plugin_dir_path( __FILE__ ) . 'theme/single-' . $current_post_type . '.php' );                
                         
             } else {                                
                 load_template( STYLESHEETPATH . '/single.php' );                        
