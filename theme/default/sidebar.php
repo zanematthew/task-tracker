@@ -17,7 +17,7 @@
                         </span>
                     <?php endif; ?>
                     <span class="mini-button-container">
-                        <a href="<?php echo wp_logout_url( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ); ?>" title="Click here to Log the out" class="high">Logout</a>
+                        <a href="<?php echo wp_logout_url( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ); ?>" title="Click here to Log out" class="high">Logout</a>
                     </span>
                 </p>
             <?php endif; ?>
