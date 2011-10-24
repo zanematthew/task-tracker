@@ -199,22 +199,24 @@ li.icon-container { text-indent: 0; width: auto; }
 
 /*= Navigation
 -------------------------------------------------------------- */
-.zm-tt-navigation-container { background: #e9f7f7; border-radius: 5px; float: left; margin-bottom: 40px; width: 100%; }
+.zm-default-navigation-container { background: #e9f7f7; border-radius: 5px; float: left; margin-bottom: 40px; width: 100%; }
+.zm-default-navigation-container .post-type { text-transform: capitalize; }
+.zm-default-navigation-container li { color: #00aecf; font-size: 14px; margin: 5px 5px 0; padding: 11px; }
+.zm-default-navigation-container li a { color: #00aecf; }
+.zm-default-navigation-container li.create-ticket:hover { background: none; }
+.zm-default-navigation-container li:hover { background: #fff; border-radius: 5px 5px 0 0; }
+.zm-default-navigation-container li ul { border-radius: 0 0 5px 5px; box-shadow: 0 5px 5px #d8d8d8; background: #fff; display: none; margin: 11px 0 0 -10px; padding: 10px; position: absolute; z-index: 1; }
+.zm-default-navigation-container li ul li { border-bottom: 1px solid #e8e8e8; float: none; margin: 0; padding: 10px 0; }
+.zm-default-navigation-container li ul li:last-child { border-bottom: 0; }
+.zm-default-navigation-container li ul li a { color: #888; font-size: 12px; }
 
-.zm-tt-navigation-container li { color: #00aecf; font-size: 14px; margin: 5px 5px 0; padding: 11px; }
-.zm-tt-navigation-container li a { color: #00aecf; }
-.zm-tt-navigation-container li.create-ticket:hover { background: none; }
-.zm-tt-navigation-container li:hover { background: #fff; border-radius: 5px 5px 0 0; }
-.zm-tt-navigation-container li ul { border-radius: 0 0 5px 5px; box-shadow: 0 5px 5px #d8d8d8; background: #fff; display: none; margin: 11px 0 0 -10px; padding: 10px; position: absolute; z-index: 1; }
-.zm-tt-navigation-container li ul li { border-bottom: 1px solid #e8e8e8; float: none; margin: 0; padding: 10px 0; }
-.zm-tt-navigation-container li ul li:last-child { border-bottom: 0; }
-.zm-tt-navigation-container li ul li a { color: #888; font-size: 12px; }
+.zm-default-navigation-container ul li:hover > ul { background: #fff; display: block; }
 
-.zm-tt-navigation-container ul li:hover > ul { background: #fff; display: block; }
+.zm-default-navigation-container nav ul { list-style-type: none; margin: 0; padding: 0; }
+.zm-default-navigation-container nav ul li { float: left; list-style-type: none; }
+.zm-default-navigation-container nav li.create-ticket { float: right; padding: 0; }
 
-.zm-tt-navigation-container nav.tt-navigation-container ul { list-style-type: none; margin: 0; padding: 0; }
-.zm-tt-navigation-container nav.tt-navigation-container ul li { float: left; list-style-type: none; }
-.zm-tt-navigation-container nav.tt-navigation-container li.create-ticket { float: right; padding: 0; }
+.zm-default-navigation-container .zm-tt-form-container a.button { font-size: 15px; float: left; padding: 8px 20px; }
 /* -------------------------------------------------------------- */
 
 
@@ -266,8 +268,6 @@ font-size: 12px; }
 .zm-tt-form-container .button-container ul li a { color: #888; margin-right: 5px; }
 /* create */
 .zm-tt-form-container a.button { float: left; padding: 5px 10px; }
-
-.zm-tt-navigation-container .zm-tt-form-container a.button { font-size: 15px; float: left; padding: 8px 20px; }
 
 .zm-tt-form-container fieldset label { cursor: pointer; }
 
