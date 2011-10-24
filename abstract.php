@@ -360,7 +360,8 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             'post_content' => $content,
             'post_author' => $author_ID,            
             'post_type' => $type,
-            'post_status' => $status
+            'post_status' => $status,
+            'tax_input' => $_POST
         );
 
         $post_id = wp_insert_post( $post, true );
@@ -369,16 +370,8 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             print_r( $post_id->get_error_message() );              
             print_r( $post_id->get_error_messages() );              
             print_r( $post_id->get_error_data() );                      
-        }            
-        
-        /**
-         * if insert was successful we take everything left in post and submit, yeah, should be while listed, I'm dumb or lazy
-         */
-        if ( !empty( $post_id ) ) {
-            foreach( $taxonomies as $taxonomy => $term ) {
-                if ( isset( $term ) )
-                    wp_set_post_terms( $post_id, $term, $taxonomy );
-            }
+        } else {            
+            print '<div class="success-container"><div class="message">Your content was successfully <strong>Saved</strong></div></div>';
         }
         die();
     } // End 'postTypeSubmit'

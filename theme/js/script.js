@@ -352,28 +352,20 @@ jQuery(document).ready(function( $ ){
             success: function( msg ) {                
                 console.log( msg ); 
                 if ( msg.length ) {
-                    $( '#error_message_target' ).fadeIn().html( msg );
-                    $( '#post_title, textarea[name="content"]').addClass('status-required');
+                    $( '#default_message_target' ).fadeIn().html( msg ).delay(1000).fadeOut();                    
                 }
             }
-        });                    
+        }); 
     }    
     
-    $( '#save_exit' ).live( 'click', function(){        
-        
-        submit_boo( $( '#create_task_form' ).serialize() );
-        
-        $('#create_ticket_dialog').dialog('close');
-        
-        location.reload( true );
-                
+    $( '#save_exit' ).live( 'click', function(){                
+        submit_boo( $( '#create_task_form' ).serialize() );        
+        $('#create_ticket_dialog').dialog('close');        
+        location.reload( true );                
     });
 
     $( '#save_add' ).live( 'click', function(){                
-
-        submit_boo( $( '#create_task_form' ).serialize() );
-
-        // clear_form();
+        submit_boo( $( '#create_task_form' ).serialize() );        
     }); 
 
     /** @todo filter [task] onclick: needs to be part of class for dialog */    
