@@ -306,12 +306,12 @@ jQuery(document).ready(function( $ ){
 
             $('#tt_main_target').fadeOut();   
 
-            template = $(this).attr( 'data-template' );
+            template = $( this ).attr( 'data-template' );
             
             data = { 
                 action: "loadTemplate",
                 template: template,
-                post_type: "task",
+                post_type: $( this ).attr( 'data-post_type' ),
                 post_status: "published"
             };
     
@@ -367,14 +367,12 @@ jQuery(document).ready(function( $ ){
 
         if ( $( '#archive_table' ).length ) {
 
-            $('#tt_main_target').fadeOut();   
-
-            template = $(this).attr( 'data-template' );
+            $('#tt_main_target').fadeOut();               
             
             data = { 
                 action: "loadTemplate",
-                template: template,
-                post_type: "task",
+                template: $(this).attr( 'data-template' ),
+                post_type: $( this ).attr( 'data-post_type' ),
                 post_status: "published"
             };
     
