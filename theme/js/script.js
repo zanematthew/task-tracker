@@ -250,17 +250,12 @@ jQuery(document).ready(function( $ ){
     
     // @todo templating still handled via php, consider js templating?
     function temp_load( params ) {
-console.log( params );
+
         params.action = "loadTemplate";        
         
-        console.log( $('#tt_main_target') );
-
-console.log( jQuery );
-
         $.ajax({
             data: params,
-            success: function( msg ){
-                console.log( msg );
+            success: function( msg ){                
                 $( params.target_div ).fadeIn().html( msg );
             },
             error: function( xhr ){
@@ -276,7 +271,8 @@ console.log( jQuery );
         $('#create_ticket_dialog').dialog('open');        
         temp_load({
             "target_div": "#create_ticket_target",
-            "template": $( this ).attr("data-template")
+            "template": $( this ).attr("data-template"),
+            "post_type": $( this ).attr("data-post_type")
         });
     });   
 
@@ -336,7 +332,7 @@ console.log( jQuery );
     /** @todo clear [task] form: needs to be part of class for dialog */
     /** clear our form */
     function clear_form() {
-        $(':input','#create_task_form')
+        $(':input','#create_default_form')
             .not(':button, :submit, :reset, :hidden')
             .val('')
             .removeAttr('checked')
@@ -363,7 +359,7 @@ console.log( jQuery );
     
     $( '#save_exit' ).live( 'click', function(){
 
-        submit_boo( $( '#create_task_form' ).serialize() );        
+        submit_boo( $( '#create_default_form' ).serialize() );        
         
         $(this).delay( 2000 );
 
@@ -398,7 +394,7 @@ console.log( jQuery );
     });
 
     $( '#save_add' ).live( 'click', function(){                
-        submit_boo( $( '#create_task_form' ).serialize() );        
+        submit_boo( $( '#create_default_form' ).serialize() );        
     }); 
 
     /** @todo filter [task] onclick: needs to be part of class for dialog */    

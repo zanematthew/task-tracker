@@ -1,5 +1,5 @@
 <div class="zm-default-form-container" id="task_create_form">
-    <form action="javascript://" id="create_task_form">
+    <form action="javascript://" id="create_default_form">
         <div id="default_message_target"></div>
         <input type="hidden" name="security" value="<?php print wp_create_nonce( 'tt-ajax-forms' );?>">
         <div class="form-wrapper">
