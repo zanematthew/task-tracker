@@ -4,7 +4,7 @@
     <div class="tt-wrapper">
     <div class="tt-glue">
         <div class="main-container">
-            <?php load_template( plugin_dir_path( __FILE__ ) . 'default/navigation.php' ); ?>
+            <?php load_template( plugin_dir_path( __FILE__ ) . 'custom/task-navigation.php' ); ?>
             <div id="tt_main_target">
                 <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
                     <script type="text/javascript">
