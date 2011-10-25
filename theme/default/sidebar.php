@@ -29,9 +29,8 @@
 
 	// Derive the Current Post Type
 	// Are we viewing a Custom Post Type Archive?
-	if ( is_post_type_archive() ) {
+    if ( is_post_type_archive() || is_single() ) {
 		$cpt = $wp_query->query_vars['post_type'];
-
 	// Are we viewing a Custom Taxonomy Archive?
 	} elseif ( is_tax() ) {
 		$cpt = $wp_query->posts[0]->post_type;
