@@ -97,7 +97,7 @@ function zm_base_posted_in() {
     );
 }
 endif;
-		 
+         
 /** 
  * Retrive user's information based on a param 
  *
@@ -112,8 +112,8 @@ function zm_base_userdata($user_id=1, $param=null){
         exit('need param');
 
     /** @todo check list: http://codex.wordpress.org/Function_Reference/get_userdata */
-	$user_info = get_userdata( $user_id );	
-	echo $user_info->$param ;
+    $user_info = get_userdata( $user_id );  
+    echo $user_info->$param ;
 }
 endif;
 
@@ -127,11 +127,11 @@ if ( ! function_exists( 'zm_base_image_src' ) ) :
 function zm_base_image_src( $size=null ) {
     /** @todo check for post->ID */
     /* @todo check against global image sizes */
-	if ( $size == null )
-		$size = 'large';
+    if ( $size == null )
+        $size = 'large';
 
-	$src = wp_get_attachment_image_src( get_post_thumbnail_id(), $size );
-	print $src[0];
+    $src = wp_get_attachment_image_src( get_post_thumbnail_id(), $size );
+    print $src[0];
 }
 endif;
 
@@ -144,6 +144,9 @@ endif;
  */
 if ( ! function_exists( 'zm_base_get_the_term_list' ) ) :
 function zm_base_get_the_term_list( $post_id=null, $taxonomy=null, $before = '', $sep = ', ', $after = '' ) {
+
+    print_r( $taxonomy );
+    $taxonomy = strtolower( trim( str_replace( " ", "-", $taxonomy ) ) );
 
     if ( is_array( $post_id ) )
         extract( $post_id );
@@ -192,6 +195,8 @@ function zm_base_list_terms( $taxonomy ) {
 
     if ( is_array( $taxonomy ) )
         extract( $taxonomy );
+    
+    $taxonomy = strtolower( trim( str_replace( " ", "-", $taxonomy ) ) );
     
     $terms = get_terms( $taxonomy );
     
@@ -328,16 +333,16 @@ function zm_base_build_options( $taxonomy=null, $value='term_id' ) {
 
     /** @todo the below markup should be pulled out into a 'view' */ 
     ?>
-	<?php if ( $terms ) : ?>
+    <?php if ( $terms ) : ?>
     <fieldset class="zm-base-<?php echo $taxonomy; ?>-container <?php echo $taxonomy; ?>-container">
-    <legend class="zm-base-title"><?php echo $label; ?></legend>	
-	<select name="<?php echo $taxonomy; ?>" id="select_<?php echo $taxonomy; ?>">
+    <legend class="zm-base-title"><?php echo $label; ?></legend>    
+    <select name="<?php echo $taxonomy; ?>" id="select_<?php echo $taxonomy; ?>">
         <option value="">-- Choose a <?php echo $taxonomy; ?> --</option>              
-	    <?php foreach( $terms as $term ) : ?>
+        <?php foreach( $terms as $term ) : ?>
             <?php /** Some cryptic short hand true:false */ ?>
             <?php $current_term == $term->name ? $selected = 'selected=selected' : $selected = null; ?>
             <option value="<?php echo $prepend; ?><?php echo $term->$value; ?>" data-value="<?php echo $term->slug; ?>" class="taxonomy-<?php echo $taxonomy; ?> term-<?php echo $term->slug; ?> <?php echo $taxonomy; ?>-<?php echo $term->term_id; ?>" <?php echo $selected; ?>><?php echo $term->name; ?></option>
-	    <?php endforeach; ?>
+        <?php endforeach; ?>
     </select>
     </fieldset>
     <?php endif; ?>
@@ -474,10 +479,10 @@ function zm_next_post() {
         }
         echo '</div>';
 
-		print '<div class="content">';
-		print '<span class="title">';
-		next_post_link('%link', '%title');
-		print '</span>';
+        print '<div class="content">';
+        print '<span class="title">';
+        next_post_link('%link', '%title');
+        print '</span>';
 
         // Get our list of catgeories
         if (get_the_category($nextPost->ID)) {
@@ -755,7 +760,7 @@ function zm_term_links( $zm_term=null) {
     $html = null;
     $class = '';    
 
-    foreach ($terms as $term) {	    
+    foreach ($terms as $term) {     
 
         // First
         if ( $x == 1 ) {
