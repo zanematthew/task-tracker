@@ -145,14 +145,11 @@ endif;
 if ( ! function_exists( 'zm_base_get_the_term_list' ) ) :
 function zm_base_get_the_term_list( $post_id=null, $taxonomy=null, $before = '', $sep = ', ', $after = '' ) {
 
-    print_r( $taxonomy );
-    $taxonomy = strtolower( trim( str_replace( " ", "-", $taxonomy ) ) );
-
     if ( is_array( $post_id ) )
         extract( $post_id );
 
+    $taxonomy = strtolower( trim( str_replace( " ", "-", $taxonomy ) ) );
     $terms = get_the_terms( $post_id, $taxonomy );
-    
     $my_link = null;
 
     if ( $terms && !is_wp_error( $terms ) ) {
