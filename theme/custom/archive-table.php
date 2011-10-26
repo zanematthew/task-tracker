@@ -63,8 +63,7 @@ $x++;
                             </span>
                         <?php endif; ?>
 
-                        Added <?php tt_task_age(); ?> ago
-
+                        <br />Added <?php tt_task_age(); ?> ago
                     </div>
                 </td>
                     <td>

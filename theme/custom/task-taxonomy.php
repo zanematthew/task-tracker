@@ -72,14 +72,23 @@ else
                                      <strong class="title"><a href="<?php the_permalink(); ?>" title="Link to project: <?php the_title(); ?>">#<?php the_ID(); ?> <?php the_title(); ?></a></strong>
                                      <span class="<?php print $comment_class; ?>"><a href="<?php the_permalink(); ?>#comments_target" title="<?php comments_number(); ?>"><?php comments_number(' '); ?></a></span>
 
-                                     <div class="utility-container zm-base-hidden">
-                                         <?php edit_post_link('Admin Edit', '' , ' |'); ?>
-                                         by <?php the_author(); ?> on <?php the_time(get_option('date_format')); ?> |
-                                         <?php if ( is_user_logged_in() ) : ?>
-                                         <a href="#delete" class="default_delete" data-post_id="<?php print $post->ID; ?>" data-security="<?php print wp_create_nonce( 'tt-ajax-forms' );?>">Delete</a>
-                                         <?php endif; ?>
-                                     </div>
-                                </td>
+                                    <div class="utility-container zm-base-hidden">
+                                        
+                                        <?php if ( is_user_logged_in() && current_user_can( 'administrator' ) ) : ?>
+                                        <span class="mini-button-container">
+                                            <span class="default"><?php edit_post_link('WordPress Admin Edit', '' ); ?></span>
+                                        </span>
+                                        <?php endif; ?>
+
+                                        <?php if ( is_user_logged_in() ) : ?>
+                                            <span class="mini-button-container">
+                                                <a href="#delete" class="default_delete high" data-post_id="<?php print $post->ID; ?>" data-security="<?php print wp_create_nonce( 'tt-ajax-forms' );?>">Delete</a>
+                                            </span>
+                                        <?php endif; ?>
+
+                                        <br />Added <?php tt_task_age(); ?> ago
+                                    </div>
+                                    </td>
                                 <td>
                                     <?php tt_task_age(); ?>
                                 </td>

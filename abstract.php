@@ -202,19 +202,20 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         if ( is_null( $current_post_type ) )
             wp_die( 'I need a CPT');
 
-        wp_register_style( 'tt-taxonomy-default-style', plugin_dir_url( __FILE__ ) . 'theme/css/taxonomy.css', $this->dependencies['style'] , 'all' );   
+        wp_register_style( 'taxonomy-default-style', plugin_dir_url( __FILE__ ) . 'theme/css/taxonomy.css', $this->dependencies['style'] , 'all' );   
 
         foreach( $this->post_type as $wtf ) {
             
             $my_cpt = get_post_types( array( 'name' => $wtf['type']), 'objects' );                    
             
-            if ( is_tax( $wtf['taxonomies'] ) ) {                                
+            if ( is_tax( $wtf['taxonomies'] ) ) {                                                
                 if ( in_array( $wp_query->query_vars['taxonomy'], $wtf['taxonomies'] ) ) {                                        
-                    if ( file_exists( plugin_dir_path( __FILE__ ) . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' ) ) {                        
+                    if ( file_exists( plugin_dir_path( __FILE__ ) . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' ) ) {                                                
+                        wp_enqueue_style( 'taxonomy-default-style' );                        
                         load_template( plugin_dir_path( __FILE__ ) . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' );                                        
-                    } elseif ( file_exists( plugin_dir_path( __FILE__ ) . 'theme/default/taxonomy.php' ) ) {                                                
-                        wp_enqueue_style( 'tt-taxonomy-default-style' );
-                        load_template( plugin_dir_path( __FILE__ ) . 'theme/default/taxonomy.php' );                                        
+                    } elseif ( file_exists( plugin_dir_path( __FILE__ ) . 'theme/default/taxonomy.php' ) ) {                                                                        
+                        wp_enqueue_style( 'taxonomy-default-style' );
+                        load_template( plugin_dir_path( __FILE__ ) . 'theme/default/taxonomy.php' );
                     } elseif ( file_exists( STYLESHEETPATH . '/archive.php' ) ) {                    
                         load_template( STYLESHEETPATH . '/archive.php' );                                                            
                     } else {                        

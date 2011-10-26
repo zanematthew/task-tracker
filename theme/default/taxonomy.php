@@ -50,7 +50,22 @@ if ( is_null( $cpt ) ) {
                                      <div class="utility-container zm-base-hidden">
                                          <?php edit_post_link('Admin Edit', '' , ' |'); ?>
                                          by <?php the_author(); ?> on <?php the_time(get_option('date_format')); ?> |
-                                         <a href="#delete" class="default_delete" data-post_id="<?php print $post->ID; ?>" data-security="<?php print wp_create_nonce( 'tt-ajax-forms' );?>">Delete</a>
+                                    <div class="utility-container zm-base-hidden">
+                                        
+                                        <?php if ( is_user_logged_in() && current_user_can( 'administrator' ) ) : ?>
+                                        <span class="mini-button-container">
+                                            <span class="default"><?php edit_post_link('WordPress Admin Edit', '' ); ?></span>
+                                        </span>
+                                        <?php endif; ?>
+
+                                        <?php if ( is_user_logged_in() ) : ?>
+                                            <span class="mini-button-container">
+                                                <a href="#delete" class="default_delete high" data-post_id="<?php print $post->ID; ?>" data-security="<?php print wp_create_nonce( 'tt-ajax-forms' );?>">Delete</a>
+                                            </span>
+                                        <?php endif; ?>
+
+                                        <br />Added <?php tt_task_age(); ?> ago
+                                    </div>
                                      </div>
                                 </td>
                                 <?php foreach( $cpt_obj[ $cpt ]->taxonomies as $tax ) : ?>
