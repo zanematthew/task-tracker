@@ -218,7 +218,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                         load_template( plugin_dir_path( __FILE__ ) . 'theme/default/taxonomy.php' );
                     } elseif ( file_exists( STYLESHEETPATH . '/archive.php' ) ) {                    
                         load_template( STYLESHEETPATH . '/archive.php' );                                                            
-                    } else {                        
+                    } else {                                        
                         load_template( STYLESHEETPATH . '/index.php' );                                                                        
                     }                        
                 } else {
@@ -237,26 +237,42 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         wp_register_style( 'tt-archive-style', plugin_dir_url( __FILE__ ) . 'theme/css/archive.css', $this->dependencies['style'] , 'all' );   
         wp_register_style( 'tt-archive-default-style', plugin_dir_url( __FILE__ ) . 'theme/css/archive-default.css', $this->dependencies['style'] , 'all' );   
 
-        if ( is_null( $current_post_type ) )
-            wp_die( 'I need a CPT');
+        if ( is_null( $current_post_type ) ) {
+            wp_die( 'I need a CPT');        
+        }
 
-        // @todo this needs a loop for cpt's
+        $default_template = plugin_dir_path( __FILE__ ) . 'theme/default/archive.php';
+        $custom_template  = plugin_dir_path( __FILE__ ) . 'theme/custom/archive-' . $current_post_type . '.php';
+        $theme_template   = STYLESHEETPATH . '/archive-' . $current_post_type . '.php';
+
+        // @todo this will need a loop to handle multiple cpt's
         if ( is_post_type_archive( $current_post_type ) ) {            
-            if ( file_exists( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' ) ) {                                
-                load_template( STYLESHEETPATH . '/archive-' . $current_post_type . '.php' );                    
-            } elseif ( file_exists( plugin_dir_path( __FILE__ ) . 'theme/archive-' . $current_post_type . '.php' ) ) {
+
+            if ( file_exists( $theme_template ) ) {                
+                load_template( $theme_template );
+            } 
+
+            elseif ( file_exists( $custom_template ) ) {
                 wp_enqueue_style( 'tt-archive-style' );
-                load_template( plugin_dir_path( __FILE__ ) . 'theme/archive-' . $current_post_type . '.php' );                                
-            } elseif ( file_exists( plugin_dir_path( __FILE__ ) . 'theme/default/archive-default.php' ) ) {                            
+                load_template( $custom_template );
+            } 
+
+            elseif ( file_exists( $default_template ) ) {
                 wp_enqueue_style( 'tt-archive-default-style' );
-                load_template( plugin_dir_path( __FILE__ ) . 'theme/default/archive-default.php' );                
+                load_template( $default_template );
             }
             exit;   
         }
     } // End 'archiveRedirect'
 
     /**
-     * Load the single template and needed css/js based on the following hierarchy:
+     * Load the single template and needed css/js.
+     *
+     * If we do NOT have a "current post type", just load the default single.php 
+     * from the users custom theme folder. If we do have one we do some checking, 
+     * first we check to see if we (plugin developer) have a custom template in:
+     * /custom/single-[custom post type].php if we do load that if we don't use 
+     * the default in /default/single.php     
      *
      * wp-content/theme/[users theme]/single-[custom_post_type].php
      * wp-content/plugins/[plugin name]]/theme/single-[$]custom_post_type].php
@@ -265,17 +281,26 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      * @param current_post_type
      */
     public function singleRedirect( $current_post_type=null ) {
-        
-        wp_register_style( 'tt-single-style', plugin_dir_url( __FILE__ ) . 'theme/css/single.css', $this->dependencies['style'] , 'all' );   
 
-        if ( is_null( $current_post_type ) )
-            wp_die( 'I need a CPT');
-                
+        if ( is_null( $current_post_type ) || empty( $current_post_type ) ) {
+            load_template( STYLESHEETPATH . '/single.php' );
+            exit;
+        }
+
+        wp_register_style( 'tt-single-style', plugin_dir_url( __FILE__ ) . 'theme/css/single.css', $this->dependencies['style'] , 'all' );   
+        
+        $default_template = plugin_dir_path( __FILE__ ) . 'theme/default/single.php';
+        $custom_template  = plugin_dir_path( __FILE__ ) . 'theme/custom/single-' . $current_post_type . '.php';
+        $theme_template   = STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php';
+
         if ( is_single() ) {
                         
-            if ( file_exists( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php'  ) ) {                
-                load_template( STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php' );                                
-            } elseif ( file_exists( plugin_dir_path( __FILE__ ) . 'theme/single-' . $current_post_type . '.php' ) ) {                                                
+            if ( file_exists( $theme_template ) ) {                
+                
+                load_template( $theme_template );          
+
+            } elseif ( file_exists( $custom_template ) ) {
+
                 wp_enqueue_style( 'tt-single-style' );
 
                 if ( current_user_can( 'publish_posts' ) ) {
@@ -283,7 +308,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                     wp_enqueue_style( 'inplace-edit-style' );
                 }
                 
-                load_template( plugin_dir_path( __FILE__ ) . 'theme/single-' . $current_post_type . '.php' );                
+                load_template( $custom_template );
                         
             } else {                                
                 wp_enqueue_style( 'tt-single-style' );
@@ -293,8 +318,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                     wp_enqueue_style( 'inplace-edit-style' );
                 }
                 
-                load_template( plugin_dir_path( __FILE__ ) . 'theme/default/single.php' );                
-
+                load_template( $default_template );
             }
          exit;
         }

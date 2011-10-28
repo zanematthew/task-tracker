@@ -8,7 +8,7 @@ get_template_part( 'header-container', 'single' );
 <div class="tt-wrapper">
     <div class="tt-glue">
         <div class="main-container">
-            <?php load_template( plugin_dir_path( __FILE__ ) . 'custom/task-navigation.php' ); ?>   
+            <?php load_template( plugin_dir_path( __FILE__ ) . 'task-navigation.php' ); ?>   
             <div class="tt-filter-container">
                 <ul class="inline">
                     <li class="icon-container"><a href="javascript://" id="filter_handle" class="icon-find" data-template="default/navigation-filter.php" data-post_type="<?php print  get_query_var( 'post_type' );?>">Advanced Filter</a></li>
@@ -21,7 +21,7 @@ get_template_part( 'header-container', 'single' );
                 <div id="no_results"></div>                        
             </div>
         </div>
-        <?php load_template( plugin_dir_path( __FILE__ ) . 'custom/task-sidebar.php' ); ?>    
+        <?php load_template( plugin_dir_path( __FILE__ ) . 'task-sidebar.php' ); ?>    
     </div>
 </div>
 </div>

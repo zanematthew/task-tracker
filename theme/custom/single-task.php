@@ -4,7 +4,7 @@
     <div class="tt-wrapper">
     <div class="tt-glue">
         <div class="main-container">
-            <?php load_template( plugin_dir_path( __FILE__ ) . 'custom/task-navigation.php' ); ?>
+            <?php load_template( plugin_dir_path( __FILE__ ) . 'task-navigation.php' ); ?>
             <div id="tt_main_target">
                 <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
                     <script type="text/javascript">
@@ -24,7 +24,7 @@
                                 Loading entry utility...
                                 </div>
                             </div>
-                            <?php load_template( plugin_dir_path( __FILE__ ) . 'default/utility-update.php' ); ?>                            
+                            <?php load_template( dirname( plugin_dir_path( __FILE__ ) ) . '/default/utility-update.php' ); ?>                                                        
                         </div>
 
                     </div>
@@ -37,7 +37,7 @@
                 <?php endwhile; ?>
             </div>
         </div>
-        <?php load_template( plugin_dir_path( __FILE__ ) . 'custom/task-sidebar.php' ); ?>    
+        <?php load_template( plugin_dir_path( __FILE__ ) . 'task-sidebar.php' ); ?>    
     </div>
 </div>
 </div>
