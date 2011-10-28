@@ -261,6 +261,14 @@ abstract class CustomPostTypeBase implements ICustomPostType {
                 wp_enqueue_style( 'tt-archive-default-style' );
                 load_template( $default_template );
             }
+
+            else {
+                print '<p>Default: ' . $default_template . '</p>';
+                print '<p>Custom: ' . $custom_template . '</p>';
+                print '<p>Theme: ' . $theme_template . '</p>';
+                wp_die('Unable to load any template');
+            }
+
             exit;   
         }
     } // End 'archiveRedirect'
