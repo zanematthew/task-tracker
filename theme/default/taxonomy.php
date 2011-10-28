@@ -20,7 +20,9 @@ if ( is_null( $cpt ) ) {
         <div class="zm-default-archive-container">
 
         <div class="main-container">
-            
+
+            <?php load_template( plugin_dir_path( __FILE__ ) . '/navigation.php' ); ?>
+
             <div class="tt-filter-container">
                 <ul class="inline">
                     <li><a href="javascript://" id="filter_handle" data-template="default/navigation-filter.php" data-post_type="<?php print  $cpt; ?>">Advanced Filter</a></li>

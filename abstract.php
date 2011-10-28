@@ -186,15 +186,23 @@ abstract class CustomPostTypeBase implements ICustomPostType {
 
         $current_post_type = get_query_var( 'post_type' );
         
-        $this->singleRedirect( $current_post_type );                        
+        $this->singleRedirect( $current_post_type );
         $this->taxonomyRedirect( $current_post_type );        
         $this->archiveRedirect( $current_post_type );
     } // End 'function templateRedirect'    
 
-    // Did I make one?
-    // Use MY default?
-    // Use WP archive
-    // Use WP index
+
+    /**
+     * Load the taxonomy template, css, js files and allow the users theme folder
+     * override our default theme.
+     *
+     * This should work for an unlimited number of custom post types. If the user
+     * made a custom tempalte in their theme folder load that, if not we load our
+     * custom template, and fall back on the default template.
+     *
+     * @param current_post_type
+     *
+     */
     public function taxonomyRedirect( $current_post_type=null ) {
 
         global $wp_query;
@@ -208,19 +216,28 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             
             $my_cpt = get_post_types( array( 'name' => $wtf['type']), 'objects' );                    
             
+            $custom_template  = plugin_dir_path( __FILE__ ) . 'theme/custom/' . $wtf['type'] . '-taxonomy.php';
+            $default_template = plugin_dir_path( __FILE__ ) . 'theme/default/taxonomy.php';
+            $theme_template   = STYLESHEETPATH . '/index.php';
+
             if ( is_tax( $wtf['taxonomies'] ) ) {                                                
+
                 if ( in_array( $wp_query->query_vars['taxonomy'], $wtf['taxonomies'] ) ) {                                        
-                    if ( file_exists( plugin_dir_path( __FILE__ ) . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' ) ) {                                                
+                
+                    if ( file_exists( $custom_template ) ) {                        
+                        load_template( $custom_template );
+                    }
+                    
+                    elseif ( file_exists( $default_template ) ) {                                                                        
                         wp_enqueue_style( 'taxonomy-default-style' );                        
-                        load_template( plugin_dir_path( __FILE__ ) . 'theme/custom/' . $wtf['type'] . '-taxonomy.php' );                                        
-                    } elseif ( file_exists( plugin_dir_path( __FILE__ ) . 'theme/default/taxonomy.php' ) ) {                                                                        
+                        load_template( $default_template );
+                    } 
+
+                    else {                                  
                         wp_enqueue_style( 'taxonomy-default-style' );
-                        load_template( plugin_dir_path( __FILE__ ) . 'theme/default/taxonomy.php' );
-                    } elseif ( file_exists( STYLESHEETPATH . '/archive.php' ) ) {                    
-                        load_template( STYLESHEETPATH . '/archive.php' );                                                            
-                    } else {                                        
-                        load_template( STYLESHEETPATH . '/index.php' );                                                                        
-                    }                        
+                        load_template( $default_template );
+                    } 
+
                 } else {
                     wp_die( 'Sorry the following taxonomies: ' . print_r( $wtf['taxonomies'] ) . ' are not in my array' );
                 }  
@@ -274,7 +291,8 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     } // End 'archiveRedirect'
 
     /**
-     * Load the single template and needed css/js.
+     * Load the single template and needed css/js allowing the template to be overriden
+     * via the users theme folder.
      *
      * If we do NOT have a "current post type", just load the default single.php 
      * from the users custom theme folder. If we do have one we do some checking, 
@@ -290,19 +308,18 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      */
     public function singleRedirect( $current_post_type=null ) {
 
-        if ( is_null( $current_post_type ) || empty( $current_post_type ) ) {
-            load_template( STYLESHEETPATH . '/single.php' );
-            exit;
-        }
-
-        wp_register_style( 'tt-single-style', plugin_dir_url( __FILE__ ) . 'theme/css/single.css', $this->dependencies['style'] , 'all' );   
-        
-        $default_template = plugin_dir_path( __FILE__ ) . 'theme/default/single.php';
-        $custom_template  = plugin_dir_path( __FILE__ ) . 'theme/custom/single-' . $current_post_type . '.php';
-        $theme_template   = STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php';
-
         if ( is_single() ) {
-                        
+            if ( is_null( $current_post_type ) || empty( $current_post_type ) ) {
+                load_template( STYLESHEETPATH . '/single.php' );
+                exit;
+            }
+
+            wp_register_style( 'tt-single-style', plugin_dir_url( __FILE__ ) . 'theme/css/single.css', $this->dependencies['style'] , 'all' );   
+            
+            $default_template = plugin_dir_path( __FILE__ ) . 'theme/default/single.php';
+            $custom_template  = plugin_dir_path( __FILE__ ) . 'theme/custom/single-' . $current_post_type . '.php';
+            $theme_template   = STYLESHEETPATH . 'theme/single-' . $current_post_type . '.php';
+                            
             if ( file_exists( $theme_template ) ) {                
                 
                 load_template( $theme_template );          
