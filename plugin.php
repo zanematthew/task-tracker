@@ -74,7 +74,7 @@ class CustomPostType extends CustomPostTypeBase {
         $this->loginSetup();                
     }        
 
-    public function regsiterActivation() {
+    public function registerActivation() {
 
         /**
          * Dont forget registration hook is called 

@@ -24,7 +24,7 @@ interface ICustomPostType {
     public function registerTaxonomy( $param=array() );        
     // @todo http://codex.wordpress.org/Function_Reference/locate_template
     public function templateRedirect();
-    public function regsiterActivation();
+    public function registerActivation();
     // public function regsiterDeactivation();
     // public function baseStyleSheet( $param=array() );
 
