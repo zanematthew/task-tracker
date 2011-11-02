@@ -179,8 +179,14 @@ jQuery(document).ready(function( $ ){
     $( '#default_utility_udpate_form' ).live('submit', function(){
         $.ajax({
             data: "action=defaultUtilityUpdate&" + $(this).serialize(), 
-            success: function( msg ){                
-               location.reload( true );
+            success: function( msg ){                               
+                temp_load({
+                    "target_div": "#task_entry_utility_target",
+                    "template": $( '#task_entry_utility_handle' ).attr( 'data-template' ),
+                    "post_id": $( '#task_entry_utility_handle' ).attr( 'data-post_id' ),
+                    "post_type": $( '#task_entry_utility_handle' ).attr( 'data-post_type' )
+                });
+                $('#default_utility_update_container').fadeOut();
             }
         });    
     });
