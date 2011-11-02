@@ -252,7 +252,7 @@ jQuery(document).ready(function( $ ){
     function temp_load( params ) {
 
         params.action = "loadTemplate";        
-        
+        console.log( 'show loading icon in target' );
         $.ajax({
             data: params,
             success: function( msg ){                
@@ -549,9 +549,12 @@ jQuery(document).ready(function( $ ){
 
         $.ajax({
             data: data, 
-            success: function( msg ){            
-                // $('#comments_target ul').append('<li><div class="content">' + data.comment + '</div></li>').slideDown();
-                location.reload( true );
+            success: function( msg ){                                
+                temp_load({
+                    "target_div": "#task_comment_target",
+                    "template": $( '#task_comment_handle' ).attr( 'data-template' ),
+                    "post_id": $( '#task_comment_handle' ).attr( 'data-post_id' )
+                });
             },
             error: function( xhr ) {
                 console.log( 'XHR Error: ' + xhr );
