@@ -48,9 +48,9 @@ class CustomPostType extends CustomPostTypeBase {
         parent::__construct();
 
         add_action( 'init', array( &$this, 'registerPostType' ) );        
-        add_action( 'init', array( &$this, 'registerTaxonomy' ) );                                    
+        add_action( 'init', array( &$this, 'registerTaxonomy' ) );                                            
         add_action( 'wp_footer', array( &$this, 'createPostTypeDiv' ) );            
-        add_action( 'wp_footer', array( &$this, 'createDeleteDiv' ) );            
+        add_action( 'wp_footer', array( &$this, 'createDeleteDiv' ) );                    
               
         register_activation_hook( __FILE__, array( &$this, 'registerActivation') );        
 
@@ -177,18 +177,22 @@ class CustomPostType extends CustomPostTypeBase {
         </div>
     <?php }
 
-    public function createPostTypeDiv(){ ?>
+    public function createPostTypeDiv(){ 
+        if ( is_user_logged_in() ) : ?>
         <div id="create_ticket_dialog" class="dialog-container">
             <div id="create_ticket_target" style="display: none;">hi</div>
         </div>
-    <?php } 
+        <?php endif;
+    } 
 
-    public function createDeleteDiv(){ ?>
+    public function createDeleteDiv(){ 
+        if ( is_user_logged_in() ) : ?>
         <div id="delete_dialog" class="dialog-container">
             <p>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
             <div id="delete_target" style="display: none">delete hi</div>
         </div>
-    <?php }
+        <?php endif;
+    }
 } // End 'CustomPostType'
 
 
