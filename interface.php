@@ -1,5 +1,4 @@
 <?php
-
 /**
  * A predetermined list of methods our class MUST implement
  *

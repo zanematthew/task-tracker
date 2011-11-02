@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Helper Funciton Definition -- We define our helper function by the following: 
  * "Any funciton that maybe of use when building a WordPress theme." They should have the following 
