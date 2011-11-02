@@ -1,13 +1,7 @@
 <?php
-if ( is_admin() ) {
-    ini_set('display_errors', 'on');
-    error_reporting( E_ALL );
-}
-
 /**
  * Registers custom post type: "Task" with custom taxonoimes: "Type", "Status", "Priority", "Milestone", "Assigned" and "Project".
  */
-
 /**
  * Plugin Name: Task Tracker
  * Plugin URI: --
@@ -17,7 +11,6 @@ if ( is_admin() ) {
  * Author URI: http://zanematthew.com/
  * License: GP
  */
-
 require_once 'wordpress-helper-functions.php';
 require_once 'interface.php';
 require_once 'abstract.php';
@@ -36,11 +29,11 @@ class CustomPostType extends CustomPostTypeBase {
      * Every thing that is "custom" to our CPT goes here.
      */
     public function __construct() {
-        
-        wp_localize_script( 'my-ajax-request', 'MyAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );                
+
+        wp_localize_script( 'my-ajax-request', 'MyAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 
         self::$instance = $this;       
-        
+
         $this->dependencies['script'] = array(
             'jquery',
             'jquery-ui-core',
@@ -51,15 +44,15 @@ class CustomPostType extends CustomPostTypeBase {
             'tt-base-style',
             'inplace-edit-style'
             );
-        
+
         parent::__construct();
 
         add_action( 'init', array( &$this, 'registerPostType' ) );        
         add_action( 'init', array( &$this, 'registerTaxonomy' ) );                                    
         add_action( 'wp_footer', array( &$this, 'createPostTypeDiv' ) );            
         add_action( 'wp_footer', array( &$this, 'createDeleteDiv' ) );            
-                                
-        register_activation_hook( __FILE__, array( &$this, 'regsiterActivation') );        
+              
+        register_activation_hook( __FILE__, array( &$this, 'registerActivation') );        
 
         if ( !is_admin() ) {
             wp_register_style( 'tt-base-style',      plugin_dir_url( __FILE__ ) . 'theme/css/style.css', '', 'all' );
@@ -74,7 +67,7 @@ class CustomPostType extends CustomPostTypeBase {
         $this->loginSetup();                
     }        
 
-    public function registerActivation() {
+    public function registerActivation(){
 
         /**
          * Dont forget registration hook is called 
@@ -83,12 +76,6 @@ class CustomPostType extends CustomPostTypeBase {
          */
         $taxonomies = array( 'priority', 'status', 'type' );
         $this->registerTaxonomy( $taxonomies );
-                
-        // Set to we know its been installed at least once before
-        $installed = get_option( 'zm_tt_number_installed' );
-
-        if ( $installed == '1' )
-            return;
     
         // Priority 
         wp_insert_term( 'High',   'priority', array( 'description' => '', 'slug' => 'high' ) );
@@ -113,12 +100,13 @@ class CustomPostType extends CustomPostTypeBase {
         // insert sample task  
         $author_ID = get_current_user_id();
         $post = array(
-            'post_title' => 'Your first Task!',
+            'post_title'   => 'Your first Task!',
             'post_content' => 'This is a sample Task make it short and sweet, hopefully this system will help you get a tad more stuff done :D',
-            'post_author' => $author_ID,
-            'post_type' => 'task',
-            'post_status' => 'publish'
+            'post_author'  => $author_ID,
+            'post_type'    => 'task',
+            'post_status'  => 'publish'
         );
+
         $post_id = wp_insert_post( $post, true );
 
         // assign a term for our sample Task  
@@ -131,9 +119,7 @@ class CustomPostType extends CustomPostTypeBase {
 
             $term_id = term_exists( 'personal', 'type' );
             wp_set_post_terms( $post_id, $term_id, 'type' );
-
-            update_option( 'zm_tt_number_installed', '1' );
-        }        
+        }            
     }    
     
     /**
