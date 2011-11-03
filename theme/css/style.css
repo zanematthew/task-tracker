@@ -3,6 +3,12 @@
 a { color: #1982D1; text-decoration: none; }
 pre { background: #333; border-top: 3px solid #000; color: green; font: 300 11px/1em Courier; }
 
+/*= Reset 
+-------------------------------------------------------------- */ 
+.zm-default-container ul { padding: 0; }
+.zm-default-form-container li,
+.zm-default-container li { list-style: none; }
+.zm-default-container table { border-spacing: 0; }
 
 /**
  * Use this color picker: http://www.w3schools.com/tags/ref_colorpicker.asp
