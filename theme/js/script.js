@@ -19,6 +19,26 @@ jQuery( 'a[title], label[title]' ).live( "mouseover mouseout", function( event )
 
 
 jQuery(document).ready(function( $ ){
+
+    // @todo templating still handled via php, consider js templating?
+    window.temp_load = function( params ) {
+
+        params.action = "loadTemplate";        
+        console.log( 'show loading icon in target' );
+        $.ajax({
+            data: params,
+            success: function( msg ){                
+                $( params.target_div ).fadeIn().html( msg );
+                if(typeof params.callback === "function") {
+                    params.callback();
+                }
+            },
+            error: function( xhr ){
+                console.log( params );
+                console.log( 'XHR Error: ' + xhr );
+            }
+        });
+    }
     
     /**
      * Default ajax setup
@@ -133,10 +153,6 @@ jQuery(document).ready(function( $ ){
         "login_dialog": { 
             autoOpen: false,
             title: 'Please <em>Login</em>',
-            open: function() {
-                console.log($(this));
-              $(".user_name").focus();
-            },
             modal: true
         },
         "delete_dialog": { 
@@ -171,30 +187,7 @@ jQuery(document).ready(function( $ ){
     $( '#create_ticket_dialog, #login_dialog, #delete_dialog' ).each(function() {
         $(this).dialog(dialogs[this.id]);
     });
-
-    $( '#login_exit' ).live('click', function(){
-        $( '#login_dialog' ).dialog( 'close' ); 
-    });
-    
-    // @todo templating still handled via php, consider js templating?
-    function temp_load( params ) {
-
-        params.action = "loadTemplate";        
-        console.log( 'show loading icon in target' );
-        $.ajax({
-            data: params,
-            success: function( msg ){                
-                $( params.target_div ).fadeIn().html( msg );
-                if(typeof params.callback === "function") {
-                    params.callback();
-                }
-            },
-            error: function( xhr ){
-                console.log( params, 'XHR Error: ' + xhr );
-            }
-        });
-    }
-    
+        
     /** Load dialog box and get create ticket form */
     /** @todo create dialog [task]: needs to be part of class for dialog */
     $( '#create_ticket' ).click(function(){
@@ -205,29 +198,6 @@ jQuery(document).ready(function( $ ){
             "post_type": $( this ).attr("data-post_type")
         });
     });   
-
-    // @todo look up^^ very similar!
-    $( '#ltfo_handle' ).click(function(){
-        $( '#login_dialog' ).dialog( 'open' );
-        temp_load({
-            "target_div": "#login_target",
-            "template": $( this ).attr( 'data-template' ),
-            "callback": function() {
-                $("#user_name").focus();
-            }
-        });        
-    });
-    
-
-    /** @todo create [task]: needs to be part of class for dialog */
-    $( '#login_form' ).live('submit', function(){
-        $.ajax({
-            data: "action=siteLoginSubmit&" + $(this).serialize(), 
-            success: function( msg ){
-                location.reload( true );
-            }
-        });    
-    });
 
     /** @todo exit dialog [task]: needs to be part of class for dialog */    
     /**

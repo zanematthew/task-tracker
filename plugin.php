@@ -63,6 +63,18 @@ class CustomPostType extends CustomPostTypeBase {
             wp_register_script( 'qtip-nightly',        plugin_dir_url( __FILE__ ) . 'library/js/qtip-nightly/jquery.qtip.min.js', $this->dependencies['script'], '0.0.1' );            
             wp_register_script( 'jquery-ui-effects',   plugin_dir_url( __FILE__ ) . 'library/js/jquery-ui/jquery-ui-1.8.13.effects.min.js', $this->dependencies['script'], '1.8.13' );        
             wp_register_script( 'inplace-edit-script', plugin_dir_url( __FILE__ ) . 'library/js/inplace-edit/inplace-edit.js', $this->dependencies['script'], '0.1' );                
+
+            // We register then enqueue because we plan on moving the enqueue some where else later
+            // where I don't know?
+            wp_register_script( 'hash-script', plugin_dir_url( __FILE__ ) . 'theme/js/hash.js', array('jquery'), '1.0' );
+            wp_enqueue_script( 'hash-script' );
+
+            wp_register_script( 'cud-script', plugin_dir_url( __FILE__ ) . 'theme/js/cud.js', array('jquery'), '1.0' );    
+            wp_enqueue_script( 'cud-script' );
+
+            wp_register_script( 'login-script', plugin_dir_url( __FILE__ ) . 'theme/js/login.js', array('jquery','tt-script'), '1.0' );    
+            wp_enqueue_script( 'login-script' );        
+            
         }
         $this->loginSetup();                
     }        
