@@ -21,6 +21,9 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         add_action( 'wp_ajax_loadTemplate', array( &$this, 'loadTemplate' ) );         
         add_action( 'wp_head', array( &$this, 'baseAjaxUrl' ) );                    
         add_action( 'template_redirect', array( &$this, 'templateRedirect' ) );            
+
+        wp_register_script( 'hash-script', plugin_dir_url( __FILE__ ) . 'theme/js/hash.js', array('jquery'), '1.0' );
+        wp_enqueue_script( 'hash-script' );
     }
 
     /**
