@@ -215,6 +215,10 @@ jQuery(document).ready(function( $ ){
         "login_dialog": { 
             autoOpen: false,
             title: 'Please <em>Login</em>',
+            open: function() {
+                console.log($(this));
+              $(".user_name").focus();
+            },
             modal: true
         },
         "delete_dialog": { 
@@ -263,10 +267,12 @@ jQuery(document).ready(function( $ ){
             data: params,
             success: function( msg ){                
                 $( params.target_div ).fadeIn().html( msg );
+                if(typeof params.callback === "function") {
+                    params.callback();
+                }
             },
             error: function( xhr ){
-                console.log( params );
-                console.log( 'XHR Error: ' + xhr );
+                console.log( params, 'XHR Error: ' + xhr );
             }
         });
     }
@@ -287,7 +293,10 @@ jQuery(document).ready(function( $ ){
         $( '#login_dialog' ).dialog( 'open' );
         temp_load({
             "target_div": "#login_target",
-            "template": $( this ).attr( 'data-template' )            
+            "template": $( this ).attr( 'data-template' ),
+            "callback": function() {
+                $("#user_name").focus();
+            }
         });        
     });
     
