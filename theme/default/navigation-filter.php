@@ -9,7 +9,7 @@
             $my_cpt = get_post_types( array( 'name' => $post_type ), 'objects' );                    
 
             foreach( $my_cpt[ $post_type ]->taxonomies as $taxonomy ) {
-                zm_base_build_options( array( 'taxonomy' => $taxonomy, 'prepend' => $taxonomy.'-' ) );
+                zm_base_build_input( array( 'taxonomy' => $taxonomy, 'prepend' => $taxonomy.'-', type => 'checkbox' ) );
             }
             ?>
         </div>

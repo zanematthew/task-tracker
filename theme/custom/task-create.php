@@ -14,7 +14,7 @@
         </p>        
         <?php zm_base_build_input( array( 'taxonomy'=> 'type', 'type'=> 'radio', 'default' => 'Personal', 'label' => 'Category' ) ); ?>        
         <?php zm_base_build_input( array( 'taxonomy'=> 'status', 'type'=> 'radio', 'default' => 'New' ) ); ?>        
-        <?php zm_base_build_input( array( 'taxonomy'=> 'priority', 'type'=> 'radio', 'default' => 'Medium' ) ); ?>
+        <?php zm_base_build_input( array( 'taxonomy'=> 'priority', 'type'=> 'checkbox', 'default' => 'Medium' ) ); ?>
         <?php zm_base_build_options('project'); ?>
         <?php zm_base_build_options('phase'); ?>
         <?php zm_base_build_options( array( 'taxonomy' => 'assigned', 'label' => 'Assigned To' ) ); ?>

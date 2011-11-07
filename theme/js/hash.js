@@ -7,11 +7,20 @@ function addHash( hash ) {
         _filters = {};
     }
     if ( hash ) {
-        var thishash;
+        var thishash, theseterms;
         var thesehashes = hash.split('/');
+
         for(var i = 0; i < thesehashes.length; i++) {
-            if(thesehashes[i].indexOf('__') > -1) {
-                thishash = thesehashes[i].split('__'); _filters[ thishash[0] ] = thishash[1];
+            if(thesehashes[i].indexOf('_') > -1) {
+                thishash = thesehashes[i].split('_'); 
+                theseterms = thishash[1].split(',');
+                for(var j = 0; j < theseterms.length; j++ ) {
+                    if(typeof _filters[ thishash[0] ] !== "object") {
+                        _filters[ thishash[0] ] = [];
+                    }
+                    _filters[ thishash[0] ].push(theseterms[j]);
+                    jQuery("#" + thishash[0] + "-" + theseterms[j].toLowerCase()).prop("checked", true);
+                }
                 jQuery("#select_" + thishash[0] + " option[data-value=" + thishash[1].toLowerCase() + "]").attr("selected", "selected");
             }
         }
@@ -20,7 +29,7 @@ function addHash( hash ) {
 function changeHash() {
     var hash = "/";
     for(var j in _filters) {
-        hash += j + "__" + _filters[j] + "/";
+        hash += j + "_" + _filters[j].join(",") + "/";
     }
     window.location.hash = hash;
 }
@@ -31,7 +40,7 @@ function filterRows() {
     for( var i in _data ) {
         showhide = true;
         for(var j in _filters) {
-            if ( _data[i][j] != _filters[j] ) {
+            if ( jQuery.inArray(_data[i][j], _filters[j]) === -1) {
                 showhide = false;
             }
         }
@@ -62,8 +71,19 @@ function build_filters() {
     jQuery( "#filter_task_form select" ).each(function() { 
         if(jQuery(this).val()) {
 //            searchClasses += "." + jQuery(this).val();
-            _filters[this.name] = jQuery('option:selected', this).attr("data-value");
+            if(typeof _filters[this.name] !== "object") {
+                _filters[this.name] = [];
+            }
+            _filters[this.name].push(jQuery('option:selected', this).attr("data-value"));
         }
+    });
+    jQuery( "#filter_task_form input[type=checkbox]").each(function() {
+        if(jQuery(this).prop('checked')) {
+            if(typeof _filters[this.name] !== "object") {
+                _filters[this.name] = [];
+            }
+            _filters[this.name].push(jQuery(this).attr("data-value"));
+        } 
     });
     filterRows();
 }

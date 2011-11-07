@@ -355,12 +355,7 @@ jQuery(document).ready(function( $ ){
                     data: data,
                     success: function( msg ){
                         $('#tt_filter_target').html( msg ).fadeIn();
-                        if(_filters != {}) {
-                            for(var j in _filters) {
-                                _filterClass = "option.taxonomy-" + j + ".term-" + _filters[j];
-                                $(_filterClass).attr("selected", "selected");
-                            }
-                        }
+                        addHash(window.location.hash, false);
                     }
                 });            
             });                    
@@ -368,7 +363,7 @@ jQuery(document).ready(function( $ ){
     });    
 
     /** @todo filter [task] archive: needs to be part of class for dialog */    
-    $( '#tt_filter_target select' ).live( 'change', build_filters );
+    $( '#tt_filter_target select, #tt_filter_target input[type=checkbox]' ).live( 'change', build_filters );
 
     $( window ).load(function(){
 

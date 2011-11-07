@@ -160,7 +160,7 @@ function zm_base_get_the_term_list( $post_id=null, $taxonomy=null, $before = '',
                     if ( !$post_type )
                         die( 'I need a post type for anchor' );                                            
                     
-                    $my_link = home_url() . '/' . $post_type.  '/#/' . $term->taxonomy . '__'. $term->slug;                
+                    $my_link = home_url() . '/' . $post_type.  '/#/' . $term->taxonomy . '_'. $term->slug;                
                 } else {
                     $my_link = get_term_link( $term, $taxonomy );
                 }
@@ -213,7 +213,7 @@ function zm_base_list_terms( $taxonomy ) {
         if ( isset( $link ) && $link == 'javascript://' )
             $my_link = 'javascript://';
         elseif ( isset( $link ) && $link == 'anchor' )
-            $my_link = home_url() . '/' . $post->post_type.  '/#/' . $term->taxonomy . '__'. $term->slug;            
+            $my_link = home_url() . '/' . $post->post_type.  '/#/' . $term->taxonomy . '_'. $term->slug;            
         else            
             $my_link = get_term_link( $term->slug, $term->taxonomy );                                        
 
@@ -224,7 +224,7 @@ function zm_base_list_terms( $taxonomy ) {
         $title = sprintf( '%1$s <br /><em>%2$s</em>', sprintf( __("View all %s"), $term->name), $term->description );
 
         $html .= '<li class="zm-base-item ' . $term->taxonomy . '-container">';
-        $html .= '<a href="' . $my_link . '" title="'.$title.'" rel="' . $term->taxonomy . '__' . $term->slug . '" class="zm-base-' . $term->taxonomy .'-'.$term->slug . '">' . $term->name . '</a>';
+        $html .= '<a href="' . $my_link . '" title="'.$title.'" rel="' . $term->taxonomy . '_' . $term->slug . '" class="zm-base-' . $term->taxonomy .'-'.$term->slug . '">' . $term->name . '</a>';
         $html .= '<span class="zm-base-count">' . $term->count . '</span>';
         $html .= '</li>';
         $i++;
@@ -400,8 +400,14 @@ function zm_base_build_input( $taxonomy=null ) {
         <?php /** Some cryptic short hand true:false */ ?>
         <?php $current_term == $term->name ? $selected = 'checked=checked' : $selected = null; ?>
         <label for="<?php echo $term->$value; ?>" class="zm-base-<?php print $taxonomy; ?>-<?php print $term->slug; ?>">        
-        <input type="<?php echo $type; ?>" value="<?php echo $prepend; ?><?php echo $term->$value; ?>" class="taxonomy-<?php echo $taxonomy; ?> term-<?php echo $term->slug; ?> <?php echo $taxonomy; ?>-<?php echo $term->term_id; ?>" id="<?php echo $term->term_id; ?>" name="<?php echo $taxonomy; ?>"
-        <?php echo $selected; ?> />
+        <input 
+            type="<?php echo $type; ?>" 
+            value="<?php echo $prepend; ?><?php echo $term->$value; ?>" 
+            class="taxonomy-<?php echo $taxonomy; ?> term-<?php echo $term->slug; ?> <?php echo $taxonomy; ?>-<?php echo $term->term_id; ?>" 
+            data-value="<?php echo $term->slug; ?>" 
+            id="<?php echo $taxonomy; ?>-<?php echo $term->slug; ?>" 
+            name="<?php echo $taxonomy; ?>"
+            <?php echo $selected; ?> />
         <?php echo $term->name; ?></label>
     <?php endforeach; ?>
     </fieldset>
@@ -413,6 +419,7 @@ endif;
  * Build checkbox of Terms based on a given Taxonomy.
  *
  * @package helper 
+ * @deprecated
  * @uses zm_base_get_terms to return the terms with error checking 
  * @uses zm_base_current_term() to get the current term for post type currently being viewed
  * @param string $taxonomy
