@@ -30,18 +30,18 @@
 	// Derive the Current Post Type
 	// Are we viewing a Custom Post Type Archive?
     if ( is_post_type_archive() || is_single() ) {
-		$cpt = $wp_query->query_vars['post_type'];
-	// Are we viewing a Custom Taxonomy Archive?
-	} elseif ( is_tax() ) {
+		$cpt = $wp_query->query_vars['post_type'];	
+	} 
+        
+    elseif ( is_tax() ) {
+        // Are we viewing a Custom Taxonomy Archive?
 		$cpt = $wp_query->posts[0]->post_type;
-
-	// Else die
 	} else {
+       // Else die
 		wp_die( 'need a CPT' );
 	}
 
 	$cpt_obj = get_post_types( array( 'name' => $cpt), 'objects' );
-
 	?>
    	<?php foreach ( $cpt_obj[ $cpt ]->taxonomies as $tax ) : ?>
         <?php zm_base_list_terms( array('taxonomy' => $tax ) ); ?>

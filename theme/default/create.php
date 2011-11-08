@@ -10,18 +10,18 @@ $cpt_obj = get_post_types( array( 'name' => $cpt), 'objects' );
         <div id="default_message_target"></div>
         <input type="hidden" name="security" value="<?php print wp_create_nonce( 'tt-ajax-forms' );?>">
         <div class="form-wrapper">
-        <input type="hidden" value="<?php print $cpt; ?>" name="post_type" />
-        <p>
-            <label>Title</label>
-            <input type="text" name="post_title" id="post_title" />
-        </p>
-        <p>
-            <label>Description</label>
-            <textarea name="content"></textarea>
-        </p>        
-        <?php foreach ( $cpt_obj[$cpt]->taxonomies as $tax ) : ?>
-            <?php zm_base_build_options( $tax ); ?>
-        <?php endforeach; ?>
+            <input type="hidden" value="<?php print $cpt; ?>" name="post_type" />
+            <p>
+                <label>Title</label>
+                <input type="text" name="post_title" id="post_title" />
+            </p>
+            <p>
+                <label>Description</label>
+                <textarea name="content"></textarea>
+            </p>        
+            <?php foreach ( $cpt_obj[$cpt]->taxonomies as $tax ) : ?>
+                <?php zm_base_build_options( $tax ); ?>
+            <?php endforeach; ?>
         </div>
         <div class="button-container">
             <div id="publishing-action">

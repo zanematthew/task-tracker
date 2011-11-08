@@ -7,13 +7,10 @@ $cpt = $wp_query->query_vars['post_type'];
 $cpt_obj = get_post_types( array( 'name' => $cpt), 'objects' );
 
 ?>
-
 <div class="zm-default-container zm-default-archive-container">
     <div class="tt-glue">
         <div class="main-container">        
-
             <?php load_template( plugin_dir_path( __FILE__ ) . 'navigation.php' ); ?>   
-
             <div class="tt-filter-container">
                 <ul class="inline">
                     <li><a href="javascript://" id="filter_handle" data-template="default/navigation-filter.php" data-post_type="<?php print  $cpt;?>">Advanced Filter</a></li>
@@ -26,12 +23,8 @@ $cpt_obj = get_post_types( array( 'name' => $cpt), 'objects' );
                 <div id="no_results"></div>                        
             </div>
         </div>
-
         <?php load_template( plugin_dir_path( __FILE__ ) . 'sidebar.php' ); ?>   
-
     </div>
 </div>
-
 <?php tt_json_feed( $cpt,  $cpt_obj[ $cpt ]->taxonomies ); ?>
-
 <?php get_footer(); ?>
