@@ -435,7 +435,11 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     } // End 'postTypeSubmit'
 
     /**
-     * Simple form submission to be used in AJAX request!0
+     * Update a Post using the Current Users ID
+     *
+     * @package Ajax
+     * @link http://codex.wordpress.org/Function_Reference/wp_update_post
+     * @todo add check_ajax_refere()
      */
     public function postTypeUpdate( $post ) {
         
