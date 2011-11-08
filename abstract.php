@@ -365,6 +365,14 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     
     /**
      * Basic post submission for use with an ajax request
+     *
+     * @package Ajax
+     * @uses wp_insert_post();
+     * @uses get_current_user_id()
+     * @uses is_user_logged_in()
+     * @uses check_ajax_referer()
+     * @uses get_current_user_id()
+     * @uses is_wp_error()
      */
     public function postTypeSubmit() {
 
@@ -438,7 +446,12 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      * Update a Post using the Current Users ID
      *
      * @package Ajax
-     * @link http://codex.wordpress.org/Function_Reference/wp_update_post
+     *
+     * @uses wp_update_post()
+     * @uses is_user_logged_in()
+     * @uses current_user_can()
+     * @uses wp_get_current_user()
+     *
      * @todo add check_ajax_refere()
      */
     public function postTypeUpdate( $post ) {
@@ -469,8 +482,13 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      * Inserts a comment for the current post if the user is logged in
      *
      * @package Ajax
-     * @link http://codex.wordpress.org/Function_Reference/wp_insert_comment
-     * @todo add check_ajax_refer
+     *
+     * @uses is_user_logged_in()
+     * @uses wp_get_current_user()
+     * @uses current_time()
+     * @uses wp_insert_comment()
+     *
+     * @todo add check_ajax_refer()
      */
     public function addComment() {
         
@@ -507,10 +525,15 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     /**
      * Updates the 'utiltily', i.e. taxonomies, of a post
      *
-     * @param (int)post id
-     * @param (array)taxonomies
-     * @todo add chcek_ajax_refer()
      * @package Ajax
+     *
+     * @param (int)post id, (array)taxonomies
+     *
+     * @uses is_user_logged_in()
+     * @uses current_user_can()
+     * @uses wp_set_post_terms()
+     *
+     * @todo add chcek_ajax_refer()
      */
     public function defaultUtilityUpdate( $post_id=null, $taxonomies=null) {
 
@@ -541,9 +564,16 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     /**
      * Delets a post given the post ID, post will be moved to the trash
      *
-     * @param (int) post id
-     * @todo generic validateUser method, check ajax refer and if user can (?)
      * @package Ajax
+     *
+     * @param (int) post id
+     *
+     * @uses check_ajax_referer
+     * @uses is_user_logged_in
+     * @uses wp_trash_post
+     * @uses is_wp_error
+     *
+     * @todo generic validateUser method, check ajax refer and if user can (?)     
      */
     public function postTypeDelete( $id=null ) {
         
@@ -570,8 +600,12 @@ abstract class CustomPostTypeBase implements ICustomPostType {
 
     /**
      * Print our ajax url in the footer 
+     *
+     * @uses plugin_dir_url()
+     * @uses admin_url()
+     *
      * @todo baseAjaxUrl() consider moving to abstract
-     * @todo consider using localize script
+     * @todo consider using localize script     
      */
     public function baseAjaxUrl() {
         // @todo use localize for this
@@ -582,7 +616,12 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     /**
      * Adds additional classes to post_class() for additional CSS styling and JavaScript manipulation.     
      * term_slug-taxonomy_id
-     * @param 
+     *
+     * @param classes
+     *
+     * @uses get_post_types()
+     * @uses get_the_terms()
+     * @uses is_wp_error()
      */
     public function addPostClass( $classes ) {
         global $post;
