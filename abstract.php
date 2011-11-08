@@ -466,6 +466,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      *
      * @package Ajax
      * @link http://codex.wordpress.org/Function_Reference/wp_insert_comment
+     * @todo add check_ajax_refer
      */
     public function addComment() {
         
@@ -505,6 +506,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      * @param (int)post id
      * @param (array)taxonomies
      * @todo add chcek_ajax_refer()
+     * @package Ajax
      */
     public function defaultUtilityUpdate( $post_id=null, $taxonomies=null) {
 
@@ -537,6 +539,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      *
      * @param (int) post id
      * @todo generic validateUser method, check ajax refer and if user can (?)
+     * @package Ajax
      */
     public function postTypeDelete( $id=null ) {
         
