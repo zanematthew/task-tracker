@@ -461,6 +461,12 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         die();
     } // postTypeUpdate
 
+    /**
+     * Inserts a comment for the current post if the user is logged in
+     *
+     * @package Ajax
+     * @link http://codex.wordpress.org/Function_Reference/wp_insert_comment
+     */
     public function addComment() {
         
         if ( !is_user_logged_in() )
@@ -498,6 +504,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      *
      * @param (int)post id
      * @param (array)taxonomies
+     * @todo add chcek_ajax_refer()
      */
     public function defaultUtilityUpdate( $post_id=null, $taxonomies=null) {
 
@@ -511,7 +518,6 @@ abstract class CustomPostTypeBase implements ICustomPostType {
 
         $post_id = (int)$_POST['PostID'];    
 
-        /** What's left is our taxonomies */
         unset( $_POST['action'] );
         unset( $_POST['PostID'] );
         
@@ -530,10 +536,10 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      * Delets a post given the post ID, post will be moved to the trash
      *
      * @param (int) post id
+     * @todo generic validateUser method, check ajax refer and if user can (?)
      */
     public function postTypeDelete( $id=null ) {
         
-        // @todo needs to be generic for cpt
         check_ajax_referer( 'tt-ajax-forms', 'security' );
 
         $id = (int)$_POST['post_id'];
@@ -558,6 +564,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     /**
      * Print our ajax url in the footer 
      * @todo baseAjaxUrl() consider moving to abstract
+     * @todo consider using localize script
      */
     public function baseAjaxUrl() {
         // @todo use localize for this
