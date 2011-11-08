@@ -26,8 +26,10 @@ abstract class CustomPostTypeBase implements ICustomPostType {
     /**
      * Regsiter an unlimited number of CPTs based on an array of parmas.
      * 
-     * Note, some args are still hard coded.
-     * Full list @ http://codex.wordpress.org/Function_Reference/register_post_type     
+     * @uses register_post_type()
+     * @uses wp_die()
+     *
+     * @todo re-map more stuff, current NOT ALL the args are params
      */
     public function registerPostType( $args=NULL ) {
         $taxonomies = $supports = array();
@@ -118,6 +120,15 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         return $this->post_type;
     } // End 'function'
 
+    /**
+     * Wrapper for register_taxonomy() to register an unlimited
+     * number of taxonomies for a given CPT.
+     *     
+     * @uses register_taxonomy
+     *
+     * @todo re-map more stuff, current NOT ALL the args are params
+     * @todo this 'hierarchical' => false' fucks up on wp_set_post_terms() for submitting and updating a cpt
+     */
     public function registerTaxonomy( $args=NULL ) {
         foreach ( $this->taxonomy as $taxonomy ) {
             
@@ -133,7 +144,6 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             if ( empty( $taxonomy['plural_name'] ) )
                 $taxonomy['plural_name'] = $taxonomy['name'] . 's';
 
-            /** @todo if this as fasle fucks up on wp_set_post_terms() for submitting and updating a cpt */
             if ( !isset( $taxonomy['hierarchical'] ) ) {
                 $taxonomy['hierarchical'] = true;
             }
@@ -166,16 +176,23 @@ abstract class CustomPostTypeBase implements ICustomPostType {
             
         } // End 'foreach'
        
-        return $this->taxonomy;    
+        return $this->taxonomy;
     } // End 'function'   
 
     /**
-     * Get somethings and do a little bit of thinking before 
-     * calling the redirect methods.
+     * Get somethings and do a little bit of thinking before calling the redirect methods.
+     * @package Template Redirect
+     *
+     * @uses wp_enqueue_style()
+     * @uses wp_enqueue_script()
+     * @uses is_admin()
+     * @uses get_query_var()
+     * @uses $this->singleRedirect()
+     * @uses $this->taxonomyRedirect()
+     * @uses $this->archiveRedirect()
      */
     public function templateRedirect() {
-
-        // @todo this needs to be generic
+        
         if ( !is_admin() ) {
             wp_enqueue_style( 'qtip-nightly-style' );
             wp_enqueue_style( 'tt-base-style' );
@@ -187,9 +204,9 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         $current_post_type = get_query_var( 'post_type' );
         
         $this->singleRedirect( $current_post_type );
-        $this->taxonomyRedirect( $current_post_type );        
+        $this->taxonomyRedirect( $current_post_type );
         $this->archiveRedirect( $current_post_type );
-    } // End 'function templateRedirect'    
+    } // End 'function templateRedirect'
 
 
     /**
@@ -201,7 +218,16 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      * custom template, and fall back on the default template.
      *
      * @param current_post_type
+     * @package Template Redirect     
      *
+     * @uses wp_die()
+     * @uses wp_register_style()
+     * @uses wp_enqueue_style()
+     * @uses plugin_dir_url()
+     * @uses plugin_dir_path()
+     * @uses get_post_types()
+     * @uses is_tax()
+     * @uses load_template()     
      */
     public function taxonomyRedirect( $current_post_type=null ) {
 
@@ -222,7 +248,7 @@ abstract class CustomPostTypeBase implements ICustomPostType {
 
             if ( is_tax( $wtf['taxonomies'] ) ) {                                                
 
-                if ( in_array( $wp_query->query_vars['taxonomy'], $wtf['taxonomies'] ) ) {                                        
+                if ( in_array( $wp_query->query_vars['taxonomy'], $wtf['taxonomies'] ) ) {
                 
                     if ( file_exists( $custom_template ) ) {                        
                         load_template( $custom_template );
@@ -246,9 +272,24 @@ abstract class CustomPostTypeBase implements ICustomPostType {
         }
     } // End 'taxonomyRedirect'
     
-    // Did you make a custom one?    
-    // Did I make a custom one?    
-    // Use MY default
+    /**
+     * Load the archive template for a given post type.
+     *
+     * We check in the users current theme folder first in:
+     * wp-content/theme/[user theme]/archive-[post type].php then
+     * in our: wp-content/plugin/[plugin name]/theme/custom/arcvhie-[post type].php
+     * if none of those exisits load: wp-content/plugin/[plugin name]/theme/default/arcvhie.php
+     *
+     * @package Template Redirect
+     *
+     * @uses wp_register_style()
+     * @uses wp_enqueue_style()
+     * @uses wp_die()
+     * @uses plugin_dir_url()
+     * @uses plugin_dir_path()
+     * @uses is_post_type_archive()
+     * @uses load_template()
+     */
     public function archiveRedirect( $current_post_type=null ) {
 
         wp_register_style( 'tt-archive-style', plugin_dir_url( __FILE__ ) . 'theme/css/archive.css', $this->dependencies['style'] , 'all' );   
@@ -304,7 +345,18 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      * wp-content/plugins/[plugin name]]/theme/single-[$]custom_post_type].php
      * wp-content/plugins/[plugin name]/default/single.php
      *
+     * @package Template Redirect
+     *
      * @param current_post_type
+     *
+     * @uses is_single()
+     * @uses load_template()
+     * @uses wp_register_style()
+     * @uses wp_enqueue_style()
+     * @uses wp_enqueue_script()
+     * @uses plugin_dir_url()
+     * @uses plugin_dir_path()
+     * @uses current_user_can()     
      */
     public function singleRedirect( $current_post_type=null ) {
 
@@ -351,6 +403,10 @@ abstract class CustomPostTypeBase implements ICustomPostType {
 
     /** 
      * loads a template from a specificed path
+     *
+     * @package Ajax
+     *
+     * @uses load_template()
      */
     public function loadTemplate() {
 
@@ -367,12 +423,12 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      * Basic post submission for use with an ajax request
      *
      * @package Ajax
+     *
      * @uses wp_insert_post();
      * @uses get_current_user_id()
      * @uses is_user_logged_in()
-     * @uses check_ajax_referer()
-     * @uses get_current_user_id()
      * @uses is_wp_error()
+     * @uses check_ajax_referer()     
      */
     public function postTypeSubmit() {
 
@@ -448,9 +504,9 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      * @package Ajax
      *
      * @uses wp_update_post()
+     * @uses wp_get_current_user()
      * @uses is_user_logged_in()
      * @uses current_user_can()
-     * @uses wp_get_current_user()
      *
      * @todo add check_ajax_refere()
      */
@@ -484,9 +540,9 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      * @package Ajax
      *
      * @uses is_user_logged_in()
+     * @uses wp_insert_comment()
      * @uses wp_get_current_user()
      * @uses current_time()
-     * @uses wp_insert_comment()
      *
      * @todo add check_ajax_refer()
      */
@@ -569,9 +625,9 @@ abstract class CustomPostTypeBase implements ICustomPostType {
      * @param (int) post id
      *
      * @uses check_ajax_referer
-     * @uses is_user_logged_in
-     * @uses wp_trash_post
      * @uses is_wp_error
+     * @uses is_user_logged_in
+     * @uses wp_trash_post     
      *
      * @todo generic validateUser method, check ajax refer and if user can (?)     
      */
