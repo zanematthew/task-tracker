@@ -27,6 +27,13 @@ class CustomPostType extends CustomPostTypeBase {
         
     /**
      * Every thing that is "custom" to our CPT goes here.
+     * @uses wp_localize_script()
+     * @uses wp_register_style()
+     * @uses wp_register_script()
+     * @uses wp_enqueue_script()
+     * @uses plugin_dir_url()
+     * @uses admin_url()
+     * @uses register_activation_hook()
      */
     public function __construct() {
 
@@ -62,8 +69,8 @@ class CustomPostType extends CustomPostTypeBase {
             wp_register_script( 'tt-script',           plugin_dir_url( __FILE__ ) . 'theme/js/script.js', $this->dependencies['script'], '1.0' );        
             wp_register_script( 'qtip-nightly',        plugin_dir_url( __FILE__ ) . 'library/js/qtip-nightly/jquery.qtip.min.js', $this->dependencies['script'], '0.0.1' );            
             wp_register_script( 'jquery-ui-effects',   plugin_dir_url( __FILE__ ) . 'library/js/jquery-ui/jquery-ui-1.8.13.effects.min.js', $this->dependencies['script'], '1.8.13' );        
-            wp_register_script( 'inplace-edit-script', plugin_dir_url( __FILE__ ) . 'library/js/inplace-edit/inplace-edit.js', $this->dependencies['script'], '0.1' );                
-
+            wp_register_script( 'inplace-edit-script', plugin_dir_url( __FILE__ ) . 'library/js/inplace-edit/inplace-edit.js', $this->dependencies['script'], '0.1' );
+            
             // We register then enqueue because we plan on moving the enqueue some where else later
             // where I don't know?
             wp_register_script( 'hash-script', plugin_dir_url( __FILE__ ) . 'theme/js/hash.js', array('jquery'), '1.0' );
@@ -76,16 +83,25 @@ class CustomPostType extends CustomPostTypeBase {
             wp_enqueue_script( 'login-script' );        
             
         }
-        $this->loginSetup();                
-    }        
+        $this->loginSetup();
+    } // End 'construct'
 
+    /**
+     * Runs on plugin activation and inserts base terms along with term
+     * descriptions and one sample Task.
+     *
+     * @uses wp_insert_term
+     * @uses get_current_user_id
+     * @uses wp_insert_post
+     * @uses wp_set_post_terms
+     * @uses term_exists
+     */
     public function registerActivation(){
 
-        /**
-         * Dont forget registration hook is called 
-         * BEFORE! taxonomies are regsitered! therefore
-         * these terms and taxonomies are NOT derived from our object!
-         */
+        
+        // Dont forget registration hook is called 
+        // BEFORE! taxonomies are regsitered! therefore
+        // these terms and taxonomies are NOT derived from our object!        
         $taxonomies = array( 'priority', 'status', 'type' );
         $this->registerTaxonomy( $taxonomies );
     
@@ -121,7 +137,6 @@ class CustomPostType extends CustomPostTypeBase {
 
         $post_id = wp_insert_post( $post, true );
 
-        // assign a term for our sample Task  
         if ( isset( $post_id ) ) {
             $term_id = term_exists( 'medium', 'priority' );
             wp_set_post_terms( $post_id, $term_id, 'priority' );
@@ -132,26 +147,31 @@ class CustomPostType extends CustomPostTypeBase {
             $term_id = term_exists( 'personal', 'type' );
             wp_set_post_terms( $post_id, $term_id, 'type' );
         }            
-    }    
+    } // End 'registerActivation'
     
     /**
-     * to be used in AJAX submission, gets the $_POST data and logs the user in.
+     * To be used in AJAX submission, gets the $_POST data and logs the user in.
+     *
+     * @uses check_ajax_referer()
+     * @uses wp_signon()
+     * @uses is_wp_error()
+     *
+     * @todo move this to the abtract!
      */    
     public function siteLoginSubmit() {
-        // @todo needs to be generic for cpt
+
         check_ajax_referer( 'tt-ajax-forms', 'security' );
         
-        // @todo this should include EVEERYTHING needed for ajax login to work!
-        // js, css, actions etc.
         $creds = array();
         $creds['user_login'] = $_POST['user_name'];
         $creds['user_password'] = $_POST['password'];
 
-        if ( $_POST['remember'] == 'on' )
+        if ( $_POST['remember'] == 'on' ) {
             $creds['remember'] = true;
-        else            
+        } else {
             $creds['remember'] = false;
-            
+        }
+
         $user = wp_signon( $creds, false );
 
         if ( is_wp_error( $user ) )
@@ -166,6 +186,11 @@ class CustomPostType extends CustomPostTypeBase {
      * Note this does NOT hook into the default WordPress login! In essence 
      * you will need custom mark-up. Telling it which template to call
      * and create you own, see theme/default/login.php 
+     *
+     * @uses add_action()
+     * @uses wp_enqueue_style()
+     * @uses wp_enqueue_script()
+     * @uses plugin_dir_url()
      */
     public function loginSetup() {
 
@@ -179,10 +204,13 @@ class CustomPostType extends CustomPostTypeBase {
         );
         
         wp_enqueue_style( 'wp-jquery-ui-dialog' );
-        wp_enqueue_style( 'tt-login-style', plugin_dir_url( __FILE__ ) . 'theme/css/login.css', $dependencies['style'], 'all' );        
-        wp_enqueue_script( 'jquery-ui-effects' );                
+        wp_enqueue_style( 'tt-login-style', plugin_dir_url( __FILE__ ) . 'theme/css/login.css', $dependencies['style'], 'all' );
+        wp_enqueue_script( 'jquery-ui-effects' );
     } // End 'loginSetup'
 
+    /**
+     * 
+     */
     public function createLoginDiv(){ ?>
     <div id="login_dialog" class="dialog-container">
             <div id="login_target" style="display: none;">login hi</div>
